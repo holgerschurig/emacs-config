@@ -931,6 +931,19 @@ Convert      _ch_ ^^ RGB → Hex       _cr_ ^^ Hex → RGB       _cR_ ^^ Hex →
 
 
 
+;;; Package: symbol-overlay - jump / manipulate to symbols
+;; https://github.com/wolray/symbol-overlay
+
+(map! "M-p"      #'symbol-overlay-jump-prev
+	  "M-n"      #'symbol-overlay-jump-next
+	  "M-<up>"   #'symbol-overlay-jump-prev
+	  "M-<down>" #'symbol-overlay-jump-next
+	  )
+
+
+
+
+
 ;;; Package: tabify
 (after! tabify
   ;; only tabify initial whitespace
