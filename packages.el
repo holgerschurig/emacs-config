@@ -72,15 +72,15 @@
   doom-themes   ;; modus-vivendi is better
   drag-stuff    ;; I'll never drag stuff around
   forge         ;; would be pulled in by tools/magit, but I don't need it
-  github-review	;; would be pulled in by tools/magit, but I don't need it
+  github-review ;; would be pulled in by tools/magit, but I don't need it
   graphql-mode  ;; would be pulled in by modules/data, but I don't need it
   helm-bibtex   ;; I won't write bibliographic entries
   hl-line       ;; highlights the current cursor line
   irony         ;; I'll use lsp eventually
   ivy-bibtex    ;; I won't write bibliographic entries
   jsonnet-mode  ;; would be pulled in by modules/data, but I don't need it
-  magit-gitflow	;; would be pulled in by tools/magit, but I don't need it
-  magit-todos	;; would be pulled in by tools/magit, but I don't need it
+  magit-gitflow ;; would be pulled in by tools/magit, but I don't need it
+  magit-todos   ;; would be pulled in by tools/magit, but I don't need it
   org-yt        ;; youtube links in org-mode?  Who wants that?  :-)
   rtags         ;; I'll use lsp eventually
   smartparens   ;; makes many M-<cursor keypad> keys behave weird
