@@ -3,7 +3,7 @@
 
 ;;; Error handling
 
-;(toggle-debug-on-error)
+;;(toggle-debug-on-error)
 (setq debugger-stack-frame-as-list t)
 
 
@@ -37,10 +37,10 @@
 
 ;; Make the messages be displayed full-screen
 (add-to-list 'display-buffer-alist
-  			 `(,(rx bos "*Messages*" eos)
-  			   (display-buffer-reuse-window display-buffer-same-window)
-			   (reusable-frames . visible))
-			 )
+             `(,(rx bos "*Messages*" eos)
+               (display-buffer-reuse-window display-buffer-same-window)
+               (reusable-frames . visible))
+             )
 
 
 ;; revert buffer with one keystroke
@@ -53,38 +53,38 @@
 
 (defun my-zoom-next-buffer2 ()
   (let ((curbuf (current-buffer))
-	(firstbuf nil))
-	(dolist (buffer (buffer-list))
-	  (with-current-buffer buffer
-	;(princ (format "name %s, fn %s\n" (buffer-name) buffer-file-name))
-	(unless (or
-		 ;; Don't mention internal buffers.
-		 (string= (substring (buffer-name) 0 1) " ")
-		 ;; No buffers without files.
-		 (not buffer-file-name)
-		 ;; Skip the current buffer
-		 (eq buffer curbuf)
-		 )
-	  ;(princ (format " nme %s, fn %s\n" (buffer-name) buffer-file-name))
-	  (unless firstbuf
-		(setq firstbuf buffer))
-		;;(print buffer)
-	  )))
-	(when firstbuf
-	  ;(princ (format "new buffer: %s.\n" firstbuf))
-	  (bury-buffer)
-	  (switch-to-buffer firstbuf))))
+        (firstbuf nil))
+    (dolist (buffer (buffer-list))
+      (with-current-buffer buffer
+                                        ;(princ (format "name %s, fn %s\n" (buffer-name) buffer-file-name))
+        (unless (or
+                 ;; Don't mention internal buffers.
+                 (string= (substring (buffer-name) 0 1) " ")
+                 ;; No buffers without files.
+                 (not buffer-file-name)
+                 ;; Skip the current buffer
+                 (eq buffer curbuf)
+                 )
+                                        ;(princ (format " nme %s, fn %s\n" (buffer-name) buffer-file-name))
+          (unless firstbuf
+            (setq firstbuf buffer))
+          ;;(print buffer)
+          )))
+    (when firstbuf
+                                        ;(princ (format "new buffer: %s.\n" firstbuf))
+      (bury-buffer)
+      (switch-to-buffer firstbuf))))
 (defun my-explode-window ()
   "If there is only one window displayed, act like C-x2. If there
 are two windows displayed, act like C-x1:"
   (interactive)
   (if (one-window-p t)
-	  (progn
-		(split-window-vertically)
-		(other-window 1)
-		(my-zoom-next-buffer2)
-		(other-window -1))
-	(delete-other-windows)))
+      (progn
+        (split-window-vertically)
+        (other-window 1)
+        (my-zoom-next-buffer2)
+        (other-window -1))
+    (delete-other-windows)))
 
 (map! "<f5>" #'my-explode-window)
 
@@ -96,8 +96,8 @@ are two windows displayed, act like C-x1:"
 If there are two windows displayed, act like \"C-x o\"."
   (interactive)
   (if (one-window-p t)
-	  (switch-to-buffer (other-buffer (current-buffer) 1))
-	(other-window -1)))
+      (switch-to-buffer (other-buffer (current-buffer) 1))
+    (other-window -1)))
 
 (map! "<f6>" #'my-switch-to-buffer)
 
@@ -129,10 +129,10 @@ If there are two windows displayed, act like \"C-x o\"."
 
 (defadvice kill-region (before unix-werase activate compile)
   "When called interactively with no active region, delete a single word
-	backwards instead."
+  backwards instead."
   (interactive
    (if mark-active (list (region-beginning) (region-end))
-	 (list (save-excursion (backward-word 1) (point)) (point)))))
+     (list (save-excursion (backward-word 1) (point)) (point)))))
 
 
 
@@ -246,32 +246,32 @@ behavior added."
 
 (after! autorevert
   (setq global-auto-revert-non-file-buffers t
-		auto-revert-interval 1
-		auto-revert-verbose nil))
+        auto-revert-interval 1
+        auto-revert-verbose nil))
 
 
 
 ;;; Package: c-mode
 
 (after! cc-mode
-		(defun my-c-mode-setup ()
-		  ;; need to check the mode because I run this also at the revert hook!
-		  (modify-syntax-entry ?_ "w")
-		  (setq c-recognize-knr-p nil)
+  (defun my-c-mode-setup ()
+    ;; need to check the mode because I run this also at the revert hook!
+    (modify-syntax-entry ?_ "w")
+    (setq c-recognize-knr-p nil)
 
-		  ;; (if (and buffer-file-name (string-match "/linux" buffer-file-name))
-		  ;; 	;; only for Linux C files
-		  ;; 	(progn (c-set-style "linux-tabs-only")
-		  ;; 		   (setq tab-width 8
-		  ;; 				 c-basic-offset 8))
-		  ;;   (c-set-style "linux")
-		  ;;   (setq tab-width 4
-		  ;;         c-basic-offset 4))))
-		  )
-		;; TODO: is there some hook! command?
-		(add-hook 'c-mode-hook #'my-c-mode-setup)
-		(add-hook 'c++-mode-hook #'my-c-mode-setup)
-		)
+    ;; (if (and buffer-file-name (string-match "/linux" buffer-file-name))
+    ;;    ;; only for Linux C files
+    ;;    (progn (c-set-style "linux-tabs-only")
+    ;;         (setq tab-width 8
+    ;;           c-basic-offset 8))
+    ;;   (c-set-style "linux")
+    ;;   (setq tab-width 4
+    ;;         c-basic-offset 4))))
+    )
+  ;; TODO: is there some hook! command?
+  (add-hook 'c-mode-hook #'my-c-mode-setup)
+  (add-hook 'c++-mode-hook #'my-c-mode-setup)
+  )
 
 
 
@@ -279,7 +279,6 @@ behavior added."
 ;;; CANC Package: circe
 
 ;; (after! circe
-;; 		(message "CIIIIIIIIIIIIIIIIIIIIIRCE")
 ;;   (set-irc-server! "chat.freenode.net"
 ;;     `(:tls t
 ;;       :port 6697
@@ -301,17 +300,17 @@ behavior added."
 
 (after! compile
   (defun my-compile-autoclose (buffer string)
-	"Auto close compile log if there are no errors"
-	(when (string-match "finished" string)
-	  (delete-window (get-buffer-window buffer t))
-	  (bury-buffer-internal buffer)))
+    "Auto close compile log if there are no errors"
+    (when (string-match "finished" string)
+      (delete-window (get-buffer-window buffer t))
+      (bury-buffer-internal buffer)))
   (add-to-list 'compilation-finish-functions #'my-compile-autoclose)
 
   ;; the next-error function weirdly stops at "In file included from
   ;; config.cpp:14:0:". Stop that:
   ;; http://stackoverflow.com/questions/15489319/how-can-i-skip-in-file-included-from-in-emacs-c-compilation-mode
   ;; (setcar (nthcdr 5 (assoc 'gcc-include compilation-error-regexp-alist-alist)) 0)
-)
+  )
 
 
 
@@ -332,7 +331,7 @@ behavior added."
 ;; The following let the commits from "git diff >foo.diff" stand out more:
 (after! diff-mode
   (defun my-diff-mode-setup ()
-	(hi-lock-line-face-buffer "^commit"))
+    (hi-lock-line-face-buffer "^commit"))
   (add-hook 'diff-mode-hook #'my-diff-mode-setup))
 
 
@@ -343,7 +342,7 @@ behavior added."
 ;; This removes the display of the line numbers
 
 (remove-hook! '(prog-mode-hook text-mode-hook conf-mode-hook)
-              #'display-line-numbers-mode)
+  #'display-line-numbers-mode)
 
 
 
@@ -383,7 +382,7 @@ behavior added."
 ;;; Package: expand-region
 
 (after! expand-region
-		(setq expand-region-reset-fast-key    "<ESC><ESC>"))
+  (setq expand-region-reset-fast-key    "<ESC><ESC>"))
 
 (map! "C-+" #'er/expand-region)
 
@@ -393,83 +392,83 @@ behavior added."
 
 (after! lisp-mode
   (defun my-emacs-lisp-mode-setup ()
-	(interactive)
-	"My emacs lisp mode setup function."
-	;; "-" is almost always part of a function- or variable-name
-	(modify-syntax-entry ?- "w")
+    (interactive)
+    "My emacs lisp mode setup function."
+    ;; "-" is almost always part of a function- or variable-name
+    (modify-syntax-entry ?- "w")
 
-	;; The following changes the imenu "M-g i" to care most about my ";;;" comments
-	(setq lisp-imenu-generic-expression '())
-	(setq imenu-generic-expression
-  		  (list
-  		   (list (purecopy "Type")
-  		   		 (purecopy (concat "^\\s-*("
-  		   						   (eval-when-compile
-  		   							 (regexp-opt
-  		   							  '(;; Elisp
-  		   								"defgroup" "deftheme"
-  		   								"define-widget" "define-error"
-  		   								"defface" "cl-deftype" "cl-defstruct"
-  		   								;; CL
-  		   								"deftype" "defstruct"
-  		   								"define-condition" "defpackage"
-  		   								;; CLOS and EIEIO
-  		   								"defclass")
-  		   							  t))
-  		   						   "\\s-+'?\\(" lisp-mode-symbol-regexp "\\)"))
-  		   		 2)
-  		   (list (purecopy "Variable")
-  		   		 (purecopy (concat "^\\s-*("
-  		   						   (eval-when-compile
-  		   							 (regexp-opt
-  		   							  '(;; Elisp
-  		   								"defconst" "defcustom"
-  		   								;; CL
-  		   								"defconstant"
-  		   								"defparameter" "define-symbol-macro")
-  		   							  t))
-  		   						   "\\s-+\\(" lisp-mode-symbol-regexp "\\)"))
-  		   		 2)
-  		   ;; For `defvar'/`defvar-local', we ignore (defvar FOO) constructs.
-  		   (list (purecopy "Variable")
-  		   		 (purecopy (concat "^\\s-*(defvar\\(?:-local\\)?\\s-+\\("
-  		   						   lisp-mode-symbol-regexp "\\)"
-  		   						   "[[:space:]\n]+[^)]"))
-  		   		 1)
-  		   (list "Function"
-  		   		 (purecopy (concat "^\\s-*("
-  		   						   (eval-when-compile
-  		   							 (regexp-opt
-  		   							  '("defun" "defmacro"
-  		   								;; Elisp.
-  		   								"defun*" "defsubst" "define-inline"
-  		   								"define-advice" "defadvice" "define-skeleton"
-  		   								"define-compilation-mode" "define-minor-mode"
-  		   								"define-global-minor-mode"
-  		   								"define-globalized-minor-mode"
-  		   								"define-derived-mode" "define-generic-mode"
-  		   								"ert-deftest"
-  		   								"cl-defun" "cl-defsubst" "cl-defmacro"
-  		   								"cl-define-compiler-macro" "cl-defgeneric"
-  		   								"cl-defmethod"
-  		   								;; CL.
-  		   								"define-compiler-macro" "define-modify-macro"
-  		   								"defsetf" "define-setf-expander"
-  		   								"define-method-combination"
-  		   								;; CLOS and EIEIO
-  		   								"defgeneric" "defmethod")
-  		   							  t))
-  		   						   "\\s-+\\(" lisp-mode-symbol-regexp "\\)"))
-  		   		 2)
-  		   (list "require"
-  		   		 (concat "^\\s-*(require\\s-+'\\(" lisp-mode-symbol-regexp "\\)")
-  		   		 1)
-  		   (list "use-package"
-  		   		 (concat "^\\s-*(use-package\\s-+\\(" lisp-mode-symbol-regexp "\\)")
-  		   		 1)
-  		   (list "Section"
-  				 "^;;[;]\\{1,8\\} \\(.*$\\)"
-  				 1))))
+    ;; The following changes the imenu "M-g i" to care most about my ";;;" comments
+    (setq lisp-imenu-generic-expression '())
+    (setq imenu-generic-expression
+          (list
+           (list (purecopy "Type")
+                 (purecopy (concat "^\\s-*("
+                                   (eval-when-compile
+                                     (regexp-opt
+                                      '(;; Elisp
+                                        "defgroup" "deftheme"
+                                        "define-widget" "define-error"
+                                        "defface" "cl-deftype" "cl-defstruct"
+                                        ;; CL
+                                        "deftype" "defstruct"
+                                        "define-condition" "defpackage"
+                                        ;; CLOS and EIEIO
+                                        "defclass")
+                                      t))
+                                   "\\s-+'?\\(" lisp-mode-symbol-regexp "\\)"))
+                 2)
+           (list (purecopy "Variable")
+                 (purecopy (concat "^\\s-*("
+                                   (eval-when-compile
+                                     (regexp-opt
+                                      '(;; Elisp
+                                        "defconst" "defcustom"
+                                        ;; CL
+                                        "defconstant"
+                                        "defparameter" "define-symbol-macro")
+                                      t))
+                                   "\\s-+\\(" lisp-mode-symbol-regexp "\\)"))
+                 2)
+           ;; For `defvar'/`defvar-local', we ignore (defvar FOO) constructs.
+           (list (purecopy "Variable")
+                 (purecopy (concat "^\\s-*(defvar\\(?:-local\\)?\\s-+\\("
+                                   lisp-mode-symbol-regexp "\\)"
+                                   "[[:space:]\n]+[^)]"))
+                 1)
+           (list "Function"
+                 (purecopy (concat "^\\s-*("
+                                   (eval-when-compile
+                                     (regexp-opt
+                                      '("defun" "defmacro"
+                                        ;; Elisp.
+                                        "defun*" "defsubst" "define-inline"
+                                        "define-advice" "defadvice" "define-skeleton"
+                                        "define-compilation-mode" "define-minor-mode"
+                                        "define-global-minor-mode"
+                                        "define-globalized-minor-mode"
+                                        "define-derived-mode" "define-generic-mode"
+                                        "ert-deftest"
+                                        "cl-defun" "cl-defsubst" "cl-defmacro"
+                                        "cl-define-compiler-macro" "cl-defgeneric"
+                                        "cl-defmethod"
+                                        ;; CL.
+                                        "define-compiler-macro" "define-modify-macro"
+                                        "defsetf" "define-setf-expander"
+                                        "define-method-combination"
+                                        ;; CLOS and EIEIO
+                                        "defgeneric" "defmethod")
+                                      t))
+                                   "\\s-+\\(" lisp-mode-symbol-regexp "\\)"))
+                 2)
+           (list "require"
+                 (concat "^\\s-*(require\\s-+'\\(" lisp-mode-symbol-regexp "\\)")
+                 1)
+           (list "use-package"
+                 (concat "^\\s-*(use-package\\s-+\\(" lisp-mode-symbol-regexp "\\)")
+                 1)
+           (list "Section"
+                 "^;;[;]\\{1,8\\} \\(.*$\\)"
+                 1))))
   (add-hook 'emacs-lisp-mode-hook #'my-emacs-lisp-mode-setup))
 
 
@@ -510,10 +509,10 @@ behavior added."
 ;;; Package: helpful
 
 (add-to-list 'display-buffer-alist
-  			 `(,(rx bos "*helpful" )
-  			   (display-buffer-reuse-window display-buffer-same-window)
-			   (reusable-frames . visible))
-			 )
+             `(,(rx bos "*helpful" )
+               (display-buffer-reuse-window display-buffer-same-window)
+               (reusable-frames . visible))
+             )
 
 (map! "<f1> h" #'helpful-at-point)
 
@@ -547,9 +546,9 @@ behavior added."
 
 
   ;; (defun my-ivy-sort (X Y)
-  ;; 	(or (< (length X) (length Y))
-  ;; 		(and (= (length X) (length Y)) (string< X Y))
-  ;; 		))
+  ;;    (or (< (length X) (length Y))
+  ;;      (and (= (length X) (length Y)) (string< X Y))
+  ;;      ))
   ;; (setq ivy-sort-functions-alist '((t . my-ivy-sort)))
 
 
@@ -559,28 +558,28 @@ behavior added."
   ;;       '((t . ivy--regex-ignore-order)))
 
   ;; (setq ivy-sort-functions-alist '((t . my-ivy-sort)))
-)
+  )
 
 (map! "C-x C-b"   #'ivy-switch-buffer
       "C-c C-r"   #'ivy-resume
 
       "C-x C-f"   #'counsel-find-file
-	  "C-x 8 RET" #'counsel-unicode-char
-	  "M-s g"     #'counsel-git-grep
-	  "M-g i"     #'counsel-imenu
-	  "M-y"       #'counsel-yank-pop ;; see http://pragmaticemacs.com/emacs/counsel-yank-pop-with-a-tweak/
-	  "M-s o"     #'swiper)
+      "C-x 8 RET" #'counsel-unicode-char
+      "M-s g"     #'counsel-git-grep
+      "M-g i"     #'counsel-imenu
+      "M-y"       #'counsel-yank-pop ;; see http://pragmaticemacs.com/emacs/counsel-yank-pop-with-a-tweak/
+      "M-s o"     #'swiper)
 
 
 
 ;;; Package: ivy-compile
 
 (use-package! ivy-compile
-			  ;; :if (and (not my-use-helm) (not noninteractive))
-			  :load-path doom-private-dir
+  ;; :if (and (not my-use-helm) (not noninteractive))
+  :load-path doom-private-dir
   :defer t
   :bind (("S-<f7>" . ivy-select-compile-command)
-		 ("<f7>"   . ivy-compile)))
+         ("<f7>"   . ivy-compile)))
 
 
 
@@ -591,29 +590,29 @@ behavior added."
 ;; This package allows interactive modification of color values.
 
 (defhydra hydra-kurecolor (:color pink :hint  nil)
-      "
+  "
 Dec/Inc      _j_/_J_ brightness      _k_/_K_ saturation      _l_/_L_ hue
 Set          _sj_ ^^ brightness      _sk_ ^^ saturation      _sl_ ^^ hue
 Get          _gj_ ^^ brightness      _gk_ ^^ saturation      _gl_ ^^ hue
 
 Convert      _ch_ ^^ RGB → Hex       _cr_ ^^ Hex → RGB       _cR_ ^^ Hex → RGBA
 "
-      ("j"  kurecolor-decrease-brightness-by-step)
-      ("J"  kurecolor-increase-brightness-by-step)
-      ("k"  kurecolor-decrease-saturation-by-step)
-      ("K"  kurecolor-increase-saturation-by-step)
-      ("l"  kurecolor-decrease-hue-by-step)
-      ("L"  kurecolor-increase-hue-by-step)
-      ("sj" kurecolor-set-brightness :color blue)
-      ("sk" kurecolor-set-saturation :color blue)
-      ("sl" kurecolor-set-hue :color blue)
-      ("gj" kurecolor-hex-val-group :color blue)
-      ("gk" kurecolor-hex-sat-group :color blue)
-      ("gl" kurecolor-hex-hue-group :color blue)
-      ("ch" kurecolor-cssrgb-at-point-or-region-to-hex :color blue)
-      ("cr" kurecolor-hexcolor-at-point-or-region-to-css-rgb :color blue)
-      ("cR" kurecolor-hexcolor-at-point-or-region-to-css-rgba :color blue)
-      ("q"  nil "cancel" :color blue))
+  ("j"  kurecolor-decrease-brightness-by-step)
+  ("J"  kurecolor-increase-brightness-by-step)
+  ("k"  kurecolor-decrease-saturation-by-step)
+  ("K"  kurecolor-increase-saturation-by-step)
+  ("l"  kurecolor-decrease-hue-by-step)
+  ("L"  kurecolor-increase-hue-by-step)
+  ("sj" kurecolor-set-brightness :color blue)
+  ("sk" kurecolor-set-saturation :color blue)
+  ("sl" kurecolor-set-hue :color blue)
+  ("gj" kurecolor-hex-val-group :color blue)
+  ("gk" kurecolor-hex-sat-group :color blue)
+  ("gl" kurecolor-hex-hue-group :color blue)
+  ("ch" kurecolor-cssrgb-at-point-or-region-to-hex :color blue)
+  ("cr" kurecolor-hexcolor-at-point-or-region-to-css-rgb :color blue)
+  ("cR" kurecolor-hexcolor-at-point-or-region-to-css-rgba :color blue)
+  ("q"  nil "cancel" :color blue))
 
 (defun my-kurecolor ()
   (interactive)
@@ -636,18 +635,18 @@ Convert      _ch_ ^^ RGB → Hex       _cr_ ^^ Hex → RGB       _cR_ ^^ Hex →
 
   ;; Switch repositories with magit-list-repositories
   (setq magit-repository-directories
-  		'(
-  		  ("~/d"      . 1)
-  		  ("~/src"    . 1)
-  		)))
+        '(
+          ("~/d"      . 1)
+          ("~/src"    . 1)
+          )))
 
 (after! git-commit
-    ;; Anything longer will be highlighted
+  ;; Anything longer will be highlighted
   (setq git-commit-summary-max-length 70))
 
 (map!
-  "M-g m" #'magit-status
-  "M-g M" #'magit-list-repositories)
+ "M-g m" #'magit-status
+ "M-g M" #'magit-list-repositories)
 
 
 
@@ -681,10 +680,10 @@ Convert      _ch_ ^^ RGB → Hex       _cr_ ^^ Hex → RGB       _cR_ ^^ Hex →
 
 (after! nswbuff
   (setq nswbuff-display-intermediate-buffers t
-		nswbuff-exclude-buffer-regexps '("^ .*" "^\\*.*\\*")))
+        nswbuff-exclude-buffer-regexps '("^ .*" "^\\*.*\\*")))
 
 (map! "S-<f5>" #'nswbuff-switch-to-previous-buffer
-	  "S-<f6>" #'nswbuff-switch-to-next-buffer)
+      "S-<f6>" #'nswbuff-switch-to-next-buffer)
 
 
 
@@ -694,8 +693,8 @@ Convert      _ch_ ^^ RGB → Hex       _cr_ ^^ Hex → RGB       _cR_ ^^ Hex →
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (after! org
-		(setq org-directory "~/org/")
-		)
+  (setq org-directory "~/org/")
+  )
 
 
 
@@ -727,7 +726,7 @@ Convert      _ch_ ^^ RGB → Hex       _cr_ ^^ Hex → RGB       _cR_ ^^ Hex →
 ;;; Package: ox-html
 
 (after! ox-html
-	  (setq org-html-postamble-format '(("en" "<p class=\"author\">Author: %a</p><p class=\"creator\">Created with %c</p>")))
+  (setq org-html-postamble-format '(("en" "<p class=\"author\">Author: %a</p><p class=\"creator\">Created with %c</p>")))
   (setq org-html-validation-link nil)
   (setq org-html-postamble nil)
   (setq org-html-style-default "<style type=\"text/css\">\n <!--/*--><![CDATA[/*><!--*/\n  body { text-align: center; font-family: \"Aria\", sans-serif; }\n  #content { margin: 0 auto; width: 860px; text-align: left; }\n  #text-table-of-contents > ul > li { margin-top: 1em; }\n  .title  { text-align: center; }\n  .todo   { color: red; }\n  .done   { color: green; }\n  .WAIT, .DELE   { color: blue; }\n  .done   { color: green; }\n  .tag    { background-color: #eee; font-family: monospace;\n            padding: 2px; font-size: 80%; font-weight: normal; }\n  .timestamp { color: #bebebe; }\n  .timestamp-kwd { color: #5f9ea0; }\n  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }\n  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }\n  .center { margin-left: auto; margin-right: auto; text-align: center; }\n  .underline { text-decoration: underline; }\n  #postamble p, #preamble p { font-size: 90%; margin: .2em; }\n  p.verse { margin-left: 3%; }\n  pre {\n    border: 1px solid #ccc;\n    box-shadow: 3px 3px 3px #eee;\n    padding: 8pt;\n    font-family: monospace;\n    overflow: auto;\n    margin: 1em 0;\n  }\n  pre.src {\n    position: relative;\n    overflow: visible;\n    padding-top: 8pt;\n  }\n  pre.src:before {\n    display: none;\n    position: absolute;\n    background-color: white;\n    top: -10px;\n    right: 10px;\n    padding: 3px;\n    border: 1px solid black;\n  }\n  pre.src:hover:before { display: inline;}\n  pre.src-sh:before    { content: 'sh'; }\n  pre.src-bash:before  { content: 'sh'; }\n  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }\n  pre.src-R:before     { content: 'R'; }\n  pre.src-perl:before  { content: 'Perl'; }\n  pre.src-java:before  { content: 'Java'; }\n  pre.src-sql:before   { content: 'SQL'; }\n\n  table { border-collapse:collapse; }\n  caption.t-above { caption-side: top; }\n  caption.t-bottom { caption-side: bottom; }\n  td, th { vertical-align:top;  }\n  th.right  { text-align: center;  }\n  th.left   { text-align: center;   }\n  th.center { text-align: center; }\n  td.right  { text-align: right;  }\n  td.left   { text-align: left;   }\n  td.center { text-align: center; }\n  dt { font-weight: bold; }\n  .footpara:nth-child(2) { display: inline; }\n  .footpara { display: block; }\n  .footdef  { margin-bottom: 1em; }\n  .figure { padding: 1em; }\n  .figure p { text-align: center; }\n  .inlinetask {\n    padding: 10px;\n    border: 2px solid gray;\n    margin: 10px;\n    background: #ffffcc;\n  }\n  #org-div-home-and-up\n   { text-align: right; font-size: 70%; white-space: nowrap; }\n  textarea { overflow-x: auto; }\n  .linenr { font-size: smaller }\n  .code-highlighted { background-color: #ffff00; }\n  .org-info-js_info-navigation { border-style: none; }\n  #org-info-js_console-label\n    { font-size: 10px; font-weight: bold; white-space: nowrap; }\n  .org-info-js_search-highlight\n    { background-color: #ffff00; color: #000000; font-weight: bold; }\n  .ulClassNameOrID > li {}\n  /*]]>*/-->\n</style>")
@@ -740,8 +739,8 @@ Convert      _ch_ ^^ RGB → Hex       _cr_ ^^ Hex → RGB       _cR_ ^^ Hex →
 ;;; Package: pdf-tools
 
 (after! pdf-tools
-	(defhydra hydra-pdftools (:color blue :hint nil)
-  	"
+  (defhydra hydra-pdftools (:color blue :hint nil)
+    "
                                                                       ╭───────────┐
        Move  History   Scale/Fit     Annotations  Search/Link    Do   │ PDF Tools │
    ╭──────────────────────────────────────────────────────────────────┴───────────╯
@@ -756,59 +755,59 @@ Convert      _ch_ ^^ RGB → Hex       _cr_ ^^ Hex → RGB       _cR_ ^^ Hex →
          ^^_G_^^
    --------------------------------------------------------------------------------
         "
-  	("\\" hydra-master/body "back")
-  	("<ESC>" nil "quit")
-  	("al" pdf-annot-list-annotations)
-  	("ad" pdf-annot-delete)
-  	("aa" pdf-annot-attachment-dired)
-  	("am" pdf-annot-add-markup-annotation)
-  	("at" pdf-annot-add-text-annotation)
-  	("y"  pdf-view-kill-ring-save)
-  	("+" pdf-view-enlarge :color red)
-  	("-" pdf-view-shrink :color red)
-  	("0" pdf-view-scale-reset)
-  	("H" pdf-view-fit-height-to-window)
-  	("W" pdf-view-fit-width-to-window)
-  	("P" pdf-view-fit-page-to-window)
-  	("n" pdf-view-next-page-command :color red)
-  	("p" pdf-view-previous-page-command :color red)
-  	("d" pdf-view-dark-minor-mode)
-  	("b" pdf-view-set-slice-from-bounding-box)
-  	("r" pdf-view-reset-slice)
-  	("g" pdf-view-first-page)
-  	("G" pdf-view-last-page)
-  	("e" pdf-view-goto-page)
-  	("o" pdf-outline)
-  	("s" pdf-occur)
-  	("i" pdf-misc-display-metadata)
-  	("u" pdf-view-revert-buffer)
-  	("F" pdf-links-action-perform)
-  	("f" pdf-links-isearch-link)
-  	("B" pdf-history-backward :color red)
-  	("N" pdf-history-forward :color red)
-  	("l" image-forward-hscroll :color red)
-  	("h" image-backward-hscroll :color red))
+    ("\\" hydra-master/body "back")
+    ("<ESC>" nil "quit")
+    ("al" pdf-annot-list-annotations)
+    ("ad" pdf-annot-delete)
+    ("aa" pdf-annot-attachment-dired)
+    ("am" pdf-annot-add-markup-annotation)
+    ("at" pdf-annot-add-text-annotation)
+    ("y"  pdf-view-kill-ring-save)
+    ("+" pdf-view-enlarge :color red)
+    ("-" pdf-view-shrink :color red)
+    ("0" pdf-view-scale-reset)
+    ("H" pdf-view-fit-height-to-window)
+    ("W" pdf-view-fit-width-to-window)
+    ("P" pdf-view-fit-page-to-window)
+    ("n" pdf-view-next-page-command :color red)
+    ("p" pdf-view-previous-page-command :color red)
+    ("d" pdf-view-dark-minor-mode)
+    ("b" pdf-view-set-slice-from-bounding-box)
+    ("r" pdf-view-reset-slice)
+    ("g" pdf-view-first-page)
+    ("G" pdf-view-last-page)
+    ("e" pdf-view-goto-page)
+    ("o" pdf-outline)
+    ("s" pdf-occur)
+    ("i" pdf-misc-display-metadata)
+    ("u" pdf-view-revert-buffer)
+    ("F" pdf-links-action-perform)
+    ("f" pdf-links-isearch-link)
+    ("B" pdf-history-backward :color red)
+    ("N" pdf-history-forward :color red)
+    ("l" image-forward-hscroll :color red)
+    ("h" image-backward-hscroll :color red))
 
-	(map! :map pdf-view-mode-map
-  		  "?"  #'hydra-pdftools/body
-  		  "g"  #'pdf-view-first-page
-  		  "G"  #'pdf-view-last-page
-  		  "l"  #'image-forward-hscroll
-  		  "h"  #'image-backward-hscroll
-  		  "j"  #'pdf-view-next-page
-  		  "k"  #'pdf-view-previous-page
-  		  "e"  #'pdf-view-goto-page
-  		  "u"  #'pdf-view-revert-buffer
-  		  "al" #'pdf-annot-list-annotations
-  		  "ad" #'pdf-annot-delete
-  		  "aa" #'pdf-annot-attachment-dired
-  		  "am" #'pdf-annot-add-markup-annotation
-  		  "at" #'pdf-annot-add-text-annotation
-  		  "y"  #'pdf-view-kill-ring-save
-  		  "i"  #'pdf-misc-display-metadata
-  		  "s"  #'pdf-occur
-  		  "b"  #'pdf-view-set-slice-from-bounding-box
-  		  "r"  #'pdf-view-reset-slice))
+  (map! :map pdf-view-mode-map
+        "?"  #'hydra-pdftools/body
+        "g"  #'pdf-view-first-page
+        "G"  #'pdf-view-last-page
+        "l"  #'image-forward-hscroll
+        "h"  #'image-backward-hscroll
+        "j"  #'pdf-view-next-page
+        "k"  #'pdf-view-previous-page
+        "e"  #'pdf-view-goto-page
+        "u"  #'pdf-view-revert-buffer
+        "al" #'pdf-annot-list-annotations
+        "ad" #'pdf-annot-delete
+        "aa" #'pdf-annot-attachment-dired
+        "am" #'pdf-annot-add-markup-annotation
+        "at" #'pdf-annot-add-text-annotation
+        "y"  #'pdf-view-kill-ring-save
+        "i"  #'pdf-misc-display-metadata
+        "s"  #'pdf-occur
+        "b"  #'pdf-view-set-slice-from-bounding-box
+        "r"  #'pdf-view-reset-slice))
 
 
 
@@ -825,7 +824,7 @@ Convert      _ch_ ^^ RGB → Hex       _cr_ ^^ Hex → RGB       _cR_ ^^ Hex →
 (defun my-hide-trailing-whitespace ()
   "Hide trailing whitespace."
   (interactive)
-    (setq show-trailing-whitespace nil))
+  (setq show-trailing-whitespace nil))
 (add-hook 'prog-mode-hook #'my-show-trailing-whitespace)
 
 
@@ -834,17 +833,17 @@ Convert      _ch_ ^^ RGB → Hex       _cr_ ^^ Hex → RGB       _cR_ ^^ Hex →
 ;;; Package: recentf
 
 (after! recentf
-  (setq	recentf-exclude '("^/tmp/"
-						  "/\\.newsrc"
-						  ".*CMakeFiles.*"
-						  "bbdb$"
-						  "svn-commit\\.tmp$"
-						  ".*-autoloads\\.el\\'"
-						  "\\.png$"
-						  "COMMIT_EDITMSG" "COMMIT_EDITMSG" "TAG_EDITMSG")
-		recentf-max-saved-items 1000
-		recentf-auto-cleanup 300
-		recentf-max-menu-items 20))
+  (setq   recentf-exclude '("^/tmp/"
+                            "/\\.newsrc"
+                            ".*CMakeFiles.*"
+                            "bbdb$"
+                            "svn-commit\\.tmp$"
+                            ".*-autoloads\\.el\\'"
+                            "\\.png$"
+                            "COMMIT_EDITMSG" "COMMIT_EDITMSG" "TAG_EDITMSG")
+          recentf-max-saved-items 1000
+          recentf-auto-cleanup 300
+          recentf-max-menu-items 20))
 
 
 
@@ -869,17 +868,17 @@ Convert      _ch_ ^^ RGB → Hex       _cr_ ^^ Hex → RGB       _cR_ ^^ Hex →
 
 (map! "C-x I" #'insert-buffer
 
-	  "M-SPC" #'cycle-spacing   ;; was: just-one-space
+      "M-SPC" #'cycle-spacing   ;; was: just-one-space
 
-	  "M-c" #'capitalize-dwim
-	  "M-l" #'downcase-dwim
-	  "M-u" #'upcase-dwim
+      "M-c" #'capitalize-dwim
+      "M-l" #'downcase-dwim
+      "M-u" #'upcase-dwim
 
-	  "M-o" #'delete-blank-lines	; opposite of C-o
+      "M-o" #'delete-blank-lines  ; opposite of C-o
 
-	  ;; Error navigation
-	  "<f8>"   #'next-error
-	  "S-<f8>"  #'previous-error)
+      ;; Error navigation
+      "<f8>"   #'next-error
+      "S-<f8>"  #'previous-error)
 
 
 
@@ -888,15 +887,15 @@ Convert      _ch_ ^^ RGB → Hex       _cr_ ^^ Hex → RGB       _cR_ ^^ Hex →
 
 (after! sh-script
   (defun my-sh-mode-setup ()
-	(interactive)
-	(setq-local indent-tabs-mode t)
-	(setq tab-width 4)
+    (interactive)
+    (setq-local indent-tabs-mode t)
+    (setq tab-width 4)
 
-	;; Tab positions for M-i
-	(setq tab-stop-list '(4 8 12 16 20 24 28 32 36 40 44 48 52 56 60 64 68 72 76 80 84))
+    ;; Tab positions for M-i
+    (setq tab-stop-list '(4 8 12 16 20 24 28 32 36 40 44 48 52 56 60 64 68 72 76 80 84))
 
-	;; (setq smie-config--buffer-local '((4 :after "{" 4)))
-	)
+    ;; (setq smie-config--buffer-local '((4 :after "{" 4)))
+    )
 
   (add-hook 'sh-mode-hook  #'my-sh-mode-setup))
 
@@ -938,10 +937,10 @@ Convert      _ch_ ^^ RGB → Hex       _cr_ ^^ Hex → RGB       _cR_ ^^ Hex →
 ;; https://github.com/wolray/symbol-overlay
 
 (map! "M-p"      #'symbol-overlay-jump-prev
-	  "M-n"      #'symbol-overlay-jump-next
-	  "M-<up>"   #'symbol-overlay-jump-prev
-	  "M-<down>" #'symbol-overlay-jump-next
-	  )
+      "M-n"      #'symbol-overlay-jump-next
+      "M-<up>"   #'symbol-overlay-jump-prev
+      "M-<down>" #'symbol-overlay-jump-next
+      )
 
 
 
@@ -990,26 +989,26 @@ Convert      _ch_ ^^ RGB → Hex       _cr_ ^^ Hex → RGB       _cR_ ^^ Hex →
 ;;; Package: whitespace
 
 (after! whitespace
-	(setq-default whitespace-style '(
-		;; Original values with some uncommented:
-		face
-		tabs
-		spaces
-		trailing
-		lines
-		space-before-tab
-		newline
-		indentation
-		empty
-		space-after-tab
-		space-mark
-		tab-mark
-		;; newline-mark
+  (setq-default whitespace-style '(
+                                   ;; Original values with some uncommented:
+                                   face
+                                   tabs
+                                   spaces
+                                   trailing
+                                   lines
+                                   space-before-tab
+                                   newline
+                                   indentation
+                                   empty
+                                   space-after-tab
+                                   space-mark
+                                   tab-mark
+                                   ;; newline-mark
 
-		;; Additional values:
-		lines-tail
-		empty
-		)))
+                                   ;; Additional values:
+                                   lines-tail
+                                   empty
+                                   )))
 
 (map! "C-x w" #'whitespace-mode)
 
