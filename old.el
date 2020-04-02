@@ -91,11 +91,11 @@
 (defadvice delete-window (around delete-window (&optional window) activate)
   (interactive)
   (save-current-buffer
-	(setq window (or window (selected-window)))
-	(select-window window)
-	(if (one-window-p t)
-	(delete-frame)
-	  ad-do-it (selected-window))))
+  (setq window (or window (selected-window)))
+  (select-window window)
+  (if (one-window-p t)
+  (delete-frame)
+    ad-do-it (selected-window))))
 
 
 
@@ -116,7 +116,7 @@ there are several windows open."
   (interactive)
   (setq buffer (or buffer (current-buffer)))
   (unless (one-window-p)
-	(delete-window))
+  (delete-window))
   (kill-buffer buffer))
 
 (bind-key "C-x k" 'my--kill-buffer-and-window)
@@ -130,39 +130,39 @@ there are several windows open."
 
 (defun my-zoom-next-buffer2 ()
   (let ((curbuf (current-buffer))
-	(firstbuf nil))
-	(dolist (buffer (buffer-list))
-	  (with-current-buffer buffer
-	;(princ (format "name %s, fn %s\n" (buffer-name) buffer-file-name))
-	(unless (or
-		 ;; Don't mention internal buffers.
-		 (string= (substring (buffer-name) 0 1) " ")
-		 ;; No buffers without files.
-		 (not buffer-file-name)
-		 ;; Skip the current buffer
-		 (eq buffer curbuf)
-		 )
-	  ;(princ (format " nme %s, fn %s\n" (buffer-name) buffer-file-name))
-	  (unless firstbuf
-		(setq firstbuf buffer))
-		;;(print buffer)
-	  )))
-	(when firstbuf
-	  ;(princ (format "new buffer: %s.\n" firstbuf))
-	  (bury-buffer)
-	  (switch-to-buffer firstbuf))))
+  (firstbuf nil))
+  (dolist (buffer (buffer-list))
+    (with-current-buffer buffer
+  ;(princ (format "name %s, fn %s\n" (buffer-name) buffer-file-name))
+  (unless (or
+     ;; Don't mention internal buffers.
+     (string= (substring (buffer-name) 0 1) " ")
+     ;; No buffers without files.
+     (not buffer-file-name)
+     ;; Skip the current buffer
+     (eq buffer curbuf)
+     )
+    ;(princ (format " nme %s, fn %s\n" (buffer-name) buffer-file-name))
+    (unless firstbuf
+    (setq firstbuf buffer))
+    ;;(print buffer)
+    )))
+  (when firstbuf
+    ;(princ (format "new buffer: %s.\n" firstbuf))
+    (bury-buffer)
+    (switch-to-buffer firstbuf))))
 
 (defun my-explode-window ()
   "If there is only one window displayed, act like C-x2. If there
 are two windows displayed, act like C-x1:"
   (interactive)
   (if (one-window-p t)
-	  (progn
-	(split-window-vertically)
-	(other-window 1)
-	(my-zoom-next-buffer2)
-	(other-window -1))
-	(delete-other-windows)))
+    (progn
+  (split-window-vertically)
+  (other-window 1)
+  (my-zoom-next-buffer2)
+  (other-window -1))
+  (delete-other-windows)))
 
 (bind-key "<f5>" 'my-explode-window)
 
@@ -180,8 +180,8 @@ are two windows displayed, act like C-x1:"
 If there are two windows displayed, act like \"C-x o\"."
   (interactive)
   (if (one-window-p t)
-	  (switch-to-buffer (other-buffer (current-buffer) 1))
-	(other-window -1)))
+    (switch-to-buffer (other-buffer (current-buffer) 1))
+  (other-window -1)))
 
 (bind-key "<f6>" 'my-switch-to-buffer)
 
@@ -208,23 +208,23 @@ sequence."
 
   ;; Build incrementation part
   (setq max (cond ((null max) '(setq seq-times (1+ seq-times)))
-		  ((atom max) (if (and (integerp max) (> max 0))
-				  `(setq seq-times (% (1+ seq-times) ,max))
-				'(setq seq-times (1+ seq-times))))
-		  (t          `(let ((max ,max))
-				 (if (and (integerp max) (> max 0))
-					 (setq seq-times (% (1+ seq-times) max))
-				   (setq seq-times (1+ seq-times)))))))
+      ((atom max) (if (and (integerp max) (> max 0))
+          `(setq seq-times (% (1+ seq-times) ,max))
+        '(setq seq-times (1+ seq-times))))
+      (t          `(let ((max ,max))
+         (if (and (integerp max) (> max 0))
+           (setq seq-times (% (1+ seq-times) max))
+           (setq seq-times (1+ seq-times)))))))
 
   ;; Make macro
   (if (eq name 'last-command)
-	  max
-	(cond ((null  name) (setq name 'this-command))
-	  ((consp name) (setq name `(or ,name this-command))))
-	`(if (eq last-command ,name)
-	 ,max
-	   ,@body
-	   (setq seq-times 0))))
+    max
+  (cond ((null  name) (setq name 'this-command))
+    ((consp name) (setq name `(or ,name this-command))))
+  `(if (eq last-command ,name)
+   ,max
+     ,@body
+     (setq seq-times 0))))
 
 (defmacro seq-times-nth (name body &rest list)
   "Calls `seq-times' with arguments NAME, length and BODY
@@ -256,11 +256,11 @@ command from COMMANDS."
    - back to where it was"
   (interactive)
   (seq-times-do nil (setq my--previous-position (point))
-	(back-to-indentation)
-	(beginning-of-line)
-	(beginning-of-defun)
-	(goto-char (point-min))
-	(goto-char my--previous-position)))
+  (back-to-indentation)
+  (beginning-of-line)
+  (beginning-of-defun)
+  (goto-char (point-min))
+  (goto-char my--previous-position)))
 
 (bind-key "C-a" 'my-home)
 (bind-key "<home>" 'my-home)
@@ -274,11 +274,11 @@ command from COMMANDS."
    - back to where it was"
   (interactive)
   (seq-times-do nil (setq my--previous-position (point))
-	(end-of-line)
-	(forward-paragraph)
-	(end-of-defun)
-	(goto-char (point-max))
-	(goto-char my--previous-position)))
+  (end-of-line)
+  (forward-paragraph)
+  (end-of-defun)
+  (goto-char (point-max))
+  (goto-char my--previous-position)))
 
 (bind-key "C-e" 'my-end)
 (bind-key "<end>" 'my-end)
@@ -333,14 +333,14 @@ command from COMMANDS."
 ;; Sample ~/.Xresources:
 
 ;; Emacs.geometry: 120x55
-;; Emacs.Font:	terminus 11
+;; Emacs.Font:  terminus 11
 
 (defun merge-x-resources ()
   (let ((file (file-name-nondirectory (buffer-file-name))))
-	(when (or (string= file ".Xdefaults")
-		  (string= file ".Xresources"))
-	  (start-process "xrdb" nil "xrdb" "-merge" (buffer-file-name))
-	  (message (format "Merged %s into X resource database" file)))))
+  (when (or (string= file ".Xdefaults")
+      (string= file ".Xresources"))
+    (start-process "xrdb" nil "xrdb" "-merge" (buffer-file-name))
+    (message (format "Merged %s into X resource database" file)))))
 (add-hook 'after-save-hook 'merge-x-resources)
 
 
@@ -362,20 +362,20 @@ negative prefix argument, just echo the result in the
 minibuffer."
   (interactive "p")
   (let (start end)
-	(if (use-region-p)
-	(setq start (region-beginning) end (region-end))
-	  (progn
-	(setq end (point))
-	(setq start (search-backward-regexp "\\s-\\|\n" 0 1))
-	(setq start (1+ (if start start 0)))
-	(goto-char end)))
-	(let ((value (calc-eval (buffer-substring-no-properties start end))))
-	  (pcase arg
-	(1 (delete-region start end))
-	(4 (insert " = ")))
-	  (pcase arg
-	((or 1 4) (insert value))
-	(-1 (message value))))))
+  (if (use-region-p)
+  (setq start (region-beginning) end (region-end))
+    (progn
+  (setq end (point))
+  (setq start (search-backward-regexp "\\s-\\|\n" 0 1))
+  (setq start (1+ (if start start 0)))
+  (goto-char end)))
+  (let ((value (calc-eval (buffer-substring-no-properties start end))))
+    (pcase arg
+  (1 (delete-region start end))
+  (4 (insert " = ")))
+    (pcase arg
+  ((or 1 4) (insert value))
+  (-1 (message value))))))
 (bind-key "C-=" #'calc-region)
 
 
@@ -412,9 +412,9 @@ minibuffer."
 
   :init
   (defun my-byte-compile ()
-	"Byte-compile an .el file, if it's is in the `user-emacs-directory'."
-	(interactive)
-	(when (and (string= (file-name-directory (buffer-file-name)) (expand-file-name user-emacs-directory))
+  "Byte-compile an .el file, if it's is in the `user-emacs-directory'."
+  (interactive)
+  (when (and (string= (file-name-directory (buffer-file-name)) (expand-file-name user-emacs-directory))
                (string= (file-name-extension (buffer-file-name)) "el"))
       (byte-compile-file (buffer-file-name) nil)))
 
@@ -427,7 +427,7 @@ minibuffer."
 (use-package cc-mode
   ;; open *.h files normally in c++ mode
   :mode (("\\.h\\(h?\\|xx\\|pp\\)\\'" . c++-mode)
-	 ("\\.inl\\'"                 . c++-mode))
+   ("\\.inl\\'"                 . c++-mode))
 
   :config
 
@@ -442,7 +442,7 @@ minibuffer."
 
   ;; Tab behavior
   (setq c-tab-always-indent nil  ;; insert real tab
-	c-insert-tab-function 'indent-for-tab-command)
+  c-insert-tab-function 'indent-for-tab-command)
 
   ;; for C and C++ files
   (defun my-c-mode-common-setup ()
@@ -452,22 +452,22 @@ minibuffer."
   (defun my-c-mode-setup ()
     ;; need to check the mode because I run this also at the revert hook!
     (when (derived-mode-p 'c++-mode 'c-mode)
-	  (yas-minor-mode-on)
-	  (set (make-local-variable 'company-backends)
+    (yas-minor-mode-on)
+    (set (make-local-variable 'company-backends)
            '((company-yasnippet
-			  company-lsp
-			  company-files
-			  ;; company-dabbrev-code
-			  )))
+        company-lsp
+        company-files
+        ;; company-dabbrev-code
+        )))
       (if (and buffer-file-name (string-match "/linux" buffer-file-name))
-		  ;; only for Linux C files
-		  (progn (c-set-style "linux-tabs-only")
-				 (setq tab-width 8
-					   c-basic-offset 8))
-		(progn
-		  (c-set-style "linux")
-		  (setq tab-width 4
-				c-basic-offset 4)))))
+      ;; only for Linux C files
+      (progn (c-set-style "linux-tabs-only")
+         (setq tab-width 8
+             c-basic-offset 8))
+    (progn
+      (c-set-style "linux")
+      (setq tab-width 4
+        c-basic-offset 4)))))
   (add-hook 'c-mode-hook 'my-c-mode-setup)
   (add-hook 'c++-mode-hook 'my-c-mode-setup)
   (add-hook 'after-revert-hook 'my-c-mode-setup))
@@ -479,8 +479,8 @@ minibuffer."
   :defer t
   :config
   (setq c-default-style '((java-mode . "java")
-						  (awk-mode . "awk")
-						  (other . "linux"))))
+              (awk-mode . "awk")
+              (other . "linux"))))
 
 
 ;;; Builtin package: cc-styles
@@ -490,9 +490,9 @@ minibuffer."
   :config
   ;; Default style
   (c-add-style "linux-tabs-only"
-	       '("linux" (c-offsets-alist (arglist-cont-nonempty
-					   c-lineup-gcc-asm-reg
-					   c-lineup-arglist-tabs-only)))))
+         '("linux" (c-offsets-alist (arglist-cont-nonempty
+             c-lineup-gcc-asm-reg
+             c-lineup-arglist-tabs-only)))))
 
 
 ;;; Builtin package: comint
@@ -500,11 +500,11 @@ minibuffer."
 (use-package comint
   :if (not noninteractive)
   :bind (:map comint-mode-map
-			  ("<down>" . comint-next-input)
-			  ("<up>"   . comint-previous-input)
-			  ("C-n"    . comint-next-input)
-			  ("C-p"    . comint-previous-input)
-			  ("C-r"    . comint-history-isearch-backward))
+        ("<down>" . comint-next-input)
+        ("<up>"   . comint-previous-input)
+        ("C-n"    . comint-next-input)
+        ("C-p"    . comint-previous-input)
+        ("C-r"    . comint-history-isearch-backward))
 
   :config
   ;; Make the prompt readonly
@@ -523,17 +523,17 @@ minibuffer."
   :defines (eshell-visual-commands)
   :config
   (defun eshell/clear ()
-	"Deletes the contents of eshell buffer, except the last prompt"
-	(save-excursion
-	  (goto-char eshell-last-output-end)
-	  (let ((lines (count-lines 1 (point)))
-		(inhibit-read-only t))
-	(beginning-of-line)
-	(let ((pos (point)))
-	  (if (bobp)
-		  (if (called-interactively-p 'interactive)
-			  (error "Buffer too short to truncate"))
-		(delete-region (point-min) (point)))))))
+  "Deletes the contents of eshell buffer, except the last prompt"
+  (save-excursion
+    (goto-char eshell-last-output-end)
+    (let ((lines (count-lines 1 (point)))
+    (inhibit-read-only t))
+  (beginning-of-line)
+  (let ((pos (point)))
+    (if (bobp)
+      (if (called-interactively-p 'interactive)
+        (error "Buffer too short to truncate"))
+    (delete-region (point-min) (point)))))))
 
   ;; If I ever want my own eshell/foo commands overwrite real commands ...
   (setq eshell-prefer-lisp-functions t)
@@ -542,14 +542,14 @@ minibuffer."
   ;; eshell-visual-commands
 
   (defun my--eshell-hook ()
-	(eshell-read-aliases-list)
-	(setq global-hl-line-mode nil)
-	(setq show-trailing-whitespace nil)
-	(add-to-list 'eshell-visual-commands "ssh")
-	(add-to-list 'eshell-visual-commands "htop")
-	(add-to-list 'eshell-visual-commands "ncmpcpp")
-	(add-to-list 'eshell-visual-commands "tail")
-	(eshell/addpath "~/bin"))
+  (eshell-read-aliases-list)
+  (setq global-hl-line-mode nil)
+  (setq show-trailing-whitespace nil)
+  (add-to-list 'eshell-visual-commands "ssh")
+  (add-to-list 'eshell-visual-commands "htop")
+  (add-to-list 'eshell-visual-commands "ncmpcpp")
+  (add-to-list 'eshell-visual-commands "tail")
+  (eshell/addpath "~/bin"))
   (add-hook 'eshell-mode-hook 'my--eshell-hook)
 
   ;; If I ever want my own eshell/foo commands overwrite real commands ...
@@ -587,7 +587,7 @@ minibuffer."
 ;; (defun my-flyspell-prog-mode ()
 ;;   (interactive)
 ;;   (unless (string= (buffer-name) "*scratch*")
-;; 	(flyspell-prog-mode)))
+;;    (flyspell-prog-mode)))
 ;; (when (eq system-type 'gnu/linux)
 ;;   (add-hook 'prog-mode-hook  #'my-flyspell-prog-mode)
 ;;   (add-hook 'text-mode-hook  #'flyspell-mode)
@@ -601,7 +601,7 @@ minibuffer."
 (use-package help-mode
   ;; Make 'b' (back) go to the previous position in emacs help.
   :bind (:map help-mode-map
-			  ("b" . help-go-back)))
+        ("b" . help-go-back)))
 
 
 ;;; Builtin package: message
@@ -622,49 +622,49 @@ minibuffer."
 
   ;; When I reply, I don't want to have me in To or Cc
   (setq message-dont-reply-to-names (concat "\\("
-											user-mail-address
-											;; Nor the Debian BTS
-											;; "\\|^submit@bugs.debian\\.org$"
-											"\\)"))
+                      user-mail-address
+                      ;; Nor the Debian BTS
+                      ;; "\\|^submit@bugs.debian\\.org$"
+                      "\\)"))
 
   ;; based on http://mbork.pl/2016-02-06_An_attachment_reminder_in_mu4e
   (defun my-message-attachment-present-p ()
-	"Return t if an attachment is found in the current message."
-	(save-excursion
-	  (save-restriction
-		(widen)
-		(goto-char (point-min))
-		(when (search-forward "<#part" nil t) t))))
+  "Return t if an attachment is found in the current message."
+  (save-excursion
+    (save-restriction
+    (widen)
+    (goto-char (point-min))
+    (when (search-forward "<#part" nil t) t))))
 
   (defvar my-message-attachment-intent-re
-	(regexp-opt '("I attach"
-				  "I have attached"
-				  "I've attached"
-				  "I have included"
-				  "I've included"
-				  "see the attached"
-				  "see the attachment"
-				  "attached file"))
-	"A regex which - if found in the message, and if there is no
+  (regexp-opt '("I attach"
+          "I have attached"
+          "I've attached"
+          "I have included"
+          "I've included"
+          "see the attached"
+          "see the attachment"
+          "attached file"))
+  "A regex which - if found in the message, and if there is no
 attachment - should launch the no-attachment warning.")
 
   (defvar my-message-attachment-reminder
-	"Are you sure you want to send this message without any attachment? "
-	"The default question asked when trying to send a message
+  "Are you sure you want to send this message without any attachment? "
+  "The default question asked when trying to send a message
 containing `my-message-attachment-intent-re' without an
 actual attachment.")
 
   (defun my-message-warn-if-no-attachments ()
-	"Ask the user if s?he wants to send the message even though
+  "Ask the user if s?he wants to send the message even though
 there are no attachments."
-	(when (and (save-excursion
-				 (save-restriction
-				   (widen)
-				   (goto-char (point-min))
-				   (re-search-forward my-message-attachment-intent-re nil t)))
-			   (not (my-message-attachment-present-p)))
-	  (unless (y-or-n-p my-message-attachment-reminder)
-		(keyboard-quit))))
+  (when (and (save-excursion
+         (save-restriction
+           (widen)
+           (goto-char (point-min))
+           (re-search-forward my-message-attachment-intent-re nil t)))
+         (not (my-message-attachment-present-p)))
+    (unless (y-or-n-p my-message-attachment-reminder)
+    (keyboard-quit))))
 
   (add-hook 'message-send-hook #'my-message-warn-if-no-attachments))
 
@@ -676,8 +676,8 @@ there are no attachments."
   :config
   ;; Displaying zip/tar inline is a really, really stupid default!
   (setq mm-inlined-types
-		(cl-remove-if (apply-partially #'string-match-p "\\(x-g?tar\\|zip\\)")
-					  mm-inlined-types)))
+    (cl-remove-if (apply-partially #'string-match-p "\\(x-g?tar\\|zip\\)")
+            mm-inlined-types)))
 
 
 ;;; Builtin package: mwheel - mouse scrolling
@@ -714,11 +714,11 @@ there are no attachments."
  indentation rules."
    (interactive "r")
    (save-excursion
-	 (nxml-mode)
-	 (goto-char begin)
-	 (while (search-forward-regexp "\>[ \\t]*\<" nil t)
-	   (backward-char) (insert "\n"))
-	 (indent-region begin end))))
+   (nxml-mode)
+   (goto-char begin)
+   (while (search-forward-regexp "\>[ \\t]*\<" nil t)
+     (backward-char) (insert "\n"))
+   (indent-region begin end))))
 
 
 ;;; Builtin package: octave-mode: mayor-mode for GNU Octave
@@ -733,10 +733,10 @@ there are no attachments."
   :commands (project-current)
   :init
   (defun my-project-based-on-git (dir)
-	"Find project root based on .git:"
-	(message (concat "DIR " dir))
-	(let ((root (locate-dominating-file dir ".git")))
-	  (and root (cons 'transient root))))
+  "Find project root based on .git:"
+  (message (concat "DIR " dir))
+  (let ((root (locate-dominating-file dir ".git")))
+    (and root (cons 'transient root))))
   ;; test it: (project-current)
 
   :config
@@ -750,13 +750,13 @@ there are no attachments."
   :defer t
   :config
   (defun my-python-setup ()
-	(interactive)
-	(setq indent-tabs-mode t
-		  python-indent-offset 4
-		  tab-width 4
-		  ;; this fixes the weird indentation when entering a colon
-		  ;; from http://emacs.stackexchange.com/questions/3322/python-auto-indent-problem
-		  electric-indent-chars (delq ?: electric-indent-chars)))
+  (interactive)
+  (setq indent-tabs-mode t
+      python-indent-offset 4
+      tab-width 4
+      ;; this fixes the weird indentation when entering a colon
+      ;; from http://emacs.stackexchange.com/questions/3322/python-auto-indent-problem
+      electric-indent-chars (delq ?: electric-indent-chars)))
   (add-hook 'python-mode-hook 'my-python-setup))
 
 
@@ -780,17 +780,17 @@ there are no attachments."
   :commands (recentf-mode)
   :config
   (setq recentf-save-file (locate-user-emacs-file "tmp/recentf.el")
-		recentf-exclude '("^/tmp/"
-						  "/\\.newsrc"
-						  ".*CMakeFiles.*"
-						  "bbdb$"
-						  "svn-commit\\.tmp$"
-						  ".*-autoloads\\.el\\'"
-						  "\\.png$"
-						  "COMMIT_EDITMSG" "COMMIT_EDITMSG" "TAG_EDITMSG")
-		recentf-max-saved-items 1000
-		recentf-auto-cleanup 300
-		recentf-max-menu-items 20)
+    recentf-exclude '("^/tmp/"
+              "/\\.newsrc"
+              ".*CMakeFiles.*"
+              "bbdb$"
+              "svn-commit\\.tmp$"
+              ".*-autoloads\\.el\\'"
+              "\\.png$"
+              "COMMIT_EDITMSG" "COMMIT_EDITMSG" "TAG_EDITMSG")
+    recentf-max-saved-items 1000
+    recentf-auto-cleanup 300
+    recentf-max-menu-items 20)
   (recentf-mode 1))
 
 
@@ -802,8 +802,8 @@ there are no attachments."
   :config
 
   (setq send-mail-function 'sendmail-send-it
-		sendmail-program "/usr/bin/msmtp"
-		mail-specify-envelope-from t))
+    sendmail-program "/usr/bin/msmtp"
+    mail-specify-envelope-from t))
 
 
 ;;; Builtin package: shr - Simple HTML Renderer, used by elfeed)
@@ -823,44 +823,44 @@ there are no attachments."
 (use-package term
   :bind ("M-g s" . ansi-shell)
   :commands (ansi-term ansi-shell
-					   term-in-line-mode
-					   term-line-mode
-					   term-char-mode)
+             term-in-line-mode
+             term-line-mode
+             term-char-mode)
   :defines (term-buffer-maximum-size
-			show-dir-in-mode-line?)
+      show-dir-in-mode-line?)
   :init
   (defun ansi-shell ()
-	"Start ansi-term with bash"
-	(interactive)
-	(ansi-term "/bin/bash"))
+  "Start ansi-term with bash"
+  (interactive)
+  (ansi-term "/bin/bash"))
 
   :config
   ;; don't linger around when closing
   (defadvice term-sentinel (around my-advice-term-sentinel (proc msg))
-	(if (memq (process-status proc) '(signal exit))
-		(let ((buffer (process-buffer proc)))
-		  ad-do-it
-		  (kill-buffer buffer))
-	  ad-do-it))
+  (if (memq (process-status proc) '(signal exit))
+    (let ((buffer (process-buffer proc)))
+      ad-do-it
+      (kill-buffer buffer))
+    ad-do-it))
   (ad-activate 'term-sentinel)
 
   (defun term-toggle-mode ()
-	(interactive)
-	(if (term-in-line-mode)
-		(term-char-mode)
-	  (term-line-mode)))
+  (interactive)
+  (if (term-in-line-mode)
+    (term-char-mode)
+    (term-line-mode)))
 
   (defun my-term-hook ()
-	(goto-address-mode)
-	;; (bind-key "C-c C-j" #'term-toggle-mode term-mode-map)
-	;; (bind-key "C-c C-k" #'term-toggle-mode term-mode-map)
-	(setq global-hl-line-mode nil)
-	(setq term-buffer-maximum-size 10000)
-	(setq-local show-dir-in-mode-line? t) ;; also mode linec'
-	(setq show-trailing-whitespace nil)
-	;; disable company in favor of shell completion
-	;;(company-mode -1)
-	)
+  (goto-address-mode)
+  ;; (bind-key "C-c C-j" #'term-toggle-mode term-mode-map)
+  ;; (bind-key "C-c C-k" #'term-toggle-mode term-mode-map)
+  (setq global-hl-line-mode nil)
+  (setq term-buffer-maximum-size 10000)
+  (setq-local show-dir-in-mode-line? t) ;; also mode linec'
+  (setq show-trailing-whitespace nil)
+  ;; disable company in favor of shell completion
+  ;;(company-mode -1)
+  )
   (add-hook 'term-mode-hook 'my-term-hook))
 
 
@@ -878,9 +878,9 @@ there are no attachments."
   :defer t
   :config
   (setq display-time-world-time-format "%d.%m %R %Z"
-		display-time-world-list '(("Europe/Berlin" "Frankfurt")
-								  ("US/Arizona"    "Tucson")
-								  ("Asia/Taipei"   "Taiwan"))))
+    display-time-world-list '(("Europe/Berlin" "Frankfurt")
+                  ("US/Arizona"    "Tucson")
+                  ("Asia/Taipei"   "Taiwan"))))
 
 
 ;;; Package: auto-compile - compile saving
@@ -911,7 +911,7 @@ there are no attachments."
 
   :config
   (setq avy-keys (append (number-sequence ?a ?z)
-						 (number-sequence ?0 ?9)))
+             (number-sequence ?0 ?9)))
   (setq avy-style 'at-full)
   (setq avy-all-windows nil)
   (setq avy-highlight-first t))
@@ -926,7 +926,7 @@ there are no attachments."
 (use-package avy-zap
   :straight t
   :bind (("M-z" . avy-zap-up-to-char-dwim)
-		 ("M-Z" . avy-zap-to-char-dwim)))
+     ("M-Z" . avy-zap-to-char-dwim)))
 
 
 ;;; Package: bind-key
@@ -946,7 +946,7 @@ there are no attachments."
 
   :config
   (setq browse-url-browser-function 'browse-url-generic
-		browse-url-generic-program "x-www-browser"))
+    browse-url-generic-program "x-www-browser"))
 
 
 ;;; Package: column-marker
@@ -956,8 +956,8 @@ there are no attachments."
   :commands (column-marker-1 column-marker-2)
   :init
   (defun my--column-marker-at-80 ()
-	(interactive)
-	(column-marker-2 80))
+  (interactive)
+  (column-marker-2 80))
   (add-hook 'c-mode-hook 'my--column-marker-at-80))
 
 
@@ -978,22 +978,22 @@ there are no attachments."
   :diminish t
 
   :bind (("C-ä" . company-complete)
-		 :map company-active-map
-		 ("<tab>"      . company-complete-common-or-cycle)
-		 :map company-mode-map
-		 ("C-M-i"      . company-complete-common-or-cycle)
-		 :map company-active-map
-		 ("ESC"        . company-abort)
-		 ("C-g"        . company-abort)
-		 ("<backtab>"  . company-complete-common-or-cycle-backward)
-		 ("C-s"        . company-filter-candidates)
-		 )
+     :map company-active-map
+     ("<tab>"      . company-complete-common-or-cycle)
+     :map company-mode-map
+     ("C-M-i"      . company-complete-common-or-cycle)
+     :map company-active-map
+     ("ESC"        . company-abort)
+     ("C-g"        . company-abort)
+     ("<backtab>"  . company-complete-common-or-cycle-backward)
+     ("C-s"        . company-filter-candidates)
+     )
 
   :preface
   (defun my-company-complete ()
-	(interactive)
-  	(company-mode-on)
-  	(company-complete-common-or-cycle))
+  (interactive)
+    (company-mode-on)
+    (company-complete-common-or-cycle))
 
   :init
   ;; This variable is used in indent-for-tab-command and calls and calls out to completion-at-point
@@ -1015,24 +1015,24 @@ there are no attachments."
   (setq company-show-numbers t)
 
   (setq company-backends '(;; company-bbdb
-						   company-nxml
-						   company-css
-						   ;; company-elisp       ; now done via company-capf
-						   ;; company-eclim
-						   ;; company-semantic    ; CEDET semantic completion
-						   ;; company-clang
-						   ;; company-xcode
-						   ;; company-cmake
-						   company-capf           ; hook into completion-at-point-functions
-						   company-files          ; files and directories
-						   (company-dabbrev-code  ; all symbols of current buffer that aren't strings/code
-							;; company-gtags      ; tags from GNU global
-							company-etags         ; tags from etags
-							company-keywords      ; programming language keywords
-							)
-						   ;; company-oddmuse     ; seldom used wiki
-						   company-dabbrev        ; all string of buffer
-						   )))
+               company-nxml
+               company-css
+               ;; company-elisp       ; now done via company-capf
+               ;; company-eclim
+               ;; company-semantic    ; CEDET semantic completion
+               ;; company-clang
+               ;; company-xcode
+               ;; company-cmake
+               company-capf           ; hook into completion-at-point-functions
+               company-files          ; files and directories
+               (company-dabbrev-code  ; all symbols of current buffer that aren't strings/code
+              ;; company-gtags      ; tags from GNU global
+              company-etags         ; tags from etags
+              company-keywords      ; programming language keywords
+              )
+               ;; company-oddmuse     ; seldom used wiki
+               company-dabbrev        ; all string of buffer
+               )))
 
 
 
@@ -1163,9 +1163,9 @@ there are no attachments."
   :config
   ;; Make the list of errors be displayed full-screen
   (add-to-list 'display-buffer-alist
-  			   `(,(rx bos "*Flycheck errors*" eos)
-  				 (display-buffer-reuse-window display-buffer-same-window)
-			   (reusable-frames . visible))))
+           `(,(rx bos "*Flycheck errors*" eos)
+           (display-buffer-reuse-window display-buffer-same-window)
+         (reusable-frames . visible))))
 
 
 ;;; Package: go-mode - mayor mode for Go
@@ -1203,7 +1203,7 @@ there are no attachments."
   :straight t
   :commands (helpful-callable helpful-variable)
   :bind (("<f1>"  . helpful-at-point)
-		 ("C-h k" . helpful-key))
+     ("C-h k" . helpful-key))
 
   :config
   (setq helpful-switch-buffer-function 'pop-to-buffer-same-window))
@@ -1215,9 +1215,9 @@ there are no attachments."
   :straight t
   :if (not noninteractive)
   :commands (defhydra hydra-default-pre hydra-keyboard-quit
-			 hydra-set-transient-map
-			 hydra--call-interactively-remap-maybe
-			 hydra-show-hint))
+       hydra-set-transient-map
+       hydra--call-interactively-remap-maybe
+       hydra-show-hint))
 
 
 ;;; Package: lv - semi-permanent messages
@@ -1245,17 +1245,17 @@ there are no attachments."
   :commands ()
   :init
   (defun ispell-english ()
-	"Switch to an english dictionary"
+  "Switch to an english dictionary"
     (interactive)
     (ispell-change-dictionary "en_US")
-	(flyspell-mode 1)
+  (flyspell-mode 1)
     (flyspell-buffer))
 
   (defun ispell-german ()
-	"Switch to a german dictionary"
+  "Switch to a german dictionary"
     (interactive)
     (ispell-change-dictionary "german-new8")
-	(flyspell-mode 1)
+  (flyspell-mode 1)
     (flyspell-buffer))
 
   :config
@@ -1266,7 +1266,7 @@ there are no attachments."
   (setq ispell-program-name (executable-find "aspell"))
   (setq ispell-extra-args
         '("--sug-mode=fast" ;; ultra|fast|normal|bad-spellers
-		  "--ignore=3"))    ;; ignore words less than 3 characters long
+      "--ignore=3"))    ;; ignore words less than 3 characters long
 
   ;; Ignore org-mode properties
   (add-to-list 'ispell-skip-region-alist '(":\\(PROPERTIES\\|LOGBOOK\\):" . ":END:"))
@@ -1303,7 +1303,7 @@ there are no attachments."
 
   :config
   ;; (use-package helm-config
-  ;; 	:defines (helm-command-map))
+  ;;    :defines (helm-command-map))
 
   (helm-mode t)
 
@@ -1447,7 +1447,7 @@ there are no attachments."
   :after flyspell
   ;; :command (helm-flyspell-correct)
   :bind (:map flyspell-mode-map
-  			  ("C-;" . helm-flyspell-correct))
+          ("C-;" . helm-flyspell-correct))
 )
 
 ;;; Package: helm-swoop
@@ -1457,18 +1457,18 @@ there are no attachments."
   :straight t
   :bind (("M-s o"   . helm-swoop)
          ("M-s b"   . helm-swoop-back-to-last-point)
-		 :map isearch-mode-map
-		 ("M-s o"   . helm-swoop)
-		 :map helm-swoop-edit-map
-		 ;; Switch to edit mode with C-c C-e, and exit edit mode with C-c C-c
-		 ("C-c C-c" . helm-swoop--edit-complete)
-		 :map helm-swoop-map
-		 ("C-r" . helm-previous-line)
-		 ("C-s" . helm-next-line)
-		 :map helm-multi-swoop-map
-		 ("C-r" . helm-previous-line)
-		 ("C-s" . helm-next-line)
-		 )
+     :map isearch-mode-map
+     ("M-s o"   . helm-swoop)
+     :map helm-swoop-edit-map
+     ;; Switch to edit mode with C-c C-e, and exit edit mode with C-c C-c
+     ("C-c C-c" . helm-swoop--edit-complete)
+     :map helm-swoop-map
+     ("C-r" . helm-previous-line)
+     ("C-s" . helm-next-line)
+     :map helm-multi-swoop-map
+     ("C-r" . helm-previous-line)
+     ("C-s" . helm-next-line)
+     )
   :config
   (setq helm-swoop-split-direction 'split-window-sensibly)
 
@@ -1492,28 +1492,28 @@ there are no attachments."
   :if (not noninteractive)
   :defer t
   :bind (("C-x C-f"   . counsel-find-file)
-		 ("C-x g"     . counsel-git)  ;; find file in current git tree
-		 ;; Help related -> this is now handled by the "helpful" package
-		 ;; ("C-h f"     . counsel-describe-function)
-		 ;; ("C-h v"     . counsel-describe-variable)
-		 ;; ("C-h S"     . counsel-info-lookup-symbol)
-		 ;; Describe
-		 ("C-h f"     . counsel-describe-function)
-		 ("C-h v"     . counsel-describe-variable)
-		 ;; special characters
-		 ("C-x 8 RET" . counsel-unicode-char)
-		 ;; searching
-		 ("M-s a"     . counsel-ag)
-		 ("M-s g"     . counsel-git-grep)
-		 ;; goto
-		 ("M-g i"     . counsel-imenu)
-		 ;; yank/pop, see http://pragmaticemacs.com/emacs/counsel-yank-pop-with-a-tweak/
-		 ("M-y"       . counsel-yank-pop)
-		 )
+     ("C-x g"     . counsel-git)  ;; find file in current git tree
+     ;; Help related -> this is now handled by the "helpful" package
+     ;; ("C-h f"     . counsel-describe-function)
+     ;; ("C-h v"     . counsel-describe-variable)
+     ;; ("C-h S"     . counsel-info-lookup-symbol)
+     ;; Describe
+     ("C-h f"     . counsel-describe-function)
+     ("C-h v"     . counsel-describe-variable)
+     ;; special characters
+     ("C-x 8 RET" . counsel-unicode-char)
+     ;; searching
+     ("M-s a"     . counsel-ag)
+     ("M-s g"     . counsel-git-grep)
+     ;; goto
+     ("M-g i"     . counsel-imenu)
+     ;; yank/pop, see http://pragmaticemacs.com/emacs/counsel-yank-pop-with-a-tweak/
+     ("M-y"       . counsel-yank-pop)
+     )
   :config
   (when (fboundp 'helpful-callable)
-	(setq counsel-describe-function-function #'helpful-callable)
-	(setq counsel-describe-variable-function #'helpful-variable)))
+  (setq counsel-describe-function-function #'helpful-callable)
+  (setq counsel-describe-variable-function #'helpful-variable)))
 
 
 ;;; Package: js2-mode - mayor mode for JavaScript
@@ -1527,7 +1527,7 @@ there are no attachments."
   :interpreter ("node" . js2-mode)
   :config
   (setq js2-basic-offset 2
-	js2-highlight-level 3)
+  js2-highlight-level 3)
   ;; we can run a nodejs REPL locally or over TRAMP, and it works out-of-the-box!
   (defalias 'run-node 'nodejs-repl))
 
@@ -1544,36 +1544,36 @@ there are no attachments."
   :commands (keyfreq-mode keyfreq-autosave-mode)
   :config
   (defun my-turnon-keyfreq-mode ()
-	(interactive)
-	(keyfreq-mode 1)
-	(keyfreq-autosave-mode 1))
+  (interactive)
+  (keyfreq-mode 1)
+  (keyfreq-autosave-mode 1))
 
   (defun turnoff-keyfreq-mode ()
-	(interactive)
-	(keyfreq-mode -1)
-	(keyfreq-autosave-mode -1))
+  (interactive)
+  (keyfreq-mode -1)
+  (keyfreq-autosave-mode -1))
 
   (add-to-list 'same-window-buffer-names "*frequencies*")
 
   (setq keyfreq-excluded-commands
-		'(self-insert-command
-		  org-self-insert-command
-		  abort-recursive-edit
-		  backward-char
-		  delete-backward-char
-		  forward-char
-		  keyfreq-mode
-		  previous-line
-		  next-line
-		  undefined ;; lambda
-		  ))
+    '(self-insert-command
+      org-self-insert-command
+      abort-recursive-edit
+      backward-char
+      delete-backward-char
+      forward-char
+      keyfreq-mode
+      previous-line
+      next-line
+      undefined ;; lambda
+      ))
 
   (setq keyfreq-file (locate-user-emacs-file "tmp/keyfreq.el"))
 
   (unless (file-exists-p (file-truename keyfreq-file))
-	(with-temp-buffer
-	  (insert "()")
-	  (write-file (file-truename keyfreq-file))))
+  (with-temp-buffer
+    (insert "()")
+    (write-file (file-truename keyfreq-file))))
 
   ;; And use keyfreq-show to see how many times you used a command.
   ;; comment out below line if there is performance impact
@@ -1593,12 +1593,12 @@ there are no attachments."
   :commands (lsp lsp-deferred)
   :bind (:map lsp-mode-map
               ("C-c o" . lsp-describe-thing-at-point)
-			  ("C-c f" . lsp-format-region)
-			  ("C-c a" . lsp-execute-code-action)
-			  ("C-c h" . lsp-document-highlight)
-			  ("C-c n" . lsp-rename)
-			  ;; ("M-." . lsp-find-definition)
-			  )
+        ("C-c f" . lsp-format-region)
+        ("C-c a" . lsp-execute-code-action)
+        ("C-c h" . lsp-document-highlight)
+        ("C-c n" . lsp-rename)
+        ;; ("M-." . lsp-find-definition)
+        )
   :init
   (add-to-list 'safe-local-variable-values '(eval lsp-deferred))
   :config
@@ -1616,11 +1616,11 @@ there are no attachments."
 
   ;; face for "hightlight referenced"
   (set-face-attribute 'lsp-face-highlight-textual nil
-					  :background "#666" :foreground "#ffffff")
+            :background "#666" :foreground "#ffffff")
   (set-face-attribute 'lsp-face-highlight-read nil
-					  :background "#666" :foreground "#ffffff" :underline nil)
+            :background "#666" :foreground "#ffffff" :underline nil)
   (set-face-attribute 'lsp-face-highlight-write nil
-					  :background "#666" :foreground "#ffffff")
+            :background "#666" :foreground "#ffffff")
 
   ;; fixup the menu
   (define-key lsp-mode-menu [menu-bar lsp] nil)
@@ -1632,7 +1632,7 @@ there are no attachments."
   (easy-menu-remove-item lsp-mode-menu nil "Find type definitions of symbol under point")
   ;; no need to display this menu entry when the function is disabled
   (unless lsp-log-io
-	(easy-menu-remove-item lsp-mode-menu nil "View IO logs for workspace")))
+  (easy-menu-remove-item lsp-mode-menu nil "View IO logs for workspace")))
 
 
 ;;; Package: lsp-clients - use clangd
@@ -1646,13 +1646,13 @@ there are no attachments."
   ;; maybe set this from .dir-locals?
   (setq lsp-clients-clangd-args `("-j=2"
                                   "--background-index"
-								  "--clang-tidy"
-								  "--completion-style=bundled"
-								  "--header-insertion=iwyu"
-								  "--suggest-missing-includes"
+                  "--clang-tidy"
+                  "--completion-style=bundled"
+                  "--header-insertion=iwyu"
+                  "--suggest-missing-includes"
                                   "--log=error"
                                   ,(concat "--compile-commands-dir=" (file-truename (locate-dominating-file "." ".git")) "build")
-								  )))
+                  )))
 
 
 ;;; Package: lsp-ui - show error and documentation in a nice way
@@ -1664,7 +1664,7 @@ there are no attachments."
               ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
               ([remap xref-find-references]  . lsp-ui-peek-find-references)
               ("M-g i" . lsp-ui-imenu)
-			  )
+        )
   :config
 
   (setq lsp-ui-doc-enable nil)
@@ -1681,10 +1681,10 @@ there are no attachments."
   ;; (add-to-list 'lsp-ui-doc-frame-parameters '(right-fringe . 8))
 
   (easy-menu-define-key lsp-mode-menu "M-." (cons "Find definition" #'lsp-ui-peek-find-definitions)
-						"Find definitions of symbol")
+            "Find definitions of symbol")
 
   (easy-menu-define-key lsp-mode-menu "M-?" (cons "Find references" #'lsp-ui-peek-find-references)
-						"Find definitions of symbol")
+            "Find definitions of symbol")
 
   (easy-menu-remove-item lsp-mode-menu nil "Find definitions of symbol")
   ;; these two aren't supported by clangd
@@ -1700,7 +1700,7 @@ there are no attachments."
   :init
   ;; normally long lines get the same face as comments, which is quite irritating
   (defun my-lua-hook ()
-	(setq-local whitespace-line-column 132))
+  (setq-local whitespace-line-column 132))
   (add-hook 'lua-mode-hook #'my-lua-hook))
 
 
@@ -1711,7 +1711,7 @@ there are no attachments."
   :defer t
   :hook (markdown-mode . visual-line-mode)
   :mode (("\\.md\\'"       . markdown-mode)
-		 ("\\.markdown\\'" . markdown-mode)))
+     ("\\.markdown\\'" . markdown-mode)))
 
 
 ;;; Package: meson-mode
@@ -1749,20 +1749,20 @@ there are no attachments."
 (use-package org
   :straight t
   :bind (("C-c l" . org-store-link)
-		 ("C-c o" . org-open-at-point-global)
-		 ;; This used to be org-shift{up/down}, but I'm not working
-		 ;; with priorities it however also allowed to edit
-		 ;; timestamps, not sure if I'm gonna miss that.
-		 :map org-mode-map
-		 ("C-<tab>"   . company-complete)
-		 ("C-c C-x e" . my-org-set-effort)
-		 ("M-p"       . org-previous-visible-heading)
-		 ("M-n"       . org-next-visible-heading))
+     ("C-c o" . org-open-at-point-global)
+     ;; This used to be org-shift{up/down}, but I'm not working
+     ;; with priorities it however also allowed to edit
+     ;; timestamps, not sure if I'm gonna miss that.
+     :map org-mode-map
+     ("C-<tab>"   . company-complete)
+     ("C-c C-x e" . my-org-set-effort)
+     ("M-p"       . org-previous-visible-heading)
+     ("M-n"       . org-next-visible-heading))
   :commands (org-babel-do-load-languages
-			 org-buffer-list
-			 org-open-file
-			 org-set-property
-			 orgstruct++-mode
+       org-buffer-list
+       org-open-file
+       org-set-property
+       orgstruct++-mode
              org-link-set-parameters
              org-property-get-allowed-values)
 
@@ -1772,99 +1772,99 @@ there are no attachments."
 
   ;; modules to load together with org-mode
   (setq org-modules '(
-				 ;; org-annotate-file
-				 ;; org-bbdb
-				 ;; org-bibtex
-				 ;; org-collector
-				 ;; org-docview
-				 ;; org-drill
-				 ;; org-eval
-				 ;; org-expiry
-				 ;; org-gnus
-				 ;; org-habit
-				 ;; org-info
-				 ;; org-interactive-query
-				 ;; org-irc
-				 ;; org-jsinfo
-				 ;; org-man
-				 ;; org-mhe
-				 ;; org-mouse
-				 ;; org-panel
-				 ;; org-protocol
-				 ;; org-rmail
-				 ;; org-screen
-				 ;; org-toc
-				 ;; org-w3m
-				 ))
+         ;; org-annotate-file
+         ;; org-bbdb
+         ;; org-bibtex
+         ;; org-collector
+         ;; org-docview
+         ;; org-drill
+         ;; org-eval
+         ;; org-expiry
+         ;; org-gnus
+         ;; org-habit
+         ;; org-info
+         ;; org-interactive-query
+         ;; org-irc
+         ;; org-jsinfo
+         ;; org-man
+         ;; org-mhe
+         ;; org-mouse
+         ;; org-panel
+         ;; org-protocol
+         ;; org-rmail
+         ;; org-screen
+         ;; org-toc
+         ;; org-w3m
+         ))
 
   (when (featurep 'straight)
-	;; This section is devoted to fixing the asinine version-check
-	;; handling in Org (it's not designed to handle the case where you
-	;; run straight from the Git repo, apparently). This is one of the
-	;; worse hacks I've ever had the misfortune to create in Emacs.
+  ;; This section is devoted to fixing the asinine version-check
+  ;; handling in Org (it's not designed to handle the case where you
+  ;; run straight from the Git repo, apparently). This is one of the
+  ;; worse hacks I've ever had the misfortune to create in Emacs.
 
-	;; First we define a function to return a proper version string
-	;; based on the Git repo. (This is somewhat similar to what happens
-	;; in org-fixup.el.) We should really define a function that will
-	;; return the latest tag, as well, but this remains a FIXME for now.
-	(defun my--org-git-version ()
-	  "Return the abbreviated SHA for the Org Git repo."
-	  (let ((default-directory (concat user-emacs-directory
-									   "straight/repos/org/")))
-		(if (executable-find "git")
-			(with-temp-buffer
-			  ;; Returns the shortest prefix of the SHA for HEAD that is
-			  ;; unique, down to a minimum of 4 characters (see
-			  ;; git-rev-parse(1)).
-			  (call-process "git" nil '(t nil) nil
-							"rev-parse" "--short" "HEAD")
-			  (if (> (buffer-size) 0)
-				  (string-trim (buffer-string))
-				;; This shouldn't happen, unless somehow Org is not
-				;; actually a Git repo.
-				"revision unknown"))
-		  ;; This also shouldn't happen, because how would you have
-		  ;; gotten Org in the first place, then? But the real world
-		  ;; sucks and we have to account for stuff like this.
-		  "git not available")))
+  ;; First we define a function to return a proper version string
+  ;; based on the Git repo. (This is somewhat similar to what happens
+  ;; in org-fixup.el.) We should really define a function that will
+  ;; return the latest tag, as well, but this remains a FIXME for now.
+  (defun my--org-git-version ()
+    "Return the abbreviated SHA for the Org Git repo."
+    (let ((default-directory (concat user-emacs-directory
+                     "straight/repos/org/")))
+    (if (executable-find "git")
+      (with-temp-buffer
+        ;; Returns the shortest prefix of the SHA for HEAD that is
+        ;; unique, down to a minimum of 4 characters (see
+        ;; git-rev-parse(1)).
+        (call-process "git" nil '(t nil) nil
+              "rev-parse" "--short" "HEAD")
+        (if (> (buffer-size) 0)
+          (string-trim (buffer-string))
+        ;; This shouldn't happen, unless somehow Org is not
+        ;; actually a Git repo.
+        "revision unknown"))
+      ;; This also shouldn't happen, because how would you have
+      ;; gotten Org in the first place, then? But the real world
+      ;; sucks and we have to account for stuff like this.
+      "git not available")))
 
-	;; Here we're defining `org-git-version' and `org-release' eagerly.
-	;; Pay close attention here, since we actually do this multiple
-	;; times. The control flow is really weird. The reason we define the
-	;; functions here is that Emacs includes its own copy of Org, and
-	;; these functions are autoloaded by Emacs. Now, normally the
-	;; built-in autoloads are overridden by the version of Org
-	;; downloaded from EmacsMirror, but since we're running straight
-	;; from the Git repo, `org-git-version' and `org-release' are not
-	;; generated and autoloaded. So in order to avoid the original
-	;; autoloads from being triggered under any circumstances, we have
-	;; to overwrite them here.
-	(defalias #'org-git-version #'my--org-git-version)
-	(defun org-release () "N/A") ; FIXME: replace with a real function
+  ;; Here we're defining `org-git-version' and `org-release' eagerly.
+  ;; Pay close attention here, since we actually do this multiple
+  ;; times. The control flow is really weird. The reason we define the
+  ;; functions here is that Emacs includes its own copy of Org, and
+  ;; these functions are autoloaded by Emacs. Now, normally the
+  ;; built-in autoloads are overridden by the version of Org
+  ;; downloaded from EmacsMirror, but since we're running straight
+  ;; from the Git repo, `org-git-version' and `org-release' are not
+  ;; generated and autoloaded. So in order to avoid the original
+  ;; autoloads from being triggered under any circumstances, we have
+  ;; to overwrite them here.
+  (defalias #'org-git-version #'my--org-git-version)
+  (defun org-release () "N/A") ; FIXME: replace with a real function
 
-	;; Now, the culprit function is `org-check-version', which is
-	;; defined in org-compat.el and called from org.el. The problem with
-	;; this function is that if the version of Org in use is not a
-	;; release version (i.e. it's running straight from the repo, as we
-	;; are doing), then it prints a warning. We don't want this. The
-	;; natural thought is to override `org-check-version'.
-	;; Unfortunately, this is completely impossible since
-	;; `org-check-version' is a macro, and org.el (which is where the
-	;; macro is used) is byte-compiled, so the code of
-	;; `org-check-version' is hardcoded into org.elc. The easiest way
-	;; around the problem, other than doing something even more
-	;; horrifying like suppressing warnings while loading Org, seems to
-	;; be to *pretend* that org-version.el is available, even though it
-	;; doesn't exist. Then `org-check-version' happily defines
-	;; `org-git-version' and `org-release' as autoloads pointing to
-	;; org-version.el. Of course, then after Org is loaded, we have to
-	;; override those autoloads to make the functions point back to what
-	;; we want. Right now, the definition of `org-release' generated by
-	;; `org-check-version' is the same as the one used above, so we
-	;; don't bother to change it. That should change, FIXME.
-	(provide 'org-version)
-	(with-eval-after-load 'org
-	  (defalias #'org-git-version #'my--org-git-version)))
+  ;; Now, the culprit function is `org-check-version', which is
+  ;; defined in org-compat.el and called from org.el. The problem with
+  ;; this function is that if the version of Org in use is not a
+  ;; release version (i.e. it's running straight from the repo, as we
+  ;; are doing), then it prints a warning. We don't want this. The
+  ;; natural thought is to override `org-check-version'.
+  ;; Unfortunately, this is completely impossible since
+  ;; `org-check-version' is a macro, and org.el (which is where the
+  ;; macro is used) is byte-compiled, so the code of
+  ;; `org-check-version' is hardcoded into org.elc. The easiest way
+  ;; around the problem, other than doing something even more
+  ;; horrifying like suppressing warnings while loading Org, seems to
+  ;; be to *pretend* that org-version.el is available, even though it
+  ;; doesn't exist. Then `org-check-version' happily defines
+  ;; `org-git-version' and `org-release' as autoloads pointing to
+  ;; org-version.el. Of course, then after Org is loaded, we have to
+  ;; override those autoloads to make the functions point back to what
+  ;; we want. Right now, the definition of `org-release' generated by
+  ;; `org-check-version' is the same as the one used above, so we
+  ;; don't bother to change it. That should change, FIXME.
+  (provide 'org-version)
+  (with-eval-after-load 'org
+    (defalias #'org-git-version #'my--org-git-version)))
 
   :config
   ;; My main file
@@ -1884,15 +1884,15 @@ there are no attachments."
   ;; :bind cannot bind into a different map
   (bind-key "C-TAB"   'org-cycle org-mode-map)
   (if (and (not my-use-helm) (not noninteractive))
-	  (bind-key "C-c C-j" 'counsel-org-goto org-mode-map)
-	(bind-key "C-c C-j" 'helm-org-in-buffer-headings org-mode-map)) ;; was org-goto
+    (bind-key "C-c C-j" 'counsel-org-goto org-mode-map)
+  (bind-key "C-c C-j" 'helm-org-in-buffer-headings org-mode-map)) ;; was org-goto
   (bind-key "C-c k"   'org-cut-subtree org-mode-map)
   (bind-key "C-c R"   'org-reveal org-mode-map)
   ;; (bind-key "C-c t"   'org-show-todo-tree org-mode-map)
 
   ;; adjust level, but not for drawers/properties
   (setq org-yank-adjusted-subtrees t
-		org-adapt-indentation nil)
+    org-adapt-indentation nil)
 
   ;; https://emacs.stackexchange.com/questions/33064/fontify-broken-links-in-org-mode
   (org-link-set-parameters
@@ -1932,30 +1932,30 @@ there are no attachments."
   ;; "x/y"  use x when entering state, y when leaving state
   ;; the first letter can be used with C-c C-t
   (setq org-todo-keywords
-	'((sequence "TODO(t)" "STARTED(s)" "|" "DONE(x)")
-	  (sequence "WAIT(w)" "DELE(d)" "|" "CANC(c)")))
+  '((sequence "TODO(t)" "STARTED(s)" "|" "DONE(x)")
+    (sequence "WAIT(w)" "DELE(d)" "|" "CANC(c)")))
 
   (setq org-todo-keyword-faces
-	  '(("TODO"      . (:foreground "red" :weight bold))
-		("STARTED"   . (:foreground "#b70101" :weight bold))
-		("DONE"      . (:foreground "forestgreen" :weight bold))
-		("WAIT"      . (:foreground "orange" :weight bold))
-		("DELE"      . (:foreground "forestgreen" :weight bold))
-		("CANC"      . shadow)))
+    '(("TODO"      . (:foreground "red" :weight bold))
+    ("STARTED"   . (:foreground "#b70101" :weight bold))
+    ("DONE"      . (:foreground "forestgreen" :weight bold))
+    ("WAIT"      . (:foreground "orange" :weight bold))
+    ("DELE"      . (:foreground "forestgreen" :weight bold))
+    ("CANC"      . shadow)))
 
   ;; use extra drawer
   (setq org-log-into-drawer t)
 
   ;; when my day ends
   (setq org-use-effective-time t
-		org-extend-today-until 17)
+    org-extend-today-until 17)
 
   ;; Resume clocking tasks when emacs is restarted
   ;; (org-clock-persistence-insinuate)
 
   ;; TODO creates error
   ;; (setq org-global-properties
-  ;; 	'("Effort_ALL" . "0:10 0:30 1:00 2:00 3:00 4:00 5:00 6:00 8:00"))
+  ;;    '("Effort_ALL" . "0:10 0:30 1:00 2:00 3:00 4:00 5:00 6:00 8:00"))
 
   ;; Try column with this:
   ;; (setq org-columns-default-format "%80ITEM(Task) %10Effort(Effort){:} %10CLOCKSUM")
@@ -1972,33 +1972,33 @@ there are no attachments."
 
   ;; export and open
   (defun my-org-export-to-html-and-open ()
-	(interactive)
-	(org-open-file (org-html-export-to-html)))
+  (interactive)
+  (org-open-file (org-html-export-to-html)))
   (bind-key "<M-f7>" 'my-org-export-to-html-and-open org-mode-map)
 
   (setq org-imenu-depth 3)
 
   ;; For org-babel
   (org-babel-do-load-languages 'org-babel-load-languages
-							   '((shell . t)
-								 (python . t)
-								 ;; (R . t)
-								 ;; (ruby . t)
-								 ;; (ditaa . t)
-								 (dot . t)
-								 ;; (octave . t)
-								 (sqlite . t)
-								 ;;(perl . t)
-								 ))
+                 '((shell . t)
+                 (python . t)
+                 ;; (R . t)
+                 ;; (ruby . t)
+                 ;; (ditaa . t)
+                 (dot . t)
+                 ;; (octave . t)
+                 (sqlite . t)
+                 ;;(perl . t)
+                 ))
   (setq org-confirm-babel-evaluate nil)
 
   (defun my-org-set-effort ()
-	"More interactive replacement for org-set-effort"
-	(interactive)
-	;; (org-property-get-allowed-values nil org-effort-property 'table)
-	(let ((effort (completing-read
-				   "Effort: "
-				   (org-property-get-allowed-values nil org-effort-property))))
+  "More interactive replacement for org-set-effort"
+  (interactive)
+  ;; (org-property-get-allowed-values nil org-effort-property 'table)
+  (let ((effort (completing-read
+           "Effort: "
+           (org-property-get-allowed-values nil org-effort-property))))
       (unless (equal effort "")
         (org-set-property "Effort" effort)))))
 
@@ -2008,7 +2008,7 @@ there are no attachments."
 
 (use-package org-agenda
   :bind (("M-g a" . org-agenda)
-		 ("M-g w" . org-agenda-list))
+     ("M-g w" . org-agenda-list))
   :config
   (bind-key "i" 'org-agenda-clock-in org-agenda-mode-map)
   ;; (bind-key "!" 'my/org-clock-in-and-track org-agenda-mode-map)
@@ -2021,15 +2021,15 @@ there are no attachments."
 
   ;; Let date stand out
   (setq org-agenda-format-date
-	"%Y-%m-%d ---------------------------------------------------------------------")
+  "%Y-%m-%d ---------------------------------------------------------------------")
 
   (setq org-agenda-show-outline-path t)
 
   ;; colorize priorities
   (setq org-agenda-fontify-priorities
-	'((65 (:foreground "Red"))
-	  (66 (:foreground "Blue"))
-	  (67 (:foreground "Darkgreen"))))
+  '((65 (:foreground "Red"))
+    (66 (:foreground "Blue"))
+    (67 (:foreground "Darkgreen"))))
 
   ;; hide done tasks
   (setq org-agenda-skip-deadline-if-done t)
@@ -2043,15 +2043,15 @@ there are no attachments."
 
   ;; own views
   (setq org-agenda-custom-commands
-	'(("n" "Agenda and all TODO's"
-	   ((agenda "")
-		(alltodo "")))
-	  ;; ("f" "Agenda and flagged tasks"
-	  ;;  ((tags "flagged")
-	  ;;   (agenda "")))
-	  ("s" "Tagged 'someday'" tags "someday" ((org-agenda-filter-preset '("+someday"))
-						  (org-agenda-todo-ignore-with-date nil)))
-	  ))
+  '(("n" "Agenda and all TODO's"
+     ((agenda "")
+    (alltodo "")))
+    ;; ("f" "Agenda and flagged tasks"
+    ;;  ((tags "flagged")
+    ;;   (agenda "")))
+    ("s" "Tagged 'someday'" tags "someday" ((org-agenda-filter-preset '("+someday"))
+              (org-agenda-todo-ignore-with-date nil)))
+    ))
 
   ;; show clock report
   ;; (setq org-agenda-start-with-clockreport-mode nil)
@@ -2068,14 +2068,14 @@ there are no attachments."
   :commands (org-capture)
   :config
   (defun my-org-capture-todo ()
-	(interactive)
-	(org-capture nil "o"))
+  (interactive)
+  (org-capture nil "o"))
   (setq org-capture-templates
-	`(("o" "Open task" entry
-	   (file+headline org-default-notes-file "Unsortiert")
-	   "* TODO %?\n- %u aufgenommen\n")
-	  ("n" "Note" item
-	   (file+headline org-default-notes-file "Infos")))))
+  `(("o" "Open task" entry
+     (file+headline org-default-notes-file "Unsortiert")
+     "* TODO %?\n- %u aufgenommen\n")
+    ("n" "Note" item
+     (file+headline org-default-notes-file "Infos")))))
 
 
 ;;; Package: org-clock
@@ -2123,9 +2123,9 @@ there are no attachments."
   ;; speed commands are fun, not only on the headers, but also on lists
   ;; see http://orgmode.org/manual/Speed-keys.html
   (defun my/org-use-speed-commands-for-headings-and-lists ()
-	"Activate speed commands on list items too."
-	(or (and (looking-at org-outline-regexp) (looking-back "^\**" nil))
-	(save-excursion (and (looking-at (org-item-re)) (looking-back "^[ \t]*" nil)))))
+  "Activate speed commands on list items too."
+  (or (and (looking-at org-outline-regexp) (looking-back "^\**" nil))
+  (save-excursion (and (looking-at (org-item-re)) (looking-back "^[ \t]*" nil)))))
   (setq org-use-speed-commands 'my/org-use-speed-commands-for-headings-and-lists))
 
 
@@ -2134,13 +2134,13 @@ there are no attachments."
 (use-package org-src
   :defer t
   :bind (:map org-src-mode-map
-			  ;; F2 used to be save-buffer, but this will happily save a file
-			  ;; "config.org[*Org Src config.org[ emacs-lisp ]*]" which is a bit
-			  ;; awkward
-			  ("F2"      . org-edit-source-save)
-			  ;; normally I'd need C-c ' to exit, but this enables the same exit
-			  ;; method I have in when doing a commit in magit.
-			  ("C-c C-c" . org-edit-src-exit))
+        ;; F2 used to be save-buffer, but this will happily save a file
+        ;; "config.org[*Org Src config.org[ emacs-lisp ]*]" which is a bit
+        ;; awkward
+        ("F2"      . org-edit-source-save)
+        ;; normally I'd need C-c ' to exit, but this enables the same exit
+        ;; method I have in when doing a commit in magit.
+        ("C-c C-c" . org-edit-src-exit))
   :config
   ;; Open source editor in current window
   (setq org-src-window-setup 'current-window)
@@ -2164,108 +2164,108 @@ there are no attachments."
   ;; to convert "emacs-lisp" to "lisp":
   ;;
   (defun org-gfm-src-block (src-block contents info)
-	"Transcode SRC-BLOCK element into Github Flavored Markdown
+  "Transcode SRC-BLOCK element into Github Flavored Markdown
 format. CONTENTS is nil.  INFO is a plist used as a communication
 channel."
-	(let* ((lang (org-element-property :language src-block))
-		   (code (org-export-format-code-default src-block info))
-		   (prefix (concat "```" (if (string= lang "emacs-lisp") "lisp" lang) "\n"))
-		   (suffix "```"))
-	  (concat prefix code suffix))))
+  (let* ((lang (org-element-property :language src-block))
+       (code (org-export-format-code-default src-block info))
+       (prefix (concat "```" (if (string= lang "emacs-lisp") "lisp" lang) "\n"))
+       (suffix "```"))
+    (concat prefix code suffix))))
 
 
 ;;; Package: ox-publish
 
 (use-package ox-publish
   :if (or (string= "holger" (system-name))
-		  (string= "laptop" (system-name)))
+      (string= "laptop" (system-name)))
   :bind ("C-c p" . my-publish)
   :commands (org-publish)
   :config
   (setq org-publish-project-alist
-	'(("twbs"
-	   :base-directory "~/org/"
-	   :publishing-directory "~/org/twbs/"
-	   :base-extension "org"
-	   :recursive t
-	   :publishing-function org-twbs-publish-to-html
+  '(("twbs"
+     :base-directory "~/org/"
+     :publishing-directory "~/org/twbs/"
+     :base-extension "org"
+     :recursive t
+     :publishing-function org-twbs-publish-to-html
 
-	   ;; See http://orgmode.org/manual/Publishing-options.html#Publishing-options
+     ;; See http://orgmode.org/manual/Publishing-options.html#Publishing-options
 
-	   ;; Don't emit  "Created: 2016-02-12 Fri 09:28 Emacs 24.5.1 (Org mode 8.3.3)"
-	   :html-postamble nil
+     ;; Don't emit  "Created: 2016-02-12 Fri 09:28 Emacs 24.5.1 (Org mode 8.3.3)"
+     :html-postamble nil
 
-	   ;; This is the Table of Contents on the right side, you can turn it off
-	   ;; per page with "#+OPTIONS: toc:nil"
-	   :with-toc t
+     ;; This is the Table of Contents on the right side, you can turn it off
+     ;; per page with "#+OPTIONS: toc:nil"
+     :with-toc t
 
-	   :html-use-infojs nil
-	   :html-validation-link ""
-	   :html-home/up-format ""
-	   :html-link-up ""
-	   :html-link-home ""
-	   ;; :html-checkbox-type 'html   ;; use CSS to format them
-	   :html-metadata-timestamp-format "%Y-%m-%d %H:%M"
+     :html-use-infojs nil
+     :html-validation-link ""
+     :html-home/up-format ""
+     :html-link-up ""
+     :html-link-home ""
+     ;; :html-checkbox-type 'html   ;; use CSS to format them
+     :html-metadata-timestamp-format "%Y-%m-%d %H:%M"
 
-	   ;; General export settings
-	   :archived-trees nil
-	   :headline-levels 3
-	   :section-numbers nil
-	   :with-author nil ;; Only one author ever
-	   :with-date nil
-	   :with-latex nil
-	   :with-sub-superscript nil
-	   )
+     ;; General export settings
+     :archived-trees nil
+     :headline-levels 3
+     :section-numbers nil
+     :with-author nil ;; Only one author ever
+     :with-date nil
+     :with-latex nil
+     :with-sub-superscript nil
+     )
 
-	  ("html"
-	   :base-directory "~/org/"
-	   :publishing-directory "~/org/html/"
-	   :base-extension "org"
-	   :recursive t
-	   :publishing-function org-html-publish-to-html
+    ("html"
+     :base-directory "~/org/"
+     :publishing-directory "~/org/html/"
+     :base-extension "org"
+     :recursive t
+     :publishing-function org-html-publish-to-html
 
-	   ;; see (org-html--build-head info)
-	   :html-head-include-default-style nil ;; org-html-head-include-default-style
-	   ;; :html-head                   ;; org-html-head
-	   ;; :html-head "<link rel=\"stylesheet\" href=\"../other/mystyle.css\" type=\"text/css\"/>"
-	   ;; :html-head-extra             ;; org-html-head-extra
-	   ;; :html-htmlized-css-url       ;; org-html-htmlized-css-url
-	   :html-head-include-scripts nil       ;; org-html-head-include-scripts
+     ;; see (org-html--build-head info)
+     :html-head-include-default-style nil ;; org-html-head-include-default-style
+     ;; :html-head                   ;; org-html-head
+     ;; :html-head "<link rel=\"stylesheet\" href=\"../other/mystyle.css\" type=\"text/css\"/>"
+     ;; :html-head-extra             ;; org-html-head-extra
+     ;; :html-htmlized-css-url       ;; org-html-htmlized-css-url
+     :html-head-include-scripts nil       ;; org-html-head-include-scripts
 
-	   ;; Don't emit  "Created: 2016-02-12 Fri 09:28 Emacs 24.5.1 (Org mode 8.3.3)"
-	   :html-postamble nil
+     ;; Don't emit  "Created: 2016-02-12 Fri 09:28 Emacs 24.5.1 (Org mode 8.3.3)"
+     :html-postamble nil
 
-	   :with-toc nil
+     :with-toc nil
 
-	   :html-use-infojs nil
-	   :html-validation-link ""
-	   :html-home/up-format ""
-	   :html-link-up ""
-	   :html-link-home ""
-	   ;; :html-checkbox-type 'html   ;; use CSS to format them
-	   :html-metadata-timestamp-format "%Y-%m-%d %H:%M"
+     :html-use-infojs nil
+     :html-validation-link ""
+     :html-home/up-format ""
+     :html-link-up ""
+     :html-link-home ""
+     ;; :html-checkbox-type 'html   ;; use CSS to format them
+     :html-metadata-timestamp-format "%Y-%m-%d %H:%M"
 
-	   ;; General export settings
-	   :archived-trees nil
-	   :headline-levels 3
-	   :section-numbers nil
-	   :with-author nil ;; Only one author ever
-	   :with-date nil
-	   :with-latex nil
-	   :with-sub-superscript nil
-	   )
+     ;; General export settings
+     :archived-trees nil
+     :headline-levels 3
+     :section-numbers nil
+     :with-author nil ;; Only one author ever
+     :with-date nil
+     :with-latex nil
+     :with-sub-superscript nil
+     )
 
-	  ("static"
-	   :base-directory "~/org/"
-	   :base-extension "jpg\\|gif\\|png\\|css\\|js"
-	   :recursive t
-	   :publishing-directory "~/org/out/"
-	   :publishing-function org-publish-attachment)
+    ("static"
+     :base-directory "~/org/"
+     :base-extension "jpg\\|gif\\|png\\|css\\|js"
+     :recursive t
+     :publishing-directory "~/org/out/"
+     :publishing-function org-publish-attachment)
 
-	  ("site" :components ("twbs" "html"))))
+    ("site" :components ("twbs" "html"))))
   (defun my-publish ()
-	(interactive)
-	(org-publish "site" t)))
+  (interactive)
+  (org-publish "site" t)))
 
 
 ;;; Package: ox-reveal
@@ -2341,7 +2341,7 @@ channel."
   :after cus-edit
   :init
   (let ((custom-safe-themes t))
-	(color-theme-sanityinc-tomorrow-bright))
+  (color-theme-sanityinc-tomorrow-bright))
 )
 
 
@@ -2358,7 +2358,7 @@ channel."
   :commands (server-running-p server-mode server-edit)
   :config
   (unless (or (daemonp) (server-running-p))
-	(server-mode 1))
+  (server-mode 1))
   (add-hook 'server-switch-hook 'raise-frame))
 
 ;; A good way to start emacsclient is with this line in /etc/bash.bashrc:
@@ -2378,12 +2378,12 @@ channel."
   :commands (symbol-overlay-mode)
 
   :bind (("M-p"      . symbol-overlay-jump-prev)
-		 ("M-n"      . symbol-overlay-jump-next)
-		 ("M-<up>"   . symbol-overlay-jump-prev)
-		 ("M-<down>" . symbol-overlay-jump-next)
-		 ("M-<home>" . highlight-symbol-first)
-		 ("M-<end>"  . highlight-symbol-last)
-		 ("M-g o"    . symbol-overlay-hydra/body))
+     ("M-n"      . symbol-overlay-jump-next)
+     ("M-<up>"   . symbol-overlay-jump-prev)
+     ("M-<down>" . symbol-overlay-jump-next)
+     ("M-<home>" . highlight-symbol-first)
+     ("M-<end>"  . highlight-symbol-last)
+     ("M-g o"    . symbol-overlay-hydra/body))
 
   ;; This enables auto-highlighting. Note that the commands still
   ;; work, even when highlighting is off.
@@ -2394,26 +2394,26 @@ channel."
 
   :config
   (defun highlight-symbol-first ()
-	"Jump to the first location of symbol at point."
-	(interactive)
-	(push-mark)
-	(eval
-	 `(progn
-		(goto-char (point-min))
-		(let ((case-fold-search nil))
+  "Jump to the first location of symbol at point."
+  (interactive)
+  (push-mark)
+  (eval
+   `(progn
+    (goto-char (point-min))
+    (let ((case-fold-search nil))
           (search-forward-regexp
            (rx symbol-start ,(thing-at-point 'symbol) symbol-end)
            nil t))
-		(beginning-of-thing 'symbol))))
+    (beginning-of-thing 'symbol))))
 
   (defun highlight-symbol-last ()
-	"Jump to the last location of symbol at point."
-	(interactive)
-	(push-mark)
-	(eval
-	 `(progn
-		(goto-char (point-max))
-		(let ((case-fold-search nil))
+  "Jump to the last location of symbol at point."
+  (interactive)
+  (push-mark)
+  (eval
+   `(progn
+    (goto-char (point-max))
+    (let ((case-fold-search nil))
           (search-backward-regexp
            (rx symbol-start ,(thing-at-point 'symbol) symbol-end)
            nil t)))))
@@ -2424,26 +2424,26 @@ channel."
 _<_   _>_    _d_  definition   _R_  remove     _Q_  query-replace
   _n_   ^^   _w_  save         ^^              _r_  rename
 "
-	  ("<home>" symbol-overlay-jump-first)
-	  ("<end>"  symbol-overlay-jump-last)
-	  ("<"      symbol-overlay-jump-first)
-	  (">"      symbol-overlay-jump-last)
+    ("<home>" symbol-overlay-jump-first)
+    ("<end>"  symbol-overlay-jump-last)
+    ("<"      symbol-overlay-jump-first)
+    (">"      symbol-overlay-jump-last)
 
-	  ("p"      symbol-overlay-jump-prev)
-	  ("n"      symbol-overlay-jump-next)
+    ("p"      symbol-overlay-jump-prev)
+    ("n"      symbol-overlay-jump-next)
 
-	  ("d"      symbol-overlay-jump-to-definition)
-	  ("b"      symbol-overlay-echo-mark)
+    ("d"      symbol-overlay-jump-to-definition)
+    ("b"      symbol-overlay-echo-mark)
 
-  	  ("h" symbol-overlay-put :color blue)
-	  ("R" symbol-overlay-remove-all :color blue)
+      ("h" symbol-overlay-put :color blue)
+    ("R" symbol-overlay-remove-all :color blue)
 
-	  ("w" symbol-overlay-save-symbol :color blue)
-	  ("t" symbol-overlay-toggle-in-scope)
+    ("w" symbol-overlay-save-symbol :color blue)
+    ("t" symbol-overlay-toggle-in-scope)
 
-	  ("i" symbol-overlay-isearch-literally :color blue)
-	  ("Q" symbol-overlay-query-replace :color blue)
-	  ("r" symbol-overlay-rename  :color blue)
+    ("i" symbol-overlay-isearch-literally :color blue)
+    ("Q" symbol-overlay-query-replace :color blue)
+    ("r" symbol-overlay-rename  :color blue)
       ("q" nil)))
 
 
@@ -2479,8 +2479,8 @@ _<_   _>_    _d_  definition   _R_  remove     _Q_  query-replace
 (use-package undo-propose
   :straight t
   :bind (("C-z" . undo-propose)
-		 :map undo-propose-mode-map
-		 ("C-z" . undo))
+     :map undo-propose-mode-map
+     ("C-z" . undo))
   :config
   ;; this makes calling undo-propose already do the first undo when entering the mode
   (add-hook 'undo-propose-entry-hook #'undo)
@@ -2521,30 +2521,30 @@ _<_   _>_    _d_  definition   _R_  remove     _Q_  query-replace
   :straight t
   :commands (web-mode web-mode-guess-engine-and-content-type)
   :mode (("\\.html\\'" . web-mode)
-		 ("\\.css\\'"  . web-mode)
-		 ("\\.scss\\'" . web-mode)
-		 ("\\.json\\'" . web-mode)
-		 )
+     ("\\.css\\'"  . web-mode)
+     ("\\.scss\\'" . web-mode)
+     ("\\.json\\'" . web-mode)
+     )
   :defines (web-mode-engines-alist)
   :config
   ;; remove the   (nil ("<!-" . "- | -->"))  data set:
   (unless (car (car (last web-mode-engines-auto-pairs)))
-   	(setq web-mode-engines-auto-pairs (butlast web-mode-engines-auto-pairs)))
+      (setq web-mode-engines-auto-pairs (butlast web-mode-engines-auto-pairs)))
 
   (defun my-web-mode-hook ()
-	(visual-line-mode 1)
-	(setq web-mode-markup-indent-offset 2
-		  web-mode-css-indent-offset 4
-		  web-mode-code-indent-offset 2
-		  web-mode-indent-style 2
-		  web-mode-style-padding 1
-		  web-mode-script-padding 1
-		  web-mode-block-padding 0
-		  indent-tabs-mode t
-		  tab-width 4
-		  web-mode-engines-alist '(("go" . "\\.html\\'")))
-	(web-mode-guess-engine-and-content-type)
-	)
+  (visual-line-mode 1)
+  (setq web-mode-markup-indent-offset 2
+      web-mode-css-indent-offset 4
+      web-mode-code-indent-offset 2
+      web-mode-indent-style 2
+      web-mode-style-padding 1
+      web-mode-script-padding 1
+      web-mode-block-padding 0
+      indent-tabs-mode t
+      tab-width 4
+      web-mode-engines-alist '(("go" . "\\.html\\'")))
+  (web-mode-guess-engine-and-content-type)
+  )
   (add-hook 'web-mode-hook 'my-web-mode-hook))
 
 
@@ -2610,8 +2610,8 @@ _<_   _>_    _d_  definition   _R_  remove     _Q_  query-replace
   :disabled t
   :straight t
   :bind (("C-M-g" . dumb-jump-go)
-		 ("C-M-p" . dumb-jump-back)
-		 ("C-M-q" . dumb-jump-quick-look)))
+     ("C-M-p" . dumb-jump-back)
+     ("C-M-q" . dumb-jump-quick-look)))
 
 
 ;;; CANC Package: elfeed - RSS feed reader
@@ -2636,29 +2636,29 @@ _<_   _>_    _d_  definition   _R_  remove     _Q_  query-replace
   :bind ("M-g r" . elfeed)   ; r like "RSS"
   :config
   (setq elfeed-feeds
-		'(;; emacs
-		  ("http://emacsredux.com/atom.xml" emacs)
-		  ("http://endlessparentheses.com/atom.xml" emacs)
-		  ("http://nullprogram.com/feed/" emacs)
-		  ("http://planet.emacsen.org/atom.xml" emacs)
-		  ("http://www.lunaryorn.com/feed.atom" emacs)
-		  ("http://www.masteringemacs.org/feed/" emacs)
-		  ("https://github.com/milkypostman/melpa/commits/master.atom" github emacs)
-		  ("http://oremacs.com/atom.xml" emacs)
-		  ("http://emacsnyc.org/atom.xml" emacs)
-		  ;; ("https://www.reddit.com/r/emacs/.rss" emacs reddit)
-		  ;; ("https://www.reddit.com/r/orgmode/.rss" emacs reddit)
+    '(;; emacs
+      ("http://emacsredux.com/atom.xml" emacs)
+      ("http://endlessparentheses.com/atom.xml" emacs)
+      ("http://nullprogram.com/feed/" emacs)
+      ("http://planet.emacsen.org/atom.xml" emacs)
+      ("http://www.lunaryorn.com/feed.atom" emacs)
+      ("http://www.masteringemacs.org/feed/" emacs)
+      ("https://github.com/milkypostman/melpa/commits/master.atom" github emacs)
+      ("http://oremacs.com/atom.xml" emacs)
+      ("http://emacsnyc.org/atom.xml" emacs)
+      ;; ("https://www.reddit.com/r/emacs/.rss" emacs reddit)
+      ;; ("https://www.reddit.com/r/orgmode/.rss" emacs reddit)
 
-		  ;;("http://stackexchange.com/feeds/tagsets/152198/emacs?sort=active" emacs)
-		  ))
+      ;;("http://stackexchange.com/feeds/tagsets/152198/emacs?sort=active" emacs)
+      ))
 
   (setq elfeed-use-curl t)
   (setq elfeed-search-filter "@1-week-ago +unread")
 
   ;; Entries older than 4 weeks are marked as read
   (add-hook 'elfeed-new-entry-hook
-			(elfeed-make-tagger :before "4 weeks ago"
-								:remove 'unread))
+      (elfeed-make-tagger :before "4 weeks ago"
+                :remove 'unread))
 
   ;; fetch RSS/Atom feeds in the background
   ;;
@@ -2675,16 +2675,16 @@ _<_   _>_    _d_  definition   _R_  remove     _Q_  query-replace
 ;; (defun elfeed-dead-feeds (years)
 ;;   "Return a list of feeds that haven't posted en entry in YEARS years."
 ;;   (cl-block
-;; 	  (macroexp-let* ((living-feeds (make-hash-table :test 'equal))
-;; 					  (seconds (* years 365.0 24 60 60))
-;; 					  (threshold (- (float-time) seconds)))
-;; 					 (with-elfeed-db-visit (entry feed)
-;; 										   (let ((date (elfeed-entry-date entry)))
-;; 											 (when (> date threshold)
-;; 											   (setf (gethash (elfeed-feed-url feed) living-feeds) t))))
-;; 					 (cl-loop for url in (elfeed-feed-list)
-;; 							  unless (gethash url living-feeds)
-;; 							  collect url))))
+;;      (macroexp-let* ((living-feeds (make-hash-table :test 'equal))
+;;              (seconds (* years 365.0 24 60 60))
+;;              (threshold (- (float-time) seconds)))
+;;             (with-elfeed-db-visit (entry feed)
+;;                         (let ((date (elfeed-entry-date entry)))
+;;                         (when (> date threshold)
+;;                           (setf (gethash (elfeed-feed-url feed) living-feeds) t))))
+;;             (cl-loop for url in (elfeed-feed-list)
+;;                  unless (gethash url living-feeds)
+;;                  collect url))))
 ;; (elfeed-dead-feeds 1.0)
 
 
@@ -2773,7 +2773,7 @@ _<_   _>_    _d_  definition   _R_  remove     _Q_  query-replace
   :if (and my-use-helm (not noninteractive))
   :defer t
   :bind (("S-<f7>" . helm-select-compile-command)
-		 ("<f7>"   . helm-compile)))
+     ("<f7>"   . helm-compile)))
 
 
 
@@ -2824,8 +2824,7 @@ _<_   _>_    _d_  definition   _R_  remove     _Q_  query-replace
   "Show loaded features."
   (interactive)
   (with-output-to-temp-buffer "*Features*"
-	(let (value)
-	  (dolist (elem (cl-set-difference features features-when-run-emacs-Q))
-		(unless (s-suffix? "-autoloads" (symbol-name elem))
-		  (princ (format "%s\n" (symbol-name elem))))))))
-
+  (let (value)
+    (dolist (elem (cl-set-difference features features-when-run-emacs-Q))
+    (unless (s-suffix? "-autoloads" (symbol-name elem))
+      (princ (format "%s\n" (symbol-name elem))))))))
