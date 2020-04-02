@@ -13,6 +13,8 @@
 
 (setq user-full-name "Holger Schurig")
 (setq user-mail-address "holgerschurig@gmail.com")
+(defvar my-freenode-password nil "Password for the IRC network freenode.net")
+(require 'private (expand-file-name "private.el" doom-private-dir) 'noerror)
 
 
 
@@ -276,8 +278,6 @@ behavior added."
 
 ;;; CANC Package: circe
 
-;; (defvar my-freenode-password nil "Password for the IRC network freenode.net")
-;; (require 'private (expand-file-name "private.el" doom-private-dir) 'noerror)
 ;; (after! circe
 ;; 		(message "CIIIIIIIIIIIIIIIIIIIIIRCE")
 ;;   (set-irc-server! "chat.freenode.net"
