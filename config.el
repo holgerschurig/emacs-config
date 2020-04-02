@@ -508,13 +508,25 @@ behavior added."
 
 ;;; Package: helpful
 
-(add-to-list 'display-buffer-alist
-             `(,(rx bos "*helpful" )
-               (display-buffer-reuse-window display-buffer-same-window)
-               (reusable-frames . visible))
-             )
+(after! helpful
+  (add-to-list 'display-buffer-alist
+               `(,(rx bos "*helpful" )
+                 (display-buffer-reuse-window display-buffer-same-window)
+                 (reusable-frames . visible))
+               )
+  (add-hook 'helpful-mode-hook #'visual-line-mode))
 
 (map! "<f1> h" #'helpful-at-point)
+
+
+
+;;; Package: indent
+
+(after! indent
+  ;; This variable is used in indent-for-tab-command and calls and calls out to
+  ;; completion-at-point
+  (setq tab-always-indent 'complete))
+
 
 
 
