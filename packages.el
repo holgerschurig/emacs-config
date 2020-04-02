@@ -62,6 +62,8 @@
 
 (package! rainbow-mode)
 
+(package! symbol-overlay)
+
 (disable-packages!
   demangle-mode ;; objdump can do this quite well
   dhall-mode    ;; no need for this "programmable configuration language"
