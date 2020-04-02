@@ -927,6 +927,9 @@ Convert      _ch_ ^^ RGB → Hex       _cr_ ^^ Hex → RGB       _cR_ ^^ Hex →
   "Dummy")
 (defun turn-off-smartparens-mode ()
   "Dummy")
+(defun sp-point-in-comment (&optional pos)
+  "Dummy"
+  nil)
 
 
 
