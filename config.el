@@ -19,15 +19,6 @@
 
 
 
-;;; Doom related
-
-(setq doom-font (font-spec :family "monospace" :size 14))
-;; `doom-variable-pitch-font'
-;; `doom-big-font' -- used for `doom-big-font-mode'; for presentations
-
-
-
-
 ;;; Buffers
 
 ;; Don't asks you if you want to kill a buffer with a live process
