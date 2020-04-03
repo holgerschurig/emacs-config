@@ -547,12 +547,22 @@ behavior added."
   ;; Don't show ./ and ../ when finding files with ivy. Use backspace to go up.
   (setq ivy-extra-directories nil)
 
-
-  ;; (defun my-ivy-sort (X Y)
-  ;;    (or (< (length X) (length Y))
-  ;;      (and (= (length X) (length Y)) (string< X Y))
-  ;;      ))
-  ;; (setq ivy-sort-functions-alist '((t . my-ivy-sort)))
+  (defun my-ivy-sort (X Y)
+    "Similar to ivy-string<, but also takes the length of the string into consideration."
+    (let ((xx (if (consp X) (car X) X))
+          (yy (if (consp Y) (car Y) Y)))
+      (or (< (length xx) (length yy))
+          (and (= (length xx) (length yy)) (string< xx yy)))))
+  ;; (sort '("c" "b" "a") #'my-ivy-sort)
+  ;; (sort '("c" "b" "a" "cc" "bb" "aa") #'my-ivy-sort)
+  ;; (sort '("general-define-key" "general-evil-define-key") #'my-ivy-sort)
+  ;; (ivy-read "Test: " '("cc" "c" "b" "a" "bb" "aa"))
+  ;; (ivy-read "Test: " '("cc" "c" "b" "a" "bb" "aa") :sort t)
+  (setq ivy-sort-functions-alist
+        '(
+          (read-file-name-internal . ivy-sort-file-function-default)
+          (t . my-ivy-sort)
+          ))
 
 
   ;; Don't require order, so 'func descr' matches 'describe-function',
