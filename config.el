@@ -617,7 +617,9 @@ Convert      _ch_ ^^ RGB → Hex       _cr_ ^^ Hex → RGB       _cR_ ^^ Hex →
   ("cR" kurecolor-hexcolor-at-point-or-region-to-css-rgba :color blue)
   ("q"  nil "cancel" :color blue))
 
-(defun my-kurecolor ()
+(defun kurecolor ()
+  "Turns on rainbow mode and lets you modify the current color code. The
+cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   (interactive)
   (rainbow-mode t)
   (hydra-kurecolor/body))
