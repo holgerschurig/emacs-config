@@ -93,7 +93,7 @@ buffer is not visiting a file."
         (firstbuf nil))
     (dolist (buffer (buffer-list))
       (with-current-buffer buffer
-                                        ;(princ (format "name %s, fn %s\n" (buffer-name) buffer-file-name))
+        ;;(princ (format "name %s, fn %s\n" (buffer-name) buffer-file-name))
         (unless (or
                  ;; Don't mention internal buffers.
                  (string= (substring (buffer-name) 0 1) " ")
@@ -102,13 +102,13 @@ buffer is not visiting a file."
                  ;; Skip the current buffer
                  (eq buffer curbuf)
                  )
-                                        ;(princ (format " nme %s, fn %s\n" (buffer-name) buffer-file-name))
+          ;;(princ (format " nme %s, fn %s\n" (buffer-name) buffer-file-name))
           (unless firstbuf
             (setq firstbuf buffer))
           ;;(print buffer)
           )))
     (when firstbuf
-                                        ;(princ (format "new buffer: %s.\n" firstbuf))
+      ;;(princ (format "new buffer: %s.\n" firstbuf))
       (bury-buffer)
       (switch-to-buffer firstbuf))))
 (defun my-explode-window ()
