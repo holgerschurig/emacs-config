@@ -576,18 +576,6 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
-;;; Package: modes/circe TODO
-
-;; (after! circe
-;;   (set-irc-server! "chat.freenode.net"
-;;     `(:tls t
-;;       :port 6697
-;;       :nick "schurig"
-;;       :channels ("#emacs"))))
-
-
-
-
 ;;; Package: modes/diff-mode
 
 ;; The following let the commits from "git diff >foo.diff" stand out more:
