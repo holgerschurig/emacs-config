@@ -350,28 +350,15 @@ behavior added."
 ;;; Package: gui/whitespace
 
 (after! whitespace
-  (setq-default whitespace-style '(
-                                   ;; Original values with some uncommented:
-                                   face
-                                   tabs
-                                   spaces
-                                   trailing
-                                   lines
-                                   space-before-tab
-                                   newline
-                                   indentation
-                                   empty
-                                   space-after-tab
-                                   space-mark
-                                   tab-mark
-                                   ;; newline-mark
+  (setq whitespace-global-modes nil))
+;; unfortunately, removing doom-highlight-non-default-indentation-h from
+;; change-major-mode-hook didn't work, it was somehow added again so I define a
+;; dummy function to override doom's weird behavior of turning white-space
+;; mode on at unwanted times.
+(defun doom-highlight-non-default-indentation-h ()
+  "Dummy")
 
-                                   ;; Additional values:
-                                   lines-tail
-                                   empty
-                                   )))
-
-(map! "C-x w" #'whitespace-mode)
+(map! "C-c w" #'whitespace-mode)
 
 
 
