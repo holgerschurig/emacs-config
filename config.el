@@ -939,6 +939,16 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
+;;; Package: lang/meson
+
+(use-package! meson-mode
+  :mode (("\\meson.build\\'" . meson-mode))
+  :config
+  (setq meson-indent-basic 4))
+
+
+
+
 ;;; Package: lang/sh-script
 
 (after! sh-script
