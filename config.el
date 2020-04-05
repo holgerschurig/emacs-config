@@ -499,10 +499,9 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
-;;; Package: edit/newcomment TODO
+;;; Package: edit/newcomment
 
-;; this clashes with the +emacs-bindings.el
-;; (map! "C-c c" #'comment-dwim)
+(map! "C-c c" #'comment-dwim)
 
 
 
