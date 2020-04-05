@@ -491,10 +491,9 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 ;;; Package: edit/indent
 
-(after! indent
-  ;; This variable is used in indent-for-tab-command and calls and calls out to
-  ;; completion-at-point
-  (setq tab-always-indent 'complete))
+;; This variable is used in indent-for-tab-command and calls and calls out to
+;; completion-at-point
+(setq tab-always-indent 'complete)
 
 
 
@@ -779,7 +778,13 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
     )
   (add-hook 'c-mode-hook #'my-c-mode-setup)
   (add-hook 'c++-mode-hook #'my-c-mode-setup)
+  (set-company-backend! '(c-mode c++-mode)
+    '(company-dabbrev-code  ; all symbols of current buffer that aren't strings/code
+      company-keywords      ; programming language keywords
+      company-yasnippet
+      ))
   )
+(map! "C-ä" #'company-complete)
 
 
 
