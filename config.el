@@ -495,29 +495,29 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 ;; I hate this package, so I don't want it. But I must define some fake functions
 ;; in order to mitigate errors.
-(cl-defun sp-local-pair (modes
-                         open
-                         close
-                         &key
-                         trigger
-                         trigger-wrap
-                         (actions '(:add))
-                         (when '(:add))
-                         (unless '(:add))
-                         (pre-handlers '(:add))
-                         (post-handlers '(:add))
-                         wrap
-                         bind
-                         insert
-                         prefix
-                         suffix
-                         skip-match)
-  "Dummy")
-(defun turn-off-smartparens-mode ()
-  "Dummy")
-(defun sp-point-in-comment (&optional pos)
-  "Dummy"
-  nil)
+;; (cl-defun sp-local-pair (modes
+;;                          open
+;;                          close
+;;                          &key
+;;                          trigger
+;;                          trigger-wrap
+;;                          (actions '(:add))
+;;                          (when '(:add))
+;;                          (unless '(:add))
+;;                          (pre-handlers '(:add))
+;;                          (post-handlers '(:add))
+;;                          wrap
+;;                          bind
+;;                          insert
+;;                          prefix
+;;                          suffix
+;;                          skip-match)
+;;   "Dummy")
+;; (defun turn-off-smartparens-mode ()
+;;   "Dummy")
+;; (defun sp-point-in-comment (&optional pos)
+;;   "Dummy"
+;;   nil)
 
 
 
