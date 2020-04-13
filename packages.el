@@ -56,6 +56,8 @@
 
 (package! kurecolor)
 
+(package! meson-mode)
+
 (package! modus-vivendi-theme :recipe (:host gitlab :repo "protesilaos/modus-themes"))
 
 (package! nswbuff :recipe (:host github :repo "joostkremers/nswbuff"))
