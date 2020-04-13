@@ -588,7 +588,9 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   ;; without restrictions.
   (setq dired-isearch-filenames 'dwim))
 
-(map! "C-x C-d" #'dired-jump) ;; "C-x d" is dired
+(map! "C-x C-d" #'dired-jump  ;; "C-x d" is dired
+      :map dired-mode-map
+      "q" #'dired-up-directory)
 
 
 
