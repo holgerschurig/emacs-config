@@ -989,6 +989,8 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
+(setq org-replace-disputed-keys t)
+
 (after! org
   (setq org-directory "~/org/")
   )
