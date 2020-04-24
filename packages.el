@@ -85,7 +85,7 @@
   magit-todos   ;; would be pulled in by tools/magit, but I don't need it
   org-yt        ;; youtube links in org-mode?  Who wants that?  :-)
   rtags         ;; I'll use lsp eventually
-  ;; smartparens   ;; makes many M-<cursor keypad> keys behave weird
+  smartparens   ;; makes many M-<cursor keypad> keys behave weird
   ivy-rtags     ;; I'll use lsp eventually
   irony-eldoc
   company-dict	;; we don't load complete from dictionaries
