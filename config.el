@@ -691,6 +691,25 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
+;;; Package: completion/company
+
+(after! company
+  (setq company-idle-delay 1)
+
+  (setq company-selection-wrap-around t))
+
+(map!
+ :map company-mode-map
+ "C-<tab>"   #'company-complete
+ "C-ä"       #'company-complete
+ :map company-active-map
+ "ESC"       #'company-abort
+ "<tab>"     #'company-complete-common-or-cycle
+ "<backtab>" #'company-complete-common-or-cycle-backward
+ )
+
+
+
 ;;; Package: completion/ivy
 
 (after! ivy
