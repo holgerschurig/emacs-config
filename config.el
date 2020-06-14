@@ -509,6 +509,9 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 (defun sp-point-in-comment (&optional pos)
   "Dummy"
   nil)
+(defun sp-point-in-string (&optional pos)
+  "Dummy"
+  nil)
 
 
 
