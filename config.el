@@ -987,6 +987,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 (after! org
   (setq org-directory "~/org/")
+  (remove-hook 'org-mode-hook #'org-superstar-mode)
   )
 
 
