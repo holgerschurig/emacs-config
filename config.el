@@ -730,9 +730,12 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 ;;; Package: completion/company
 
 (after! company
-  (setq company-idle-delay 1)
-
-  (setq company-selection-wrap-around t))
+  (setq company-idle-delay 1             ;; was 0.5
+        company-selection-wrap-around t  ;; was nil
+        company-tooltip-limit 10         ;; was 14
+        company-tooltip-minimum-width 80 ;; was 0
+        company-tooltip-minimum 5        ;; was 6
+        company-global-modes '(not comint-mode erc-mode message-mode help-mode gud-mode)))
 
 (map!
  :map company-mode-map
