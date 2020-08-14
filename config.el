@@ -30,9 +30,6 @@
 
 
 
-
-
-
 ;;; Misc
 
 (add-hook 'message-mode-hook #'word-wrap-mode)
@@ -50,6 +47,20 @@
 
 (defalias 'sudo-edit 'doom/sudo-this-file
    "Edit currently visited file as root.")
+
+
+
+
+;;; Misc keybindings
+;; This is like the start of modules/config/default/+emacs-bindings.el:
+
+;; Sensible default key bindings for non-evil users
+(setq doom-leader-alt-key "C-c"
+      doom-localleader-alt-key "C-c l")
+;; persp-mode and projectile in different prefixes
+(setq persp-keymap-prefix (kbd "C-c w"))
+(after! projectile
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
 
 
 
