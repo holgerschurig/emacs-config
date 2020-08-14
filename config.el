@@ -723,6 +723,9 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   ;; Don't show ./ and ../ when finding files with ivy. Use backspace to go up.
   (setq ivy-extra-directories nil)
 
+  ;; With this setting C-o will show a list of available actions in a hydra
+  (setq ivy-read-action-function #'ivy-hydra-read-action)
+
   (defun my-ivy-sort (X Y)
     "Similar to ivy-string<, but also takes the length of the string into consideration."
     (let ((xx (if (consp X) (car X) X))
