@@ -928,6 +928,12 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
+;;; Package: lsp
+
+;;(setq lsp-flycheck-live-reporting t)
+
+
+
 ;;; Package: lang/magit
 
 (after! magit
