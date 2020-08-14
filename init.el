@@ -138,7 +138,7 @@
        ;;ledger            ; an accounting system in Emacs
        lua                 ; one-based indices? one-based indices
        markdown            ; writing docs for people to ignore
-       ;;nim               ; python + lisp at the speed of c
+       nim                 ; python + lisp at the speed of c
        ;;nix               ; I hereby declare "nix geht mehr!"
        ;;ocaml             ; an objective camel
        org                 ; organize your plain life in plain text
@@ -152,7 +152,7 @@
        ;;rest              ; Emacs as a REST client
        ;;rst               ; ReST in peace
        ;;(ruby +rails)     ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
-       ;;rust              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
+       rust              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
        ;;scala             ; java, but good
        ;;scheme            ; a fully conniving family of lisps
        sh                  ; she sells {ba,z,fi}sh shells on the C xor
