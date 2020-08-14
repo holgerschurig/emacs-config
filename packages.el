@@ -88,5 +88,5 @@
   smartparens   ;; makes many M-<cursor keypad> keys behave weird
   ivy-rtags     ;; I'll use lsp eventually
   irony-eldoc
-  company-dict	;; we don't load complete from dictionaries
+  company-dict  ;; we don't load complete from dictionaries
   )
