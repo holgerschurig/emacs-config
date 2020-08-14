@@ -366,6 +366,31 @@ behavior added."
 
 
 
+;;; Package: gui/hl-todo
+(after! hl-todo
+  (setq hl-todo-keyword-faces
+        '(("TODO" warning bold)                      ;; was "#cc9393"
+          ("FIXME" error bold)                       ;; was "#cc9393")
+          ("HACK" font-lock-constant-face bold)      ;; was "#d0bf8f"
+          ("REVIEW" font-lock-keyword-face bold)
+          ("NOTE" success bold)                      ;; was "#d0bf8f"
+          ("DEPRECATED" font-lock-doc-face bold)
+          ("BUG" error bold)
+          ("XXX" font-lock-constant-face bold)       ;; was "#cc9393"
+          ;; some more original values
+          ("HOLD" . "#d0bf8f")
+          ("OKAY" . "#7cb8bb")
+          ("DONT" . "#5f7f5f")
+          ("FAIL" . "#8c5353")
+          ("DONE" . "#afd8af")
+          ("KLUDGE" . "#d0bf8f")
+          ("TEMP" . "#d0bf8f")
+          ;; some of my own
+          ("WAIT" . "#d0bf8f")
+          ("XXX+" . "#dc752f"))))
+
+
+
 ;;; Package: theme/font-core
 
 ;; I got the idea from here:
