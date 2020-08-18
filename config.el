@@ -700,6 +700,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 (map!
  :map company-mode-map
+ "<tab>"     #'company-indent-or-complete-common
  "C-<tab>"   #'company-complete
  "C-ä"       #'company-complete
  :map company-active-map
