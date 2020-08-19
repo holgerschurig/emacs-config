@@ -773,15 +773,15 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
     (modify-syntax-entry ?_ "w")
     (setq c-recognize-knr-p nil)
 
-    ;; (if (and buffer-file-name (string-match "/linux" buffer-file-name))
-    ;;    ;; only for Linux C files
-    ;;    (progn (c-set-style "linux-tabs-only")
-    ;;         (setq tab-width 8
-    ;;           c-basic-offset 8))
-    ;;   (c-set-style "linux")
-    ;;   (setq tab-width 4
-    ;;         c-basic-offset 4))))
-    )
+    (if (and buffer-file-name (string-match "/linux" buffer-file-name))
+       ;; only for Linux C files
+       (progn (c-set-style "linux-tabs-only")
+            (setq tab-width 8
+              c-basic-offset 8))
+      (c-set-style "qt-gnu")
+      ;; (setq tab-width 4
+      ;;       c-basic-offset 4)
+    ))
   (add-hook 'c-mode-hook #'my-c-mode-setup)
   (add-hook 'c++-mode-hook #'my-c-mode-setup)
   (set-company-backend! '(c-mode c++-mode)
