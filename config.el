@@ -735,7 +735,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
         company-tooltip-limit 10         ;; was 14
         company-tooltip-minimum-width 80 ;; was 0
         company-tooltip-minimum 5        ;; was 6
-        company-global-modes '(not comint-mode erc-mode message-mode help-mode gud-mode)))
+        company-global-modes '(not magit-status-mode comint-mode erc-mode message-mode help-mode gud-mode)))
 
 (map!
  :map company-mode-map
