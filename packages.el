@@ -58,7 +58,7 @@
 
 (package! meson-mode)
 
-(package! modus-vivendi-theme :recipe (:host gitlab :repo "protesilaos/modus-themes"))
+(package! modus-vivendi-theme)
 
 (package! nswbuff :recipe (:host github :repo "joostkremers/nswbuff"))
 
