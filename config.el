@@ -184,8 +184,7 @@ If there are two windows displayed, act like \"C-x o\"."
   (setq isearch-allow-scroll t)
 
   ;; Do less flickering be removing highlighting immediately
-  (setq lazy-highlight-initial-delay 0)
-  (setq search-whitespace-regexp ".*"))
+  (setq lazy-highlight-initial-delay 0))
 
 
 
