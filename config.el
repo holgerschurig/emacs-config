@@ -1053,8 +1053,11 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 (setq org-replace-disputed-keys t)
 
 (after! org
-  (setq org-directory "~/org/")
-  (setq org-startup-indented nil)
+  (setq org-directory "~/org/"
+        org-fontify-quote-and-verse-blocks nil
+        org-fontify-whole-heading-line nil
+        org-hide-leading-stars nil
+        org-startup-indented nil)
   (remove-hook 'org-mode-hook #'org-superstar-mode)
   )
 
