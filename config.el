@@ -1020,6 +1020,21 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
+;;; Package: lang/python
+
+(after! python
+    (defun my-python-setup ()
+      (interactive)
+      (setq indent-tabs-mode t
+            python-indent-offset 4
+            tab-width 4
+            ;; this fixes the weird indentation when entering a colon
+            ;; from http://emacs.stackexchange.com/questions/3322/python-auto-indent-problem
+            electric-indent-chars (delq ?: electric-indent-chars)))
+    (add-hook 'python-mode-hook #'my-python-setup))
+
+
+
 ;;; Package: lang/sh-script
 
 (after! sh-script
