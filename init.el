@@ -79,7 +79,9 @@
 
        :checkers
        ;;syntax            ; tasing you for every semicolon you forget
-       ;;spell             ; tasing you for misspelling mispelling
+       (spell              ; tasing you for misspelling mispelling
+        +aspell
+        -hunspell)
        ;;grammar           ; tasing grammar mistake every you make
 
        :tools
