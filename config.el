@@ -1012,6 +1012,14 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
+;;; Package: lang/plantuml
+
+(after! plantuml-mode
+  (setq plantuml-jar-path "/home/schurig/.cache/plantuml.jar"))
+
+
+
+
 ;;; Package: lang/sh-script
 
 (after! sh-script
@@ -1058,6 +1066,10 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
         org-fontify-whole-heading-line nil
         org-hide-leading-stars nil
         org-startup-indented nil)
+  ;; PlantUML
+  (setq org-plantuml-jar-path "/usr/local/bin/plantuml.1.2020.16.jar")
+  (org-babel-do-load-languages 'org-babel-load-languages
+                                 '(plantuml . t))
   (remove-hook 'org-mode-hook #'org-superstar-mode)
   )
 
