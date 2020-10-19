@@ -973,6 +973,18 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
+;;; Package: lsp/eglot
+
+(after! eglot
+  (add-to-list 'eglot-server-programs '((c++-mode c-mode) "/usr/bin/clangd-10"
+                                        ;;"--clang-tidy"
+                                        "--background-index"
+                                        "--suggest-missing-includes"
+                                        "-j=1"
+                                        "--compile-commands-dir=build")))
+
+
+
 ;;; Package: lang/magit
 
 (after! magit
