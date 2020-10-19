@@ -807,9 +807,15 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 (after! cc-mode
   (defun my-c-mode-setup ()
+    ;;(eglot-ensure)
+
     ;; need to check the mode because I run this also at the revert hook!
     (modify-syntax-entry ?_ "w")
     (setq c-recognize-knr-p nil)
+
+    (c-add-style "qt-gnu"
+                 '("gnu" (c-access-key .
+                        "\\<\\(signals\\|public\\|protected\\|private\\|public slots\\|protected slots\\|private slots\\):")))
 
     (if (and buffer-file-name (string-match "/linux" buffer-file-name))
        ;; only for Linux C files
