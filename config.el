@@ -823,8 +823,8 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
             (setq tab-width 8
               c-basic-offset 8))
       (c-set-style "qt-gnu")
-      ;; (setq tab-width 4
-      ;;       c-basic-offset 4)
+      (setq tab-width 4
+            c-basic-offset 4)
     ))
   (add-hook 'c-mode-hook #'my-c-mode-setup)
   (add-hook 'c++-mode-hook #'my-c-mode-setup)
