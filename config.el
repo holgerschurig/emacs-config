@@ -1099,6 +1099,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
         org-fontify-whole-heading-line nil
         org-hide-leading-stars nil
         org-startup-indented nil)
+  (electric-indent-mode -1)
   ;; PlantUML
   (setq org-plantuml-jar-path "/usr/local/bin/plantuml.1.2020.16.jar")
   (org-babel-do-load-languages 'org-babel-load-languages
