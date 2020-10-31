@@ -974,12 +974,6 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
-;;; Package: lsp
-
-;;(setq lsp-flycheck-live-reporting t)
-
-
-
 ;;; Package: lang/magit
 
 (after! magit
@@ -1074,6 +1068,12 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   ;; Remove most back-ends from vc-mode
   (setq vc-handled-backends '(Git)))
 
+
+
+;;; Package: tools/eglot
+
+(after! eglot
+  (add-to-list 'eglot-server-programs '((c++-mode c-mode) . ("clangd-11" "--compile-commands-dir=build"))))
 
 
 ;;; Package: org/org
