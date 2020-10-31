@@ -67,6 +67,7 @@
 (package! symbol-overlay)
 
 (disable-packages!
+  better-jumper ;; looks like it only works in evil mode
   demangle-mode ;; objdump can do this quite well
   dhall-mode    ;; no need for this "programmable configuration language"
   dired-rsync   ;; would be pulled in by modules/data, but I don't need it
