@@ -813,6 +813,11 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
     (modify-syntax-entry ?_ "w")
     (setq c-recognize-knr-p nil)
 
+    ;; use "// " for commenting in both C and C++
+    (setq comment-start "// "
+          comment-end "")
+
+
     (if (and buffer-file-name (string-match "/linux" buffer-file-name))
        ;; only for Linux C files
        (progn (c-set-style "linux-tabs-only")
