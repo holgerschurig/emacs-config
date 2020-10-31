@@ -654,6 +654,8 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 ;;; Package: modes/pdf-tools
 
 (after! pdf-tools
+  (add-hook 'pdf-view-mode-hook #'pdf-view-auto-slice-minor-mode)
+  (add-hook 'pdf-view-mode-hook #'pdf-view-midnight-minor-mode)
   (defhydra hydra-pdftools (:color blue :hint nil)
     "
                                                                       ╭───────────┐
