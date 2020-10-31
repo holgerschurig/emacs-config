@@ -184,8 +184,7 @@ If there are two windows displayed, act like \"C-x o\"."
   (setq isearch-allow-scroll t)
 
   ;; Do less flickering be removing highlighting immediately
-  (setq lazy-highlight-initial-delay 0)
-  (setq search-whitespace-regexp ".*"))
+  (setq lazy-highlight-initial-delay 0))
 
 
 
@@ -737,7 +736,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
         company-tooltip-limit 10         ;; was 14
         company-tooltip-minimum-width 80 ;; was 0
         company-tooltip-minimum 5        ;; was 6
-        company-global-modes '(not magit-status-mode comint-mode erc-mode message-mode help-mode gud-mode)))
+        company-global-modes '(not magit-status-mode org-mode comint-mode erc-mode message-mode help-mode gud-mode)))
 
 (map!
  :map company-mode-map
@@ -1015,6 +1014,29 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
+;;; Package: lang/plantuml
+
+(after! plantuml-mode
+  (setq plantuml-jar-path "/home/schurig/.cache/plantuml.jar"))
+
+
+
+
+;;; Package: lang/python
+
+(after! python
+    (defun my-python-setup ()
+      (interactive)
+      (setq indent-tabs-mode t
+            python-indent-offset 4
+            tab-width 4
+            ;; this fixes the weird indentation when entering a colon
+            ;; from http://emacs.stackexchange.com/questions/3322/python-auto-indent-problem
+            electric-indent-chars (delq ?: electric-indent-chars)))
+    (add-hook 'python-mode-hook #'my-python-setup))
+
+
+
 ;;; Package: lang/sh-script
 
 (after! sh-script
@@ -1056,8 +1078,15 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 (setq org-replace-disputed-keys t)
 
 (after! org
-  (setq org-directory "~/org/")
-  (setq org-startup-indented nil)
+  (setq org-directory "~/org/"
+        org-fontify-quote-and-verse-blocks nil
+        org-fontify-whole-heading-line nil
+        org-hide-leading-stars nil
+        org-startup-indented nil)
+  ;; PlantUML
+  (setq org-plantuml-jar-path "/usr/local/bin/plantuml.1.2020.16.jar")
+  (org-babel-do-load-languages 'org-babel-load-languages
+                                 '(plantuml . t))
   (remove-hook 'org-mode-hook #'org-superstar-mode)
   )
 
