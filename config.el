@@ -809,6 +809,8 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 (after! cc-mode
   (defun my-c-mode-setup ()
+    ;;(eglot-ensure)
+
     ;; need to check the mode because I run this also at the revert hook!
     (modify-syntax-entry ?_ "w")
     (setq c-recognize-knr-p nil)
@@ -817,6 +819,9 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
     (setq comment-start "// "
           comment-end "")
 
+    (c-add-style "qt-gnu"
+                 '("gnu" (c-access-key .
+                        "\\<\\(signals\\|public\\|protected\\|private\\|public slots\\|protected slots\\|private slots\\):")))
 
     (if (and buffer-file-name (string-match "/linux" buffer-file-name))
        ;; only for Linux C files
@@ -824,8 +829,8 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
             (setq tab-width 8
               c-basic-offset 8))
       (c-set-style "qt-gnu")
-      ;; (setq tab-width 4
-      ;;       c-basic-offset 4)
+      (setq tab-width 4
+            c-basic-offset 4)
     ))
   (add-hook 'c-mode-hook #'my-c-mode-setup)
   (add-hook 'c++-mode-hook #'my-c-mode-setup)
@@ -974,6 +979,18 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
+;;; Package: lsp/eglot
+
+(after! eglot
+  (add-to-list 'eglot-server-programs '((c++-mode c-mode) "/usr/bin/clangd-10"
+                                        ;;"--clang-tidy"
+                                        "--background-index"
+                                        "--suggest-missing-includes"
+                                        "-j=1"
+                                        "--compile-commands-dir=build")))
+
+
+
 ;;; Package: lang/magit
 
 (after! magit
@@ -1088,6 +1105,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
         org-fontify-whole-heading-line nil
         org-hide-leading-stars nil
         org-startup-indented nil)
+  (electric-indent-mode -1)
   ;; PlantUML
   (setq org-plantuml-jar-path "/usr/local/bin/plantuml.1.2020.16.jar")
   (org-babel-do-load-languages 'org-babel-load-languages
