@@ -301,6 +301,19 @@ behavior added."
 
 
 
+;;; Package: core/vc
+
+(after! vc-hooks
+  ;; Remove most back-ends from vc-mode
+  (setq vc-handled-backends '(Git))
+  ;; Disable version control when using tramp
+  (setq vc-ignore-dir-regexp
+      (format "\\(%s\\)\\|\\(%s\\)"
+              vc-ignore-dir-regexp
+              tramp-file-name-regexp)))
+
+
+
 ;;; Package: core/window
 
 (map! "C-x k" #'kill-buffer-and-window)
@@ -1076,14 +1089,6 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 (remove-hook 'text-mode-hook #'auto-fill-mode)
 
-
-
-
-;;; Package: lang/vc-hooks
-
-(after! vc-hooks
-  ;; Remove most back-ends from vc-mode
-  (setq vc-handled-backends '(Git)))
 
 
 
