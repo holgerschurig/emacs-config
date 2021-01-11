@@ -90,4 +90,8 @@
   ivy-rtags     ;; I'll use lsp eventually
   irony-eldoc
   company-dict  ;; we don't load complete from dictionaries
+  ;; I use magit, not vc
+  vc
+  vc-git
+  vc-hooks
   )
