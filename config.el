@@ -207,7 +207,7 @@ If there are two windows displayed, act like \"C-x o\"."
 
 
 
-;;; Package: minibuf
+;;; Package: core/minibuf
 
 (setq history-delete-duplicates t)
 
