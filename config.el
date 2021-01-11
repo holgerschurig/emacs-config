@@ -1,6 +1,7 @@
 ;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
 
+
 ;;; Error handling
 
 ;;(toggle-debug-on-error)
@@ -213,6 +214,9 @@ If there are two windows displayed, act like \"C-x o\"."
 
 (setq resize-mini-windows t)
 
+;; Have you ever tried to quit the minibuffer when point was in another window?
+;; Naturally you would try hammering C-g but in stock Emacs the minibuffer stays
+;; active and all you get are grumpy "Quit" messages.
 (defun my-keyboard-quit ()
   "Quit current context.
 
@@ -604,6 +608,71 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
+;;; Package: misc/embark
+
+;; The following keymaps are already existing, so you can just add actions to
+;; them. Then position the cursor somewhere and do "C-,". To see then which
+;; actions are available, run "C-h".
+;;
+;; embark-meta-map
+;; embark-symbol-map
+;; embark-collect-direct-action-minor-mode-map
+;; embark-become-shell-command-map
+;; embark-command-map
+;; embark-collect-mode-map
+;; embark-buffer-map
+;; embark-file-map
+;; embark-become-file+buffer-map
+;; embark-variable-map
+;; embark-occur-direct-action-minor-mode-map
+;; embark-package-map
+;; embark-unicode-name-map
+;; embark-general-map
+;; embark-overriding-map
+;; embark-bookmark-map
+;; embark-become-help-map
+;; embark-become-match-map
+;; embark-url-map
+;; embark-consult-location-map
+
+;; https://github.com/oantolin/embark
+(use-package! embark
+  :config
+  ;; the following general embark actions don't make sense as long as I use ivy
+  (if (featurep! :completion ivy)
+      (progn (define-key embark-general-map "B" nil)  ;; was embark-become
+             (define-key embark-general-map "E" nil)  ;; was embark-export
+             (define-key embark-general-map "L" nil)  ;; was embark-collect-live (something like occur)
+             (define-key embark-general-map "S" nil)  ;; was embark-collect-snapshot (something like occur)
+             (define-key embark-general-map "s" nil)) ;; was embark-save
+
+    (defun current-candidate+category ()
+      (when selectrum-active-p
+        (cons (selectrum--get-meta 'category)
+              (selectrum-get-current-candidate))))
+    (defun current-candidates+category ()
+      (when selectrum-active-p
+        (cons (selectrum--get-meta 'category)
+              (selectrum-get-current-candidates
+               ;; Pass relative file names for dired.
+               minibuffer-completing-file-name))))
+    (add-hook 'embark-target-finders #'current-candidate+category)
+    (add-hook 'embark-candidate-collectors #'current-candidates+category)
+    ;; No unnecessary computation delay after injection
+    (add-hook 'embark-setup-hook 'selectrum-set-selected-candidate)
+
+    (setq embark-action-indicator
+      (lambda (map) (which-key--show-keymap "Embark" map nil nil 'no-paging)
+        #'which-key--hide-popup-ignore-command)
+      embark-become-indicator embark-action-indicator)
+  )
+  :bind
+  ("C-," . embark-act  ;; *not* in minibuffer-local-map, because this can be used universally
+   )
+)
+
+
+
 ;;; Package: modes/diff-mode
 
 ;; The following let the commits from "git diff >foo.diff" stand out more:
@@ -804,19 +873,92 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   ;;       '((t . ivy--regex-ignore-order)))
 
   ;; (setq ivy-sort-functions-alist '((t . my-ivy-sort)))
+  (map! "C-x C-b"   #'ivy-switch-buffer
+        "C-c C-r"   #'ivy-resume
+
+        "C-x C-f"   #'counsel-find-file
+        "C-x 8 RET" #'counsel-unicode-char
+        "M-s g"     #'counsel-git-grep
+        "M-g i"     #'counsel-imenu
+        "M-y"       #'counsel-yank-pop ;; see http://pragmaticemacs.com/emacs/counsel-yank-pop-with-a-tweak/
+        "M-s o"     #'swiper)
   )
 
-(map! "C-x C-b"   #'ivy-switch-buffer
-      "C-c C-r"   #'ivy-resume
-
-      "C-x C-f"   #'counsel-find-file
-      "C-x 8 RET" #'counsel-unicode-char
-      "M-s g"     #'counsel-git-grep
-      "M-g i"     #'counsel-imenu
-      "M-y"       #'counsel-yank-pop ;; see http://pragmaticemacs.com/emacs/counsel-yank-pop-with-a-tweak/
-      "M-s o"     #'swiper)
 
 
+
+;;; Package: completion/selectrum
+
+;; https://github.com/raxod502/selectrum
+(use-package! selectrum
+  :init
+  (unless (featurep! :completion ivy)
+    (selectrum-mode +1))
+
+  :bind
+  ("C-x C-z"  . #'selectrum-repeat) ;; was suspend-frame
+  ("C-c C-r"  . #'selectrum-repeat)
+
+  :custom
+  ;; (selectrum-show-indices t)
+  (selectrum-num-candidates-displayed 15) ;; was 10
+)
+
+
+;;; Package: completion/selectrum-prescient
+(use-package! selectrum-prescient
+  :after selectrum
+  :init
+  (unless (featurep! :completion ivy)
+    (selectrum-prescient-mode +1))
+)
+
+;;; Package: completion/prescient
+;; https://github.com/raxod502/prescient.el
+;; Alternative: https://github.com/oantolin/orderless
+(use-package! prescient
+  :custom
+  (prescient-save-file (concat doom-cache-dir "prescient-save.el"))
+
+  :config
+  (prescient-persist-mode +1)
+)
+
+;;; Package: completion/marginalia
+;; https://github.com/minad/marginalia
+(use-package! marginalia
+  :init
+  (marginalia-mode)
+)
+
+;;; Package: completion/consult
+
+;; https://github.com/minad/consult
+(use-package consult
+  :config
+  (require 'consult-selectrum (concat doom-local-dir "straight/repos/consult/consult-selectrum.el"))
+
+  ;; this forces recentf to load directly, not delayed. So a C-x C-b directly after starting emacs
+  ;; will show previously used files
+  (recentf-mode +1)
+
+  :bind
+  ;; https://github.com/minad/consult#available-commands
+  ("C-x C-b"  . consult-buffer)    ;; https://github.com/minad/consult#virtual-buffers
+  ("C-x 4 b"  . consult-buffer-other-window)
+  ("C-x 5 b"  . consult-buffer-other-frame)
+  ("C-x r x"  . consult-register)
+  ("C-x r b"  . consult-bookmark)
+  ("M-y"      . consult-yank-pop)
+  ("M-g i"    . consult-imenu)
+  ("M-g M-g"  . consult-goto-line)
+  ("M-g g"    . consult-git-grep)  ;; needs 3 chars
+  ("M-g r"    . consult-ripgrep)   ;; needs 3 chars
+  ("M-g o"    . consult-line)      ;; similar to swiper, try M-n
+  ("<help> a" . consult-apropos)
+  ("C-x M-:"  . consult-complex-command) ;; was: repeat-complex-command
+
+)
 
 ;;; Package: lang/c-mode
 
@@ -980,19 +1122,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
-;;; Package: lang/ivy-compile
-
-(use-package! ivy-compile
-  ;; :if (and (not my-use-helm) (not noninteractive))
-  :load-path doom-private-dir
-  :defer t
-  :bind (("S-<f7>" . ivy-select-compile-command)
-         ("<f7>"   . ivy-compile)))
-
-
-
-
-;;; Package: lsp/eglot
+;;; Package: lang/eglot
 
 (after! eglot
   (add-to-list 'eglot-server-programs `((c++-mode c-mode)
@@ -1001,6 +1131,19 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
                                         "--suggest-missing-includes"
                                         "-j=1"
                                         "--compile-commands-dir=build")))
+
+
+
+;;; Package: lang/completion-compile
+
+(use-package! my-compile
+  :load-path doom-private-dir
+  :defer t
+  :bind
+  ("S-<f7>" . my-select-compile-command)
+  ("<f7>"   . my-compile)
+)
+
 
 
 

@@ -52,6 +52,12 @@
 
 (package! clean-aindent-mode)
 
+(package! embark)
+(package! selectrum)
+(package! selectrum-prescient)
+(package! marginalia)
+(package! consult)
+
 (package! ivy-hydra)
 
 (package! kurecolor)
