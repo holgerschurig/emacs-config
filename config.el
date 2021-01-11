@@ -982,8 +982,8 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 ;;; Package: lsp/eglot
 
 (after! eglot
-  (add-to-list 'eglot-server-programs '((c++-mode c-mode) "/usr/bin/clangd-10"
-                                        ;;"--clang-tidy"
+  (add-to-list 'eglot-server-programs `((c++-mode c-mode)
+                                        ,(if (string= (system-name) "desktop") "/usr/bin/clangd-10" "/usr/bin/clangd-11")
                                         "--background-index"
                                         "--suggest-missing-includes"
                                         "-j=1"
@@ -1085,12 +1085,6 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   ;; Remove most back-ends from vc-mode
   (setq vc-handled-backends '(Git)))
 
-
-
-;;; Package: tools/eglot
-
-(after! eglot
-  (add-to-list 'eglot-server-programs '((c++-mode c-mode) . ("clangd-11" "--compile-commands-dir=build"))))
 
 
 ;;; Package: org/org
