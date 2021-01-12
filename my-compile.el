@@ -14,8 +14,8 @@
 ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ;; GNU General Public License for more details.
 
-;; You should have received a copy of the GNU General Public License
-;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+;; You didn't have received a copy of the GNU General Public License
+;; along with this program.  So simply see <http://www.gnu.org/licenses/>.
 
 ;;; Commentary:
 
@@ -149,23 +149,28 @@ As a special case for elisp, also consider '(setq compile-command
   ;; my-compile-commands is now something like:
   ;; '(("make -C foo" . 1) ("ccmake && make" . 2))
 
-  ;; http://oremacs.com/swiper/#api
-  (cond ((boundp 'ivy-read)
-         (ivy-read "cmd: "
-                   (delq "" (mapcar 'car my-compile-commands))
-                   :preselect compile-command
-                   :caller #'my-select-compile-command
-                   :action #'my-compile-default-action
-                   ))
-         (t
-          (completing-read "cmd: "
-                           (delq "" (mapcar 'car my-compile-commands))
-                           nil ; predicate
-                           t   ; require match
-                           compile-command ; initial input
-                           )
-          )))
+  (setq compile-command
+        (let ((list (delq "" (mapcar 'car my-compile-commands))))
+          (cond ((fboundp 'ivy-read)
+                 ;; http://oremacs.com/swiper/#api
+                 (ivy-read "cmd: "
+                           list
+                           :preselect compile-command
+                           :caller #'my-select-compile-command
+                           :action #'my-compile-default-action))
+                 ((fboundp 'selectrum-read)
+                  (selectrum-read "cmd: "
+                                  list
+                                  :default-candidate compile-command
+                                  :require-match t
+                                  :may-modify-candidates t))
 
+                 (t
+                  (completing-read "cmd: "
+                                   list
+                                   :require-match t
+                                   :initial-input compile-command))
+                 ))))
 
 
 
@@ -210,4 +215,3 @@ selected with completion help."
       (compile compile-command))))
 
 (provide 'my-compile)
-;;; my-compile.el ends here
