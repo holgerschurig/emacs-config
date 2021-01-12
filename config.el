@@ -646,6 +646,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
              (define-key embark-general-map "S" nil)  ;; was embark-collect-snapshot (something like occur)
              (define-key embark-general-map "s" nil)) ;; was embark-save
 
+    ;; https://github.com/raxod502/selectrum/wiki/Additional-Configuration#minibuffer-actions-with-embark
     (defun current-candidate+category ()
       (when selectrum-active-p
         (cons (selectrum--get-meta 'category)
