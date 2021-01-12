@@ -836,6 +836,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 ;;; Package: completion/ivy
 
 (after! ivy
+  (message "IVY")
   (setq ivy-use-virtual-buffers t)       ; extend searching to bookmarks and recent files
   (setq ivy-count-format "(%d/%d) ")     ; count format, from the ivy help page
 
@@ -957,7 +958,6 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   ("M-g o"    . consult-line)      ;; similar to swiper, try M-n
   ("<help> a" . consult-apropos)
   ("C-x M-:"  . consult-complex-command) ;; was: repeat-complex-command
-
 )
 
 ;;; Package: lang/c-mode
