@@ -666,35 +666,27 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
                                        (t . list)))
 
   :config
-  ;; the following general embark actions don't make sense as long as I use ivy
-  (if (featurep! :completion ivy)
-      (progn (define-key embark-general-map "B" nil)  ;; was embark-become
-             (define-key embark-general-map "E" nil)  ;; was embark-export
-             (define-key embark-general-map "L" nil)  ;; was embark-collect-live (something like occur)
-             (define-key embark-general-map "S" nil)  ;; was embark-collect-snapshot (something like occur)
-             (define-key embark-general-map "s" nil)) ;; was embark-save
+  ;; https://github.com/raxod502/selectrum/wiki/Additional-Configuration#minibuffer-actions-with-embark
+  (defun current-candidate+category ()
+    (when selectrum-active-p
+      (cons (selectrum--get-meta 'category)
+            (selectrum-get-current-candidate))))
+  (defun current-candidates+category ()
+    (when selectrum-active-p
+      (cons (selectrum--get-meta 'category)
+            (selectrum-get-current-candidates
+             ;; Pass relative file names for dired.
+             minibuffer-completing-file-name))))
+  (add-hook 'embark-target-finders #'current-candidate+category)
+  (add-hook 'embark-candidate-collectors #'current-candidates+category)
+  ;; No unnecessary computation delay after injection
+  (add-hook 'embark-setup-hook 'selectrum-set-selected-candidate)
 
-    ;; https://github.com/raxod502/selectrum/wiki/Additional-Configuration#minibuffer-actions-with-embark
-    (defun current-candidate+category ()
-      (when selectrum-active-p
-        (cons (selectrum--get-meta 'category)
-              (selectrum-get-current-candidate))))
-    (defun current-candidates+category ()
-      (when selectrum-active-p
-        (cons (selectrum--get-meta 'category)
-              (selectrum-get-current-candidates
-               ;; Pass relative file names for dired.
-               minibuffer-completing-file-name))))
-    (add-hook 'embark-target-finders #'current-candidate+category)
-    (add-hook 'embark-candidate-collectors #'current-candidates+category)
-    ;; No unnecessary computation delay after injection
-    (add-hook 'embark-setup-hook 'selectrum-set-selected-candidate)
+  (setq embark-action-indicator
+        (lambda (map) (which-key--show-keymap "Embark" map nil nil 'no-paging)
+          #'which-key--hide-popup-ignore-command)
+        embark-become-indicator embark-action-indicator)
 
-    (setq embark-action-indicator
-      (lambda (map) (which-key--show-keymap "Embark" map nil nil 'no-paging)
-        #'which-key--hide-popup-ignore-command)
-      embark-become-indicator embark-action-indicator)
-  )
   :bind
   (("C-,"  . embark-act)  ;; *not* in minibuffer-local-map, because this can be used universally
    :map minibuffer-local-completion-map
@@ -885,8 +877,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 ;; https://github.com/raxod502/selectrum
 (use-package! selectrum
   :init
-  (unless (featurep! :completion ivy)
-    (selectrum-mode +1))
+  (selectrum-mode +1)
 
   :bind
   ("C-x C-z"  . #'selectrum-repeat) ;; was suspend-frame
@@ -900,10 +891,9 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 ;;; Package: completion/selectrum-prescient
 (use-package! selectrum-prescient
-  :after selectrum
+  :after (selectrum prescient)
   :init
-  (unless (featurep! :completion ivy)
-    (selectrum-prescient-mode +1))
+  (selectrum-prescient-mode +1)
 )
 
 ;;; Package: completion/prescient
