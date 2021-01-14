@@ -323,6 +323,14 @@ behavior added."
 (map! "C-x k" #'kill-buffer-and-window)
 
 
+;;; Package: core/xref
+
+(use-package! xref
+  :custom
+  (xref-file-name-display 'project-relative) ;; was abs
+  (xref-search-program 'ripgrep)             ;; was grep
+)
+
 
 
 ;;; Package: gui/display-line-numbers
