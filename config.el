@@ -644,7 +644,27 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 ;; embark-consult-location-map
 
 ;; https://github.com/oantolin/embark
+
+(use-package! embark-consult
+  :after (embark consult)
+  :load-path "~/.emacs.d/.local/straight/repos/embark"
+  :demand t
+
+  :hook (embark-collect-mode-hook . embark-consult-preview-minor-mode)
+)
+
+
 (use-package! embark
+  :custom
+  (embark-collect-initial-view-alist '((file . list)   ;; was grid
+                                       (buffer . list) ;; was grid
+                                       (symbol . list)
+                                       (line . list)   ;; new entry
+                                       (consult-location . list)
+                                       (xref-location . list)
+                                       (kill-ring . zebra)
+                                       (t . list)))
+
   :config
   ;; the following general embark actions don't make sense as long as I use ivy
   (if (featurep! :completion ivy)
@@ -676,8 +696,26 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
       embark-become-indicator embark-action-indicator)
   )
   :bind
-  ("C-," . embark-act  ;; *not* in minibuffer-local-map, because this can be used universally
-   )
+  (("C-,"  . embark-act)  ;; *not* in minibuffer-local-map, because this can be used universally
+   :map minibuffer-local-completion-map
+   ("C-,"  . embark-act)
+   ("C-."  . embark-act-noexit)
+   :map minibuffer-local-map
+   ("C-,"  . embark-act)
+   ("C-."  . embark-act-noexit)
+   ;; ("C->"  . embark-become)
+   :map embark-collect-mode-map
+   ;; ("C-,"  . embark-act)
+   ;; ("C-."  . embark-act-noexit)
+   ;; (","    . embark-act)
+   ;; ("."    . embark-act-noexit)
+   ;; ("M-o"  . embark-export)
+   ;; ("C-o"  . embark-export)
+   ("M-t"  . toggle-truncate-lines)
+   :map embark-symbol-map
+   ("."    . embark-find-definition)
+   :map embark-file-map
+   ("j"    . dired-jump))
 )
 
 
