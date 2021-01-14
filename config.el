@@ -958,7 +958,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   ("M-g g"    . consult-git-grep)  ;; needs 3 chars
   ("M-g r"    . consult-ripgrep)   ;; needs 3 chars
   ("M-g k"    . consult-mark)
-  ("M-s p"    . consult-line)      ;; similar to swiper
+  ("M-s o"    . consult-line)      ;; similar to swiper
   ("<help> a" . consult-apropos)
   ("C-x M-:"  . consult-complex-command) ;; was: repeat-complex-command
 )
