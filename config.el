@@ -880,61 +880,6 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
-;;; Package: completion/ivy
-
-(after! ivy
-  (message "IVY")
-  (setq ivy-use-virtual-buffers t)       ; extend searching to bookmarks and recent files
-  (setq ivy-count-format "(%d/%d) ")     ; count format, from the ivy help page
-
-  (setq ivy-use-selectable-prompt t)     ; allow partial candidates be selected
-
-  (setq ivy-format-function 'ivy-format-function-arrow)
-
-  ;; Don't show ./ and ../ when finding files with ivy. Use backspace to go up.
-  (setq ivy-extra-directories nil)
-
-  ;; With this setting C-o will show a list of available actions in a hydra
-  (setq ivy-read-action-function #'ivy-hydra-read-action)
-
-  (defun my-ivy-sort (X Y)
-    "Similar to ivy-string<, but also takes the length of the string into consideration."
-    (let ((xx (if (consp X) (car X) X))
-          (yy (if (consp Y) (car Y) Y)))
-      (or (< (length xx) (length yy))
-          (and (= (length xx) (length yy)) (string< xx yy)))))
-  ;; (sort '("c" "b" "a") #'my-ivy-sort)
-  ;; (sort '("c" "b" "a" "cc" "bb" "aa") #'my-ivy-sort)
-  ;; (sort '("general-define-key" "general-evil-define-key") #'my-ivy-sort)
-  ;; (ivy-read "Test: " '("cc" "c" "b" "a" "bb" "aa"))
-  ;; (ivy-read "Test: " '("cc" "c" "b" "a" "bb" "aa") :sort t)
-  (setq ivy-sort-functions-alist
-        '(
-          (read-file-name-internal . ivy-sort-file-function-default)
-          (t . my-ivy-sort)
-          ))
-
-
-  ;; Don't require order, so 'func descr' matches 'describe-function',
-  ;; at least once you remove the ^ at the start of the query
-  ;; (setq ivy-re-builders-alist
-  ;;       '((t . ivy--regex-ignore-order)))
-
-  ;; (setq ivy-sort-functions-alist '((t . my-ivy-sort)))
-  (map! "C-x C-b"   #'ivy-switch-buffer
-        "C-c C-r"   #'ivy-resume
-
-        "C-x C-f"   #'counsel-find-file
-        "C-x 8 RET" #'counsel-unicode-char
-        "M-s g"     #'counsel-git-grep
-        "M-g i"     #'counsel-imenu
-        "M-y"       #'counsel-yank-pop ;; see http://pragmaticemacs.com/emacs/counsel-yank-pop-with-a-tweak/
-        "M-s o"     #'swiper)
-  )
-
-
-
-
 ;;; Package: completion/selectrum
 
 ;; https://github.com/raxod502/selectrum
