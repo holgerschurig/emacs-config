@@ -926,10 +926,28 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 ;;; Package: completion/consult
 
+(use-package! consult-selectrum
+  :after (selectrum consult)
+  :load-path "~/.emacs.d/.local/straight/repos/consult"
+  :demand t
+)
+
 ;; https://github.com/minad/consult
-(use-package consult
+(use-package! consult
+  :custom
+  (completion-in-region-function #'consult-completion-in-region) ;; was selectrum-completion-in-region
+  (consult-async-input-debounce 0.5)                             ;; was 0.25
+  (consult-async-input-throttle 0.8)                             ;; was 0.5
+  (consult-narrow-key ">")                                       ;; was empty
+  (consult-widen-key "<")                                        ;; was empty
+  (consult-config `(;; changing the theme while moving the cursor is annoying, so turn this off
+                    (consult-theme :preview-key nil)
+                    ;; the same in the file/buffer selection
+                    (consult-buffer :preview-key nil)
+                    ;; ... and in the swiper substitute
+                    (consult-line :preview-key nil)))
+
   :config
-  (require 'consult-selectrum (concat doom-local-dir "straight/repos/consult/consult-selectrum.el"))
 
   ;; this forces recentf to load directly, not delayed. So a C-x C-b directly after starting emacs
   ;; will show previously used files
@@ -944,10 +962,13 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   ("C-x r b"  . consult-bookmark)
   ("M-y"      . consult-yank-pop)
   ("M-g i"    . consult-imenu)
+  ("M-g l"    . consult-line)      ;; similar to swiper
+  ("M-g o"    . consult-outline)
   ("M-g M-g"  . consult-goto-line)
   ("M-g g"    . consult-git-grep)  ;; needs 3 chars
   ("M-g r"    . consult-ripgrep)   ;; needs 3 chars
-  ("M-g o"    . consult-line)      ;; similar to swiper, try M-n
+  ("M-g k"    . consult-mark)
+  ("M-s p"    . consult-line)      ;; similar to swiper
   ("<help> a" . consult-apropos)
   ("C-x M-:"  . consult-complex-command) ;; was: repeat-complex-command
 )
