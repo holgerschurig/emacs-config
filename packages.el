@@ -62,7 +62,10 @@
 
 (package! meson-mode)
 
-(package! modus-vivendi-theme)
+;; (package! modus-vivendi-theme)
+(package! modus-themes
+ :recipe (:host github :repo "protesilaos/modus-themes"
+          :files ("*.el")))
 
 (package! nswbuff :recipe (:host github :repo "joostkremers/nswbuff"))
 
@@ -90,6 +93,7 @@
   magit-todos   ;; would be pulled in by tools/magit, but I don't need it
   org-yt        ;; youtube links in org-mode?  Who wants that?  :-)
   rtags         ;; I'll use lsp eventually
+  solaire-mode  ;; does interference with modus-vivendi-theme
   smartparens   ;; makes many M-<cursor keypad> keys behave weird
   ivy-rtags     ;; I'll use lsp eventually
   irony-eldoc
