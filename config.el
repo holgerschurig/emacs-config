@@ -444,20 +444,26 @@ behavior added."
 ;;; Package: theme/modus-vivendi
 ;; https://protesilaos.com/codelog/2019-08-07-emacs-modus-themes/
 ;; https://gitlab.com/protesilaos/modus-themes
+;; https://github.com/protesilaos/modus-themes/blob/main/doc/modus-themes.org
+
 
 (setq doom-theme 'modus-vivendi)
 
-(use-package! modus-vivendi-theme
+(use-package! modus-themes
   :config
-  (setq modus-vivendi-theme-slanted-constructs t)
-  (setq modus-vivendi-theme-bold-constructs t)
+  (message "MODUS THEMES")
+)
 
-  (load-theme 'modus-vivendi t)
+(use-package! modus-vivendi-theme
+  :custom
+  ( modus-vivendi-theme-slanted-constructs t)
+  ( modus-vivendi-theme-bold-constructs t)
 
+  :config
+  (message "MODUS VIVENDI")
   ;; Make the marked region be much easier visible
   (set-face-attribute 'region nil :background "#6c6c6c")
-  )
-
+)
 
 
 
