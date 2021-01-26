@@ -58,8 +58,6 @@
 (package! marginalia)
 (package! consult)
 
-(package! ivy-hydra)
-
 (package! kurecolor)
 
 (package! meson-mode)
