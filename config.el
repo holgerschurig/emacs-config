@@ -948,22 +948,30 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
   :bind
   ;; https://github.com/minad/consult#available-commands
+  ("C-c h"    . consult-history)
+  ("C-c m"    . consult-mode-command)
+  ("C-c k   " . consult-keep-lines)
+  ("C-c f"    . consult-focus-lines)     ;; run with C-u to show all lines again
+  ("C-x M-:"  . consult-complex-command) ;; was: repeat-complex-command
   ("C-x C-b"  . consult-buffer)    ;; https://github.com/minad/consult#virtual-buffers
   ("C-x 4 b"  . consult-buffer-other-window)
   ("C-x 5 b"  . consult-buffer-other-frame)
   ("C-x r x"  . consult-register)
   ("C-x r b"  . consult-bookmark)
-  ("M-y"      . consult-yank-pop)
-  ("M-g i"    . consult-imenu)
-  ("M-g l"    . consult-line)      ;; similar to swiper
-  ("M-g o"    . consult-outline)
+  ;; M-g (goto) bindings
   ("M-g M-g"  . consult-goto-line)
-  ("M-g g"    . consult-git-grep)  ;; needs 3 chars
+  ("M-g o"    . consult-outline)
+  ("M-g l"    . consult-line)      ;; similar to swiper
+  ("M-g m"    . consult-mark)
+  ("M-g k"    . consult-global-mark)
   ("M-g r"    . consult-ripgrep)   ;; needs 3 chars
-  ("M-g k"    . consult-mark)
-  ("M-s o"    . consult-line)      ;; similar to swiper
+  ("M-g g"    . consult-git-grep)  ;; needs 3 chars
+  ("M-g f"    . consult-locate)
+  ("M-g i"    . consult-project-imenu)  ;; or consult-imenu
+  ("M-g e"    . consult-error)
+  ;; Other bindings
+  ("M-y"      . consult-yank-pop)
   ("<help> a" . consult-apropos)
-  ("C-x M-:"  . consult-complex-command) ;; was: repeat-complex-command
 )
 
 ;;; Package: lang/c-mode
