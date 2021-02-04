@@ -139,7 +139,10 @@ As a special case for elisp, also consider '(setq compile-command
     (setq compile-command nil)))
 
 
-(defun my-select-compile-command ()
+(defun my-compile-get-commands (current-input)
+  (delq "" (mapcar 'car my-compile-commands)))
+
+(defun my-compile-select-command ()
   "Interactively select a compilation command."
   (interactive)
 
@@ -150,33 +153,31 @@ As a special case for elisp, also consider '(setq compile-command
   ;; '(("make -C foo" . 1) ("ccmake && make" . 2))
 
   (setq compile-command
-        (let ((list (delq "" (mapcar 'car my-compile-commands))))
-          (cond ((fboundp 'ivy-read)
-                 ;; http://oremacs.com/swiper/#api
-                 (ivy-read "cmd: "
-                           list
-                           :preselect compile-command
-                           :caller #'my-select-compile-command
-                           :action #'my-compile-default-action))
-                 ((fboundp 'selectrum-read)
-                  (selectrum-read "cmd: "
-                                  list
-                                  :default-candidate compile-command
-                                  :require-match t
-                                  :may-modify-candidates t))
-
-                 (t
-                  (completing-read "cmd: "
-                                   list
-                                   :require-match t
-                                   :initial-input compile-command))
-                 ))))
-
+        (cond ((fboundp 'ivy-read)
+               ;; http://oremacs.com/swiper/#api
+               (ivy-read "cmd: "
+                         #'my-compile-get-commands
+                         :caller #'my-compile-select-command
+                         :action #'my-compile-default-action))
+              ((fboundp 'selectrum-read)
+               (let ((selectrum-should-sort-p nil))
+                 (selectrum-read "cmd: "
+                                 #'my-compile-get-commands
+                                 :default-candidate compile-command
+                                 :no-move-default-candidate t
+                                 :may-modify-candidates t
+                                 :require-match t
+                                 )))
+              (t
+               (completing-read "cmd: "
+                                #'my-compile-get-commands
+                                :require-match t))
+              )))
 
 
 (when (boundp 'ivy-read)
   (ivy-set-actions
-   'my-select-compile-command
+   'my-compile-select-command
    '(("d" my-compile-del-action "delete"))))
 
 
@@ -189,7 +190,7 @@ selected with completion help."
   (delete-other-windows)
   (save-some-buffers t)
   (if (string= compile-command "")
-      (my-select-compile-command)
+      (my-compile-select-command)
     ;; (message "compile command: %s" compile-command)
     (let ((cmd (assoc compile-command my-compile-commands)))
       (when cmd
@@ -212,6 +213,14 @@ selected with completion help."
                                  (locate-dominating-file "." "Makefile")
                                  default-directory)))
       (cd (or (locate-dominating-file (buffer-file-name) ".git") "."))
-      (compile compile-command))))
+      (compile (substring-no-properties compile-command)))))
+
+
+(defun my-compile-select-command-and-run ()
+  "Interactively select a compilation command and execute it."
+  (interactive)
+  (my-compile-select-command)
+  (unless (string= compile-command "")
+    (my-compile)))
 
 (provide 'my-compile)
