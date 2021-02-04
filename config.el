@@ -1148,7 +1148,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   :load-path doom-private-dir
   :defer t
   :bind
-  ("S-<f7>" . my-select-compile-command)
+  ("S-<f7>" . my-compile-select-command-and-run)
   ("<f7>"   . my-compile)
 )
 
