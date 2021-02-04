@@ -449,18 +449,12 @@ behavior added."
 
 (setq doom-theme 'modus-vivendi)
 
-(use-package! modus-themes
-  :config
-  (message "MODUS THEMES")
-)
-
 (use-package! modus-vivendi-theme
   :custom
   ( modus-vivendi-theme-slanted-constructs t)
   ( modus-vivendi-theme-bold-constructs t)
 
   :config
-  (message "MODUS VIVENDI")
   ;; Make the marked region be much easier visible
   (set-face-attribute 'region nil :background "#6c6c6c")
 )
