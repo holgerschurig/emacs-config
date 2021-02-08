@@ -649,7 +649,6 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   :after (embark consult)
   :load-path "~/.emacs.d/.local/straight/repos/embark"
   :demand t
-
   :hook (embark-collect-mode-hook . embark-consult-preview-minor-mode)
 )
 
@@ -1021,6 +1020,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
       company-keywords      ; programming language keywords
       company-yasnippet
       ))
+  (setq-default c-electric-flag nil)
   )
 (map! "C-ä" #'company-complete)
 
