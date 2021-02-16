@@ -449,18 +449,12 @@ behavior added."
 
 (setq doom-theme 'modus-vivendi)
 
-(use-package! modus-themes
-  :config
-  (message "MODUS THEMES")
-)
-
 (use-package! modus-vivendi-theme
   :custom
   ( modus-vivendi-theme-slanted-constructs t)
   ( modus-vivendi-theme-bold-constructs t)
 
   :config
-  (message "MODUS VIVENDI")
   ;; Make the marked region be much easier visible
   (set-face-attribute 'region nil :background "#6c6c6c")
 )
@@ -655,7 +649,6 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   :after (embark consult)
   :load-path "~/.emacs.d/.local/straight/repos/embark"
   :demand t
-
   :hook (embark-collect-mode-hook . embark-consult-preview-minor-mode)
 )
 
@@ -947,32 +940,51 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   (recentf-mode +1)
 
   :bind
-  ;; https://github.com/minad/consult#available-commands
+
+  ;; C-c bindings (mode-specific-map)
   ("C-c h"    . consult-history)
   ("C-c m"    . consult-mode-command)
-  ("C-c k   " . consult-keep-lines)
-  ("C-c f"    . consult-focus-lines)     ;; run with C-u to show all lines again
-  ("C-x M-:"  . consult-complex-command) ;; was: repeat-complex-command
-  ("C-x C-b"  . consult-buffer)    ;; https://github.com/minad/consult#virtual-buffers
-  ("C-x 4 b"  . consult-buffer-other-window)
-  ("C-x 5 b"  . consult-buffer-other-frame)
-  ("C-x r x"  . consult-register)
-  ("C-x r b"  . consult-bookmark)
-  ;; M-g (goto) bindings
-  ("M-g M-g"  . consult-goto-line)
+  ("C-c b"    . consult-bookmark)
+  ("C-c k"    . consult-kmacro)
+
+  ;; C-x bindings (ctl-x-map)
+  ("C-x M-:"  . consult-complex-command)      ;; was: repeat-complex-command
+  ("C-x C-b"  . consult-buffer)               ;; was: switch-to-buffer
+  ("C-x 4 b"  . consult-buffer-other-window)  ;; was: switch-to-buffer-other-window
+  ("C-x 5 b"  . consult-buffer-other-frame)   ;; was: switch-to-buffer-other-frame
+
+  ;; Custom M-# bindings for fast register access
+  ("M-#"      . consult-register-load)
+  ("M-'"      . consult-register-store)       ;; was: abbrev-prefix-mark
+  ("C-M-#"    . consult-register)
+
+  ;; Other custom bindings
+  ("M-y"      . consult-yank-pop)             ;; was: yank-pop
+  ("<help> a" . consult-apropos)              ;; was: apropos-command
+
+  ;; M-g bindings (goto-map)
+  ("M-g g"    . consult-goto-line)            ;; was: goto-line
+  ("M-g M-g"  . consult-goto-line)            ;; was: goto-line
   ("M-g o"    . consult-outline)
-  ("M-g l"    . consult-line)      ;; similar to swiper
-  ("M-g m"    . consult-mark)
-  ("M-g k"    . consult-global-mark)
-  ("M-g r"    . consult-ripgrep)   ;; needs 3 chars
-  ("M-g g"    . consult-git-grep)  ;; needs 3 chars
-  ("M-g f"    . consult-locate)
-  ("M-g i"    . consult-project-imenu)  ;; or consult-imenu
+  ("M-g k"    . consult-mark)
+  ("M-g K"    . consult-global-mark)
+  ("M-g i"    . consult-imenu)
+  ("M-g I"    . consult-project-imenu)
   ("M-g e"    . consult-error)
-  ;; Other bindings
-  ("M-y"      . consult-yank-pop)
-  ("<help> a" . consult-apropos)
+  ("M-g l"    . consult-line)                  ;; similar to swiper
+
+  ;; M-s bindings (search-map)
+  ("M-g f"    . consult-locate)                ;; or consult-finde, find-fd
+  ("M-s g"    . consult-git-grep)              ;; or consult-grep
+  ("M-s r"    . consult-ripgrep)
+  ("M-s l"    . consult-line)
+  ("M-s m"    . consult-multi-occur)
+  ("M-s k"    . consult-keep-lines)
+  ("M-s u"    . consult-focus-lines)           ;; run with C-u to show all lines again
+
+  ("M-s o"    . consult-line)                  ;; was: occur
 )
+
 
 ;;; Package: lang/c-mode
 
@@ -1008,6 +1020,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
       company-keywords      ; programming language keywords
       company-yasnippet
       ))
+  (setq-default c-electric-flag nil)
   )
 (map! "C-ä" #'company-complete)
 
@@ -1154,7 +1167,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   :load-path doom-private-dir
   :defer t
   :bind
-  ("S-<f7>" . my-select-compile-command)
+  ("S-<f7>" . my-compile-select-command-and-run)
   ("<f7>"   . my-compile)
 )
 
