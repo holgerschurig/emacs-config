@@ -1267,6 +1267,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   (org-babel-do-load-languages 'org-babel-load-languages
                                  '(plantuml . t))
   (remove-hook 'org-mode-hook #'org-superstar-mode)
+  (remove-hook 'org-open-at-point-functions #'doom-set-jump-h)
   )
 
 
