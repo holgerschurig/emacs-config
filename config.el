@@ -934,6 +934,19 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
                     (consult-buffer :preview-key nil)
                     ;; ... and in the swiper substitute
                     (consult-line :preview-key nil)))
+  (consult-goto-line-numbers nil)
+
+  (register-preview-delay 0)
+  (register-preview-function #'consult-register-format)
+
+  :init
+  ;; Optionally tweak the register preview window.
+  ;; This adds zebra stripes, sorting and hides the mode line of the window.
+  (advice-add #'register-preview :override #'consult-register-window)
+
+  (defun my-project-root ()
+    (locate-dominating-file "." ".git"))
+  (setq consult-project-root-function #'my-project-root)
 
   :config
 
