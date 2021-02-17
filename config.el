@@ -989,8 +989,10 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   ("M-g l"    . consult-line)                  ;; similar to swiper
 
   ;; M-s bindings (search-map)
-  ("M-g f"    . consult-locate)                ;; or consult-finde, find-fd
-  ("M-s g"    . consult-git-grep)              ;; or consult-grep
+  ("M-g f"    . consult-find)
+  ("M-g L"    . consult-locate)
+  ("M-s g"    . consult-git-grep)
+  ("M-s G"    . consult-grep)
   ("M-s r"    . consult-ripgrep)
   ("M-s l"    . consult-line)
   ("M-s m"    . consult-multi-occur)
@@ -998,6 +1000,11 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   ("M-s u"    . consult-focus-lines)           ;; run with C-u to show all lines again
 
   ("M-s o"    . consult-line)                  ;; was: occur
+
+  (:map compilation-minor-mode-map
+   ("e" . consult-compile-error)
+   :map compilation-mode-map
+   ("e" . consult-compile-error))
 )
 
 
