@@ -702,7 +702,9 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
    :map embark-symbol-map
    ("."    . embark-find-definition)
    :map embark-file-map
-   ("j"    . dired-jump))
+   ("j"    . dired-jump)
+   :map org-mode-map
+   ("C-,"  . embark-act))
 )
 
 
