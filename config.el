@@ -195,17 +195,20 @@ If there are two windows displayed, act like \"C-x o\"."
 ;;; Package: core/recentf
 
 (after! recentf
-  (setq   recentf-exclude '("^/tmp/"
-                            "/\\.newsrc"
-                            ".*CMakeFiles.*"
-                            "bbdb$"
-                            "svn-commit\\.tmp$"
-                            ".*-autoloads\\.el\\'"
-                            "\\.png$"
-                            "COMMIT_EDITMSG" "COMMIT_EDITMSG" "TAG_EDITMSG")
-          recentf-max-saved-items 1000
-          recentf-auto-cleanup 300
-          recentf-max-menu-items 20))
+  (setq recentf-exclude '("^/tmp/"
+                          "/\\.newsrc"
+                          ".*CMakeFiles.*"
+                          "\\.bbdb$"
+                          "\\.html$"
+                          "svn-commit\\.tmp$"
+                          ".*-autoloads\\.el\\'"
+                          "\\.png$"
+                          "COMMIT_EDITMSG"
+                          "COMMIT_EDITMSG"
+                          "TAG_EDITMSG")
+        recentf-max-saved-items 1000
+        recentf-auto-cleanup 300
+        recentf-max-menu-items 20))
 
 
 
