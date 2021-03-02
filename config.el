@@ -1167,11 +1167,15 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   "Show trailing whitespace."
   (interactive)
   (setq show-trailing-whitespace t))
+
 (defun my-hide-trailing-whitespace ()
   "Hide trailing whitespace."
   (interactive)
   (setq show-trailing-whitespace nil))
-(add-hook 'prog-mode-hook #'my-show-trailing-whitespace)
+
+(after! prog-mode
+  (add-hook 'prog-mode-hook #'my-show-trailing-whitespace)
+  (add-hook 'prog-mode-hook #'goto-address-mode))
 
 
 
