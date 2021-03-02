@@ -456,8 +456,8 @@ behavior added."
 
 (use-package! modus-vivendi-theme
   :custom
-  ( modus-vivendi-theme-slanted-constructs t)
-  ( modus-vivendi-theme-bold-constructs t)
+  (modus-vivendi-theme-slanted-constructs t)
+  (modus-vivendi-theme-bold-constructs t)
 
   :config
   ;; Make the marked region be much easier visible
