@@ -68,6 +68,19 @@
 
 (package! nswbuff :recipe (:host github :repo "joostkremers/nswbuff"))
 
+;; This is org-mode with updated folding
+(package! org-mode
+  :recipe (:host github
+           :repo "yantar92/org"
+           :branch "feature/org-fold"
+           :files ("*.el" "lisp/*.el" "contrib/lisp/*.el")
+           :pre-build (with-temp-file (expand-file-name "org-version.el" (straight--repos-dir "org"))
+                        (insert "(fset 'org-release (lambda () \"9.5\"))\n"
+                                "(fset 'org-git-version #'ignore)\n"
+                                "(provide 'org-version)\n")))
+  ;; :pin "8508dda0fa01202c5bc6596f0057c44c31eb29b8"
+  :shadow 'org)
+
 (package! rainbow-mode)
 
 (package! symbol-overlay)
