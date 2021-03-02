@@ -62,7 +62,6 @@
 
 (package! meson-mode)
 
-;; (package! modus-vivendi-theme)
 (package! modus-themes
  :recipe (:host github :repo "protesilaos/modus-themes"
           :files ("*.el")))
