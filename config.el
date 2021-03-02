@@ -49,6 +49,8 @@
 (defalias 'sudo-edit 'doom/sudo-this-file
    "Edit currently visited file as root.")
 
+(setenv "PATH" "/home/schurig/.local/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games")
+
 
 
 
