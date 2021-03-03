@@ -166,12 +166,12 @@ As a special case for elisp, also consider '(setq compile-command
                                  :default-candidate compile-command
                                  :no-move-default-candidate t
                                  :may-modify-candidates t
-                                 :require-match t
+                                 :require-match nil
                                  )))
               (t
                (completing-read "cmd: "
                                 #'my-compile-get-commands
-                                :require-match t))
+                                :require-match nil))
               )))
 
 
