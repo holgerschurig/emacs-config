@@ -70,6 +70,7 @@
 
 ;;; Package: core/browse-url
 
+;; see https://www.emacswiki.org/emacs/BrowseUrl#h5o-7
 (after! browse-url
   (setq browse-url-browser-function 'browse-url-firefox
         browse-url-new-window-flag  t
