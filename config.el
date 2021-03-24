@@ -696,28 +696,6 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
                                        (kill-ring . zebra)
                                        (t . list)))
 
-  :config
-  ;; https://github.com/raxod502/selectrum/wiki/Additional-Configuration#minibuffer-actions-with-embark
-  (defun current-candidate+category ()
-    (when selectrum-active-p
-      (cons (selectrum--get-meta 'category)
-            (selectrum-get-current-candidate))))
-  (defun current-candidates+category ()
-    (when selectrum-active-p
-      (cons (selectrum--get-meta 'category)
-            (selectrum-get-current-candidates
-             ;; Pass relative file names for dired.
-             minibuffer-completing-file-name))))
-  (add-hook 'embark-target-finders #'current-candidate+category)
-  (add-hook 'embark-candidate-collectors #'current-candidates+category)
-  ;; No unnecessary computation delay after injection
-  (add-hook 'embark-setup-hook 'selectrum-set-selected-candidate)
-
-  (setq embark-action-indicator
-        (lambda (map) (which-key--show-keymap "Embark" map nil nil 'no-paging)
-          #'which-key--hide-popup-ignore-command)
-        embark-become-indicator embark-action-indicator)
-
   :bind
   (("C-,"  . embark-act)  ;; *not* in minibuffer-local-map, because this can be used universally
    :map minibuffer-local-map
@@ -737,6 +715,15 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
    ("j"    . dired-jump)
    :map org-mode-map
    ("C-,"  . embark-act))
+)
+
+
+(use-package! embark-consult
+  :after (embark consult)
+  :demand t                ; only necessary if you have the hook below
+  ;; if you want to have consult previews as you move around an
+  ;; auto-updating embark collect buffer
+  :hook (embark-collect-mode . embark-consult-preview-minor-mode)
 )
 
 
