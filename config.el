@@ -233,6 +233,13 @@ If there are two windows displayed, act like \"C-x o\"."
 
 
 
+;;; Package: core/register
+(after! register
+  (setq register-preview-delay 1)
+  (setq register-preview-function #'consult-register-format))
+
+
+
 ;;; Package: core/minibuf
 
 (setq history-delete-duplicates t)
@@ -963,9 +970,6 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
                     (consult-line :preview-key nil)))
   (consult-goto-line-numbers nil)
   (consult-preview-key nil)
-
-  (register-preview-delay 0)
-  (register-preview-function #'consult-register-format)
 
   :init
   ;; Optionally tweak the register preview window.
