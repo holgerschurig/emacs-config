@@ -962,6 +962,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
                     ;; ... and in the swiper substitute
                     (consult-line :preview-key nil)))
   (consult-goto-line-numbers nil)
+  (consult-preview-key nil)
 
   (register-preview-delay 0)
   (register-preview-function #'consult-register-format)
