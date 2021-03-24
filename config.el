@@ -932,6 +932,8 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 ;;; Package: completion/marginalia
 ;; https://github.com/minad/marginalia
 (use-package! marginalia
+  :custom
+  (marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
   :init
   (marginalia-mode)
 )
