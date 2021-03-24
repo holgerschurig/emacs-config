@@ -7,3 +7,6 @@ all:
 	cd ~/.emacs.d; bin/doom sync -u
 	@# recompile pdf-tools
 	$(MAKE) -C ~/.emacs.d/.local/straight/build/pdf-tools/build/server
+
+sync:
+	cd ~/.emacs.d; bin/doom sync
