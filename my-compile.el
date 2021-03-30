@@ -159,9 +159,9 @@ As a special case for elisp, also consider '(setq compile-command
                          #'my-compile-get-commands
                          :caller #'my-compile-select-command
                          :action #'my-compile-default-action))
-              ((fboundp 'selectrum-read)
+              ((fboundp 'selectrum--read)
                (let ((selectrum-should-sort-p nil))
-                 (selectrum-read "cmd: "
+                 (selectrum--read "cmd: "
                                  #'my-compile-get-commands
                                  :default-candidate compile-command
                                  :no-move-default-candidate t
