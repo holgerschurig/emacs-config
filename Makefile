@@ -1,4 +1,4 @@
-install emacs.git/src/emacs:
+install:
 	$(MAKE) -C emacs.git install prefix=/usr/local/stow/emacs
 	cd /usr/local/stow; stow emacs
 
