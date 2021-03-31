@@ -705,14 +705,9 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   (("C-,"  . embark-act)  ;; *not* in minibuffer-local-map, because this can be used universally
    :map minibuffer-local-map
    ("C-,"  . embark-act)
-   ;; ("C->"  . embark-become)
    :map minibuffer-local-completion-map
    ("C-,"  . embark-act)
    :map embark-collect-mode-map
-   ;; ("C-,"  . embark-act)
-   ;; (","    . embark-act)
-   ;; ("M-o"  . embark-export)
-   ;; ("C-o"  . embark-export)
    ("M-t"  . toggle-truncate-lines)
    :map embark-symbol-map
    ("."    . embark-find-definition)
