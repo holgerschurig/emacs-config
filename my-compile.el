@@ -164,8 +164,6 @@ As a special case for elisp, also consider '(setq compile-command
                  (selectrum--read "cmd: "
                                  #'my-compile-get-commands
                                  :default-candidate compile-command
-                                 :no-move-default-candidate t
-                                 :may-modify-candidates t
                                  :require-match nil
                                  )))
               (t
