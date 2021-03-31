@@ -361,6 +361,9 @@ behavior added."
   :custom
   (xref-file-name-display 'project-relative) ;; was abs
   (xref-search-program 'ripgrep)             ;; was grep
+
+  :config
+  (advice-remove #'xref-push-marker-stack #'doom-set-jump-a)
 )
 
 
