@@ -168,8 +168,11 @@ As a special case for elisp, also consider '(setq compile-command
                                  )))
               (t
                (completing-read "cmd: "
-                                #'my-compile-get-commands
-                                :require-match nil))
+                                (my-compile-get-commands nil)
+                                nil             ;; predicate
+                                t               ;; require-match
+                                compile-command ;; initial-input
+                                ))
               )))
 
 
