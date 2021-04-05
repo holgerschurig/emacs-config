@@ -314,6 +314,13 @@ behavior added."
 
 
 
+;;; Package: core/shr
+
+(after! shr
+  (setq shr-color-visible-luminance-min 80))
+
+
+
 ;;; Package: core/simple
 
 (after! simple
