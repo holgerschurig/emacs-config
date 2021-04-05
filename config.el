@@ -33,8 +33,6 @@
 
 ;;; Misc
 
-(add-hook 'message-mode-hook #'word-wrap-mode)
-
 (defun 822date ()
   "Insert date at point format the RFC822 way."
   (interactive)
