@@ -1418,6 +1418,9 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 ;;; Package: comm/erc
 
+;; out your credentials into .authinfo[.gpg], e.g. like this:
+;; machine irc.freenode.net login USERNAME password PASSWORD
+
 ;; https://old.reddit.com/r/emacs/comments/8ml6na/tip_how_to_make_erc_fun_to_use/
 (use-package! erc
   :preface
