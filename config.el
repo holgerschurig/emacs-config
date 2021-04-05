@@ -52,6 +52,13 @@
 (setenv "PATH" "/home/schurig/.local/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games")
 
 
+;; https://blog.lambda.cx/posts/emacs-align-columns/
+(defun my-align-non-space (BEG END)
+  "Align non-space columns in region BEG END."
+  (interactive "r")
+  (align-regexp BEG END "\\(\\s-*\\)\\S-+" 1 1 t))
+
+
 
 
 ;;; Misc keybindings
