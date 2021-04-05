@@ -173,6 +173,13 @@ If there are two windows displayed, act like \"C-x o\"."
 
 
 
+;;; Package: core/calc
+(after! calc
+  (setq calc-angle-mode 'rad  ; radians are radians, 0..2*pi
+        calc-symbolic-mode t))
+
+
+
 ;;; Package: core/cus-edit
 
 (after! cus-edit
