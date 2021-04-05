@@ -920,6 +920,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
                                helpful-mode
                                magit-status-mode
                                message-mode
+                               mu4e-view-mode
                                org-mode
                                )))
 
@@ -1506,3 +1507,113 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   (add-to-list 'erc-modules 'spelling)
   (erc-services-mode 1)
   (erc-update-modules))
+
+
+
+;;; Packages: comm/mu4e
+
+(after! mu4e
+  ;; Optics
+  (setq mu4e-headers-fields '(
+                              (:human-date . 8)
+                              (:flags . 5)
+                              (:from-or-to . 20)
+                              (:mailing-list . 8)
+                              (:thread-subject . 60)
+                              )
+        mu4e-maildir-shortcuts '( (:maildir "/inbox"     :key  ?i)
+                                  (:maildir "/barebox"   :key  ?b)
+                                  (:maildir "/darc-sdr"  :key  ?d)
+                                  (:maildir "/elecraft"  :key  ?e)
+                                  (:maildir "/etnaviv"   :key  ?v)
+                                  (:maildir "/linuxham"  :key  ?l)
+                                  (:maildir "/zephyr"    :key  ?z)
+                                  (:maildir "/sent"      :key  ?s)
+                                  (:maildir "/trash"     :key  ?t)
+                                  )
+        mu4e-headers-date-format "%d.%m.%y"
+        mu4e-headers-time-format "%H:%M"
+        mu4e-use-fancy-chars nil
+        mu4e-headers-results-limit 1000)
+
+  ;; Completing read will use Selectrum
+  (setq mu4e-completing-read-function #'completing-read)
+
+  ;; Attachment handling
+  (setq mu4e-attachment-dir "~/Downloads")
+
+  ;; Replying
+  (setq mu4e-compose-dont-reply-to-self t)
+
+  ;; Updating/Indexing
+  (setq mu4e-update-interval 600
+        mu4e-index-lazy-check nil)
+
+
+  ;; make "H" (help) work in mu4e
+  (add-to-list 'Info-directory-list (concat straight-base-dir "straight/repos/mu/mu4e/"))
+
+  ;; see also https://www.djcbsoftware.nl/code/mu/mu4e/Keybindings.html
+  (map! "M-g 4" #'=mu4e
+        :map mu4e-main-mode-map
+        "c" #'mu4e-compose-new
+        "u" #'mu4e-update-mail-and-index
+        :map mu4e-headers-mode-map
+        "n" #'mu4e-headers-next-unread
+        "p" #'mu4e-headers-prev-unread
+        ;; swap refile and reply
+        "R" #'mu4e-headers-mark-for-refile
+        "r" #'mu4e-compose-reply)
+
+  (defun mu4e~main-redraw-buffer ()
+    (with-current-buffer mu4e-main-buffer-name
+      (let ((inhibit-read-only t)
+            (pos (point))
+            (addrs (mu4e-personal-addresses)))
+        (erase-buffer)
+        (insert
+         "\n"
+         (propertize "  Basics\n\n" 'face 'mu4e-title-face)
+         (mu4e~main-action-str "\t* [c]ompose a new message\n" 'mu4e-compose-new)
+         (if mu4e-maildir-shortcuts
+             ""
+           (mu4e~main-action-str "\t* [j]ump to some maildir\n" 'mu4e-jump-to-maildir))
+         (mu4e~main-action-str "\t* enter a [s]earch query\n" 'mu4e-search)
+         "\n"
+         (propertize "  Bookmarks\n\n" 'face 'mu4e-title-face)
+         (mu4e~main-bookmarks)
+         "\n"
+         (if mu4e-maildir-shortcuts
+             (concat (propertize "  Maildirs\n\n" 'face 'mu4e-title-face)
+                     (mu4e~main-maildirs)
+                     "\n")
+           "")
+         (propertize "  Misc\n\n" 'face 'mu4e-title-face)
+
+         ;; show the queue functions if `smtpmail-queue-dir' is defined
+         (if (file-directory-p smtpmail-queue-dir)
+             (mu4e~main-view-queue)
+           "")
+         (mu4e~main-action-str "\t* [u]pdate email & database\n"
+                               'mu4e-update-mail-and-index)
+         (mu4e~main-action-str "\t* [H]elp\n" 'mu4e-display-manual)
+         (mu4e~main-action-str "\t* [q]uit\n" 'mu4e-quit)
+
+         "\n"
+         (propertize "  Info\n\n" 'face 'mu4e-title-face)
+         (mu4e~key-val "messages"
+                       (format "%d" (plist-get mu4e~server-props :doccount)) "messages")
+         (mu4e~key-val "version" mu4e-mu-version)
+         ;; (if mu4e-main-hide-personal-addresses ""
+         ;;   (mu4e~key-val "personal addresses" (if addrs (mapconcat #'identity addrs ", "  ) "none")))
+         )
+
+        (if mu4e-main-hide-personal-addresses ""
+          (unless (mu4e-personal-address-p user-mail-address)
+            (mu4e-message (concat
+                           "Tip: `user-mail-address' ('%s') is not part "
+                           "of mu's addresses; add it with 'mu init
+                        --my-address='") user-mail-address)))
+        (mu4e-main-mode)
+        (goto-char pos))))
+)
