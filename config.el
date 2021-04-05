@@ -1261,6 +1261,43 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
+;;; Package: lang/nim
+
+(after! nim-mode
+  (setq nim-pretty-triple-double-quotes nil)
+
+  (setq nim-font-lock-keywords-extra
+        `(;; export properties
+          (,(nim-rx
+             line-start (1+ " ")
+             (? "case" (+ " "))
+             (group
+              (or identifier quoted-chars) "*"
+              (? (and "[" word "]"))
+              (0+ (and "," (? (0+ " "))
+                       (or identifier quoted-chars) "*")))
+             (0+ " ") (or ":" "{." "=") (0+ nonl)
+             line-end)
+           (1 'nim-font-lock-export-face))
+          ;; Number literal
+          (,(nim-rx nim-numbers)
+           (0 'nim-font-lock-number-face))
+          ;; Highlight identifier enclosed by "`"
+          (nim-backtick-matcher
+           (10 font-lock-constant-face prepend))
+
+          ;; Highlight word after ‘is’ and ‘distinct’
+          (,(nim-rx " " (or "is" "distinct") (+ " ")
+                    (group identifier))
+           (1 font-lock-type-face))
+          ;; pragma
+          (nim-pragma-matcher . (0 'nim-font-lock-pragma-face))))
+
+  (add-hook 'nim-mode-hook #'rainbow-delimiters-mode)
+  (add-hook 'nim-mode-hook #'subword-mode)
+  (add-hook 'nim-mode-hook #'nimsuggest-mode)
+)
+
 ;;; Package: lang/plantuml
 
 (after! plantuml-mode
