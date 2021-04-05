@@ -252,6 +252,12 @@ If there are two windows displayed, act like \"C-x o\"."
 
 
 
+;;; Package: core/message
+
+(after! message
+  (setq message-send-mail-function #'message-send-mail-with-sendmail))
+
+
 ;;; Package: core/minibuf
 
 (setq history-delete-duplicates t)
@@ -294,6 +300,14 @@ behavior added."
          (keyboard-quit))))
 (global-set-key [remap keyboard-quit] #'my-keyboard-quit)
 
+
+
+
+;;; Package: core/sendmail
+
+(after! sendmail
+  (setq sendmail-program "msmtp"
+        send-mail-function #'smtpmail-send-it))
 
 
 
