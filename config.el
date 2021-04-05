@@ -255,7 +255,10 @@ If there are two windows displayed, act like \"C-x o\"."
 ;;; Package: core/message
 
 (after! message
-  (setq message-send-mail-function #'message-send-mail-with-sendmail))
+  (setq message-send-mail-function #'message-send-mail-with-sendmail
+        message-citation-line-format "On %b, %Y-%m-%d %H:%S, %N wrote ..."
+        message-citation-line-function 'message-insert-formatted-citation-line))
+
 
 
 ;;; Package: core/minibuf
