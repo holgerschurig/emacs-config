@@ -66,6 +66,10 @@
  :recipe (:host github :repo "protesilaos/modus-themes"
           :files ("*.el")))
 
+(package! mu4e
+  :recipe (:host github :repo "djcb/mu"
+           :files ("mu4e/*.el")))
+
 (package! nswbuff :recipe (:host github :repo "joostkremers/nswbuff"))
 
 ;; This is org-mode with updated folding
