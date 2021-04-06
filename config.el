@@ -730,6 +730,8 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 (use-package! embark
+  :commands embark-act
+
   :custom
   (embark-collect-initial-view-alist '((file . list)   ;; was grid
                                        (buffer . list) ;; was grid
@@ -751,9 +753,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
    :map embark-symbol-map
    ("."    . embark-find-definition)
    :map embark-file-map
-   ("j"    . dired-jump)
-   :map org-mode-map
-   ("C-,"  . embark-act))
+   ("j"    . dired-jump))
 )
 
 
@@ -1411,7 +1411,10 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
                                  '(plantuml . t))
   (remove-hook 'org-mode-hook #'org-superstar-mode)
   (remove-hook 'org-open-at-point-functions #'doom-set-jump-h)
-  )
+
+  (map! :map org-mode-map
+        "C-,"  #'embark-act)
+)
 
 
 
