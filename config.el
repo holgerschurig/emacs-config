@@ -1454,6 +1454,61 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
+;;; Package: comm/elfeed
+
+;; https://github.com/skeeto/elfeed
+;; http://nullprogram.com/blog/2013/09/04/
+(after! elfeed
+
+  ;; Optics
+  (setq elfeed-search-date-format '("%Y-%m-%d %H:%M" 17 :left)
+        elfeed-search-title-min-width 55
+        elfeed-search-title-max-width 55)
+
+  ;; Ignore junk
+  (setq elfeed-search-filter "@2-week-ago -junk ")
+
+  ;; Entries older than 2 weeks are marked as read
+  (add-hook 'elfeed-new-entry-hook
+            (elfeed-make-tagger :before "2 weeks ago"
+                                :remove 'unread))
+
+  ;; Building subset feeds
+  ;; (add-hook 'elfeed-new-entry-hook
+  ;;           (elfeed-make-tagger :feed-url "example\\.com"
+  ;;                               :entry-title '(not "something interesting")
+  ;;                               :add 'junk
+  ;;                               :remove 'unread))
+
+  ;; from http://pragmaticemacs.com/emacs/read-your-rss-feeds-in-emacs-with-elfeed/
+  (defun my-elfeed-save-db-and-bury ()
+    "Wrapper to save the elfeed db to disk before burying buffer"
+    (interactive)
+    (elfeed-db-save)
+    (quit-window))
+
+  (map! :map elfeed-search-mode-map
+        "q" #'my-elfeed-save-db-and-bury)
+
+)
+;; from http://pragmaticemacs.com/emacs/read-your-rss-feeds-in-emacs-with-elfeed/
+(defun my-elfeed-load-db-and-open ()
+  "Wrapper to load the elfeed db from disk before opening"
+  (interactive)
+  (require 'elfeed)
+  (setq elfeed-show-entry-switch #'switch-to-buffer)
+  (elfeed-db-load)
+  (elfeed)
+  (elfeed-search-update--force)
+  (run-with-timer 0.3 nil #'elfeed-update))
+(map! "M-g f" #'my-elfeed-load-db-and-open)
+
+
+(after! elfeed-org
+  (setq rmh-elfeed-org-files (list (concat doom-private-dir "elfeed.org")))
+)
+
+
 ;;; Package: comm/erc
 
 ;; out your credentials into .authinfo[.gpg], e.g. like this:
