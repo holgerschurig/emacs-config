@@ -1116,6 +1116,8 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 ;;; Package: lang/compile
 
 (after! compile
+  (setq compilation-scroll-output t)
+
   (defun my-compile-autoclose (buffer string)
     "Auto close compile log if there are no errors"
     (when (string-match "finished" string)
