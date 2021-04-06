@@ -911,6 +911,8 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
         company-tooltip-minimum 5        ;; was 6
         company-global-modes '(not
                                comint-mode
+                               elfeed-search-mode
+                               elfeed-show-mode
                                erc-mode
                                gud-mode
                                help-mode
@@ -1466,6 +1468,9 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
   ;; Ignore junk
   (setq elfeed-search-filter "@2-week-ago -junk ")
+
+  ;; Don't truncate URLs, doesn't work nicely with embark
+  (setq elfeed-show-truncate-long-urls nil)
 
   ;; Entries older than 2 weeks are marked as read
   (add-hook 'elfeed-new-entry-hook
