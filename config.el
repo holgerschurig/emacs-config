@@ -66,6 +66,9 @@
 (setq doom-leader-alt-key "C-c"
       doom-localleader-alt-key "C-c l")
 
+;; Allow scrolling up and down
+(global-set-key (kbd "C-S-<up>")   (kbd "C-u 1 M-v"))
+(global-set-key (kbd "C-S-<down>") (kbd "C-u 1 C-v"))
 
 
 
