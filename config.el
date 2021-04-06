@@ -742,18 +742,16 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
                                        (kill-ring . zebra)
                                        (t . list)))
 
-  :bind
-  (("C-,"  . embark-act)  ;; *not* in minibuffer-local-map, because this can be used universally
-   :map minibuffer-local-map
-   ("C-,"  . embark-act)
-   :map minibuffer-local-completion-map
-   ("C-,"  . embark-act)
-   :map embark-collect-mode-map
-   ("M-t"  . toggle-truncate-lines)
-   :map embark-symbol-map
-   ("."    . embark-find-definition)
-   :map embark-file-map
-   ("j"    . dired-jump))
+  :general
+  ("C-," #'embark-act)
+  (:keymaps '(minibuffer-local-map minibuffer-local-completion-map)
+   "C-," #'embark-act)
+  (:keymaps '(embark-collect-mode-map)
+   "M-t" #'toggle-truncate-lines)
+  (:keymaps '(embark-symbol-map)
+   "."   #'embark-find-definition)
+  (:keymaps '(embark-file-map)
+   "j"    #'dired-jump)
 )
 
 
@@ -944,9 +942,9 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   :init
   (selectrum-mode +1)
 
-  :bind
-  ("C-x C-z"  . #'selectrum-repeat) ;; was suspend-frame
-  ("C-c C-r"  . #'selectrum-repeat)
+  :general
+  ("C-x C-z"  #'selectrum-repeat) ;; was suspend-frame
+  ("C-c C-r"  #'selectrum-repeat)
 
   :custom
   (selectrum-fix-vertical-window-height 15)
@@ -1021,57 +1019,55 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   ;; will show previously used files
   (recentf-mode +1)
 
-  :bind
+  :general
 
   ;; C-c bindings (mode-specific-map)
-  ("C-c h"    . consult-history)
-  ("C-c m"    . consult-mode-command)
-  ("C-c b"    . consult-bookmark)
-  ("C-c k"    . consult-kmacro)
+  ("C-c h"    #'consult-history)
+  ("C-c m"    #'consult-mode-command)
+  ("C-c b"    #'consult-bookmark)
+  ("C-c k"    #'consult-kmacro)
 
   ;; C-x bindings (ctl-x-map)
-  ("C-x M-:"  . consult-complex-command)      ;; was: repeat-complex-command
-  ("C-x C-b"  . consult-buffer)               ;; was: switch-to-buffer
-  ("C-x 4 b"  . consult-buffer-other-window)  ;; was: switch-to-buffer-other-window
-  ("C-x 5 b"  . consult-buffer-other-frame)   ;; was: switch-to-buffer-other-frame
+  ("C-x M-:"  #'consult-complex-command)      ;; was: repeat-complex-command
+  ("C-x C-b"  #'consult-buffer)               ;; was: switch-to-buffer
+  ("C-x 4 b"  #'consult-buffer-other-window)  ;; was: switch-to-buffer-other-window
+  ("C-x 5 b"  #'consult-buffer-other-frame)   ;; was: switch-to-buffer-other-frame
 
   ;; Custom M-# bindings for fast register access
-  ("M-#"      . consult-register-load)
-  ("M-'"      . consult-register-store)       ;; was: abbrev-prefix-mark
-  ("C-M-#"    . consult-register)
+  ("M-#"      #'consult-register-load)
+  ("M-'"      #'consult-register-store)       ;; was: abbrev-prefix-mark
+  ("C-M-#"    #'consult-register)
 
   ;; Other custom bindings
-  ("M-y"      . consult-yank-pop)             ;; was: yank-pop
-  ("<help> a" . consult-apropos)              ;; was: apropos-command
+  ("M-y"      #'consult-yank-pop)             ;; was: yank-pop
+  ("<help> a" #'consult-apropos)              ;; was: apropos-command
 
   ;; M-g bindings (goto-map)
-  ("M-g g"    . consult-goto-line)            ;; was: goto-line
-  ("M-g M-g"  . consult-goto-line)            ;; was: goto-line
-  ("M-g o"    . consult-outline)
-  ("M-g k"    . consult-mark)
-  ("M-g K"    . consult-global-mark)
-  ("M-g i"    . consult-imenu)
-  ("M-g I"    . consult-project-imenu)
-  ("M-g e"    . consult-error)
-  ("M-g l"    . consult-line)                  ;; similar to swiper
+  ("M-g g"    #'consult-goto-line)            ;; was: goto-line
+  ("M-g M-g"  #'consult-goto-line)            ;; was: goto-line
+  ("M-g o"    #'consult-outline)
+  ("M-g k"    #'consult-mark)
+  ("M-g K"    #'consult-global-mark)
+  ("M-g i"    #'consult-imenu)
+  ("M-g I"    #'consult-project-imenu)
+  ("M-g e"    #'consult-error)
+  ("M-g l"    #'consult-line)                  ;; similar to swiper
 
   ;; M-s bindings (search-map)
-  ("M-g f"    . consult-find)
-  ("M-g L"    . consult-locate)
-  ("M-s g"    . consult-git-grep)
-  ("M-s G"    . consult-grep)
-  ("M-s r"    . consult-ripgrep)
-  ("M-s l"    . consult-line)
-  ("M-s m"    . consult-multi-occur)
-  ("M-s k"    . consult-keep-lines)
-  ("M-s u"    . consult-focus-lines)           ;; run with C-u to show all lines again
+  ("M-s f"    #'consult-find)
+  ("M-g L"    #'consult-locate)
+  ("M-s g"    #'consult-git-grep)
+  ("M-s G"    #'consult-grep)
+  ("M-s r"    #'consult-ripgrep)
+  ("M-s l"    #'consult-line)
+  ("M-s m"    #'consult-multi-occur)
+  ("M-s k"    #'consult-keep-lines)
+  ("M-s u"    #'consult-focus-lines)           ;; run with C-u to show all lines again
 
-  ("M-s o"    . consult-line)                  ;; was: occur
+  ("M-s o"    #'consult-line)                  ;; was: occur
 
-  (:map compilation-minor-mode-map
-   ("e" . consult-compile-error)
-   :map compilation-mode-map
-   ("e" . consult-compile-error))
+  (:keymaps '(compilation-mode-map compilation-minor-mode-map)
+   "e" #'consult-compile-error)
 )
 
 
@@ -1259,9 +1255,10 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 (use-package! my-compile
   :load-path doom-private-dir
   :defer t
-  :bind
-  ("S-<f7>" . my-compile-select-command-and-run)
-  ("<f7>"   . my-compile)
+
+  :general
+  ("S-<f7>" #'my-compile-select-command-and-run)
+  ("<f7>"   #'my-compile)
 )
 
 
