@@ -1670,3 +1670,5 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
         (mu4e-main-mode)
         (goto-char pos))))
 )
+(map! "M-g n" #'=mu4e ;; was next-error
+      "M-g p" nil)    ;; was previous-error
