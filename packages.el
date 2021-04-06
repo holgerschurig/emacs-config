@@ -53,7 +53,7 @@
 (package! clean-aindent-mode)
 
 (package! embark)
-(package! selectrum :pin "847947bb3fdc5991132ab9005feea0c5d650417f")
+(package! selectrum)
 (package! selectrum-prescient)
 (package! marginalia)
 (package! consult)

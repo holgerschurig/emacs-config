@@ -949,8 +949,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   ("C-c C-r"  . #'selectrum-repeat)
 
   :custom
-  ;; (selectrum-show-indices t)
-  (selectrum-num-candidates-displayed 15) ;; was 10
+  (selectrum-fix-vertical-window-height 15)
 )
 
 
