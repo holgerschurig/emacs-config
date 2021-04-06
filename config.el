@@ -65,10 +65,6 @@
 ;; Sensible default key bindings for non-evil users
 (setq doom-leader-alt-key "C-c"
       doom-localleader-alt-key "C-c l")
-;; persp-mode and projectile in different prefixes
-(setq persp-keymap-prefix (kbd "C-c w"))
-(after! projectile
-  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
 
 
 
