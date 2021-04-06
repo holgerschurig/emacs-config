@@ -1556,8 +1556,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   (add-to-list 'Info-directory-list (concat straight-base-dir "straight/repos/mu/mu4e/"))
 
   ;; see also https://www.djcbsoftware.nl/code/mu/mu4e/Keybindings.html
-  (map! "M-g 4" #'=mu4e
-        :map mu4e-main-mode-map
+  (map! :map mu4e-main-mode-map
         "c" #'mu4e-compose-new
         "u" #'mu4e-update-mail-and-index
         :map mu4e-headers-mode-map
