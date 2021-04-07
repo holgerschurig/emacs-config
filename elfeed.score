@@ -1,0 +1,15 @@
+;;; Elfeed score file                                     -*- lisp -*-
+((version 7)
+ ("title"
+  (:text "hyperbole" :value -1000 :type w :date 1617791180.6716127 :hits 5)
+  (:text "exwm" :value -1000 :type w :date 1617789436.2117488 :hits 2)
+  (:text "melpa" :value -1000 :type w :date 1617789436.211817 :hits 6)
+  (:text "evil" :value -1000 :type w :date 1617789436.214282 :hits 3))
+ ("content")
+ ("title-or-content")
+ ("tag")
+ ("authors")
+ ("feed")
+ ("link")
+ (mark -1000)
+ ("adjust-tags"))
