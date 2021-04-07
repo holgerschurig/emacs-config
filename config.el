@@ -1614,6 +1614,9 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 ;;; Packages: comm/mu4e
 
 (after! mu4e
+  ;; setting this again because .doom.d/modules/email/mu4e/config.el overwrites it
+  (setq message-send-mail-function #'message-send-mail-with-sendmail)
+
   ;; Optics
   (setq mu4e-headers-fields '(
                               (:human-date . 8)
