@@ -819,7 +819,10 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
                )
   (add-hook 'helpful-mode-hook #'visual-line-mode))
 
-(map! "<f1> h" #'helpful-at-point)
+(map! "<f1> h" #'helpful-at-point
+      :map helpful-mode-map
+      "q" #'kill-buffer-and-window)
+
 
 
 
