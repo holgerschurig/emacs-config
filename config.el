@@ -1469,6 +1469,9 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 ;; https://github.com/skeeto/elfeed
 ;; http://nullprogram.com/blog/2013/09/04/
+
+(defvar my-elfeed-score-needs-init t)
+
 (after! elfeed
 
   ;; Optics
@@ -1487,24 +1490,53 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
             (elfeed-make-tagger :before "2 weeks ago"
                                 :remove 'unread))
 
-  ;; Building subset feeds
-  ;; (add-hook 'elfeed-new-entry-hook
-  ;;           (elfeed-make-tagger :feed-url "example\\.com"
-  ;;                               :entry-title '(not "something interesting")
-  ;;                               :add 'junk
-  ;;                               :remove 'unread))
-
   ;; from http://pragmaticemacs.com/emacs/read-your-rss-feeds-in-emacs-with-elfeed/
-  (defun my-elfeed-save-db-and-bury ()
+  (defun my-elfeed-quit ()
     "Wrapper to save the elfeed db to disk before burying buffer"
     (interactive)
     (elfeed-db-save)
-    (quit-window))
+    (unless my-elfeed-score-needs-init
+      (require 'elfeed-score)
+      (elfeed-score-unload)
+      (setq my-elfeed-score-needs-init t))
+    (kill-buffer-and-window))
 
   (map! :map elfeed-search-mode-map
-        "q" #'my-elfeed-save-db-and-bury)
+        "q" #'my-elfeed-quit)
 
 )
+
+
+(after! elfeed-org
+  (setq rmh-elfeed-org-files (list (concat doom-private-dir "elfeed.org")))
+)
+
+
+(use-package! elfeed-score
+  :commands elfeed-score-enable
+  :after elfeed
+
+  :config
+
+  (defun my-elfeed-score-write-score-file ()
+    "Doesn't prompt for the file name."
+    (interactive)
+    (elfeed-score-serde-write-score-file elfeed-score-serde-score-file))
+  (defun my-elfeed-score-load-score-file ()
+    "Doesn't prompt for the file name."
+    (interactive)
+    (elfeed-score-serde-load-score-file elfeed-score-serde-score-file))
+
+  (setq elfeed-score-serde-score-file (concat doom-private-dir "elfeed.score"))
+  (setq elfeed-search-print-entry-function #'elfeed-score-print-entry)
+  (define-key elfeed-search-mode-map "=" elfeed-score-map)
+
+  :general
+  (:keymaps '(elfeed-score-map)
+   "l" #'my-elfeed-score-load-score-file
+   "w" #'my-elfeed-score-write-score-file)
+)
+
 ;; from http://pragmaticemacs.com/emacs/read-your-rss-feeds-in-emacs-with-elfeed/
 (defun my-elfeed-load-db-and-open ()
   "Wrapper to load the elfeed db from disk before opening"
@@ -1514,13 +1546,14 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   (elfeed-db-load)
   (elfeed)
   (elfeed-search-update--force)
-  (run-with-timer 0.3 nil #'elfeed-update))
+  (when my-elfeed-score-needs-init
+    (setq my-elfeed-score-needs-init nil)
+    (elfeed-score-enable))
+  (run-with-timer 0.5 nil #'elfeed-update))
+
 (map! "M-g f" #'my-elfeed-load-db-and-open)
 
 
-(after! elfeed-org
-  (setq rmh-elfeed-org-files (list (concat doom-private-dir "elfeed.org")))
-)
 
 
 ;;; Package: comm/erc
