@@ -21,7 +21,7 @@ emacs.git/configure: emacs.git/.git/HEAD
 	cd emacs.git; ./autogen.sh
 
 pullemacs emacs.git/.git/HEAD:
-ifeq ("$(wildcard emacs)","")
+ifeq ("$(wildcard emacs.git)","")
 	git clone git://git.savannah.gnu.org/emacs.git emacs.git
 else
 	cd emacs.git; git pull
