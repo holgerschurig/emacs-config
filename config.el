@@ -907,11 +907,8 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 ;;; Package: completion/company
 
 (after! company
-  (setq company-idle-delay 1             ;; was 0.5
+  (setq company-idle-delay 0           ;; was 0.5
         company-selection-wrap-around t  ;; was nil
-        company-tooltip-limit 10         ;; was 14
-        company-tooltip-minimum-width 80 ;; was 0
-        company-tooltip-minimum 5        ;; was 6
         company-global-modes '(not
                                comint-mode
                                elfeed-search-mode
@@ -924,7 +921,20 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
                                message-mode
                                mu4e-view-mode
                                org-mode
-                               )))
+                               ))
+  (setq company-frontends '(;; company-tng-frontend
+                            ;; company-echo-frontend
+                            ;; company-preview-frontend
+                            ;; company-echo-metadata-frontend
+                            ;; company-pseudo-tooltip-frontend
+                            ;; company-preview-common-frontend
+                            ;; company-echo-strip-common-frontend
+                            company-preview-if-just-one-frontend
+                            ;; company-pseudo-tooltip-unless-just-one-frontend
+                            ;; company-pseudo-tooltip-unless-just-one-frontend-with-delay
+                            ))
+)
+
 
 (map!
  :map company-mode-map
