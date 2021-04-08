@@ -514,9 +514,7 @@ behavior added."
 ;;; Package: theme/font-lock
 
 (after! font-lock
-  (setq font-lock-maximum-decoration 2)
-  (setq-default font-lock-multiline t))
-
+  (setq font-lock-maximum-decoration 2))  ;; was t
 
 
 
