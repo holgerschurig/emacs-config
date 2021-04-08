@@ -13,7 +13,26 @@ help::
 	@echo "make [-j] comp            compile emacs from source"
 
 conf emacs.git/Makefile: emacs.git/configure
-	cd emacs.git; ./configure --with-cairo --with-xwidgets --with-x-toolkit=gtk3
+	cd emacs.git; \
+	./configure \
+		--with-cairo \
+		--with-xwidgets \
+		--with-x-toolkit=gtk3 \
+		--without-gconf \
+		--without-gpm \
+		--without-gsettings \
+		--without-hesiod \
+		--without-imagemagick \
+		--without-kerberos \
+		--without-kerberos5 \
+		--without-ns \
+		--without-selinux \
+		--without-wide-int \
+		--without-xim \
+		CFLAGS='-pipe -O2 -g3 -march=native -fstack-protector-strong -Wformat -Werror=format-security -Wall' \
+		CPPFLAGS='-Wdate-time -D_FORTIFY_SOURCE=2' \
+		LDFLAGS='-Wl,-O1 -Wl,--as-needed -Wl,-z,relro'
+
 help::
 	@echo "make conf                 configure emacs"
 
