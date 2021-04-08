@@ -10,4 +10,4 @@ See https://github.com/remyhonig/elfeed-org
 ** Programming :dev:
 *** http://nullprogram.com/feed
 ** Nim :nim:
-*** https://forum.nim-lang.org/postActivity.xml"
+*** https://forum.nim-lang.org/postActivity.xml
