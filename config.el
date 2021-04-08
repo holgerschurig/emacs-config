@@ -307,6 +307,13 @@ behavior added."
 
 
 
+;;; Package: core/mule-util
+
+(after! mule-util
+  (setq truncate-string-ellipsis "…"))
+
+
+
 ;;; Package: core/sendmail
 
 (after! sendmail
