@@ -917,6 +917,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   (setq company-idle-delay nil           ;; was 0.5
         company-selection-wrap-around t  ;; was nil
         company-global-modes '(not
+                               circe-channel-mode
                                comint-mode
                                elfeed-search-mode
                                elfeed-show-mode
@@ -1538,6 +1539,86 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
+;;; Package: comm/circe
+
+(use-package circe
+  :commands (circe)
+
+  :hook (
+         (circe-channel-mode . enable-lui-autopaste)
+         (circe-channel-mode . my-maybe-log-channel)
+         )
+
+  :preface
+  (defun irc ()
+    "Connect to Freenode via Circe."
+    (interactive)
+    (circe "Freenode"))
+
+  :config
+  (setq circe-reduce-lurker-spam t
+        circe-use-cycle-completion t
+        circe-network-options
+        `(("Freenode"
+             :host "chat.freenode.net"
+             :server-buffer-name "⇄ Freenode"
+             :port "6697"
+             :tls t
+             :nick "schurig"
+             :nickserv-password ,(funcall (plist-get (car (auth-source-search :host "irc.freenode.net" :max 1)) :secret))
+             :channels (:after-auth "#emacs" "#emacs-circe")
+             )
+          ))
+  ;; (circe-set-display-handler "JOIN" (lambda (&rest ignored) nil))
+  ;; (circe-set-display-handler "PART" (lambda (&rest ignored) nil))
+  (defun circe-command-RECONNECT (&optional ignored)
+    (circe-reconnect))
+)
+
+
+(use-package circe-color-nicks
+  :after circe
+  :init
+  (enable-circe-color-nicks)
+)
+
+
+(use-package! tracking
+  :after circe
+  :init
+  (tracking-mode)
+  :config
+  (setq tracking-most-recent-first t
+        tracking-position 'end)
+)
+
+
+(use-package! lui
+  :defer t
+  :config
+  (setq lui-flyspell-p t)
+  ;; (setq lui-flyspell-alist '(("#hamburg" "german8")
+  ;;                            (".*" "american")))
+)
+
+
+(use-package! lui-logging
+  :commands (enable-lui-logging)
+  :preface
+  (defvar my-logged-irc-channels
+    '("#emacs")
+    "List of channels to log.")
+
+  (defun my-maybe-log-channel ()
+    "Maybe start logging the an IRC channel."
+    (when (-contains? my-logged-irc-channels (buffer-name))
+      (enable-lui-logging)))
+
+  :config
+  (setq lui-logging-directory (concat doom-local-dir "logging"))
+)
+
+
 ;;; Package: comm/erc
 
 ;; out your credentials into .authinfo[.gpg], e.g. like this:
@@ -1545,6 +1626,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 ;; https://old.reddit.com/r/emacs/comments/8ml6na/tip_how_to_make_erc_fun_to_use/
 (use-package! erc
+  :disabled t
   :preface
   (defun my-erc ()
     "Connects to ERC, or switch to last active buffer."
