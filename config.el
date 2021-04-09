@@ -213,6 +213,63 @@ If there are two windows displayed, act like \"C-x o\"."
 
 
 
+;;; Package: core/ibuffer
+
+(after! ibuffer
+
+  ;; see `ibuffer-filtering-alist` for what is possible beside "name" and "mode"
+  (setq ibuffer-saved-filter-groups
+        `(("default"
+           ("Programming"  (or
+                            (derived-mode . prog-mode)
+                            (filename . ,(concat "^" (getenv "HOME") "/d/"))
+                            ))
+           ("Dired" (mode . dired-mode))
+           ("Mail"  (or
+                     (mode . mu4e-view-mode)
+                     (mode . mu4e-compose-mode)
+                     (mode . mu4e-headers-mode)))
+           ("IRC"   (or
+                     (mode . erc-mode)
+                     (mode . circe-server-mode)
+                     (mode . circe-query-mode)
+                     (mode . circe-channel-mode)
+                     ))
+           ("Feeds" (or
+                     (mode . elfeed-show-mode)
+                     (mode . elfeed-search-mode)
+                     (name . "elfeed.org$")
+                     (name . "^\\*elfeed.log\\*$")
+                     ))
+           ("Documentation" (or
+                     (name . "^\\*info")
+                     (name . "^\\*help")
+                     ))
+           ("Emacs" (or
+                     (name . "^\\*")
+                     ))
+                   )))
+
+  ;; no empty sections
+  (setq ibuffer-show-empty-filter-groups nil)
+
+  ;; less annoying questions
+  (setq ibuffer-expert t)
+
+  :preface
+  (defun my-ibuffer-setup ()
+    (ibuffer-switch-to-saved-filter-groups "default")
+    (ibuffer-auto-mode 1))
+
+  (add-hook 'ibuffer-mode-hook #'my-ibuffer-setup)
+
+  (map! "C-x b" #'ibuffer
+        :map ibuffer-mode-map
+        "q" #'kill-buffer-and-window)
+)
+
+
+
 ;;; Package: core/isearch
 
 (after! isearch
