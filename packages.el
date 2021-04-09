@@ -52,8 +52,6 @@
 
 (package! clean-aindent-mode)
 
-(package! elfeed-score)
-
 (package! embark)
 (package! selectrum)
 (package! selectrum-prescient)
