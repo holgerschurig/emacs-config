@@ -6,7 +6,12 @@ See https://github.com/remyhonig/elfeed-org
 ** Emacs :emacs:
 *** [[https://planet.emacslife.com/atom.xml][Planet Emacs]]
 *** [[https://umarahmad.xyz/tags/emacs/index.xml][Umar Ahmad #emacs]]
+*** [[http://ergoemacs.org/emacs/blog.xml][Xah Emacs]]
+*** [[https://www.emacswiki.org/emacs?action=rss;days=28;all=0;showedit=0;full=1;diff=1][Emacs Wiki]]
+
 ** Programming :dev:
 *** http://nullprogram.com/feed
+
 ** Nim :nim:
-*** https://forum.nim-lang.org/postActivity.xml
+*** [[https://forum.nim-lang.org/postActivity.xml][Nim Forum]]
+*** https://moigagoo.svbtle.com/feed
