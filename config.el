@@ -1487,8 +1487,6 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 ;; https://github.com/skeeto/elfeed
 ;; http://nullprogram.com/blog/2013/09/04/
 
-(defvar my-elfeed-score-needs-init t)
-
 (after! elfeed
 
   ;; Optics
@@ -1512,10 +1510,6 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
     "Wrapper to save the elfeed db to disk before burying buffer"
     (interactive)
     (elfeed-db-save)
-    (unless my-elfeed-score-needs-init
-      (require 'elfeed-score)
-      (elfeed-score-unload)
-      (setq my-elfeed-score-needs-init t))
     (kill-buffer-and-window))
 
   (map! :map elfeed-search-mode-map
@@ -1529,31 +1523,6 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 )
 
 
-(use-package! elfeed-score
-  :commands elfeed-score-enable
-  :after elfeed
-
-  :config
-
-  (defun my-elfeed-score-write-score-file ()
-    "Doesn't prompt for the file name."
-    (interactive)
-    (elfeed-score-serde-write-score-file elfeed-score-serde-score-file))
-  (defun my-elfeed-score-load-score-file ()
-    "Doesn't prompt for the file name."
-    (interactive)
-    (elfeed-score-serde-load-score-file elfeed-score-serde-score-file))
-
-  (setq elfeed-score-serde-score-file (concat doom-private-dir "elfeed.score"))
-  (setq elfeed-search-print-entry-function #'elfeed-score-print-entry)
-  (define-key elfeed-search-mode-map "=" elfeed-score-map)
-
-  :general
-  (:keymaps '(elfeed-score-map)
-   "l" #'my-elfeed-score-load-score-file
-   "w" #'my-elfeed-score-write-score-file)
-)
-
 ;; from http://pragmaticemacs.com/emacs/read-your-rss-feeds-in-emacs-with-elfeed/
 (defun my-elfeed-load-db-and-open ()
   "Wrapper to load the elfeed db from disk before opening"
@@ -1563,9 +1532,6 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   (elfeed-db-load)
   (elfeed)
   (elfeed-search-update--force)
-  (when my-elfeed-score-needs-init
-    (setq my-elfeed-score-needs-init nil)
-    (elfeed-score-enable))
   (run-with-timer 0.5 nil #'elfeed-update))
 
 (map! "M-g f" #'my-elfeed-load-db-and-open)
