@@ -263,9 +263,7 @@ If there are two windows displayed, act like \"C-x o\"."
 
   (add-hook 'ibuffer-mode-hook #'my-ibuffer-setup)
 
-  (map! "C-x b" #'ibuffer
-        :map ibuffer-mode-map
-        "q" #'kill-buffer-and-window)
+  (map! "C-x b" #'ibuffer)
 )
 
 
