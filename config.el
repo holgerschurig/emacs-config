@@ -980,6 +980,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
                                gud-mode
                                help-mode
                                helpful-mode
+                               Info-mode
                                magit-status-mode
                                message-mode
                                mu4e-view-mode
