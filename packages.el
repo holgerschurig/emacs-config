@@ -85,6 +85,8 @@
   ;; :pin "8508dda0fa01202c5bc6596f0057c44c31eb29b8"
   :shadow 'org)
 
+(package! ox-hugo)
+
 (package! rainbow-mode)
 
 (package! symbol-overlay)
