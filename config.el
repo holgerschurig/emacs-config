@@ -1645,6 +1645,22 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
     (elfeed-db-save)
     (kill-buffer-and-window))
 
+  (defun elfeed-dead-months (months)
+    "Return a list of feeds that haven't posted en entry in MONTHS months."
+    (cl-block
+        (macroexp-let* ((living-feeds (make-hash-table :test 'equal))
+                        (seconds (* months 24.0 60 60))
+                        (threshold (- (float-time) seconds)))
+                       (with-elfeed-db-visit (entry feed)
+                         (let ((date (elfeed-entry-date entry)))
+                           (when (> date threshold)
+                             (setf (gethash (elfeed-feed-url feed) living-feeds) t))))
+                       (cl-loop for url in (elfeed-feed-list)
+                                unless (gethash url living-feeds)
+                                collect url))))
+  (elfeed-dead-months 1.0)
+
+
   (map! :map elfeed-search-mode-map
         "q" #'my-elfeed-quit)
 )
