@@ -70,6 +70,8 @@
   :recipe (:host github :repo "djcb/mu"
            :files ("mu4e/*.el")))
 
+(package! nov)
+
 (package! nswbuff :recipe (:host github :repo "joostkremers/nswbuff"))
 
 ;; This is org-mode with updated folding

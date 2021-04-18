@@ -888,6 +888,16 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
+;;; Package: modes/nov
+
+;; https://depp.brause.cc/nov.el/
+(use-package! nov
+  :defer t
+  :mode (("\\epub\\'" . nov-mode))
+  :hook
+  (nov-mode-hook . visual-line-mode)
+)
+
 ;;; Package: modes/pdf-tools
 
 (after! pdf-tools
