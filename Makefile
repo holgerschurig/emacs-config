@@ -54,9 +54,17 @@ clean:
 uninstall:
 	cd /usr/local/stow; stow -D emacs
 
-help::
-	@echo
 
+
+PDF_BUILD=~/.emacs.d/.local/straight/build-28.0.50/pdf-tools/build/server
+$(PDF_BUILD)/configure:
+	cd $(PDF_BUILD); ./autogen.sh
+$(PDF_BUILD)/Makefile: $(PDF_BUILD)/configure
+	cd $(PDF_BUILD); ./configure
+comppdf: $(PDF_BUILD)/Makefile
+	$(MAKE) -C $(PDF_BUILD)
+help::
+	@echo "make compdf               compile pdf-utils"
 
 
 
@@ -68,7 +76,7 @@ pulldoom:
 	cd ~/.emacs.d; bin/doom clean
 	cd ~/.emacs.d; bin/doom sync -u
 	@# recompile pdf-tools
-	$(MAKE) -C ~/.emacs.d/.local/straight/build/pdf-tools/build/server
+	$(MAKE) comppdf
 help::
 	@echo "make pulldoom             pull new doom changes from git"
 
