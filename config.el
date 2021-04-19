@@ -1060,7 +1060,6 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   :general
 
   ;; C-c bindings (mode-specific-map)
-  ("C-c h"    #'consult-history)
   ("C-c m"    #'consult-mode-command)
   ("C-c b"    #'consult-bookmark)
   ("C-c k"    #'consult-kmacro)
