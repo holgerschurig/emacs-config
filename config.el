@@ -973,53 +973,6 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
-;;; Package: completion/company
-
-(after! company
-  (setq company-idle-delay nil           ;; was 0.5
-        company-selection-wrap-around t  ;; was nil
-        company-global-modes '(not
-                               circe-channel-mode
-                               comint-mode
-                               elfeed-search-mode
-                               elfeed-show-mode
-                               erc-mode
-                               gud-mode
-                               help-mode
-                               helpful-mode
-                               Info-mode
-                               magit-status-mode
-                               message-mode
-                               mu4e-view-mode
-                               org-mode
-                               ))
-  (setq company-frontends '(;; company-tng-frontend
-                            ;; company-echo-frontend
-                            ;; company-preview-frontend
-                            company-echo-metadata-frontend
-                            ;; company-preview-common-frontend
-                            ;; company-echo-strip-common-frontend
-                            ;; company-preview-if-just-one-frontend
-                            ;; company-pseudo-tooltip-frontend
-                            ;; company-pseudo-tooltip-unless-just-one-frontend
-                            company-pseudo-tooltip-unless-just-one-frontend-with-delay
-                            ))
-)
-
-
-(map!
- :map company-mode-map
- "<tab>"     #'company-indent-or-complete-common
- "C-<tab>"   #'company-complete
- "C-ä"       #'company-complete
- :map company-active-map
- "ESC"       #'company-abort
- "<tab>"     #'company-complete-common-or-cycle
- "<backtab>" #'company-complete-common-or-cycle-backward
- )
-
-
-
 ;;; Package: completion/selectrum
 
 ;; https://github.com/raxod502/selectrum
@@ -1185,14 +1138,8 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
     ))
   (add-hook 'c-mode-hook #'my-c-mode-setup)
   (add-hook 'c++-mode-hook #'my-c-mode-setup)
-  (set-company-backend! '(c-mode c++-mode)
-    '(company-dabbrev-code  ; all symbols of current buffer that aren't strings/code
-      company-keywords      ; programming language keywords
-      company-yasnippet
-      ))
   (setq-default c-electric-flag nil)
   )
-(map! "C-ä" #'company-complete)
 
 
 
