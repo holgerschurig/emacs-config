@@ -56,9 +56,6 @@
   (interactive "r")
   (align-regexp BEG END "\\(\\s-*\\)\\S-+" 1 1 t))
 
-;; make the cursor be as wide as a character, e.g. as a tab char
-(setq x-stretch-cursor t)   ; xdisp.c
-
 
 
 ;;; Misc keybindings
