@@ -1494,42 +1494,49 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 ;;; Package: ox-hugo
 
-(use-package! ox-hugo
-  :defer t
-  :after ox
-  :config
+;; https://ox-hugo.scripter.co/
 
-(defun org2hugo-ensure-properties ()
-  (let ((mandatory `(("TITLE" . ,(nth 4 (org-heading-components)))
-                ("HUGO_SECTION" . "en")
-                ("EXPORT_DATE" . ,(format-time-string (org-time-stamp-format t t) (org-current-time)))))
-        (optional '(("EXPORT_HUGO_TAGS" . "")
-               ("EXPORT_HUGO_CATEGORIES" . "")))
-        (first))
+;; (use-package! ox-hugo
+;;   :commands (org-hugo-export-wim-to-md)
+;;   :after ox
+;; )
+(after! org
+    (defun org2hugo-ensure-properties ()
+    (let ((mandatory `(("EXPORT_HUGO_SECTION" . "en")
+                       ("EXPORT_FILE_NAME" . "filename")
+                       ("EXPORT_DATE" . ,(format-time-string "%Y-%m-%d" (org-current-time)))))
+          (optional '(("EXPORT_HUGO_TAGS" . "")
+                      ("EXPORT_HUGO_CATEGORIES" . "")))
+          (first))
 
-    ;; loop through mandatory entries, enter them into property if not there, note first missing one
-    (dolist (elem mandatory)
-      (unless (org-entry-get nil (car elem) t)
-        (org-entry-put nil (car elem) (cdr elem))
-        (unless first
-          (setq first (car elem)))))
-    ;; loop through optional entries, enter them into property if not there
-    (dolist (elem optional)
-      (unless (org-entry-get nil (car elem) t)
-        (org-entry-put nil (car elem) (cdr elem))))
-    ;; move behind first mandatory entry
-    (when first
-      (goto-char (org-entry-beginning-position))
-      ;; The following opens the drawer
-      (forward-line 1)
-      (beginning-of-line 1)
-      (when (looking-at org-drawer-regexp)
-        (org-flag-drawer nil))
-      ;; And now move to the drawer property
-      (search-forward (concat ":" first ":"))
-      (end-of-line))
-    ;; return first non-filled entry
-    first))
+      ;; Insert path to content directory
+      (unless (car (plist-get (org-export-get-environment 'hugo) :hugo-base-dir))
+        (save-excursion
+          (goto-char 1)
+          (insert "#+HUGO_BASE_DIR: ../\n\n")))
+      ;; loop through mandatory entries, enter them into property if not there, note first missing one
+      (dolist (elem mandatory)
+        (unless (org-entry-get nil (car elem) t)
+          (org-entry-put nil (car elem) (cdr elem))
+          (unless first
+            (setq first (car elem)))))
+      ;; loop through optional entries, enter them into property if not there
+      (dolist (elem optional)
+        (unless (org-entry-get nil (car elem) t)
+          (org-entry-put nil (car elem) (cdr elem))))
+      ;; move behind first mandatory entry
+      (when first
+        (goto-char (org-entry-beginning-position))
+        ;; The following opens the drawer
+        (forward-line 1)
+        (beginning-of-line 1)
+        (when (looking-at org-drawer-regexp)
+          (org-flag-drawer nil))
+        ;; And now move to the drawer property
+        (search-forward (concat ":" first ":"))
+        (end-of-line))
+      ;; return first non-filled entry
+      first))
 
 
   (defun org2hugo ()
@@ -1543,18 +1550,11 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
           ;; Create block
           (end-of-line)
-          (search-backward ":HUGO_SECTION:")
-          (setq blog (org-export-as 'hugo t))
+          (search-backward ":EXPORT_HUGO_SECTION:")
+          (org-hugo-export-wim-to-md)
+          ))))
 
-          ;; save markdown inside `blog` variable to `file`
-          (with-temp-buffer
-            (insert blog)
-            (untabify (point-min) (point-max))
-            (write-file file)
-            (message "Exported to %s" file))
-        ))))
-  :general
-  ("C-c h" #'org2hugo)
+  (map! "C-c h" #'org2hugo)
 )
 
 
