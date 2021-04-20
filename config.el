@@ -323,6 +323,9 @@ If there are two windows displayed, act like \"C-x o\"."
 
 (setq resize-mini-windows t)
 
+;; don't show "*Completions*" buffer
+(setq completion-auto-help nil)
+
 ;; Have you ever tried to quit the minibuffer when point was in another window?
 ;; Naturally you would try hammering C-g but in stock Emacs the minibuffer stays
 ;; active and all you get are grumpy "Quit" messages.
