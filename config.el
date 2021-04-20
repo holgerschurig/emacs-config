@@ -56,9 +56,6 @@
   (interactive "r")
   (align-regexp BEG END "\\(\\s-*\\)\\S-+" 1 1 t))
 
-;; make the cursor be as wide as a character, e.g. as a tab char
-(setq x-stretch-cursor t)   ; xdisp.c
-
 
 
 ;;; Misc keybindings
@@ -979,53 +976,6 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
-;;; Package: completion/company
-
-(after! company
-  (setq company-idle-delay nil           ;; was 0.5
-        company-selection-wrap-around t  ;; was nil
-        company-global-modes '(not
-                               circe-channel-mode
-                               comint-mode
-                               elfeed-search-mode
-                               elfeed-show-mode
-                               erc-mode
-                               gud-mode
-                               help-mode
-                               helpful-mode
-                               Info-mode
-                               magit-status-mode
-                               message-mode
-                               mu4e-view-mode
-                               org-mode
-                               ))
-  (setq company-frontends '(;; company-tng-frontend
-                            ;; company-echo-frontend
-                            ;; company-preview-frontend
-                            company-echo-metadata-frontend
-                            ;; company-preview-common-frontend
-                            ;; company-echo-strip-common-frontend
-                            ;; company-preview-if-just-one-frontend
-                            ;; company-pseudo-tooltip-frontend
-                            ;; company-pseudo-tooltip-unless-just-one-frontend
-                            company-pseudo-tooltip-unless-just-one-frontend-with-delay
-                            ))
-)
-
-
-(map!
- :map company-mode-map
- "<tab>"     #'company-indent-or-complete-common
- "C-<tab>"   #'company-complete
- "C-ä"       #'company-complete
- :map company-active-map
- "ESC"       #'company-abort
- "<tab>"     #'company-complete-common-or-cycle
- "<backtab>" #'company-complete-common-or-cycle-backward
- )
-
-
-
 ;;; Package: completion/selectrum
 
 ;; https://github.com/raxod502/selectrum
@@ -1113,7 +1063,6 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   :general
 
   ;; C-c bindings (mode-specific-map)
-  ("C-c h"    #'consult-history)
   ("C-c m"    #'consult-mode-command)
   ("C-c b"    #'consult-bookmark)
   ("C-c k"    #'consult-kmacro)
@@ -1191,14 +1140,8 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
     ))
   (add-hook 'c-mode-hook #'my-c-mode-setup)
   (add-hook 'c++-mode-hook #'my-c-mode-setup)
-  (set-company-backend! '(c-mode c++-mode)
-    '(company-dabbrev-code  ; all symbols of current buffer that aren't strings/code
-      company-keywords      ; programming language keywords
-      company-yasnippet
-      ))
   (setq-default c-electric-flag nil)
   )
-(map! "C-ä" #'company-complete)
 
 
 
@@ -1554,42 +1497,49 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 ;;; Package: ox-hugo
 
-(use-package! ox-hugo
-  :defer t
-  :after ox
-  :config
+;; https://ox-hugo.scripter.co/
 
-(defun org2hugo-ensure-properties ()
-  (let ((mandatory `(("TITLE" . ,(nth 4 (org-heading-components)))
-                ("HUGO_SECTION" . "en")
-                ("EXPORT_DATE" . ,(format-time-string (org-time-stamp-format t t) (org-current-time)))))
-        (optional '(("EXPORT_HUGO_TAGS" . "")
-               ("EXPORT_HUGO_CATEGORIES" . "")))
-        (first))
+;; (use-package! ox-hugo
+;;   :commands (org-hugo-export-wim-to-md)
+;;   :after ox
+;; )
+(after! org
+    (defun org2hugo-ensure-properties ()
+    (let ((mandatory `(("EXPORT_HUGO_SECTION" . "en")
+                       ("EXPORT_FILE_NAME" . "filename")
+                       ("EXPORT_DATE" . ,(format-time-string "%Y-%m-%d" (org-current-time)))))
+          (optional '(("EXPORT_HUGO_TAGS" . "")
+                      ("EXPORT_HUGO_CATEGORIES" . "")))
+          (first))
 
-    ;; loop through mandatory entries, enter them into property if not there, note first missing one
-    (dolist (elem mandatory)
-      (unless (org-entry-get nil (car elem) t)
-        (org-entry-put nil (car elem) (cdr elem))
-        (unless first
-          (setq first (car elem)))))
-    ;; loop through optional entries, enter them into property if not there
-    (dolist (elem optional)
-      (unless (org-entry-get nil (car elem) t)
-        (org-entry-put nil (car elem) (cdr elem))))
-    ;; move behind first mandatory entry
-    (when first
-      (goto-char (org-entry-beginning-position))
-      ;; The following opens the drawer
-      (forward-line 1)
-      (beginning-of-line 1)
-      (when (looking-at org-drawer-regexp)
-        (org-flag-drawer nil))
-      ;; And now move to the drawer property
-      (search-forward (concat ":" first ":"))
-      (end-of-line))
-    ;; return first non-filled entry
-    first))
+      ;; Insert path to content directory
+      (unless (car (plist-get (org-export-get-environment 'hugo) :hugo-base-dir))
+        (save-excursion
+          (goto-char 1)
+          (insert "#+HUGO_BASE_DIR: ../\n\n")))
+      ;; loop through mandatory entries, enter them into property if not there, note first missing one
+      (dolist (elem mandatory)
+        (unless (org-entry-get nil (car elem) t)
+          (org-entry-put nil (car elem) (cdr elem))
+          (unless first
+            (setq first (car elem)))))
+      ;; loop through optional entries, enter them into property if not there
+      (dolist (elem optional)
+        (unless (org-entry-get nil (car elem) t)
+          (org-entry-put nil (car elem) (cdr elem))))
+      ;; move behind first mandatory entry
+      (when first
+        (goto-char (org-entry-beginning-position))
+        ;; The following opens the drawer
+        (forward-line 1)
+        (beginning-of-line 1)
+        (when (looking-at org-drawer-regexp)
+          (org-flag-drawer nil))
+        ;; And now move to the drawer property
+        (search-forward (concat ":" first ":"))
+        (end-of-line))
+      ;; return first non-filled entry
+      first))
 
 
   (defun org2hugo ()
@@ -1603,18 +1553,11 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
           ;; Create block
           (end-of-line)
-          (search-backward ":HUGO_SECTION:")
-          (setq blog (org-export-as 'hugo t))
+          (search-backward ":EXPORT_HUGO_SECTION:")
+          (org-hugo-export-wim-to-md)
+          ))))
 
-          ;; save markdown inside `blog` variable to `file`
-          (with-temp-buffer
-            (insert blog)
-            (untabify (point-min) (point-max))
-            (write-file file)
-            (message "Exported to %s" file))
-        ))))
-  :general
-  ("C-c h" #'org2hugo)
+  (map! "C-c h" #'org2hugo)
 )
 
 
