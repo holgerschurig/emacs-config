@@ -1567,7 +1567,8 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
           (org-hugo-export-wim-to-md)
           ))))
 
-  (map! "C-c h" #'org2hugo)
+  (map! :map org-mode-map
+        "C-c h" #'org2hugo)
 )
 
 
