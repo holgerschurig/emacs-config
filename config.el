@@ -1038,8 +1038,13 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 (use-package! marginalia
   :custom
   (marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
+
   :init
   (marginalia-mode)
+
+  :general
+  (:keymaps '(minibuffer-local-map)
+   "M-c" #'marginalia-cycle)
 )
 
 
