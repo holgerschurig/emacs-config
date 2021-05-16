@@ -54,6 +54,7 @@
 
 (package! embark)
 (package! selectrum)
+(package! embark-consult)
 (package! selectrum-prescient)
 (package! marginalia)
 (package! consult)
