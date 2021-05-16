@@ -818,6 +818,14 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
                                        (kill-ring . zebra)
                                        (t . list)))
 
+  :config
+  (setq prefix-help-command #'embark-prefix-help-command)
+
+  (add-to-list 'display-buffer-alist
+               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                 nil
+                 (window-parameters (mode-line-format . none))))
+
   :general
   ("C-," #'embark-act)
   (:keymaps '(minibuffer-local-map minibuffer-local-completion-map)
