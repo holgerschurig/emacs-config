@@ -921,6 +921,14 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
+;;; Package: modes/js-mode
+
+(use-package! js-mode
+  :mode "\\.ns\\'"  ;; bitburner .ns files
+)
+
+
+
 ;;; Package: modes/nov
 
 ;; https://depp.brause.cc/nov.el/
