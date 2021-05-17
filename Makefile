@@ -1,18 +1,18 @@
 help::
 
 
-install:
+instemacs:
 	$(MAKE) -C emacs.git install prefix=/usr/local/stow/emacs
 	cd /usr/local/stow; stow emacs
 help::
 	@echo "sudo make install         install compiled emacs"
 
-comp emacs.git/src/emacs: emacs.git/Makefile
+compemacs emacs.git/src/emacs: emacs.git/Makefile
 	$(MAKE) -C emacs.git
 help::
 	@echo "make [-j] comp            compile emacs from source"
 
-conf emacs.git/Makefile: emacs.git/configure
+confemacs emacs.git/Makefile: emacs.git/configure
 	cd emacs.git; \
 	./configure \
 		--with-cairo \
