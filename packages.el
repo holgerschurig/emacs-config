@@ -52,46 +52,39 @@
 
 (package! clean-aindent-mode)
 
-(package! embark)
-(package! selectrum)
+(package! embark)               ;; https://github.com/oantolin/embark/
+(package! embark-consult)
+(package! selectrum)            ;; https://github.com/raxod502/selectrum
 (package! selectrum-prescient)
-(package! marginalia)
-(package! consult)
+(package! marginalia)           ;; https://github.com/minad/marginalia
+(package! consult)              ;; https://github.com/minad/consult
+(package! consult-lsp)          ;; https://github.com/gagbo/consult-lsp
 
-(package! kurecolor)
+(package! kurecolor)            ;; https://github.com/emacsfodder/kurecolor  -- edit colors inline
 
-(package! meson-mode)
+(package! meson-mode)           ;; https://github.com/wentasah/meson-mode
 
-(package! modus-themes
+(package! modus-themes          ;; https://protesilaos.com/modus-themes/
  :recipe (:host github :repo "protesilaos/modus-themes"
           :files ("*.el")))
 
-(package! mu4e
+(package! mu4e                  ;; https://github.com/djcb/mu  -- eMail
   :recipe (:host github :repo "djcb/mu"
            :files ("mu4e/*.el")))
 
-(package! nov)
+(package! nov)                  ;; https://depp.brause.cc/nov.el/  -- read ePUB
 
-(package! nswbuff :recipe (:host github :repo "joostkremers/nswbuff"))
+(package! nswbuff               ;; https://github.com/joostkremers/nswbuff  -- buffer switching
+  :recipe (:host github :repo "joostkremers/nswbuff"))
 
-;; This is org-mode with updated folding
-(package! org-mode
-  :recipe (:host github
-           :repo "yantar92/org"
-           :branch "feature/org-fold"
-           :files ("*.el" "lisp/*.el" "contrib/lisp/*.el")
-           :pre-build (with-temp-file (expand-file-name "org-version.el" (straight--repos-dir "org"))
-                        (insert "(fset 'org-release (lambda () \"9.5\"))\n"
-                                "(fset 'org-git-version #'ignore)\n"
-                                "(provide 'org-version)\n")))
-  ;; :pin "8508dda0fa01202c5bc6596f0057c44c31eb29b8"
-  :shadow 'org)
+(package! ox-hugo)              ;; https://github.com/kaushalmodi/ox-hugo
 
-(package! ox-hugo)
+(package! rainbow-mode)         ;; https://github.com/emacs-straight/rainbow-mode  -- Colorize color names
 
-(package! rainbow-mode)
+(package! symbol-overlay)       ;; https://github.com/wolray/symbol-overlay  -- highlight & jump
 
-(package! symbol-overlay)
+(package! wgrep)                ;; https://github.com/mhayashi1120/Emacs-wgrep  -- writable grep
+
 
 (disable-packages!
   better-jumper ;; looks like it only works in evil mode

@@ -758,6 +758,21 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
+;;; Package: edit/wgrep
+
+(use-package wgrep
+  ;; :after (embark-consult ripgrep)
+  :defer t
+
+  :general
+  (keymaps '(wgrep-mode-map)
+           "C-c C-c" #'save-buffer)
+  (keymaps '(grep-mode-map)
+           "e" #'wgrep-change-to-wgrep-mode)
+)
+
+
+
 ;;; Package: misc/embark
 
 ;; The following keymaps are already existing, so you can just add actions to
@@ -812,6 +827,14 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
                                        (xref-location . list)
                                        (kill-ring . zebra)
                                        (t . list)))
+
+  :config
+  (setq prefix-help-command #'embark-prefix-help-command)
+
+  (add-to-list 'display-buffer-alist
+               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                 nil
+                 (window-parameters (mode-line-format . none))))
 
   :general
   ("C-," #'embark-act)
@@ -1025,8 +1048,13 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 (use-package! marginalia
   :custom
   (marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
+
   :init
   (marginalia-mode)
+
+  :general
+  (:keymaps '(minibuffer-local-map)
+   "M-c" #'marginalia-cycle)
 )
 
 
