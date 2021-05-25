@@ -1339,7 +1339,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
                                         "--compile-commands-dir=build"))
   (map! :map eglot-mode-map
         "C-c r" #'eglot-rename
-        "C-c a" #'eglot-code-action
+        "C-c a" #'eglot-code-actions
         "C-c o" #'eglot-code-action-organize-imports
         "C-c h" #'eldoc
         "C-c d" #'xref-find-definitions) ;; Also M-.
