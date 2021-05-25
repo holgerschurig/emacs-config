@@ -427,7 +427,10 @@ behavior added."
   ;; that, kill the tab instead.
   (setq backward-delete-char-untabify-method nil)
 
-  (setq kill-ring-max 500))
+  (setq kill-ring-max 500)
+
+  ;; Don't type C-u C-SPC C-u C-SPC to pop 2 marks, now you can do C-u C-SPC C-SPC
+  (setq set-mark-command-repeat-pop t))
 
 (map! "C-x I" #'insert-buffer
 
