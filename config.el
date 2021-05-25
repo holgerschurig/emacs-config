@@ -1332,7 +1332,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 (after! eglot
   (add-to-list 'eglot-server-programs `((c++-mode c-mode)
-                                        ,(if (string= (system-name) "desktop") "/usr/bin/clangd-10" "/usr/bin/clangd-11")
+                                        ,(if (string= (system-name) "desktop") "/usr/bin/clangd-11" "/usr/bin/clangd-11")
                                         "--background-index"
                                         "--suggest-missing-includes"
                                         "-j=1"
