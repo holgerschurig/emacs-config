@@ -677,7 +677,9 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 ;; This variable is used in indent-for-tab-command and calls and calls out to
 ;; completion-at-point
-(setq tab-always-indent 'complete)
+(setq tab-always-indent 'complete
+      completion-cycle-threshold 3
+      tab-first-completion 'eol)
 
 
 
