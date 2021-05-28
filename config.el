@@ -586,7 +586,7 @@ behavior added."
 
 
 
-;;; Package: theme/modus-vivendi
+;;; Package: theme/modus-themes
 ;; https://protesilaos.com/codelog/2019-08-07-emacs-modus-themes/
 ;; https://gitlab.com/protesilaos/modus-themes
 ;; https://github.com/protesilaos/modus-themes/blob/main/doc/modus-themes.org
@@ -596,8 +596,9 @@ behavior added."
 
 (use-package! modus-vivendi-theme
   :custom
-  (modus-vivendi-theme-slanted-constructs t)
-  (modus-vivendi-theme-bold-constructs t)
+  (modus-themes-slanted-constructs t)
+  (modus-themes-bold-constructs t)
+  (modus-themes-completions 'opinionated)
 
   :config
   ;; Make the marked region be much easier visible
