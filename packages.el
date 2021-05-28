@@ -91,25 +91,19 @@
   demangle-mode ;; objdump can do this quite well
   dhall-mode    ;; no need for this "programmable configuration language"
   dired-rsync   ;; would be pulled in by modules/data, but I don't need it
-  disaster      ;; can show the dissembly of a C function
   doom-themes   ;; modus-vivendi is better
   drag-stuff    ;; I'll never drag stuff around
-  forge         ;; would be pulled in by tools/magit, but I don't need it
-  github-review ;; would be pulled in by tools/magit, but I don't need it
-  graphql-mode  ;; would be pulled in by modules/data, but I don't need it
   helm-bibtex   ;; I won't write bibliographic entries
   hl-line       ;; highlights the current cursor line
-  irony         ;; I'll use lsp eventually
+  irony         ;; I'll use lsp/eglot
   ivy-bibtex    ;; I won't write bibliographic entries
   jsonnet-mode  ;; would be pulled in by modules/data, but I don't need it
-  magit-gitflow ;; would be pulled in by tools/magit, but I don't need it
-  magit-todos   ;; would be pulled in by tools/magit, but I don't need it
   org-yt        ;; youtube links in org-mode?  Who wants that?  :-)
-  rtags         ;; I'll use lsp eventually
+  rtags         ;; I'll use lsp/eglot
   solaire-mode  ;; does interference with modus-vivendi-theme
   smartparens   ;; makes many M-<cursor keypad> keys behave weird
-  ivy-rtags     ;; I'll use lsp eventually
-  irony-eldoc
+  ivy-rtags     ;; I'll use lsp/eglot. And no ivy
+  irony-eldoc   ;; I'll use lsp/eglot
   company-dict  ;; we don't load complete from dictionaries
   ;; I use magit, not vc
   vc
