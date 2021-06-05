@@ -32,7 +32,7 @@ confemacs emacs.git/Makefile: emacs.git/configure
 		--without-native-compilation \
 		CFLAGS='-pipe -O2 -g3 -march=native -fstack-protector-strong -Wformat -Werror=format-security -Wall' \
 		CPPFLAGS='-Wdate-time -D_FORTIFY_SOURCE=2' \
-		LDFLAGS='-Wl,-O1 -Wl,--as-needed -Wl,-z,relro'
+		LDFLAGS='-Wl,-O1 -Wl,--as-needed -Wl,-z,relro' | tee my-configure.log
 
 help::
 	@echo "make conf                 configure emacs"
