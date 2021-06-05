@@ -837,10 +837,17 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   :config
   (setq prefix-help-command #'embark-prefix-help-command)
 
+  ;; which key is nicer than embark's build in prompt
   (add-to-list 'display-buffer-alist
                '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
                  nil
                  (window-parameters (mode-line-format . none))))
+
+  (setq embark-action-indicator
+      (lambda (map &optional _target)
+        (which-key--show-keymap "Embark" map nil nil 'no-paging)
+        #'which-key--hide-popup-ignore-command)
+      embark-become-indicator embark-action-indicator)
 
   :general
   ("C-," #'embark-act)
