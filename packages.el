@@ -91,6 +91,7 @@
   demangle-mode ;; objdump can do this quite well
   dhall-mode    ;; no need for this "programmable configuration language"
   dired-rsync   ;; would be pulled in by modules/data, but I don't need it
+  disaster      ;; needs makefile support to build an object, useless with Ninja
   doom-themes   ;; modus-vivendi is better
   drag-stuff    ;; I'll never drag stuff around
   helm-bibtex   ;; I won't write bibliographic entries
