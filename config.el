@@ -825,7 +825,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 ;; https://github.com/oantolin/embark/wiki/Default-Actions
 ;;
 ;; E.g. go to a lisp symbol and hit "C-, h" to get help on symbol
-;;      go to an URL        and hit "C-, e" to open the URL in ewww (or "C-, b" to browse it normally)
+;;      go to an URL        and hit "C-, e" to open the URL in eww (or "C-, b" to browse it normally)
 ;; generally hit "C-, C-h" to get help on available actions, which sometimes display more entries than which-keys
 
 (use-package! embark-consult
