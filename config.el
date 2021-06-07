@@ -324,6 +324,12 @@ If there are two windows displayed, act like \"C-x o\"."
 
 
 
+;;; Package: core/misc
+
+(map! "C-z" #'zap-up-to-char)
+
+
+
 ;;; Package: core/minibuf
 
 (setq history-delete-duplicates t)
@@ -757,9 +763,10 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   ;; don't save history persistently
   (setq undo-tree-auto-save-history nil)
 
-  (setq undo-tree-visualizer-timestamps t))
+  (setq undo-tree-visualizer-timestamps t)
+  (map! "C-z" #'undo-tree-visualize)
+)
 
-(map! "C-z" #'undo-tree-visualize)
 
 
 
