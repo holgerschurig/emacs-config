@@ -1515,6 +1515,13 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
+;;; Package: org/org-pdftools
+
+(use-package! org-pdftools
+  :hook (org-mode . org-pdftools-setup-link))
+
+
+
 ;;; Package: org/ox
 
 (after! ox
