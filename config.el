@@ -396,8 +396,9 @@ behavior added."
 ;;; Package: core/shr
 
 (after! shr
-  (setq shr-color-visible-luminance-min 80))
-
+  (setq shr-color-visible-luminance-min 80
+        shr-bullet "• "
+        shr-folding-mode t))
 
 
 ;;; Package: core/simple
