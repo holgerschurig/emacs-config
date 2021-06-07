@@ -469,6 +469,13 @@ behavior added."
 
 
 
+;;; Package: core/url-vars
+
+(after! url-vars
+  (setq url-privacy-level '(email agent cookies lastloc)))
+
+
+
 ;;; Package: core/window
 
 (map! "C-x k" #'kill-buffer-and-window)
