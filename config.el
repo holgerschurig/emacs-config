@@ -324,6 +324,12 @@ If there are two windows displayed, act like \"C-x o\"."
 
 
 
+;;; Package: core/misc
+
+(map! "C-z" #'zap-up-to-char)
+
+
+
 ;;; Package: core/minibuf
 
 (setq history-delete-duplicates t)
@@ -390,8 +396,9 @@ behavior added."
 ;;; Package: core/shr
 
 (after! shr
-  (setq shr-color-visible-luminance-min 80))
-
+  (setq shr-color-visible-luminance-min 80
+        shr-bullet "• "
+        shr-folding-mode t))
 
 
 ;;; Package: core/simple
@@ -459,6 +466,13 @@ behavior added."
       (format "\\(%s\\)\\|\\(%s\\)"
               vc-ignore-dir-regexp
               tramp-file-name-regexp)))
+
+
+
+;;; Package: core/url-vars
+
+(after! url-vars
+  (setq url-privacy-level '(email agent cookies lastloc)))
 
 
 
@@ -757,9 +771,10 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   ;; don't save history persistently
   (setq undo-tree-auto-save-history nil)
 
-  (setq undo-tree-visualizer-timestamps t))
+  (setq undo-tree-visualizer-timestamps t)
+  (map! "C-z" #'undo-tree-visualize)
+)
 
-(map! "C-z" #'undo-tree-visualize)
 
 
 
@@ -810,7 +825,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 ;; https://github.com/oantolin/embark/wiki/Default-Actions
 ;;
 ;; E.g. go to a lisp symbol and hit "C-, h" to get help on symbol
-;;      go to an URL        and hit "C-, e" to open the URL in ewww (or "C-, b" to browse it normally)
+;;      go to an URL        and hit "C-, e" to open the URL in eww (or "C-, b" to browse it normally)
 ;; generally hit "C-, C-h" to get help on available actions, which sometimes display more entries than which-keys
 
 (use-package! embark-consult
@@ -1519,6 +1534,13 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   (map! :map org-mode-map
         "C-,"  #'embark-act)
 )
+
+
+
+;;; Package: org/org-pdftools
+
+(use-package! org-pdftools
+  :hook (org-mode . org-pdftools-setup-link))
 
 
 
