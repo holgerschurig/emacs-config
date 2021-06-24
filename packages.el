@@ -52,6 +52,8 @@
 
 (package! clean-aindent-mode)
 
+(package! dts-mode)
+
 (package! embark)               ;; https://github.com/oantolin/embark/
 (package! embark-consult)
 (package! selectrum)            ;; https://github.com/raxod502/selectrum

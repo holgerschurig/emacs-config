@@ -887,6 +887,15 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
+;;; Package: modes/dts-mode
+
+(use-package! dts-mode
+  :mode (("\\.dts\\'"     . dts-mode)
+         ("\\.overlay\\'" . dts-mode))
+)
+
+
+
 ;;; Package: modes/diff-mode
 
 ;; The following let the commits from "git diff >foo.diff" stand out more:
