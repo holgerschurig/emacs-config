@@ -1204,6 +1204,9 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
     (modify-syntax-entry ?_ "w")
     (setq c-recognize-knr-p nil)
 
+    ;; might later be changed by dtrt-indent, but this is the default for new files
+    (setq indent-tabs-mode t)
+
     ;; use "// " for commenting in both C and C++
     (setq comment-start "// "
           comment-end "")
