@@ -79,8 +79,6 @@
 (package! nswbuff               ;; https://github.com/joostkremers/nswbuff  -- buffer switching
   :recipe (:host github :repo "joostkremers/nswbuff"))
 
-(package! org-pdftools)         ;; https://github.com/fuxialexander/org-pdftools
-
 (package! ox-hugo)              ;; https://github.com/kaushalmodi/ox-hugo
 
 (package! rainbow-mode)         ;; https://github.com/emacs-straight/rainbow-mode  -- Colorize color names
