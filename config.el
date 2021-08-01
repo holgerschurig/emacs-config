@@ -197,6 +197,21 @@ If there are two windows displayed, act like \"C-x o\"."
 
 
 
+;;; Package: core/dictionary
+
+(use-package dictionary
+  :defer t
+
+  :general
+  ("C-c d" #'dictionary-lookup-definition)
+
+  :config
+  (setq dictionary-server "dict.org")
+  (setq dictionary-use-single-buffer t)
+)
+
+
+
 ;;; Package: core/files
 
 (after! files
@@ -534,7 +549,7 @@ behavior added."
 
 
 
-;;; Package: gui/whitespace
+;;;; Package: gui/whitespace
 
 ;; (after! whitespace
 ;;   (setq whitespace-global-modes nil))
