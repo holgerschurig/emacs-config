@@ -1,0 +1,26 @@
+diff --git a/core/cli/packages.el b/core/cli/packages.el
+index a6434e405..4023e3f64 100644
+--- a/core/cli/packages.el
++++ b/core/cli/packages.el
+@@ -243,7 +243,7 @@ list remains lean."
+                                    collect path)
+              for file in (doom-files-in paths :match "\\.el\\(?:\\.gz\\)?$")
+              if (and (file-exists-p (byte-compile-dest-file file))
+-                     (not (doom--find-eln-file (doom--eln-file-name file)))
++                     ;;(not (doom--find-eln-file (doom--eln-file-name file)))
+                      (not (cl-some (lambda (re)
+                                      (string-match-p re file))
+                                    native-comp-deferred-compilation-deny-list))) do
+@@ -325,9 +325,9 @@ declaration) or dependency thereof that hasn't already been."
+                          (want-byte-compile
+                           (or (eq build t)
+                               (memq 'compile build)))
+-                         (want-native-compile
+-                          (or (eq build t)
+-                              (memq 'native-compile build))))
++                         (want-native-compile nil))
++                          ;;(or (eq build t)
++                          ;;    (memq 'native-compile build)))
+                     (and (eq (car-safe build) :not)
+                          (setq want-byte-compile (not want-byte-compile)
+                                want-native-compile (not want-native-compile)))
