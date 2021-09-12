@@ -670,8 +670,8 @@ behavior added."
 (defhydra hydra-kurecolor (:color pink :hint  nil)
   "
 Dec/Inc      _j_/_J_ brightness      _k_/_K_ saturation      _l_/_L_ hue
+Gradient     _gj_ ^^ brightness      _gk_ ^^ saturation      _gl_ ^^ hue
 Set          _sj_ ^^ brightness      _sk_ ^^ saturation      _sl_ ^^ hue
-Get          _gj_ ^^ brightness      _gk_ ^^ saturation      _gl_ ^^ hue
 
 Convert      _ch_ ^^ RGB → Hex       _cr_ ^^ Hex → RGB       _cR_ ^^ Hex → RGBA
 "
@@ -697,6 +697,7 @@ Convert      _ch_ ^^ RGB → Hex       _cr_ ^^ Hex → RGB       _cR_ ^^ Hex →
 cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   (interactive)
   (rainbow-mode t)
+  (defalias 'loop 'cl-loop)
   (hydra-kurecolor/body))
 
 
