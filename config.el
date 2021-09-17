@@ -1320,11 +1320,15 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
-;;; Package: completion/vertica
+;;; Package: completion/vertico
 
 (after! vertico
   ;; use 60% of the screen estate for vertico
   (setq vertico-count (/ (* 6 (frame-height)) 10))
+
+  ;; Emacs 28: Hide commands in M-x which do not work in the current mode.
+  ;; Vertico commands are hidden in normal buffers.
+  (setq read-extended-command-predicate #'command-completion-default-include-p)
 )
 
 
