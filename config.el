@@ -847,6 +847,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   ;; always get the accessible Embark completion prompter
   (setq prefix-help-command #'embark-prefix-help-command)
 
+  ;; Remove modeline from Embark collect frames
   (add-to-list 'display-buffer-alist
                '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
                  nil
@@ -917,6 +918,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 ;;; Package: modes/helpful
 
 (after! helpful
+  ;; Make helpful frames displayed "full-screen"
   (add-to-list 'display-buffer-alist
                `(,(rx bos "*helpful" )
                  (display-buffer-reuse-window display-buffer-same-window)
