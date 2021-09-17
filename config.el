@@ -1048,6 +1048,13 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   ;; no previews
   (setq consult-preview-key nil)
 
+  (defun my-consult-imenu ()
+    (interactive)
+    (let ((vertico-count 9999))
+      (if (derived-mode-p 'org-mode)
+          (consult-org-heading)
+        (consult-imenu))))
+
   ;; Optionally tweak the register preview window. This adds zebra stripes,
   ;; sorting and hides the mode line of the window.
   (advice-add #'register-preview :override #'consult-register-window)
@@ -1076,7 +1083,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
     "M-g o"    #'consult-outline
     "M-g k"    #'consult-mark
     "M-g K"    #'consult-global-mark
-    "M-g i"    #'consult-imenu
+    "M-g i"    #'my-consult-imenu
     "M-g I"    #'consult-project-imenu
     "M-g e"    #'consult-compile-error
     "M-g l"    #'consult-line                  ;; similar to swiper
