@@ -1456,6 +1456,21 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
+;;; Package: org/org-roam
+
+(use-package! org-roam
+  :init
+  (setq org-roam-v2-ack t)
+  :custom
+  (org-roam-directory "~/Sync/Org")
+  (org-roam-completion-everywhere t)
+  :general
+  ("C-c n l" #'org-roam-buffer-toggle)
+  ("C-c n f" #'org-roam-node-find)
+  ("C-c n i" #'org-roam-node-insert)
+)
+
+
 ;;; Package: org/ox
 
 (after! ox
