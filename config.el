@@ -797,19 +797,6 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 ;;; Package: edit/wgrep
 
-(use-package wgrep
-  ;; :after (embark-consult ripgrep)
-  :defer t
-
-  :general
-  (keymaps '(wgrep-mode-map)
-           "C-c C-c" #'save-buffer)
-  (keymaps '(grep-mode-map)
-           "e" #'wgrep-change-to-wgrep-mode)
-)
-
-
-
 ;;; Package: misc/embark
 
 ;; The following keymaps are already existing, so you can just add actions to
@@ -840,67 +827,36 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 ;; https://github.com/oantolin/embark
 ;; https://github.com/oantolin/embark/wiki/Default-Actions
 ;;
-;; E.g. go to a lisp symbol and hit "C-, h" to get help on symbol
-;;      go to an URL        and hit "C-, e" to open the URL in eww (or "C-, b" to browse it normally)
+;; E.g. go to a lisp symbol and hit "C-; h" to get help on symbol
+;;      go to an URL        and hit "C-; e" to open the URL in eww (or "C-, b" to browse it normally)
 ;; generally hit "C-, C-h" to get help on available actions, which sometimes display more entries than which-keys
 
-(use-package! embark-consult
-  :after (embark consult)
-  :load-path "~/.emacs.d/.local/straight/repos/embark"
-  :demand t
-  :hook (embark-collect-mode-hook . embark-consult-preview-minor-mode)
-)
+(after! embark
+  (setq embark-collect-initial-view-alist '((buffer . list)
+                                            (consult-grep . list)
+                                            (consult-location . list)
+                                            (consult-register . zebra)
+                                            (consult-yank . zebra)
+                                            (file . list)
+                                            (kill-ring . zebra)
+                                            (line . list)
+                                            (symbol . list)
+                                            (xref-location . list)
+                                            (t . list)))
 
-
-(use-package! embark
-  :commands embark-act
-
-  :custom
-  (embark-collect-initial-view-alist '((file . list)   ;; was grid
-                                       (buffer . list) ;; was grid
-                                       (symbol . list)
-                                       (line . list)   ;; new entry
-                                       (consult-location . list)
-                                       (xref-location . list)
-                                       (kill-ring . zebra)
-                                       (t . list)))
-
-  :config
+  ;; always get the accessible Embark completion prompter
   (setq prefix-help-command #'embark-prefix-help-command)
 
-  ;; which key is nicer than embark's build in prompt
   (add-to-list 'display-buffer-alist
                '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
                  nil
                  (window-parameters (mode-line-format . none))))
 
-  (setq embark-action-indicator
-      (lambda (map &optional _target)
-        (which-key--show-keymap "Embark" map nil nil 'no-paging)
-        #'which-key--hide-popup-ignore-command)
-      embark-become-indicator embark-action-indicator)
-
-  :general
-  ("C-," #'embark-act)
-  (:keymaps '(minibuffer-local-map minibuffer-local-completion-map)
-   "C-," #'embark-act)
-  (:keymaps '(embark-collect-mode-map)
-   "M-t" #'toggle-truncate-lines)
-  (:keymaps '(embark-symbol-map)
-   "."   #'embark-find-definition)
-  (:keymaps '(embark-file-map)
-   "j"    #'dired-jump)
+  ;; (define-key! :keymaps '(minibuffer-local-map minibuffer-local-completion-map)
+  ;;  "C-;" #'embark-act)
+  (define-key! :keymaps '(embark-collect-mode-map)
+    "M-t" #'toggle-truncate-lines)
 )
-
-
-(use-package! embark-consult
-  :after (embark consult)
-  :demand t                ; only necessary if you have the hook below
-  ;; if you want to have consult previews as you move around an
-  ;; auto-updating embark collect buffer
-  :hook (embark-collect-mode . embark-consult-preview-minor-mode)
-)
-
 
 
 ;;; Package: modes/dts-mode
@@ -909,6 +865,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   :mode (("\\.dts\\'"     . dts-mode)
          ("\\.overlay\\'" . dts-mode))
 )
+
 
 
 
@@ -1070,144 +1027,78 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
-;;; Package: completion/selectrum
-
-;; https://github.com/raxod502/selectrum
-(use-package! selectrum
-  :init
-  (selectrum-mode +1)
-
-  :general
-  ("C-x C-z"  #'selectrum-repeat) ;; was suspend-frame
-  ("C-c C-r"  #'selectrum-repeat)
-
-  :custom
-  (selectrum-fix-vertical-window-height 15)
-)
-
-
-;;; Package: completion/selectrum-prescient
-(use-package! selectrum-prescient
-  :after (selectrum prescient)
-  :init
-  (selectrum-prescient-mode +1)
-)
-
-;;; Package: completion/prescient
-;; https://github.com/raxod502/prescient.el
-;; Alternative: https://github.com/oantolin/orderless
-(use-package! prescient
-  :custom
-  (prescient-save-file (concat doom-cache-dir "prescient-save.el"))
-
-  :config
-  (prescient-persist-mode +1)
-)
-
-;;; Package: completion/marginalia
-;; https://github.com/minad/marginalia
-(use-package! marginalia
-  :custom
-  (marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
-
-  :init
-  (marginalia-mode)
-
-  :general
-  (:keymaps '(minibuffer-local-map)
-   "M-c" #'marginalia-cycle)
-)
-
-
 ;;; Package: completion/consult
 
-(use-package! consult-selectrum
-  :after (selectrum consult)
-  :load-path "~/.emacs.d/.local/straight/repos/consult"
-  :demand t
-)
+(after! consult
+  ;; this forces recentf to load directly, not delayed. So a C-x C-b directly
+  ;; after starting emacs will show previously used files
+  (recentf-mode)
 
-;; https://github.com/minad/consult
-(use-package! consult
-  :custom
-  (completion-in-region-function #'consult-completion-in-region) ;; was selectrum-completion-in-region
-  (consult-async-input-debounce 0.5)                             ;; was 0.25
-  (consult-async-input-throttle 0.8)                             ;; was 0.5
-  (consult-narrow-key ">")                                       ;; was empty
-  (consult-widen-key "<")                                        ;; was empty
-  (consult-config `(;; changing the theme while moving the cursor is annoying, so turn this off
-                    (consult-theme :preview-key nil)
-                    ;; the same in the file/buffer selection
-                    (consult-buffer :preview-key nil)
-                    ;; ... and in the swiper substitute
-                    (consult-line :preview-key nil)))
-  (consult-goto-line-numbers nil)
-  (consult-preview-key nil)
+  ;; different timeouts
+  ;; (setq consult-async-input-debounce 0.5)
+  ;; (setq consult-async-input-throttle 0.8)
 
-  :init
-  ;; Optionally tweak the register preview window.
-  ;; This adds zebra stripes, sorting and hides the mode line of the window.
+  ;; widen or narrow
+  ;; (setq consult-narrow-key ">")
+  ;; (setq consult-widen-key "<")
+
+  ;; don't show line numbers for consult-goto-line
+  (setq consult-goto-line-numbers nil)
+
+  ;; no previews
+  (setq consult-preview-key nil)
+
+  ;; Optionally tweak the register preview window. This adds zebra stripes,
+  ;; sorting and hides the mode line of the window.
   (advice-add #'register-preview :override #'consult-register-window)
 
-  (defun my-project-root ()
-    (locate-dominating-file "." ".git"))
-  (setq consult-project-root-function #'my-project-root)
+  (define-key!
+    ;; C-c bindings (mode-specific-map)
+    ;; "C-c m"   #'consult-mode-command
+    ;; "C-c b"   #'consult-bookmark
+    ;; "C-c k"   #'consult-kmacro
 
-  :config
+    ;; C-x bindings (ctl-x-map)
+    "C-x M-:"  #'consult-complex-command      ;; was: repeat-complex-command
+    "C-x C-b"  #'consult-buffer               ;; was: switch-to-buffer
+    "C-x 4 b"  #'consult-buffer-other-window  ;; was: switch-to-buffer-other-window
+    "C-x 5 b"  #'consult-buffer-other-frame   ;; was: switch-to-buffer-other-frame
+    "C-x C-b"  #'consult-buffer
+    "C-x b"    #'ibuffer
 
-  ;; this forces recentf to load directly, not delayed. So a C-x C-b directly after starting emacs
-  ;; will show previously used files
-  (recentf-mode +1)
+    ;; Custom M-# bindings for fast register access
+    ;; "M-#"      #'consult-register-load
+    ;; "M-'"      #'consult-register-store       ;; was: abbrev-prefix-mark
+    ;; "C-M-#"    #'consult-register
 
-  :general
+    ;; M-g bindings (goto-map)
+    "M-g g"    #'consult-goto-line            ;; was: goto-line
+    "M-g M-g"  #'consult-goto-line            ;; was: goto-line
+    "M-g o"    #'consult-outline
+    "M-g k"    #'consult-mark
+    "M-g K"    #'consult-global-mark
+    "M-g i"    #'consult-imenu
+    "M-g I"    #'consult-project-imenu
+    "M-g e"    #'consult-compile-error
+    "M-g l"    #'consult-line                  ;; similar to swiper
+    "M-g L"    #'consult-locate
 
-  ;; C-c bindings (mode-specific-map)
-  ("C-c m"    #'consult-mode-command)
-  ("C-c b"    #'consult-bookmark)
-  ("C-c k"    #'consult-kmacro)
-
-  ;; C-x bindings (ctl-x-map)
-  ("C-x M-:"  #'consult-complex-command)      ;; was: repeat-complex-command
-  ("C-x C-b"  #'consult-buffer)               ;; was: switch-to-buffer
-  ("C-x 4 b"  #'consult-buffer-other-window)  ;; was: switch-to-buffer-other-window
-  ("C-x 5 b"  #'consult-buffer-other-frame)   ;; was: switch-to-buffer-other-frame
-
-  ;; Custom M-# bindings for fast register access
-  ("M-#"      #'consult-register-load)
-  ("M-'"      #'consult-register-store)       ;; was: abbrev-prefix-mark
-  ("C-M-#"    #'consult-register)
-
-  ;; Other custom bindings
-  ("M-y"      #'consult-yank-pop)             ;; was: yank-pop
-  ("<help> a" #'consult-apropos)              ;; was: apropos-command
-
-  ;; M-g bindings (goto-map)
-  ("M-g g"    #'consult-goto-line)            ;; was: goto-line
-  ("M-g M-g"  #'consult-goto-line)            ;; was: goto-line
-  ("M-g o"    #'consult-outline)
-  ("M-g k"    #'consult-mark)
-  ("M-g K"    #'consult-global-mark)
-  ("M-g i"    #'consult-imenu)
-  ("M-g I"    #'consult-project-imenu)
-  ("M-g e"    #'consult-error)
-  ("M-g l"    #'consult-line)                  ;; similar to swiper
-
-  ;; M-s bindings (search-map)
-  ("M-s f"    #'consult-find)
-  ("M-g L"    #'consult-locate)
-  ("M-s g"    #'consult-git-grep)
-  ("M-s G"    #'consult-grep)
-  ("M-s r"    #'consult-ripgrep)
-  ("M-s l"    #'consult-line)
-  ("M-s m"    #'consult-multi-occur)
-  ("M-s k"    #'consult-keep-lines)
-  ("M-s u"    #'consult-focus-lines)           ;; run with C-u to show all lines again
-
-  ("M-s o"    #'consult-line)                  ;; was: occur
-
-  (:keymaps '(compilation-mode-map compilation-minor-mode-map)
-   "e" #'consult-compile-error)
+    ;; M-s bindings (search-map)
+    "M-s f"    #'consult-find
+    "M-s g"    #'consult-git-grep
+    "M-s G"    #'consult-grep
+    "M-s r"    #'consult-ripgrep
+    "M-s l"    #'consult-line
+    "M-s m"    #'consult-multi-occur
+    "M-s k"    #'consult-keep-lines
+    "M-s u"    #'consult-focus-lines           ;; run with C-u to show all lines again
+    "M-s o"    #'consult-line                  ;; was: occur
+    )
+  (define-key! :keymaps '(compilation-mode-map compilation-minor-mode-map)
+    "e" #'consult-compile-error)
 )
+
+
 
 
 ;;; Package: lang/c-mode
