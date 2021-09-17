@@ -1303,6 +1303,14 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
+;;; Package: completion/vertica
+
+(after! vertico
+  ;; use 60% of the screen estate for vertico
+  (setq vertico-count (/ (* 6 (frame-height)) 10))
+)
+
+
 
 ;;; Package: lang/magit
 
