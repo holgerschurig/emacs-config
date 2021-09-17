@@ -102,6 +102,11 @@
   ivy-rtags     ;; I'll use lsp/eglot. And no ivy
   irony-eldoc   ;; I'll use lsp/eglot
   company-dict  ;; we don't load complete from dictionaries
+  ;; I don't want to pull in tree-sitter just for indentation of a language I don't even code in ...
+  emacs-tree-sitter
+  tree-sitter-indent
+  tree-sitter-langs
+  csharp-mode
   ;; I use magit, not vc
   vc
   vc-git
