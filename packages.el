@@ -54,14 +54,6 @@
 
 (package! dts-mode)
 
-(package! embark)               ;; https://github.com/oantolin/embark/
-(package! embark-consult)
-(package! selectrum)            ;; https://github.com/raxod502/selectrum
-(package! selectrum-prescient)
-(package! marginalia)           ;; https://github.com/minad/marginalia
-(package! consult)              ;; https://github.com/minad/consult
-(package! consult-lsp)          ;; https://github.com/gagbo/consult-lsp
-
 (package! kurecolor)            ;; https://github.com/emacsfodder/kurecolor  -- edit colors inline
 
 (package! meson-mode)           ;; https://github.com/wentasah/meson-mode
