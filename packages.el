@@ -52,7 +52,7 @@
 
 (package! clean-aindent-mode)
 
-(package! dts-mode)
+(package! dts-mode)             ;; https://github.com/bgamari/dts-mode -- Device tree mode
 
 (package! kurecolor)            ;; https://github.com/emacsfodder/kurecolor  -- edit colors inline
 
