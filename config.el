@@ -1060,10 +1060,9 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
     ;; C-x bindings (ctl-x-map)
     "C-x M-:"  #'consult-complex-command      ;; was: repeat-complex-command
-    "C-x C-b"  #'consult-buffer               ;; was: switch-to-buffer
+    "C-x C-b"  #'consult-buffer               ;; was: list-buffers
     "C-x 4 b"  #'consult-buffer-other-window  ;; was: switch-to-buffer-other-window
     "C-x 5 b"  #'consult-buffer-other-frame   ;; was: switch-to-buffer-other-frame
-    "C-x C-b"  #'consult-buffer
     "C-x b"    #'ibuffer
 
     ;; Custom M-# bindings for fast register access
