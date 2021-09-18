@@ -1334,6 +1334,11 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   ;; Emacs 28: Hide commands in M-x which do not work in the current mode.
   ;; Vertico commands are hidden in normal buffers.
   (setq read-extended-command-predicate #'command-completion-default-include-p)
+
+  ;; completion-read-multiple didn't allow my to quit it with C-g ...
+  (define-key! :keymaps 'vertico-map
+    "C-g" #'keyboard-quit)
+
 )
 
 
