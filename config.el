@@ -38,6 +38,11 @@
   (interactive)
   (insert (format-time-string "%a, %e %b %Y %H:%M:%S %z")))
 
+(defun isodate ()
+  "Insert date at point format a ISO-like way."
+  (interactive)
+  (insert (format-time-string "%Y-%m-%d %H:%M:%S")))
+
 (defun dos2unix()
   "Convert MSDOS (^M) end of line to Unix end of line."
   (interactive)
