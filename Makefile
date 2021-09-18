@@ -30,9 +30,14 @@ confemacs emacs.git/Makefile: emacs.git/configure
 		--without-wide-int \
 		--without-xim \
 		--without-native-compilation \
-		CFLAGS='-pipe -O2 -g3 -march=native -fstack-protector-strong -Wformat -Werror=format-security -Wall' \
+		--with-imagemagick \
+		--without-pop \
+		--with-toolkit-scroll-bars \
+		--without-native-compilation \
+		CFLAGS='-g -O2 -ffile-prefix-map=/home/holger=. -fstack-protector-strong -Wformat -Werror=format-security -Wall -fno-omit-frame-pointer'
 		CPPFLAGS='-Wdate-time -D_FORTIFY_SOURCE=2' \
-		LDFLAGS='-Wl,-O1 -Wl,--as-needed -Wl,-z,relro' | tee my-configure.log
+		LDFLAGS='-Wl,-z,relro' | tee my-configure.log
+
 
 help::
 	@echo "make conf                 configure emacs"
