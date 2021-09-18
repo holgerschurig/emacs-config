@@ -1823,115 +1823,347 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
-;;; Packages: comm/mu4e
+;;; Packages: comm/message
 
-(after! mu4e
-  ;; setting this again because .doom.d/modules/email/mu4e/config.el overwrites it
-  (setq message-send-mail-function #'message-send-mail-with-sendmail)
-  (setq mu4e-get-mail-command "~/.local/bin/mbsync.sh")
+(after!
 
-  ;; Optics
-  (setq mu4e-headers-fields '(
-                              (:human-date . 8)
-                              (:flags . 5)
-                              (:from-or-to . 20)
-                              (:mailing-list . 8)
-                              (:thread-subject . 60)
-                              )
-        mu4e-maildir-shortcuts '( (:maildir "/inbox"     :key  ?i)
-                                  (:maildir "/barebox"   :key  ?b)
-                                  (:maildir "/darc-sdr"  :key  ?d)
-                                  (:maildir "/elecraft"  :key  ?e)
-                                  (:maildir "/etnaviv"   :key  ?v)
-                                  (:maildir "/linuxham"  :key  ?l)
-                                  (:maildir "/zephyr"    :key  ?z)
-                                  (:maildir "/sent"      :key  ?s)
-                                  (:maildir "/trash"     :key  ?t)
-                                  )
-        mu4e-headers-date-format "%d.%m.%y"
-        mu4e-headers-time-format "%H:%M"
-        mu4e-use-fancy-chars nil
-        mu4e-headers-results-limit 1000)
+  ;; When composing a mail, start the auto-fill-mode.
+  (add-hook 'message-mode-hook 'turn-on-auto-fill)
 
-  ;; Completing read will use Selectrum
-  (setq mu4e-completing-read-function #'completing-read)
+  ;; Add mails to bbdb (in case I'll ever use that)
+  ;; (add-hook 'message-setup-hook 'bbdb-define-all-aliases)
 
-  ;; Attachment handling
-  (setq mu4e-attachment-dir "~/Downloads")
+  ;; Generate the mail headers before you edit your message.
+  (setq message-generate-headers-first t)
 
-  ;; Replying
-  (setq mu4e-compose-dont-reply-to-self t)
-
-  ;; Updating/Indexing
-  (setq mu4e-update-interval 600
-        mu4e-index-lazy-check nil)
-
-
-  ;; make "H" (help) work in mu4e
-  (add-to-list 'Info-directory-list (concat straight-base-dir "straight/repos/mu/mu4e/"))
-
-  ;; see also https://www.djcbsoftware.nl/code/mu/mu4e/Keybindings.html
-  (map! :map mu4e-main-mode-map
-        "c" #'mu4e-compose-new
-        "u" #'mu4e-update-mail-and-index
-        :map mu4e-headers-mode-map
-        "n" #'mu4e-headers-next-unread
-        "p" #'mu4e-headers-prev-unread
-        ;; swap refile and reply
-        "R" #'mu4e-headers-mark-for-refile
-        "r" #'mu4e-compose-reply)
-
-  (defun mu4e~main-redraw-buffer ()
-    (with-current-buffer mu4e-main-buffer-name
-      (let ((inhibit-read-only t)
-            (pos (point))
-            (addrs (mu4e-personal-addresses)))
-        (erase-buffer)
-        (insert
-         "\n"
-         (propertize "  Basics\n\n" 'face 'mu4e-title-face)
-         (mu4e~main-action-str "\t* [c]ompose a new message\n" 'mu4e-compose-new)
-         (if mu4e-maildir-shortcuts
-             ""
-           (mu4e~main-action-str "\t* [j]ump to some maildir\n" 'mu4e-jump-to-maildir))
-         (mu4e~main-action-str "\t* enter a [s]earch query\n" 'mu4e-search)
-         "\n"
-         (propertize "  Bookmarks\n\n" 'face 'mu4e-title-face)
-         (mu4e~main-bookmarks)
-         "\n"
-         (if mu4e-maildir-shortcuts
-             (concat (propertize "  Maildirs\n\n" 'face 'mu4e-title-face)
-                     (mu4e~main-maildirs)
-                     "\n")
-           "")
-         (propertize "  Misc\n\n" 'face 'mu4e-title-face)
-
-         ;; show the queue functions if `smtpmail-queue-dir' is defined
-         (if (file-directory-p smtpmail-queue-dir)
-             (mu4e~main-view-queue)
-           "")
-         (mu4e~main-action-str "\t* [u]pdate email & database\n"
-                               'mu4e-update-mail-and-index)
-         (mu4e~main-action-str "\t* [H]elp\n" 'mu4e-display-manual)
-         (mu4e~main-action-str "\t* [q]uit\n" 'mu4e-quit)
-
-         "\n"
-         (propertize "  Info\n\n" 'face 'mu4e-title-face)
-         (mu4e~key-val "messages"
-                       (format "%d" (plist-get mu4e~server-props :doccount)) "messages")
-         (mu4e~key-val "version" mu4e-mu-version)
-         ;; (if mu4e-main-hide-personal-addresses ""
-         ;;   (mu4e~key-val "personal addresses" (if addrs (mapconcat #'identity addrs ", "  ) "none")))
-         )
-
-        (if mu4e-main-hide-personal-addresses ""
-          (unless (mu4e-personal-address-p user-mail-address)
-            (mu4e-message (concat
-                           "Tip: `user-mail-address' ('%s') is not part "
-                           "of mu's addresses; add it with 'mu init
-                        --my-address='") user-mail-address)))
-        (mu4e-main-mode)
-        (goto-char pos))))
+  ;; When I reply, I don't want to have me in To or Cc
+  (setq message-dont-reply-to-names (concat "\\("
+     user-mail-address
+     ;; Nor the Debian BTS
+     ;; "\\|^submit@bugs.debian\\.org$"
+     "\\)"))
 )
-(map! "M-g n" #'=mu4e ;; was next-error
-      "M-g p" nil)    ;; was previous-error
+
+
+;;; Packages: comm/mm-decode
+
+(after!
+
+  ;; Displaying zip/tar inline is a really, really stupid default!
+  (setq mm-inlined-types
+                (cl-remove-if (apply-partially #'string-match-p "\\(x-g?tar\\|zip\\)")
+                                          mm-inlined-types))
+)
+
+
+
+;;; Packages: comm/notmuch
+
+;; https://github.com/gauteh/lieer
+;; - ~/mail/account.google/
+;; - download client_secret.json from https://github.com/gauteh/lieer#using-your-own-api-key
+;; - consider adding "spam" into the array of ignore_remote_labels of .gmailier.json
+;; - cd .... && gmi init -c client_secret.json
+;; - cd .... && gmi pull
+;; - cd .... && gmi pull --resume
+;; - cd .... && gmi sync
+
+;; https://notmuchmail.org/
+;; - ~/.notmuch-config
+;;   [database]
+;;   path=/home/holger/.mail
+;;   [database]
+;;   path=/home/holger/.mail
+;;   [user]
+;;   name=Holger Schurig
+;;   primary_email=holgerschurig@gmail.com
+;;   [new]
+;;   tags=new
+;;   ignore=.uidvalidity;.mbsyncstate;/.*[.](json|lock|bak)$/
+;;   [search]
+;;   exclude_tags=deleted;spam
+;;   [maildir]
+;;   synchronize_flags=true
+
+;; https://afew.readthedocs.io/en/latest/
+;; - ~/.config/afew/config
+;;   [SpamFilter]
+;;   [KillThreadsFilter]
+;;   [ListMailsFilter]
+;;   [ArchiveSentMailsFilter]
+;;   [InboxFilter]
+
+;; Polling mail
+;; - ~/bin/pollmail
+;;   #!/bin/sh
+;;   cd ~/.mail
+;;   gmi sync
+;;   notmuch new
+;;   afew --tag --new
+
+
+notmuch tag -inbox -- tag:lists
+
+;; (use-package! notmuch
+;;   :defer t
+;;   :config
+(after! notmuch
+
+  ;; Change flagged lines to be dark blue in the background, not blue
+  ;; in the foreground. This harmonizes much more with my dark theme.
+  (add-to-list 'notmuch-search-line-faces '("flagged" :background "dark blue"))
+
+  ;; Modify search results. First the columns:
+  (setq notmuch-search-result-format
+        '(("date" . "%10s ")     ;; YYYY-MM-DD
+          ("count" . "%-6s ")
+          ("authors" . "%-23s ")
+          ("subject" . "%s ")
+          ("tags" . "(%s)")
+          ))
+
+  ;; Redefine with these changes:
+  ;; - never use the relative date, instead use YYYY-MM-DD
+  ;;   (see also notmuch-show-relative-dates)
+  ;; - the counts don't have the useless brackes: 2/2 instead of [2/2]
+  (defun notmuch-search-insert-field (field format-string result)
+    (cond
+     ((string-equal field "date")
+      (insert (propertize (format format-string (format-time-string "%Y-%m-%d" (plist-get result :timestamp)))
+                          'face 'notmuch-search-date)))
+     ((string-equal field "count")
+      (insert (propertize (format format-string
+                                  (format "%s/%s" (plist-get result :matched)
+                                          (plist-get result :total)))
+                          'face 'notmuch-search-count)))
+     ((string-equal field "subject")
+      (insert (propertize (format format-string
+                                  (notmuch-sanitize (plist-get result :subject)))
+                          'face 'notmuch-search-subject)))
+     ((string-equal field "authors")
+      (notmuch-search-insert-authors
+       format-string (notmuch-sanitize (plist-get result :authors))))
+     ((string-equal field "tags")
+      (let ((tags (plist-get result :tags))
+            (orig-tags (plist-get result :orig-tags)))
+        (insert (format format-string (notmuch-tag-format-tags tags orig-tags)))))))
+
+  ;; Easy deletion of messages with DEL
+  (defun my-notmuch-search-delete (&rest beg end)
+    (interactive)
+    (notmuch-search-tag '("-unread" "-new" "-inbox" "-sent" "+trash") beg end)
+    (notmuch-tree-next-message))
+  (define-key! :keymaps 'notmuch-search-mode-map
+    [delete] #'my-notmuch-search-delete)
+
+  ;; make tagging work again, see
+  ;; - https://github.com/minad/consult/issues/410
+  ;; - https://github.com/minad/vertico/issues/119
+  (advice-add #'notmuch-read-tag-changes
+              :filter-return (lambda (x) (mapcar #'string-trim x)))
+
+  ;; Don't save message in some directory
+  (setq notmuch-fcc-dirs nil)
+)
+
+
+
+;;; Packages: comm/notmuch-hello
+
+(after! notmuch-hello
+
+  ;; Display 3 columns
+  (setq notmuch-column-control 0.33)
+
+  ;; List of tags to be hidden in the "all tags"-section.
+  (setq notmuch-hello-hide-tags '("important" "signed"))
+
+  (setq notmuch-hello-sections (list
+                                ;; Insert the default notmuch-hello header.
+                                ;; #'notmuch-hello-insert-header
+
+                                ;; Show an entry for each saved search and inboxed messages for each tag.
+                                ;; But as I remove "inbox" tag from mailing list mails, this isn't really useful.
+                                ;; Maybe some "unread" thing could be helpful?
+                                ;; #'notmuch-hello-insert-inbox
+
+                                ;; Insert the saved-searches section.
+                                #'my-notmuch-hello-insert-saved-searches
+
+                                ;; Insert a search widget
+                                #'notmuch-hello-insert-search
+
+                                ;; Insert up to notmuch-hello-recent-searches-max recent searches.
+                                #'my-notmuch-hello-insert-recent-searches
+
+                                ;; Insert a section displaying all tags and associated message counts.
+                                #'notmuch-hello-insert-alltags
+
+                                ;; Insert the notmuch-hello footer.
+                                ;; #'notmuch-hello-insert-footer
+
+                                #'my-notmuch-hello-insert-help
+                                ))
+
+  ;; The space as thousand separator looks odd, make it more european
+  (setq notmuch-hello-thousands-separator ".")
+
+  ;; Redesign of the hello screen
+  (defun my-notmuch-hello-insert-recent-searches ()
+    "Insert recent searches, but without the clear button."
+    (when notmuch-search-history
+      (widget-insert "Recent searches:\n\n")
+      (let ((width (notmuch-search-item-field-width)))
+        (dolist (search (seq-take notmuch-search-history
+                                  notmuch-hello-recent-searches-max))
+          (widget-create 'notmuch-search-item :value search :size width)))))
+  (defun my-notmuch-hello-insert-saved-searches ()
+  "Insert the saved-searches section, but without the edit button."
+  (let ((searches (notmuch-hello-query-counts
+                   (if notmuch-saved-search-sort-function
+                       (funcall notmuch-saved-search-sort-function
+                                notmuch-saved-searches)
+                     notmuch-saved-searches)
+                   :show-empty-searches notmuch-show-empty-saved-searches)))
+    (when searches
+      (widget-insert "Saved searches:\n\n")
+      (let ((start (point)))
+        (notmuch-hello-insert-buttons searches)
+        (indent-rigidly start (point) notmuch-hello-indent)))))
+  (defun my-notmuch-hello-insert-help ()
+    (widget-insert "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――\n")
+    (widget-insert "c compose         s notmuch search  u search unthreaded\n")
+    (widget-insert "j jump            t tag search      s search threaded\n")
+    (widget-insert "G check new mail                    z search tree formatted\n"))
+  (define-key! :keymaps 'notmuch-hello-mode-map
+    "c" #'notmuch-mua-new-mail)
+
+)
+
+(defun my-notmuch-hello ()
+  (interactive)
+
+  ;; There is some race condition in Doom's "(after! notmuch" and mine. Sometimes that
+  ;; made my settings be overwritten by Doom's. So instead set them here in my start
+  ;; function :-(
+
+  ;; My own saved searches
+  (setq notmuch-saved-searches
+        ;; :name            Name of the search (required).
+        ;; :query           Search to run (required).
+        ;; :key             Optional shortcut key for ‘notmuch-jump-search’.
+        ;; :count-query     Optional extra query to generate the count
+        ;;                  shown. If not present then the :query property
+        ;;                  is used.
+        ;; :sort-order      Specify the sort order to be used for the search.
+        ;;                  Possible values are ‘oldest-first’, ‘newest-first’
+        ;;                  or nil. Nil means use the default sort order.
+        ;; :search-type     Specify whether to run the search in search-mode,
+        ;;                  tree mode or unthreaded mode. Set to ’tree to specify tree
+        ;;                  mode, ’unthreaded to specify unthreaded mode, and set to nil
+        ;;                  (or anything except tree and unthreaded) to specify search mode.
+        '((:name "inbox"     :key "i" :query "NOT tag:trash AND tag:inbox")
+          (:name "alt"       :key "a" :query "NOT tag:trash AND tag:Aufheben")
+          (:name "linux-can" :key "c" :query "NOT tag:trash AND tag:lists/linux-can")
+          (:name "etnaviv"   :key "e" :query "NOT tag:trash AND tag:lists/etnaviv")
+          (:name "zephyr"    :key "z" :query "NOT tag:trash AND tag:lists/zephyr")
+
+          (:name "Sent"      :key "S" :query "tag:sent")
+          (:name "Trash"     :key "T" :query "tag:trash")
+          (:name "Unread"    :key "U" :query "tag:unread")
+          (:name "All"       :key "A" :query "*")))
+
+  (setq-default notmuch-search-oldest-first nil)
+  (notmuch-hello))
+
+(define-key!
+  "M-g n" #'my-notmuch-hello ;; was next-error
+  "M-g p" nil             ;; was previous-error
+)
+
+
+;;; Packages: comm/notmuch-mua
+
+(after! notmuch-mua
+
+  ;; We don't need to cite everything
+  (setq notmuch-mua-cite-function #'message-cite-original-without-signature)
+)
+
+
+
+;;; Packages: comm/notmuch-show
+
+(after! notmuch-show
+
+  ;; The builtin imenu cannot display leading spaces, but consult's imenu
+  ;; doesn't have a problem with that:
+  (setq notmuch-show-imenu-indent t)
+
+  ;; Probably not needed, as I am using iso date anyway
+  (setq notmuch-show-relative-dates nil)
+)
+
+
+
+;;; Packages: comm/notmuch-tag
+
+;; Programmatic tagging:
+;;
+;; db = notmuch.Database("/home/holger/.mail", mode=notmuch.Database.MODE.READ_WRITE)
+;; query = ""
+;; messages = notmuch.Query(db, query).search_messages()
+;; for m in messages:
+;;      t = list(m.get_tags())
+;;      if len(t) != 0:
+;;              continue
+;;      print(m)
+
+
+(after! notmuch-tag
+
+  ;; Hide some tags. Not optimal, as we will get some trailing spaces in the display.
+  ;; and make the flagged tag be an star icong
+  (setq notmuch-tag-formats
+        '(("signed" (propertize tag 'invisible t))
+          ("lists" (propertize tag 'invisible t))
+          ("attachment" (propertize tag 'invisible t))
+          ("unread" (propertize tag 'face 'notmuch-tag-unread))
+          ("flagged" (propertize tag 'face 'notmuch-tag-flagged)
+           (notmuch-tag-format-image-data tag (notmuch-tag-star-icon)))
+          ))
+)
+
+
+
+;;; Packages: comm/sendmail
+
+(after! sendmail
+  ;; use GMI to send mails
+  (setq sendmail-program (expand-file-name "~/.local/bin/gmi")
+        message-sendmail-extra-arguments '("send"
+                                           "--quiet"
+                                           "--read-recipients"
+                                           "--path" "~/.mail"))
+
+  ;; not sure if I need this ... but it doesn't hurt :-)
+  (setq mail-specify-envelope-from t)
+  )
+
+
+;;; Scratch
+
+
+(defun notmuch-poll ()
+  "Run \"notmuch new\" or an external script to import mail.
+
+Invokes `notmuch-poll-script', \"notmuch new\", or does nothing
+depending on the value of `notmuch-poll-script'."
+  (interactive)
+  (message "Polling mail...")
+  (if (stringp notmuch-poll-script)
+      (unless (string-empty-p notmuch-poll-script)
+        (unless (equal (call-process notmuch-poll-script nil nil) 0)
+          (error "Notmuch: poll script `%s' failed!" notmuch-poll-script)))
+    (notmuch-call-notmuch-process "new"))
+  (message "Polling mail...done"))

@@ -62,10 +62,6 @@
  :recipe (:host github :repo "protesilaos/modus-themes"
           :files ("*.el")))
 
-(package! mu4e                  ;; https://github.com/djcb/mu  -- eMail
-  :recipe (:host github :repo "djcb/mu"
-           :files ("mu4e/*.el")))
-
 (package! nov)                  ;; https://depp.brause.cc/nov.el/  -- read ePUB
 
 (package! nswbuff               ;; https://github.com/joostkremers/nswbuff  -- buffer switching
@@ -81,6 +77,7 @@
 
 (package! wgrep)                ;; https://github.com/mhayashi1120/Emacs-wgrep  -- writable grep
 
+(unpin! notmuch)
 
 (disable-packages!
   better-jumper ;; looks like it only works in evil mode
