@@ -80,7 +80,6 @@ pulldoom:
 	cd ~/.emacs.d; git checkout core/cli/packages.el
 	cd ~/.emacs.d; git pull --rebase
 	cd ~/.emacs.d; git log --reverse --no-merges -p ORIG_HEAD..HEAD >NEWS
-	cd ~/.emacs.d; patch -p1 <../.doom.d/native.patch
 	cd ~/.emacs.d; bin/doom clean
 	cd ~/.emacs.d; bin/doom sync -u
 	@# recompile pdf-tools
