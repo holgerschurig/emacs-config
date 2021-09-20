@@ -1962,16 +1962,41 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
   ;; Don't save message in some directory
   (setq notmuch-fcc-dirs nil)
-)
 
+  (setq-default notmuch-search-oldest-first nil)
 
-
-;;; Packages: comm/notmuch-hello
-
-(after! notmuch-hello
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; notmuch-hello
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
   ;; Display 3 columns
   (setq notmuch-column-control 0.33)
+
+  ;; My own saved searches
+  (setq notmuch-saved-searches
+        ;; :name            Name of the search (required).
+        ;; :query           Search to run (required).
+        ;; :key             Optional shortcut key for ‘notmuch-jump-search’.
+        ;; :count-query     Optional extra query to generate the count
+        ;;                  shown. If not present then the :query property
+        ;;                  is used.
+        ;; :sort-order      Specify the sort order to be used for the search.
+        ;;                  Possible values are ‘oldest-first’, ‘newest-first’
+        ;;                  or nil. Nil means use the default sort order.
+        ;; :search-type     Specify whether to run the search in search-mode,
+        ;;                  tree mode or unthreaded mode. Set to ’tree to specify tree
+        ;;                  mode, ’unthreaded to specify unthreaded mode, and set to nil
+        ;;                  (or anything except tree and unthreaded) to specify search mode.
+        '((:name "inbox"     :key "i" :query "NOT tag:trash AND tag:inbox")
+          (:name "alt"       :key "a" :query "NOT tag:trash AND tag:Aufheben")
+          (:name "linux-can" :key "c" :query "NOT tag:trash AND tag:lists/linux-can")
+          (:name "etnaviv"   :key "e" :query "NOT tag:trash AND tag:lists/etnaviv")
+          (:name "zephyr"    :key "z" :query "NOT tag:trash AND tag:lists/zephyr")
+
+          (:name "Sent"      :key "S" :query "tag:sent")
+          (:name "Trash"     :key "T" :query "tag:trash")
+          (:name "Unread"    :key "U" :query "tag:unread")
+          (:name "All"       :key "A" :query "*")))
 
   ;; List of tags to be hidden in the "all tags"-section.
   (setq notmuch-hello-hide-tags '("important" "signed"))
@@ -2036,63 +2061,16 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   (define-key! :keymaps 'notmuch-hello-mode-map
     "c" #'notmuch-mua-new-mail)
 
-)
-
-(defun my-notmuch-hello ()
-  (interactive)
-
-  ;; There is some race condition in Doom's "(after! notmuch" and mine. Sometimes that
-  ;; made my settings be overwritten by Doom's. So instead set them here in my start
-  ;; function :-(
-
-  ;; My own saved searches
-  (setq notmuch-saved-searches
-        ;; :name            Name of the search (required).
-        ;; :query           Search to run (required).
-        ;; :key             Optional shortcut key for ‘notmuch-jump-search’.
-        ;; :count-query     Optional extra query to generate the count
-        ;;                  shown. If not present then the :query property
-        ;;                  is used.
-        ;; :sort-order      Specify the sort order to be used for the search.
-        ;;                  Possible values are ‘oldest-first’, ‘newest-first’
-        ;;                  or nil. Nil means use the default sort order.
-        ;; :search-type     Specify whether to run the search in search-mode,
-        ;;                  tree mode or unthreaded mode. Set to ’tree to specify tree
-        ;;                  mode, ’unthreaded to specify unthreaded mode, and set to nil
-        ;;                  (or anything except tree and unthreaded) to specify search mode.
-        '((:name "inbox"     :key "i" :query "NOT tag:trash AND tag:inbox")
-          (:name "alt"       :key "a" :query "NOT tag:trash AND tag:Aufheben")
-          (:name "linux-can" :key "c" :query "NOT tag:trash AND tag:lists/linux-can")
-          (:name "etnaviv"   :key "e" :query "NOT tag:trash AND tag:lists/etnaviv")
-          (:name "zephyr"    :key "z" :query "NOT tag:trash AND tag:lists/zephyr")
-
-          (:name "Sent"      :key "S" :query "tag:sent")
-          (:name "Trash"     :key "T" :query "tag:trash")
-          (:name "Unread"    :key "U" :query "tag:unread")
-          (:name "All"       :key "A" :query "*")))
-
-  (setq-default notmuch-search-oldest-first nil)
-  (notmuch-hello))
-
-(define-key!
-  "M-g n" #'my-notmuch-hello ;; was next-error
-  "M-g p" nil             ;; was previous-error
-)
-
-
-;;; Packages: comm/notmuch-mua
-
-(after! notmuch-mua
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; notmuch-mua
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
   ;; We don't need to cite everything
   (setq notmuch-mua-cite-function #'message-cite-original-without-signature)
-)
 
-
-
-;;; Packages: comm/notmuch-show
-
-(after! notmuch-show
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; notmuch-show
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
   ;; The builtin imenu cannot display leading spaces, but consult's imenu
   ;; doesn't have a problem with that:
@@ -2100,25 +2078,21 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
   ;; Probably not needed, as I am using iso date anyway
   (setq notmuch-show-relative-dates nil)
-)
 
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; notmuch-tag
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-
-;;; Packages: comm/notmuch-tag
-
-;; Programmatic tagging:
-;;
-;; db = notmuch.Database("/home/holger/.mail", mode=notmuch.Database.MODE.READ_WRITE)
-;; query = ""
-;; messages = notmuch.Query(db, query).search_messages()
-;; for m in messages:
-;;      t = list(m.get_tags())
-;;      if len(t) != 0:
-;;              continue
-;;      print(m)
-
-
-(after! notmuch-tag
+  ;; Programmatic tagging:
+  ;;
+  ;; db = notmuch.Database("/home/holger/.mail", mode=notmuch.Database.MODE.READ_WRITE)
+  ;; query = ""
+  ;; messages = notmuch.Query(db, query).search_messages()
+  ;; for m in messages:
+  ;;      t = list(m.get_tags())
+  ;;      if len(t) != 0:
+  ;;              continue
+  ;;      print(m)
 
   ;; Hide some tags. Not optimal, as we will get some trailing spaces in the display.
   ;; and make the flagged tag be an star icong
@@ -2131,6 +2105,18 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
            (notmuch-tag-format-image-data tag (notmuch-tag-star-icon)))
           ))
 )
+
+(defun my-notmuch-hello ()
+  (interactive)
+  (require 'notmuch)
+  (notmuch-hello))
+
+(define-key!
+  "M-g n" #'my-notmuch-hello ;; was next-error
+  "M-g p" nil             ;; was previous-error
+)
+
+
 
 
 
