@@ -1900,9 +1900,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 ;;   gmi sync
 ;;   notmuch new
 ;;   afew --tag --new
-
-
-notmuch tag -inbox -- tag:lists
+;;   notmuch tag -inbox -- tag:lists
 
 ;; (use-package! notmuch
 ;;   :defer t
