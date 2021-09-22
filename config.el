@@ -2070,6 +2070,9 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
     "G" #'my-notmuch-pollmail
     "c" #'notmuch-mua-new-mail)
 
+  ;; Tell the rest of Emacs that we are now using notmuch
+  (setq mail-user-agent 'notmuch-user-agent)
+
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; notmuch-mua
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
