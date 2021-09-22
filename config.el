@@ -2031,6 +2031,13 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   ;; The space as thousand separator looks odd, make it more european
   (setq notmuch-hello-thousands-separator ".")
 
+  (defun my-notmuch-pollmail ()
+    (interactive)
+    (start-process "pollmail" ;; NAME
+                   "*notmuch-pollmail*" ;; BUFFER
+                   (expand-file-name "~/.local/bin/pollmail"))  ;; PROGRAM
+    (message "pollmail running ..."))
+
   ;; Redesign of the hello screen
   (defun my-notmuch-hello-insert-recent-searches ()
     "Insert recent searches, but without the clear button."
@@ -2058,7 +2065,9 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
     (widget-insert "c compose         s notmuch search  u search unthreaded\n")
     (widget-insert "j jump            t tag search      s search threaded\n")
     (widget-insert "G check new mail                    z search tree formatted\n"))
+
   (define-key! :keymaps 'notmuch-hello-mode-map
+    "G" #'my-notmuch-pollmail
     "c" #'notmuch-mua-new-mail)
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
