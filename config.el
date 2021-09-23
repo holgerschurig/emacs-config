@@ -1988,6 +1988,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
         ;;                  mode, ’unthreaded to specify unthreaded mode, and set to nil
         ;;                  (or anything except tree and unthreaded) to specify search mode.
         '((:name "inbox"     :key "i" :query "NOT tag:trash AND tag:inbox")
+          (:name "unread"    :key "u" :query "NOT tag:thash AND tag:unread")
           (:name "alt"       :key "a" :query "NOT tag:trash AND tag:Aufheben")
           (:name "linux-can" :key "c" :query "NOT tag:trash AND tag:lists/linux-can")
           (:name "etnaviv"   :key "e" :query "NOT tag:trash AND tag:lists/etnaviv")
@@ -1995,7 +1996,6 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
           (:name "Sent"      :key "S" :query "tag:sent")
           (:name "Trash"     :key "T" :query "tag:trash")
-          (:name "Unread"    :key "U" :query "tag:unread")
           (:name "All"       :key "A" :query "*")))
 
   ;; List of tags to be hidden in the "all tags"-section.
