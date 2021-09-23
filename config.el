@@ -2109,9 +2109,10 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   ;; Hide some tags. Not optimal, as we will get some trailing spaces in the display.
   ;; and make the flagged tag be an star icong
   (setq notmuch-tag-formats
-        '(("signed" (propertize tag 'invisible t))
-          ("lists" (propertize tag 'invisible t))
-          ("attachment" (propertize tag 'invisible t))
+        '(
+          ;; ("signed" (propertize tag 'invisible t))
+          ;; ("lists" (propertize tag 'invisible t))
+          ;; ("attachment" (propertize tag 'invisible t))
           ("unread" (propertize tag 'face 'notmuch-tag-unread))
           ("flagged" (propertize tag 'face 'notmuch-tag-flagged)
            (notmuch-tag-format-image-data tag (notmuch-tag-star-icon)))
