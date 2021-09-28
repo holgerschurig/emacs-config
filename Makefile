@@ -81,7 +81,7 @@ pulldoom:
 	cd ~/.emacs.d; git pull --rebase
 	cd ~/.emacs.d; git log --reverse --no-merges -p ORIG_HEAD..HEAD >NEWS
 	cd ~/.emacs.d; bin/doom clean
-	cd ~/.emacs.d; bin/doom sync -u
+	cd ~/.emacs.d; bin/doom sync
 	@# recompile pdf-tools
 	$(MAKE) comppdf
 help::
