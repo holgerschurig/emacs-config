@@ -1954,12 +1954,6 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   (define-key! :keymaps 'notmuch-search-mode-map
     [delete] #'my-notmuch-search-delete)
 
-  ;; make tagging work again, see
-  ;; - https://github.com/minad/consult/issues/410
-  ;; - https://github.com/minad/vertico/issues/119
-  (advice-add #'notmuch-read-tag-changes
-              :filter-return (lambda (x) (mapcar #'string-trim x)))
-
   ;; Don't save message in some directory
   (setq notmuch-fcc-dirs nil)
 
