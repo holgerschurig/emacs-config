@@ -213,6 +213,10 @@ If there are two windows displayed, act like \"C-x o\"."
   :config
   (setq dictionary-server "dict.org")
   (setq dictionary-use-single-buffer t)
+
+  ;; Make files with shebang ("#!" at start) executable when we save them
+  (add-hook 'after-save-hook
+            'executable-make-buffer-file-executable-if-script-p)
 )
 
 
