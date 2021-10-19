@@ -872,6 +872,10 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   (cl-delete 'delete-directory embark-allow-edit-actions)
   (cl-delete 'kill-buffer      embark-allow-edit-actions)
 
+  ;; Doom uses the +vertico-embark-vertico-indicator, which displays annoyingly
+  ;; 10 times the the "digit-arguments"
+  (setq embark-indicators '(embark-mixed-indicator))
+
   ;; Keep Embark from trying to insert current selection into a y-or-n prompt
   (setq y-or-n-p-use-read-key t)
 )
