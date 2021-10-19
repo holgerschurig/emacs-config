@@ -77,6 +77,8 @@
 
 (package! wgrep)                ;; https://github.com/mhayashi1120/Emacs-wgrep  -- writable grep
 
+(unpin! embark embark-consult)
+
 (unpin! notmuch)
 
 (disable-packages!
