@@ -170,7 +170,7 @@ As a special case for elisp, also consider '(setq compile-command
                (completing-read "cmd: "
                                 (my-compile-get-commands nil)
                                 nil             ;; predicate
-                                t               ;; require-match
+                                nil             ;; require-match
                                 compile-command ;; initial-input
                                 ))
               )))
