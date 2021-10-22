@@ -872,9 +872,26 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   (cl-delete 'delete-directory embark-allow-edit-actions)
   (cl-delete 'kill-buffer      embark-allow-edit-actions)
 
-  ;; Doom uses the +vertico-embark-vertico-indicator, which displays annoyingly
-  ;; 10 times the the "digit-arguments"
-  (setq embark-indicators '(embark-mixed-indicator))
+  (define-key!
+    :keymaps '(embark-general-map)
+    ;; L used to be embark-collect-life, which isn't that helpful if one already uses
+    ;; something like vertigo or selectrum
+    "L" nil)
+
+  (define-key!
+    :keymaps '(embark-meta-map)
+    ;; the digit-argument bindings ... are needed for what?  In any case, they pollute
+    ;; the output of +vertico-embark-which-key-indicator
+    "0" nil
+    "1" nil
+    "2" nil
+    "3" nil
+    "4" nil
+    "5" nil
+    "6" nil
+    "7" nil
+    "8" nil
+    "9" nil)
 
   ;; Keep Embark from trying to insert current selection into a y-or-n prompt
   (setq y-or-n-p-use-read-key t)
