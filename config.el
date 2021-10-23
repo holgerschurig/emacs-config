@@ -861,24 +861,44 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
           embark-highlight-indicator
           embark-isearch-highlight-indicator))
 
+  ;; This allows you to use C-; after a prefix key, e.g. "C-x C-;" to get
+  ;; an embark-narrowable list of items
   (setq prefix-help-command #'embark-prefix-help-command)
-
-  ;; (define-key! :keymaps '(minibuffer-local-map minibuffer-local-completion-map)
-  ;;  "C-;" #'embark-act)
-  (define-key! :keymaps '(embark-collect-mode-map)
-    "M-t" #'toggle-truncate-lines)
 
   ;; Make some actions work without a special query
   (cl-delete 'delete-file      embark-allow-edit-actions)
   (cl-delete 'delete-directory embark-allow-edit-actions)
   (cl-delete 'kill-buffer      embark-allow-edit-actions)
 
+  (define-key! :keymaps '(embark-collect-mode-map)
+    "M-t" #'toggle-truncate-lines)
+
   (define-key!
     :keymaps '(embark-general-map)
+    ;; this is used to cycle where it works on (e.g. file, symbol, defun)
+    "C-;" #'embark-cycle
     ;; L used to be embark-collect-life, which isn't that helpful if one already uses
     ;; something like vertigo or selectrum
     "L" nil)
 
+  (define-key!
+    :keymaps '(embark-variable-map)
+    ;; Used to be customize-variable, but that is locked on Doom. Better use "=" to set
+    ;; the variable
+    "u" nil)
+
+  (define-key!
+    :keymaps '(+vertico/embark-doom-package-map)
+    "P" #'straight-pull-package
+    "c" #'straight-check-package
+    "i" #'straight-use-package
+    "r" #'straight-get-recipe
+    ;; "u" #'straight-visit-package-website ;; was doom/help-package-homepage
+    ;; "f" #'straight-fetch-package
+    ;; "p" #'straight-push-package
+    ;; "n" #'straight-normalize-package
+    ;; "m" #'straight-merge-package
+    )
 
   ;; Keep Embark from trying to insert current selection into a y-or-n prompt
   (setq y-or-n-p-use-read-key t)
