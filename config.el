@@ -1333,8 +1333,10 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
   ;; completion-read-multiple didn't allow my to quit it with C-g ...
   (define-key! :keymaps 'vertico-map
-    "C-g" #'keyboard-quit)
-
+    "C-g" #'keyboard-quit
+    ;; re-allow page-wise scrolling
+    [next] nil
+    [prior] nil)
 )
 
 
