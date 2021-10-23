@@ -841,15 +841,15 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 ;; generally hit "C-, C-h" to get help on available actions, which sometimes display more entries than which-keys
 
 (after! embark
-  (setq embark-collect-initial-view-alist '((buffer . list)
+  (setq embark-collect-initial-view-alist '((buffer . list)                ;; was grid
                                             (consult-grep . list)
                                             (consult-location . list)
                                             (consult-register . zebra)
                                             (consult-yank . zebra)
-                                            (file . list)
+                                            (file . list)                  ;; was grid
                                             (kill-ring . zebra)
                                             (line . list)
-                                            (symbol . list)
+                                            (symbol . list)                ;; was grid
                                             (xref-location . list)
                                             (t . list)))
 
