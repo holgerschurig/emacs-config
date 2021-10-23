@@ -77,7 +77,7 @@
 
 (package! wgrep)                ;; https://github.com/mhayashi1120/Emacs-wgrep  -- writable grep
 
-(unpin! embark embark-consult)
+(unpin! embark embark-consult consult vertico marginalia orderless)
 
 (unpin! notmuch)
 
