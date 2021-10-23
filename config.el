@@ -856,12 +856,6 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   ;; always get the accessible Embark completion prompter
   (setq prefix-help-command #'embark-prefix-help-command)
 
-  ;; Remove modeline from Embark collect frames
-  (add-to-list 'display-buffer-alist
-               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
-                 nil
-                 (window-parameters (mode-line-format . none))))
-
   ;; (define-key! :keymaps '(minibuffer-local-map minibuffer-local-completion-map)
   ;;  "C-;" #'embark-act)
   (define-key! :keymaps '(embark-collect-mode-map)
