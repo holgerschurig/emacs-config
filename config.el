@@ -1061,7 +1061,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
   (defun my-consult-imenu ()
     (interactive)
-    (let ((vertico-count 9999))
+    (let ((xvertico-count (- (frame-height) 10)))
       (if (derived-mode-p 'org-mode)
           (consult-org-heading)
         (consult-imenu))))
