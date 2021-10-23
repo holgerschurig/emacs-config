@@ -838,7 +838,8 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 ;;
 ;; E.g. go to a lisp symbol and hit "C-; h" to get help on symbol
 ;;      go to an URL        and hit "C-; e" to open the URL in eww (or "C-, b" to browse it normally)
-;; generally hit "C-, C-h" to get help on available actions, which sometimes display more entries than which-keys
+;; generally hit "C-, C-h" to get help on available actions, which sometimes
+;; display more entries than which-keys
 
 (after! embark
   (setq embark-collect-initial-view-alist '((buffer . list)                ;; was grid
@@ -853,7 +854,13 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
                                             (xref-location . list)
                                             (t . list)))
 
-  ;; always get the accessible Embark completion prompter
+  ;; Now that we don't use which-keys anymore, remove this indicator
+  (setq embark-indicators
+        '(+vertico-embark-vertico-indicator
+          embark-minimal-indicator
+          embark-highlight-indicator
+          embark-isearch-highlight-indicator))
+
   (setq prefix-help-command #'embark-prefix-help-command)
 
   ;; (define-key! :keymaps '(minibuffer-local-map minibuffer-local-completion-map)
@@ -872,20 +879,6 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
     ;; something like vertigo or selectrum
     "L" nil)
 
-  (define-key!
-    :keymaps '(embark-meta-map)
-    ;; the digit-argument bindings ... are needed for what?  In any case, they pollute
-    ;; the output of +vertico-embark-which-key-indicator
-    "0" nil
-    "1" nil
-    "2" nil
-    "3" nil
-    "4" nil
-    "5" nil
-    "6" nil
-    "7" nil
-    "8" nil
-    "9" nil)
 
   ;; Keep Embark from trying to insert current selection into a y-or-n prompt
   (setq y-or-n-p-use-read-key t)

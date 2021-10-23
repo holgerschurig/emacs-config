@@ -101,6 +101,7 @@
   ivy-rtags     ;; I'll use lsp/eglot. And no ivy
   irony-eldoc   ;; I'll use lsp/eglot
   company-dict  ;; we don't load complete from dictionaries
+  which-key     ;; Embark's C-h does it better
   ;; I don't want to pull in tree-sitter just for indentation of a language I don't even code in ...
   emacs-tree-sitter
   tree-sitter-indent
