@@ -1122,6 +1122,25 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 )
 
 
+;;; Package: completion/consult-dir
+
+;; Use it: C-x C-f (find-file), the C-x C-d (for consult-dir) to quickly
+;;         jump to a recently used directory
+;;
+;; Narrow to recent dirs:   "r "
+;;           bookmarks:     "m "
+;;           this dir/proj  ". "
+;;           projects       "p "
+
+(use-package consult-dir
+  :general
+  ("C-x C-d" #'consult-dir) ;; was: dired-jump, which is still on C-x C-j
+
+  (keymaps '(minibuffer-local-completion-map vertico-map)
+           "C-x C-d" #'consult-dir
+           "C-x C-j" #'consult-dir-jump-file)
+)
+
 
 
 ;;; Package: lang/c-mode

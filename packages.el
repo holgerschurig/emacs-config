@@ -52,6 +52,8 @@
 
 (package! clean-aindent-mode)
 
+(package! consult-dir)          ;; https://github.com/karthink/consult-dir
+
 (package! dts-mode)             ;; https://github.com/bgamari/dts-mode -- Device tree mode
 
 (package! kurecolor)            ;; https://github.com/emacsfodder/kurecolor  -- edit colors inline
