@@ -767,9 +767,6 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
-
-;;; Package: edit/wgrep
-
 ;;; Package: misc/embark
 
 ;; The following keymaps are already existing, so you can just add actions to
