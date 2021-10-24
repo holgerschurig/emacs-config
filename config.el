@@ -1113,6 +1113,12 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
     )
   (define-key! :keymaps '(compilation-mode-map compilation-minor-mode-map)
     "e" #'consult-compile-error)
+
+  (define-key! :keymaps '(consult-narrow-map)
+    ;; Unfortunately, the DEL key is hijacked by vertico, so I cannot unnorrow
+    ;; But we don't really need the delete-forward-char function, so we can use
+    ;; that key to unnarrow.
+    "<deletechar>" consult--narrow-delete) ;; was: delete-forward-char
 )
 
 
