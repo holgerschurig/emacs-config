@@ -806,6 +806,9 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 ;; display more entries than which-keys
 
 (after! embark
+  (message "EMBARK")
+  (require 'embark-consult)
+
   (setq embark-collect-initial-view-alist '((buffer . list)                ;; was grid
                                             (consult-grep . list)
                                             (consult-location . list)
