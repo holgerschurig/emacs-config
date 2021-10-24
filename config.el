@@ -1072,45 +1072,53 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
   (define-key!
     ;; C-c bindings (mode-specific-map)
-    ;; "C-c m"   #'consult-mode-command
-    ;; "C-c b"   #'consult-bookmark
-    ;; "C-c k"   #'consult-kmacro
+    "C-c h"   #'consult-history
+    "C-c m"   #'consult-mode-command
+    "C-c b"   #'consult-bookmark
+    "C-c k"   #'consult-kmacro
 
     ;; C-x bindings (ctl-x-map)
     "C-x M-:"  #'consult-complex-command      ;; was: repeat-complex-command
+    "C-x b"    #'ibuffer                      ;; was: switch-to-buffer
     "C-x C-b"  #'consult-buffer               ;; was: list-buffers
     "C-x 4 b"  #'consult-buffer-other-window  ;; was: switch-to-buffer-other-window
     "C-x 5 b"  #'consult-buffer-other-frame   ;; was: switch-to-buffer-other-frame
-    "C-x b"    #'ibuffer
 
     ;; Custom M-# bindings for fast register access
-    ;; "M-#"      #'consult-register-load
-    ;; "M-'"      #'consult-register-store       ;; was: abbrev-prefix-mark
-    ;; "C-M-#"    #'consult-register
+    ;; How would I type this on a german keyboard?
+    "M-#"      #'consult-register-load
+    "M-'"      #'consult-register-store
+    "C-M-#"    #'consult-register
 
     ;; M-g bindings (goto-map)
+    "M-g e"    #'consult-compile-error
+    "M-g f"    #'consult-flymake
     "M-g g"    #'consult-goto-line            ;; was: goto-line
     "M-g M-g"  #'consult-goto-line            ;; was: goto-line
     "M-g o"    #'consult-outline
     "M-g k"    #'consult-mark
     "M-g K"    #'consult-global-mark
     "M-g i"    #'my-consult-imenu
-    "M-g I"    #'consult-project-imenu
-    "M-g e"    #'consult-compile-error
-    "M-g l"    #'consult-line                  ;; similar to swiper
-    "M-g L"    #'consult-locate
+    "M-g I"    #'consult-project-imenu        ;; or maybe consult-imenu-multi?
 
     ;; M-s bindings (search-map)
+    "M-s e"    #'consult-isearch
     "M-s f"    #'consult-find
-    "M-s g"    #'consult-git-grep
-    "M-s G"    #'consult-grep
+    "M-g F"    #'consult-locate
+    "M-s g"    #'consult-grep
+    "M-s G"    #'consult-git-grep
     "M-s r"    #'consult-ripgrep
-    "M-s l"    #'consult-line
+    "M-g l"    #'consult-line                 ;; similar to swiper
+    "M-g l"    #'consult-line-multi
     "M-s m"    #'consult-multi-occur
     "M-s k"    #'consult-keep-lines
-    "M-s u"    #'consult-focus-lines           ;; run with C-u to show all lines again
-    "M-s o"    #'consult-line                  ;; was: occur
+    "M-s u"    #'consult-focus-lines          ;; run with "C-u M-s u" to show all lines again
     )
+  (define-key! :keymaps '(isearch-mode-map)
+    "M-e"      #'consult-isearch              ;; was: isearch-edit-string
+    "M-s e"    #'consult-isearch              ;; was: isearch-edit-string
+    "M-s l"    #'consult-line                 ;; needed by consult-line to detect isearch
+    "M-s L"    #'consult-line-multi)          ;; needed by consult-line to detect isearch
   (define-key! :keymaps '(compilation-mode-map compilation-minor-mode-map)
     "e" #'consult-compile-error)
 
