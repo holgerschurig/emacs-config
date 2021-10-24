@@ -85,6 +85,7 @@
 
 (disable-packages!
   better-jumper ;; looks like it only works in evil mode
+  company-dict  ;; we don't load complete from dictionaries
   demangle-mode ;; objdump can do this quite well
   dhall-mode    ;; no need for this "programmable configuration language"
   dired-rsync   ;; would be pulled in by modules/data, but I don't need it
@@ -94,15 +95,14 @@
   helm-bibtex   ;; I won't write bibliographic entries
   hl-line       ;; highlights the current cursor line
   irony         ;; I'll use lsp/eglot
+  irony-eldoc   ;; I'll use lsp/eglot
   ivy-bibtex    ;; I won't write bibliographic entries
+  ivy-rtags     ;; I'll use lsp/eglot. And no ivy
   jsonnet-mode  ;; would be pulled in by modules/data, but I don't need it
   org-yt        ;; youtube links in org-mode?  Who wants that?  :-)
   rtags         ;; I'll use lsp/eglot
-  solaire-mode  ;; does interference with modus-vivendi-theme
   smartparens   ;; makes many M-<cursor keypad> keys behave weird
-  ivy-rtags     ;; I'll use lsp/eglot. And no ivy
-  irony-eldoc   ;; I'll use lsp/eglot
-  company-dict  ;; we don't load complete from dictionaries
+  solaire-mode  ;; does interfere with modus-vivendi-theme
   which-key     ;; Embark's C-h does it better
   ;; I don't want to pull in tree-sitter just for indentation of a language I don't even code in ...
   emacs-tree-sitter
