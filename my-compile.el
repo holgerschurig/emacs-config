@@ -43,44 +43,15 @@
 (defvar my-compile-commands nil
   "List of previous compilation commands.
 
-The compile commands are an alist where the key is
-is the command and the value is the time when it was
-executed the last time.  The latter is used for sorting.
+Example:
 
- Example:
-
-'((\"make\" .  \"1448748904\")
-  (\"make -C ~/test\" . \"1448748866\"))")
+'(\"make\"
+ (\"make -C ~/test\")")
 
 
 ;; automatically save our my-compile-commands
-(defvar savehist-minibuffer-history-variables)
-(add-to-list 'savehist-minibuffer-history-variables 'my-compile-commands)
-
-
-(defun my-compile-sort-command-alist ()
-  "Sort ‘my-compile-commands’ by the value of their cons elements.
-
-This sorts the entries so that recently used compile commands
-are near the top."
-  (setq my-compile-commands (sort my-compile-commands (lambda (x y)
-                                                        (not (string< (cdr x) (cdr y)))))))
-
-(defun my-compile-add-command (cmd)
-  "Add CMD to ‘my-compile-commands’ if it isn't already in it.
-
-It inserts the seconds since 1970 into the value."
-  ;; (message "adding command '%s'" cmd)
-  (unless (string= "" cmd)
-    (unless (assoc cmd my-compile-commands)
-      (add-to-list 'my-compile-commands (cons cmd (format-time-string "%s"))))))
-
-
-(defun my-compile-del-command (cmd)
-  "This deletes CMD from the ‘my-compile-commands’ list."
-  (setq my-compile-commands
-        (delq (assoc cmd my-compile-commands)
-              my-compile-commands)))
+;; (defvar savehist-minibuffer-history-variables)
+;; (add-to-list 'savehist-minibuffer-history-variables 'my-compile-commands)
 
 
 (defun my-compile-get-commands-from-buffers ()
@@ -109,77 +80,35 @@ As a special case for elisp, also consider '(setq compile-command
     (while (re-search-forward "^..? @compile: \\(.*\\)$" nil t)
       (let ((s (match-string-no-properties 1)))
         ;; \s- whitespace character class
-        ;; (message "FOUND '%s'" s)
+        (message "FOUND '%s'" s)
         (setq s (replace-regexp-in-string "\s-*\\*/$" "" s))
-        (my-compile-del-command s)
-        (my-compile-add-command s)))
-    (goto-char (point-min))
-    (while (re-search-forward "(setq compile-command \"\\(.*\\)\")" nil t)
-      (let ((s (match-string-no-properties 1)))
-        ;; (message "via setq '%s'" s)
-        (my-compile-del-command s)
-        (my-compile-add-command s)))))
+        (add-to-list 'my-compile-commands s)))
+    (goto-char (point-min))))
 
 
-(defun my-compile-default-action (cmd)
-  "Default action that execute CMD."
+(require 'consult nil nil)
+(require 'embark nil nil)
+(when (and (featurep 'consult) (featurep 'embark))
+  (defun my-compile-del (s)
+    "Remove element s from my-compile-commands."
+    (setq my-compile-commands (remove s my-compile-commands)))
 
-  ;; (message "my-compile-default-action: '%s'" cmd)
-  (when cmd
-    (my-compile-add-command cmd)
-    (setq compile-command cmd)
-    (my-compile)))
+  (embark-define-keymap embark-compile-map
+    "Keymap with compile commands actions"
+    ("d" my-compile-del))
 
+  (add-to-list 'embark-keymap-alist '(compile . embark-compile-map)))
 
-(defun my-compile-del-action (cmd)
-  "Action that deletes CMD from the list of commands."
-  ;; (message "my-compile-del-action: '%s'" cmd)
-  (my-compile-del-command cmd)
-  (when (string= compile-command cmd)
-    (setq compile-command nil)))
-
-
-(defun my-compile-get-commands (current-input)
-  (delq "" (mapcar 'car my-compile-commands)))
 
 (defun my-compile-select-command ()
   "Interactively select a compilation command."
   (interactive)
-
-  ;; Always get list of compilation commands and sort them
-  (my-compile-get-commands-from-buffers)
-  (my-compile-sort-command-alist)
-  ;; my-compile-commands is now something like:
-  ;; '(("make -C foo" . 1) ("ccmake && make" . 2))
-
-  (setq compile-command
-        (cond ((fboundp 'ivy-read)
-               ;; http://oremacs.com/swiper/#api
-               (ivy-read "cmd: "
-                         #'my-compile-get-commands
-                         :caller #'my-compile-select-command
-                         :action #'my-compile-default-action))
-              ((fboundp 'selectrum--read)
-               (let ((selectrum-should-sort-p nil))
-                 (selectrum--read "cmd: "
-                                 #'my-compile-get-commands
-                                 :default-candidate compile-command
-                                 :require-match nil
-                                 )))
-              (t
-               (completing-read "cmd: "
-                                (my-compile-get-commands nil)
-                                nil             ;; predicate
-                                nil             ;; require-match
-                                compile-command ;; initial-input
-                                ))
-              )))
-
-
-(when (boundp 'ivy-read)
-  (ivy-set-actions
-   'my-compile-select-command
-   '(("d" my-compile-del-action "delete"))))
+  (cond ((and (featurep 'consult) (featurep 'embark))
+         (consult--read my-compile-commands
+                        :prompt "cmd: "
+                        :category 'compile))
+         (t
+          (completing-read "cmd: " my-compile-commands))))
 
 
 (defun my-compile ()
@@ -190,21 +119,14 @@ selected with completion help."
   (interactive)
   (delete-other-windows)
   (save-some-buffers t)
-  (if (string= compile-command "")
-      (my-compile-select-command)
-    ;; (message "compile command: %s" compile-command)
-    (let ((cmd (assoc compile-command my-compile-commands)))
-      (when cmd
-        ;; (message "assoc: %s" (assoc compile-command my-compile-commands))
-        (setcdr cmd (format-time-string "%s"))
-        ;; (message "assoc: %s" (assoc compile-command my-compile-commands))
-        ))
-    ;; (message "compile command: %s" compile-command)
-    (setq compile-command (replace-regexp-in-string
-                           " \\(%\\)"
-                           (buffer-file-name (window-buffer))
-                           compile-command
-                           nil nil 1)))
+  (when (string= compile-command "")
+      (setq compile-command (my-compile-select-command))
+      (add-to-list 'my-compile-commands compile-command))
+  (setq compile-command (replace-regexp-in-string
+                         " \\(%\\)"
+                         (buffer-file-name (window-buffer))
+                         compile-command
+                         nil nil 1))
   (if (string= (substring compile-command 0 1) "(")
       (eval (car (read-from-string compile-command)))
     (let ((default-directory (or (locate-dominating-file "." ".git")
@@ -220,7 +142,8 @@ selected with completion help."
 (defun my-compile-select-command-and-run ()
   "Interactively select a compilation command and execute it."
   (interactive)
-  (my-compile-select-command)
+  (setq compile-command (my-compile-select-command))
+  (add-to-list 'my-compile-commands compile-command)
   (unless (string= compile-command "")
     (my-compile)))
 
