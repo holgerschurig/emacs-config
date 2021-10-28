@@ -18,6 +18,9 @@ confemacs emacs.git/Makefile: emacs.git/configure
 		--with-cairo \
 		--with-xwidgets \
 		--with-x-toolkit=gtk3 \
+		--with-json \
+		--with-imagemagick \
+		--with-native-compilation \
 		--without-gconf \
 		--without-gpm \
 		--without-gsettings \
@@ -29,14 +32,11 @@ confemacs emacs.git/Makefile: emacs.git/configure
 		--without-selinux \
 		--without-wide-int \
 		--without-xim \
-		--without-native-compilation \
-		--with-imagemagick \
 		--without-pop \
 		--with-toolkit-scroll-bars \
-		--without-native-compilation \
 		CFLAGS='-g -O2 -ffile-prefix-map=/home/holger=. -fstack-protector-strong -Wformat -Werror=format-security -Wall -fno-omit-frame-pointer'
 		CPPFLAGS='-Wdate-time -D_FORTIFY_SOURCE=2' \
-		LDFLAGS='-Wl,-z,relro' | tee my-configure.log
+		LDFLAGS='-Wl,-z,relro'
 
 
 help::
