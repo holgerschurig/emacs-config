@@ -1519,8 +1519,6 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   (remove-hook 'org-mode-hook #'org-superstar-mode)
   (remove-hook 'org-open-at-point-functions #'doom-set-jump-h)
 
-  (map! :map org-mode-map
-        "C-,"  #'embark-act)
 )
 
 
