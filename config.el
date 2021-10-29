@@ -65,10 +65,11 @@
 ;; 1. Download  https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/RobotoMono/Regular/complete/Roboto%20Mono%20Nerd%20Font%20Complete.ttf
 ;; 2. Put that in ~/.config/share/fonts/
 
-;; (setq doom-font (font-spec :family "RobotoMono Nerd Font Mono" :size 13)
-;;       ;; doom-variable-pitch-font (font-spec :family "Fira Sans")
-;;       doom-unicode-font (font-spec :family "DejaVu Sans Mono")
-;;       doom-big-font (font-spec :family "RobotoMono Nerd Font Mono" :size 19))
+(setq doom-font (font-spec :family "NotoSans Mono" :size 13)
+      doom-variable-pitch-font (font-spec :family "Noto Sans")
+      doom-serif-font (font-spec :family "Noto Serif" :weight 'semi-bold :width 'extra-condensed)
+      doom-unicode-font (font-spec :family "Noto Sans")
+      doom-big-font (font-spec :family "NotoSans Mono" :size 19))
 
 
 
