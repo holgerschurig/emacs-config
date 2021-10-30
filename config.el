@@ -62,18 +62,6 @@
   (align-regexp BEG END "\\(\\s-*\\)\\S-+" 1 1 t))
 
 
-;; 1. Download  https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/RobotoMono/Regular/complete/Roboto%20Mono%20Nerd%20Font%20Complete.ttf
-;; 2. Put that in ~/.config/share/fonts/
-
-(setq doom-font (font-spec :family "NotoSans Mono" :size 13)
-      doom-variable-pitch-font (font-spec :family "Noto Sans")
-      doom-serif-font (font-spec :family "Noto Serif" :weight 'semi-bold :width 'extra-condensed)
-      doom-unicode-font (font-spec :family "Noto Sans")
-      doom-big-font (font-spec :family "NotoSans Mono" :size 19))
-
-
-
-
 ;;; Misc keybindings
 ;; This is like the start of modules/config/default/+emacs-bindings.el:
 
