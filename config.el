@@ -1097,8 +1097,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
     "M-s g"    #'consult-grep
     "M-s G"    #'consult-git-grep
     "M-s r"    #'consult-ripgrep
-    "M-g l"    #'consult-line                 ;; similar to swiper
-    "M-g l"    #'consult-line-multi
+    "M-g l"    #'consult-line-multi           ;; similar to swiper
     "M-s m"    #'consult-multi-occur
     "M-s k"    #'consult-keep-lines
     "M-s u"    #'consult-focus-lines          ;; run with "C-u M-s u" to show all lines again
