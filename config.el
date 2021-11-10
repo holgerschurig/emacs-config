@@ -1096,11 +1096,11 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
     ;; M-s bindings (search-map)
     "M-s e"    #'consult-isearch
     "M-s f"    #'consult-find
-    "M-g F"    #'consult-locate
+    "M-s F"    #'consult-locate
     "M-s g"    #'consult-grep
     "M-s G"    #'consult-git-grep
     "M-s r"    #'consult-ripgrep
-    "M-g l"    #'consult-line-multi           ;; similar to swiper
+    "M-s l"    #'consult-line-multi           ;; similar to swiper
     "M-s m"    #'consult-multi-occur
     "M-s k"    #'consult-keep-lines
     "M-s u"    #'consult-focus-lines          ;; run with "C-u M-s u" to show all lines again
