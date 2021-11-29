@@ -2017,12 +2017,14 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   ;; Tell the rest of Emacs that we are now using notmuch
   (setq mail-user-agent 'notmuch-user-agent)
 
+
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; notmuch-mua
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
   ;; We don't need to cite everything
   (setq notmuch-mua-cite-function #'message-cite-original-without-signature)
+
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; notmuch-show
@@ -2034,6 +2036,25 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
   ;; Probably not needed, as I am using iso date anyway
   (setq notmuch-show-relative-dates nil)
+
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; notmuch-search
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (defun my-notmuch-show-mails (&optional elide-toggle)
+    "Show one mail directly, or several mails in tree format"
+    (interactive "P")
+    (let* ((thread-id (notmuch-search-find-thread-id))
+           (result (get-text-property (point) 'notmuch-search-result)))
+      ;; one message?
+      (if (= (plist-get result :matched) 1)
+          (notmuch-search-show-thread elide-toggle)
+        (notmuch-tree thread-id notmuch-search-query-string))))
+
+  (define-key! :keymaps 'notmuch-search-mode-map
+    "RET" #'my-notmuch-show-mails)
+
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; notmuch-tag
@@ -2061,6 +2082,14 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
           ("flagged" (propertize tag 'face 'notmuch-tag-flagged)
            (notmuch-tag-format-image-data tag (notmuch-tag-star-icon)))
           ))
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; notmuch-tree
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  ;; show mail completely, not in a split window mode
+  (setq notmuch-tree-show-out t)
+
 )
 
 (defun my-notmuch-hello ()
