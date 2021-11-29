@@ -20,7 +20,7 @@
        ;;layout            ; auie,ctsrnm is the superior home row
 
        :completion
-       ;; (company)        ; the ultimate code completion backend
+       ;;company           ; the ultimate code completion backend
        ;;helm              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
        ;;ivy               ; a search engine for love and life
@@ -32,7 +32,6 @@
        doom-dashboard      ; a nifty splash screen for Emacs
        ;;doom-quit         ; DOOM quit-message prompts when you quit Emacs
        ;;(emoji +unicode)  ; 🙂
-       ;;fill-column       ; a `fill-column' indicator
        hl-todo             ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
        hydra
        ;;indent-guides     ; highlighted indent columns
@@ -81,14 +80,12 @@
 
        :checkers
        ;;syntax            ; tasing you for every semicolon you forget
-       (spell              ; tasing you for misspelling mispelling
-        +aspell
-        -hunspell
-        -flyspell)
+       (spell +aspell -hunspell -flyspell) ; tasing you for misspelling mispelling
        ;;grammar           ; tasing grammar mistake every you make
 
        :tools
        ;;ansible
+       ;;biblio            ; Writes a PhD for you (citation needed)
        ;;debugger          ; FIXME stepping through code, to help you add bugs
        ;;direnv
        ;;docker
@@ -97,9 +94,7 @@
        ;;(eval +overlay)   ; run code, run (also, repls)
        ;;gist              ; interacting with github gists
        lookup              ; navigate your code and its documentation
-       (lsp
-        -lsp-mode
-        +eglot)
+       (lsp -lsp-mode +eglot) ; M-x vscode 
        magit               ; a git porcelain for Emacs
        ;;make              ; run make tasks from Emacs
        ;;pass              ; password manager for nerds
@@ -177,7 +172,6 @@
        yaml                ; JSON, but readable
        ;;zig               ; C, but simpler
 
-
        :email
        ;; (mu4e +gmail)
        (notmuch +afew)
@@ -193,7 +187,4 @@
 
        :config
        ;;literate
-       (default
-        ;; +bindings
-        ;; +smartparens
-       ))
+       (default -bindings -smartparens))
