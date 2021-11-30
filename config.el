@@ -1190,6 +1190,10 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
       (ansi-color-apply-on-region (point-min) (point-max))))
   (add-hook 'compilation-filter-hook #'my-colorize-compilation-buffer)
 
+  (defun my-compilation-setup ()
+    (setq-local truncate-lines nil))
+  (add-hook 'compilation-mode-hook #'my-compilation-setup)
+
   (defun my-compile-autoclose (buffer string)
     "Auto close compile log if there are no errors"
     (when (string-match "finished" string)
