@@ -2054,7 +2054,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
     (let* ((thread-id (notmuch-search-find-thread-id))
            (result (get-text-property (point) 'notmuch-search-result)))
       ;; one message?
-      (if (= (plist-get result :matched) 1)
+      (if (= (plist-get result :total) 1)
           (notmuch-search-show-thread elide-toggle)
         (notmuch-tree thread-id notmuch-search-query-string))))
 
