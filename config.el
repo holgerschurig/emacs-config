@@ -2041,6 +2041,8 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   ;; Probably not needed, as I am using iso date anyway
   (setq notmuch-show-relative-dates nil)
 
+  (add-hook 'notmuch-show-mode-hook #'scroll-lock-mode)
+
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; notmuch-search
