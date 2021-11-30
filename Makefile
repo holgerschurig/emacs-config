@@ -15,12 +15,21 @@ help::
 confemacs emacs.git/Makefile: emacs.git/configure
 	cd emacs.git; \
 	./configure \
+		-C \
 		--with-cairo \
-		--with-xwidgets \
-		--with-x-toolkit=gtk3 \
-		--with-json \
+		--with-dbus \
+		--with-gnutls \
+		--with-gpm=no \
 		--with-imagemagick \
+		--with-json \
+		--with-modules \
 		--with-native-compilation \
+		--with-pgtk \
+		--with-rsvg \
+		--with-toolkit-scroll-bars \
+		--with-x-toolkit=gtk3 \
+		--with-xml2 \
+		--with-xwidgets \
 		--without-gconf \
 		--without-gpm \
 		--without-gsettings \
@@ -29,12 +38,11 @@ confemacs emacs.git/Makefile: emacs.git/configure
 		--without-kerberos \
 		--without-kerberos5 \
 		--without-ns \
+		--without-pop \
 		--without-selinux \
 		--without-wide-int \
 		--without-xim \
-		--without-pop \
-		--with-toolkit-scroll-bars \
-		CFLAGS='-g -O2 -ffile-prefix-map=/home/holger=. -fstack-protector-strong -Wformat -Werror=format-security -Wall -fno-omit-frame-pointer'
+		CFLAGS='-g -O2 -march=native -ffile-prefix-map=/home/holger=. -fstack-protector-strong -Wformat -Werror=format-security -Wall -fno-omit-frame-pointer'
 		CPPFLAGS='-Wdate-time -D_FORTIFY_SOURCE=2' \
 		LDFLAGS='-Wl,-z,relro'
 
