@@ -1213,6 +1213,9 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 ;;; Package: lang/elisp
 
 (after! lisp-mode
+  ;; Replace evil-last-sexp with pp-eval-last-sexp, as this gives nicer results
+  (global-set-key [remap eval-last-sexp] 'pp-eval-last-sexp)
+
   (defun my-emacs-lisp-mode-setup ()
     (interactive)
     "My emacs lisp mode setup function."
