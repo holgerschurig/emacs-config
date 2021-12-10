@@ -834,7 +834,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
     ;; this is used to cycle where it works on (e.g. file, symbol, defun)
     "C-;" #'embark-cycle
     ;; L used to be embark-collect-life, which isn't that helpful if one already uses
-    ;; something like vertigo or selectrum
+    ;; something like vertico or selectrum
     "L" nil)
 
   (define-key!
