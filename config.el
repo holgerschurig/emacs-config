@@ -1822,7 +1822,7 @@ buffer."
 
 
 
-;;; Packages: comm/message
+;;; Package: comm/message
 
 (after!
 
@@ -1844,7 +1844,7 @@ buffer."
 )
 
 
-;;; Packages: comm/mm-decode
+;;; Package: comm/mm-decode
 
 (after!
 
@@ -1856,7 +1856,7 @@ buffer."
 
 
 
-;;; Packages: comm/notmuch
+;;; Package: comm/notmuch
 
 ;; https://github.com/gauteh/lieer
 ;; - ~/mail/account.google/
@@ -2160,7 +2160,7 @@ buffer."
 
 
 
-;;; Packages: comm/sendmail
+;;; Package: comm/sendmail
 
 (after! sendmail
   ;; use GMI to send mails
