@@ -338,6 +338,44 @@ If there are two windows displayed, act like \"C-x o\"."
 
 
 
+;;; Package: core/replace
+
+;; https://www.reddit.com/r/emacs/comments/rk5t3b/do_you_use_interactive_regexp_replace_with_emacs/
+
+;; If you don't use pcre or some other package then you may find emacs' own
+;; regexps are clumsy when doing interactive regexp replace, because you have to
+;; escape some of the most frequent constructs like \(...\) and \|.
+;;
+;; This snippet reverses the semantics for these when using M-x
+;; query-replace-regexp, so that you can simply type ( ) for capture and | for
+;; alternation and use \( etc. for matching an actual paren which is needed less
+;; often:
+
+(defun my-perform-replace (origfun &rest args)
+  (apply
+   origfun
+   (if (eq this-command 'query-replace-regexp) ;; do conversion only for regexp replace
+       (cons (let ((s (car args))
+                   (placeholder (format "@placeholder%s@"
+                                        (int-to-string
+                                         (buffer-modified-tick)))))
+               (dolist (char '("|" "(" ")"))
+                 (setq s (replace-regexp-in-string
+                          placeholder char
+                          (replace-regexp-in-string
+                           char (concat "\\\\" char)
+                           (replace-regexp-in-string
+                            (concat "\\\\" char) placeholder
+                            s)))))
+               s)
+
+             (cdr args))
+
+     args)))
+(advice-add 'perform-replace :around 'my-perform-replace)
+
+
+
 ;;; Package: core/message
 
 (after! message
