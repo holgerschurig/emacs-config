@@ -75,6 +75,16 @@
 
 
 
+;;; Package: core/align
+
+(defadvice my-align-regexp (around align-regexp-with-spaces)
+  "Never use tabs for alignment."
+  (let ((indent-tabs-mode nil))
+    ad-do-it))
+(ad-activate 'my-align-regexp)
+
+
+
 ;;; Package: core/auth-sources
 
 (after! auth-source
