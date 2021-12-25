@@ -1762,7 +1762,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 ;;; Packages: comm/message
 
-(after!
+(after! message
 
   ;; When composing a mail, start the auto-fill-mode.
   (add-hook 'message-mode-hook 'turn-on-auto-fill)
@@ -1784,7 +1784,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 ;;; Packages: comm/mm-decode
 
-(after!
+(after! mm-decode
 
   ;; Displaying zip/tar inline is a really, really stupid default!
   (setq mm-inlined-types
