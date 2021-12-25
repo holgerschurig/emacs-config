@@ -75,6 +75,16 @@
 
 
 
+;;; Package: core/align
+
+(defadvice my-align-regexp (around align-regexp-with-spaces)
+  "Never use tabs for alignment."
+  (let ((indent-tabs-mode nil))
+    ad-do-it))
+(ad-activate 'my-align-regexp)
+
+
+
 ;;; Package: core/auth-sources
 
 (after! auth-source
@@ -325,6 +335,44 @@ If there are two windows displayed, act like \"C-x o\"."
 (after! register
   (setq register-preview-delay 1)
   (setq register-preview-function #'consult-register-format))
+
+
+
+;;; Package: core/replace
+
+;; https://www.reddit.com/r/emacs/comments/rk5t3b/do_you_use_interactive_regexp_replace_with_emacs/
+
+;; If you don't use pcre or some other package then you may find emacs' own
+;; regexps are clumsy when doing interactive regexp replace, because you have to
+;; escape some of the most frequent constructs like \(...\) and \|.
+;;
+;; This snippet reverses the semantics for these when using M-x
+;; query-replace-regexp, so that you can simply type ( ) for capture and | for
+;; alternation and use \( etc. for matching an actual paren which is needed less
+;; often:
+
+(defun my-perform-replace (origfun &rest args)
+  (apply
+   origfun
+   (if (eq this-command 'query-replace-regexp) ;; do conversion only for regexp replace
+       (cons (let ((s (car args))
+                   (placeholder (format "@placeholder%s@"
+                                        (int-to-string
+                                         (buffer-modified-tick)))))
+               (dolist (char '("|" "(" ")"))
+                 (setq s (replace-regexp-in-string
+                          placeholder char
+                          (replace-regexp-in-string
+                           char (concat "\\\\" char)
+                           (replace-regexp-in-string
+                            (concat "\\\\" char) placeholder
+                            s)))))
+               s)
+
+             (cdr args))
+
+     args)))
+(advice-add 'perform-replace :around 'my-perform-replace)
 
 
 
@@ -1029,6 +1077,68 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
+;;; Package: modes/scratch
+
+;; Adapted from the `scratch.el' package by Ian Eure.
+(defun my-list-scratch-modes ()
+  "List known major modes."
+  (cl-loop for sym the symbols of obarray
+           for name = (symbol-name sym)
+           when (and (functionp sym)
+                     (not (member sym minor-mode-list))
+                     (string-match "-mode$" name)
+                     (not (string-match "--" name)))
+           collect name))
+
+(defun my-scratch-buffer-setup (text &optional mode)
+  "Add contents to `scratch' buffer and name it accordingly.
+
+REGION is added to the contents to the new buffer.
+
+Use the current buffer's major mode by default.  With optional
+MODE use that major mode instead."
+  (let* ((major (or mode major-mode))
+         (buf (format "*Scratch for %s*" major)))
+    (with-current-buffer (get-buffer-create buf)
+      (funcall major)
+      (save-excursion
+        (insert text)
+        (goto-char (point-min)))
+      (vertical-motion 2))
+    (pop-to-buffer buf)))
+
+(add-to-list 'display-buffer-alist
+             `(,(rx bos "*Scratch for ")
+               (display-buffer-reuse-window display-buffer-same-window)
+               (reusable-frames . visible))
+             )
+
+(defun my-scratch-buffer (&optional arg)
+  "Produce a bespoke scratch buffer matching current major mode.
+
+With optional ARG argument, prompt for a major mode
+with completion.
+
+If region is active, copy its contents to the new scratch
+buffer."
+  (interactive "P")
+  (let ((modes (my-list-scratch-modes))
+        (region (with-current-buffer (current-buffer)
+                  (if (region-active-p)
+                      (buffer-substring-no-properties
+                       (region-beginning)
+                       (region-end))
+                    "")))
+         (m))
+    (pcase (prefix-numeric-value arg)
+      (4 (progn
+            (setq m (intern (completing-read "Scratch buffer mode: " modes nil t)))
+            (my-scratch-buffer-setup region m)))
+      (_ (my-scratch-buffer-setup region)))))
+
+
+(map! "M-g s" #'my-scratch-buffer)
+
 
 ;;; Package: completion/consult
 
@@ -1084,7 +1194,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
     ;; M-g bindings (goto-map)
     "M-g e"    #'consult-compile-error
-    "M-g f"    #'consult-flymake
+    ;;"M-g f"    #'consult-flymake            ;; flymake is not activated in my config
     "M-g g"    #'consult-goto-line            ;; was: goto-line
     "M-g M-g"  #'consult-goto-line            ;; was: goto-line
     "M-g o"    #'consult-outline
@@ -1760,7 +1870,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
-;;; Packages: comm/message
+;;; Package: comm/message
 
 (after! message
 
@@ -1782,7 +1892,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 )
 
 
-;;; Packages: comm/mm-decode
+;;; Package: comm/mm-decode
 
 (after! mm-decode
 
@@ -1794,7 +1904,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
-;;; Packages: comm/notmuch
+;;; Package: comm/notmuch
 
 ;; https://github.com/gauteh/lieer
 ;; - ~/mail/account.google/
@@ -2098,7 +2208,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
-;;; Packages: comm/sendmail
+;;; Package: comm/sendmail
 
 (after! sendmail
   ;; use GMI to send mails
@@ -2113,7 +2223,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   )
 
 
-;;; Scratch
+;;; This and that
 
 
 (defun notmuch-poll ()
