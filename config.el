@@ -1176,7 +1176,6 @@ buffer."
     ;; C-c bindings (mode-specific-map)
     "C-c h"   #'consult-history
     "C-c m"   #'consult-mode-command
-    "C-c b"   #'consult-bookmark
     "C-c k"   #'consult-kmacro
 
     ;; C-x bindings (ctl-x-map)
@@ -1185,6 +1184,7 @@ buffer."
     "C-x C-b"  #'consult-buffer               ;; was: list-buffers
     "C-x 4 b"  #'consult-buffer-other-window  ;; was: switch-to-buffer-other-window
     "C-x 5 b"  #'consult-buffer-other-frame   ;; was: switch-to-buffer-other-frame
+    "C-x r b"  #'consult-bookmark
 
     ;; Custom M-# bindings for fast register access
     ;; How would I type this on a german keyboard?
