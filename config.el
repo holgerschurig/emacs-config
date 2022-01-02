@@ -877,9 +877,10 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   (setq prefix-help-command #'embark-prefix-help-command)
 
   ;; Make some actions work without a special query
-  (cl-delete 'delete-file      embark-allow-edit-actions)
-  (cl-delete 'delete-directory embark-allow-edit-actions)
-  (cl-delete 'kill-buffer      embark-allow-edit-actions)
+  (assq-delete-all 'delete-file                   embark-pre-action-hooks)
+  (assq-delete-all 'delete-directory              embark-pre-action-hooks)
+  (assq-delete-all 'kill-buffer                   embark-pre-action-hooks)
+  (assq-delete-all 'embark-kill-buffer-and-window embark-pre-action-hooks)
 
   (define-key! :keymaps '(embark-collect-mode-map)
     "M-t" #'toggle-truncate-lines)
