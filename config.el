@@ -481,6 +481,13 @@ If there are two windows displayed, act like \"C-x o\"."
 
 
 
+;;; Package: core/timer-list
+
+;; Enable this command
+(put 'list-timers 'disabled nil)
+
+
+
 ;;; Package: core/vc
 
 (after! vc-hooks
