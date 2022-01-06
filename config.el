@@ -1736,82 +1736,47 @@ buffer."
 
 ;;; Package: comm/circe
 
-(use-package circe
-  :commands (circe)
 
-  :hook (
-         (circe-channel-mode . enable-lui-autopaste)
-         (circe-channel-mode . my-maybe-log-channel)
-         )
+(defun my-auth-server-pass (server)
+  (if-let ((secret (plist-get (car (auth-source-search :host server)) :secret)))
+      (if (functionp secret)
+          (funcall secret) secret)
+    (error "Could not fetch password for host %s" server)))
 
-  :preface
-  (defun irc ()
-    "Connect to Freenode via Circe."
-    (interactive)
-    (circe "Freenode"))
+(after! circe
+  ;; Put something like this
+  ;;    machine irc.libera.chat login yournick password "top-secret-string" port 6667
+  ;; into ~/.authinfo. From https://github.com/emacs-circe/circe/wiki/Configuration#safer-password-management
+  (defun my-fetch-password (&rest params)
+    (require 'auth-source)
+    (let ((match (car (apply 'auth-source-search params))))
+      (if match
+          (let ((secret (plist-get match :secret)))
+            (if (functionp secret)
+                (funcall secret)
+              secret))
+        (error "Password not found for %S" params))))
 
-  :config
-  (setq circe-reduce-lurker-spam t
-        circe-use-cycle-completion t
-        circe-network-options
-        `(("Freenode"
-             :host "chat.freenode.net"
-             :server-buffer-name "⇄ Freenode"
-             :port "6697"
-             :tls t
-             :nick "schurig"
-             :nickserv-password ,(funcall (plist-get (car (auth-source-search :host "irc.freenode.net" :max 1)) :secret))
-             :channels (:after-auth "#emacs" "#emacs-circe")
-             )
-          ))
-  ;; (circe-set-display-handler "JOIN" (lambda (&rest ignored) nil))
-  ;; (circe-set-display-handler "PART" (lambda (&rest ignored) nil))
+  (defun my-nickserv-password (server)
+    (my-fetch-password :host server))
+
+  (setq circe-network-options
+      '(("Libera Chat"
+         :logging t
+         :nick "schurig"
+         ;; :channels (:after-auth "#emacs" "#emacs-circe")
+         :nickserv-password my-nickserv-password)))
+
+  (setq circe-format-self-say "{nick:+13s} ┃ {body}")
+
   (defun circe-command-RECONNECT (&optional ignored)
     (circe-reconnect))
 )
 
-
-(use-package circe-color-nicks
-  :after circe
-  :init
-  (enable-circe-color-nicks)
-)
-
-
-(use-package! tracking
-  :after circe
-  :init
-  (tracking-mode)
-  :config
-  (setq tracking-most-recent-first t
-        tracking-position 'end)
-)
-
-
-(use-package! lui
-  :defer t
-  :config
-  (setq lui-flyspell-p t)
-  ;; (setq lui-flyspell-alist '(("#hamburg" "german8")
-  ;;                            (".*" "american")))
-)
-
-
-(use-package! lui-logging
-  :commands (enable-lui-logging)
-  :preface
-  (defvar my-logged-irc-channels
-    '("#emacs")
-    "List of channels to log.")
-
-  (defun my-maybe-log-channel ()
-    "Maybe start logging the an IRC channel."
-    (when (-contains? my-logged-irc-channels (buffer-name))
-      (enable-lui-logging)))
-
-  :config
+(after! lui-logging
   (setq lui-logging-directory (concat doom-local-dir "logging"))
 )
+
 
 
 ;;; Package: comm/message
