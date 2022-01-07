@@ -1764,17 +1764,39 @@ buffer."
       '(("Libera Chat"
          :logging t
          :nick "schurig"
-         ;; :channels (:after-auth "#emacs" "#emacs-circe")
+         :channels (:after-auth "#emacs")
          :nickserv-password my-nickserv-password)))
 
-  (setq circe-format-self-say "{nick:+13s} ┃ {body}")
+  ;; (setq circe-format-self-say "{nick:+13s} ┃ {body}")
+  (setq circe-active-users-timeout 300
+        circe-channel-killed-confirmation nil
+        circe-server-killed-confirmation 'kill-all
+        circe-extra-nicks ("hschurig" "holgerschurig")
+        circe-server-send-unknown-command-p t)
+
+  ;; who wants join and part messages?
+  (circe-set-display-handler "JOIN" (lambda (&rest ignored) nil))
+  (circe-set-display-handler "PART" (lambda (&rest ignored) nil))
+  (circe-set-display-handler "QUIT" (lambda (&rest ignored) nil))
+  (circe-set-display-handler "channel.quit" (lambda (&rest ignored) nil))
+
 
   (defun circe-command-RECONNECT (&optional ignored)
     (circe-reconnect))
+
+  ;; (map! :map circe-channel-mode-map
+  ;;       "C-c n" #'tracking-next-buffer
+  ;;       "C-c p" #'tracking-previous-buffer
+  ;;       )
+
+  ;; (enable-lui-logging-globally)
+  ;; (enable-lui-logging)
 )
 
 (after! lui-logging
-  (setq lui-logging-directory (concat doom-local-dir "logging"))
+  (setq lui-logging-directory (concat doom-local-dir "irc")
+        ;;lui-logging-flush-delay 60
+        )
 )
 
 
