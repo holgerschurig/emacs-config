@@ -1772,8 +1772,9 @@ buffer."
   (setq circe-active-users-timeout 300
         circe-channel-killed-confirmation nil
         circe-server-killed-confirmation 'kill-all
-        circe-extra-nicks ("hschurig" "holgerschurig")
-        circe-server-send-unknown-command-p t)
+        circe-extra-nicks '("hschurig" "holgerschurig")
+        circe-server-send-unknown-command-p t
+        circe-chat-buffer-name "{target}_{network}")
 
   ;; who wants join and part messages?
   (circe-set-display-handler "JOIN" (lambda (&rest ignored) nil))
