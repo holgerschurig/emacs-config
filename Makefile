@@ -70,7 +70,7 @@ uninstall:
 
 
 
-PDF_BUILD=~/.emacs.d/.local/straight/build-28.0.50/pdf-tools/build/server
+PDF_BUILD=~/.emacs.d/.local/straight/build-28.0.91/pdf-tools/build/server
 $(PDF_BUILD)/configure:
 	cd $(PDF_BUILD); ./autogen.sh
 $(PDF_BUILD)/Makefile: $(PDF_BUILD)/configure
@@ -94,7 +94,8 @@ help::
 	@echo "make pulldoom             pull new doom changes from git"
 
 sync:
-	cd ~/.emacs.d; bin/doom sync
+	cd ~/.emacs.d; bin/doom sync -u
+	$(MAKE) comppdf
 help::
 	@echo "make sync                 sync doom repos with packages.el"
 
