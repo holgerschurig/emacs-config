@@ -1413,19 +1413,22 @@ buffer."
 
 ;;; Package: lang/eglot
 
+
+;; Start eglot either with (eglot-ensure) or with Doom's (lsp!)
+;;
+;; If you don't have a compilation database (e.g. in projects not using
+;; CMake or Meson), you can use https://github.com/rizsotto/Bear
+
 (after! eglot
-  (add-to-list 'eglot-server-programs `((c++-mode c-mode)
-                                        ,(if (string= (system-name) "desktop") "/usr/bin/clangd-11" "/usr/bin/clangd-11")
-                                        "--background-index"
-                                        "--suggest-missing-includes"
-                                        "-j=1"
-                                        "--compile-commands-dir=build"))
   (map! :map eglot-mode-map
-        "C-c r" #'eglot-rename
-        "C-c a" #'eglot-code-actions
-        "C-c o" #'eglot-code-action-organize-imports
-        "C-c h" #'eldoc
-        "C-c d" #'xref-find-definitions) ;; Also M-.
+        "C-c R" #'eglot-rename                        ;; unused in c-mode
+        "C-c a" #'eglot-code-actions                  ;; was embark-act, but that is also in C-;
+        "C-c o" #'eglot-code-action-organize-imports  ;; unused in c-mode
+        "C-c r" #'xref-find-references                ;; was dictionary-lookup-definition
+        )
+
+  ;; This disables the overrides of general-override-mode-map, which steals C-c a
+  (general-override-mode 0)
 )
 
 
