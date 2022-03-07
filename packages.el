@@ -62,7 +62,7 @@
  :recipe (:host github :repo "protesilaos/modus-themes"
           :files ("*.el")))
 
-;;(package! nov)                  ;; https://depp.brause.cc/nov.el/  -- read ePUB
+;;(package! nov)                ;; https://depp.brause.cc/nov.el/  -- read ePUB
 
 (package! nswbuff               ;; https://github.com/joostkremers/nswbuff  -- buffer switching
   :recipe (:host github :repo "joostkremers/nswbuff"))
