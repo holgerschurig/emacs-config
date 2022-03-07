@@ -1428,6 +1428,9 @@ buffer."
 
   ;; This disables the overrides of general-override-mode-map, which steals C-c a
   (general-override-mode 0)
+  (defun turn-off-eldoc-mode ()
+    (eldoc-mode -1))
+  (add-hook 'eglot-managed-mode-hook #'turn-off-eldoc-mode)
 )
 
 
