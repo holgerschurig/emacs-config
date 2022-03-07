@@ -644,7 +644,6 @@ If there are two windows displayed, act like \"C-x o\"."
   :custom
   (modus-themes-slanted-constructs t)
   (modus-themes-bold-constructs t)
-  (modus-themes-completions 'opinionated)
   (modus-themes-intense-markup t)
 
   :config
