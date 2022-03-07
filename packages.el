@@ -67,7 +67,8 @@
 (package! nswbuff               ;; https://github.com/joostkremers/nswbuff  -- buffer switching
   :recipe (:host github :repo "joostkremers/nswbuff"))
 
-(package! ox-hugo)              ;; https://github.com/kaushalmodi/ox-hugo
+;; (package! ox-hugo            ;; https://github.com/kaushalmodi/ox-hugo
+;;   :recipe (:host github :repo "kaushalmodi/ox-hugo" :branch "main"))
 
 (package! rainbow-mode)         ;; https://github.com/emacs-straight/rainbow-mode  -- Colorize color names
 
