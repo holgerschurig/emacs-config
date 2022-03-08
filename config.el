@@ -644,7 +644,6 @@ If there are two windows displayed, act like \"C-x o\"."
   :custom
   (modus-themes-slanted-constructs t)
   (modus-themes-bold-constructs t)
-  (modus-themes-completions 'opinionated)
   (modus-themes-intense-markup t)
 
   :config
@@ -1436,6 +1435,9 @@ buffer."
 
   ;; This disables the overrides of general-override-mode-map, which steals C-c a
   (general-override-mode 0)
+  (defun turn-off-eldoc-mode ()
+    (eldoc-mode -1))
+  (add-hook 'eglot-managed-mode-hook #'turn-off-eldoc-mode)
 )
 
 
