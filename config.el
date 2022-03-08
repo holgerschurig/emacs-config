@@ -1186,6 +1186,7 @@ buffer."
     "C-x 4 b"  #'consult-buffer-other-window  ;; was: switch-to-buffer-other-window
     "C-x 5 b"  #'consult-buffer-other-frame   ;; was: switch-to-buffer-other-frame
     "C-x r b"  #'consult-bookmark
+    "C-x p b"  #'consult-project-buffer
 
     ;; Custom M-# bindings for fast register access
     ;; How would I type this on a german keyboard?
@@ -1205,7 +1206,7 @@ buffer."
     "M-g I"    #'consult-imenu-multi
 
     ;; M-s bindings (search-map)
-    "M-s e"    #'consult-isearch
+    "M-s e"    #'consult-isearch-history
     "M-s f"    #'consult-find
     "M-s F"    #'consult-locate
     "M-s g"    #'consult-grep
@@ -1218,18 +1219,24 @@ buffer."
     "M-s u"    #'consult-focus-lines          ;; run with "C-u M-s u" to show all lines again
     )
   (define-key! :keymaps '(isearch-mode-map)
-    "M-e"      #'consult-isearch              ;; was: isearch-edit-string
-    "M-s e"    #'consult-isearch              ;; was: isearch-edit-string
+    "M-e"      #'consult-isearch-history      ;; was: isearch-edit-string
+    "M-s e"    #'consult-isearch-history      ;; was: isearch-edit-string
     "M-s l"    #'consult-line                 ;; needed by consult-line to detect isearch
-    "M-s L"    #'consult-line-multi)          ;; needed by consult-line to detect isearch
+    "M-s L"    #'consult-line-multi           ;; needed by consult-line to detect isearch
+  )
+  (define-key! :keymaps '(minibuffer-local-map)
+    "M-s" #'consult-isearch-history           ;; was: next-matching-history-element
+    "M-r" #'consult-isearch-history           ;; was: previous-matching-history-element
+  )
   (define-key! :keymaps '(compilation-mode-map compilation-minor-mode-map)
-    "e" #'consult-compile-error)
-
+    "e" #'consult-compile-error
+  )
   (define-key! :keymaps '(consult-narrow-map)
     ;; Unfortunately, the DEL key is hijacked by vertico, so I cannot unnorrow
     ;; But we don't really need the delete-forward-char function, so we can use
     ;; that key to unnarrow.
-    "<deletechar>" consult--narrow-delete) ;; was: delete-forward-char
+    "<deletechar>" consult--narrow-delete     ;; was: delete-forward-char
+  )
 )
 
 
