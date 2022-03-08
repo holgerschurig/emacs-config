@@ -866,11 +866,13 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
                                             (t . list)))
 
   ;; Now that we don't use which-keys anymore, remove this indicator
-  (setq embark-indicators
-        '(+vertico-embark-vertico-indicator
-          embark-minimal-indicator
-          embark-highlight-indicator
-          embark-isearch-highlight-indicator))
+  (remove-hook 'embark-indicators #'+vertico-embark-which-key-indicator)
+  (remove-hook 'embark-indicators #'embark-minimal-indicator)
+  (remove-hook 'embark-indicators #'embark-highlight-indicator)
+  (remove-hook 'embark-indicators #'embark-isearch-highlight-indicator)
+  (add-hook 'embark-indicators #'embark-minimal-indicator 10)
+  (add-hook 'embark-indicators #'embark-highlight-indicator 20)
+  (add-hook 'embark-indicators #'embark-isearch-highlight-indicator 30)
 
   ;; This allows you to use C-; after a prefix key, e.g. "C-x C-;" to get
   ;; an embark-narrowable list of items
