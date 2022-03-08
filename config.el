@@ -1241,6 +1241,26 @@ buffer."
 )
 
 
+;;; Package: completion/vertico
+
+(after! vertico
+  ;; use 60% of the screen estate for vertico
+  (setq vertico-count (/ (* 6 (frame-height)) 10))
+
+  ;; Emacs 28: Hide commands in M-x which do not work in the current mode.
+  ;; Vertico commands are hidden in normal buffers.
+  (setq read-extended-command-predicate #'command-completion-default-include-p)
+
+  ;; completion-read-multiple didn't allow my to quit it with C-g ...
+  (define-key! :keymaps 'vertico-map
+    "C-g" #'keyboard-quit
+    ;; re-allow page-wise scrolling
+    [next] nil
+    [prior] nil)
+)
+
+
+
 ;;; Package: lang/c-mode
 
 (after! cc-mode
@@ -1453,26 +1473,6 @@ buffer."
   :general
   ("S-<f7>" #'my-compile-select-command-and-run)
   ("<f7>"   #'my-compile)
-)
-
-
-
-;;; Package: completion/vertico
-
-(after! vertico
-  ;; use 60% of the screen estate for vertico
-  (setq vertico-count (/ (* 6 (frame-height)) 10))
-
-  ;; Emacs 28: Hide commands in M-x which do not work in the current mode.
-  ;; Vertico commands are hidden in normal buffers.
-  (setq read-extended-command-predicate #'command-completion-default-include-p)
-
-  ;; completion-read-multiple didn't allow my to quit it with C-g ...
-  (define-key! :keymaps 'vertico-map
-    "C-g" #'keyboard-quit
-    ;; re-allow page-wise scrolling
-    [next] nil
-    [prior] nil)
 )
 
 
