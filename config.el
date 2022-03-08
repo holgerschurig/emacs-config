@@ -1149,6 +1149,40 @@ buffer."
 (map! "M-g s" #'my-scratch-buffer)
 
 
+;;; Package: completion/corfu
+
+(use-package! corfu
+  :config
+  (setq corfu-auto nil)
+
+  :custom
+  ;; (corfu-cycle t)             ;; Enable cycling for `corfu-next/previous'
+  ;; (corfu-preselect-first nil) ;; Disable candidate preselection
+
+  (corfu-min-width 60)
+  (corfu-max-width corfu-min-width)       ; Always have the same width
+  (corfu-count 14)
+  (corfu-scroll-margin 4)
+
+  (corfu-preselect-first t)               ; Preselect first candidate?
+
+  :config
+  (define-key!
+    :keymaps '(corfu-map)
+    ;; "TAB"       #'corfu-next
+    ;; "<tab>"     #'corfu-next
+    ;; "S-TAB"     #'corfu-previous
+    ;; "<backtab>" #'corfu-previous
+    "SPC"       #'corfu-insert-separator
+    "<escape>"  #'corfu-quit
+    ;; "<enter>"   #'corfu-insert
+    )
+
+  :init
+  (corfu-global-mode)
+)
+
+
 ;;; Package: completion/consult
 
 (after! consult
