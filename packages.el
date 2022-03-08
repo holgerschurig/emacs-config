@@ -62,14 +62,13 @@
  :recipe (:host github :repo "protesilaos/modus-themes"
           :files ("*.el")))
 
-;;(package! nov)                  ;; https://depp.brause.cc/nov.el/  -- read ePUB
+;;(package! nov)                ;; https://depp.brause.cc/nov.el/  -- read ePUB
 
 (package! nswbuff               ;; https://github.com/joostkremers/nswbuff  -- buffer switching
   :recipe (:host github :repo "joostkremers/nswbuff"))
 
-(package! org-roam)             ;; https://www.orgroam.com/ and https://github.com/org-roam/org-roam/
-
-(package! ox-hugo)              ;; https://github.com/kaushalmodi/ox-hugo
+;; (package! ox-hugo            ;; https://github.com/kaushalmodi/ox-hugo
+;;   :recipe (:host github :repo "kaushalmodi/ox-hugo" :branch "main"))
 
 (package! rainbow-mode)         ;; https://github.com/emacs-straight/rainbow-mode  -- Colorize color names
 
