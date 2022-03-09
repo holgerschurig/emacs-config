@@ -52,6 +52,8 @@
 
 (package! clean-aindent-mode)
 
+(package! cape)                 ;; https://github.com/minad/cape -- completion at point extensions
+
 (package! dts-mode)             ;; https://github.com/bgamari/dts-mode -- Device tree mode
 
 (package! kurecolor)            ;; https://github.com/emacsfodder/kurecolor  -- edit colors inline
