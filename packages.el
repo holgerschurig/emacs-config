@@ -52,8 +52,6 @@
 
 (package! clean-aindent-mode)
 
-(package! corfu)                ;; https://github.com/minad/corfu
-
 (package! dts-mode)             ;; https://github.com/bgamari/dts-mode -- Device tree mode
 
 (package! kurecolor)            ;; https://github.com/emacsfodder/kurecolor  -- edit colors inline
