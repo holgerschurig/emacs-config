@@ -1288,6 +1288,57 @@ buffer."
 )
 
 
+;;; Package: completion/tempel
+
+;; Basically, one types the template name, and it appears. And then one uses keymaps from
+;; tempel-map:
+;;
+;; M-<        tempel-beginning
+;; C-<down>   tempel-next
+;; M-<down>   tempel-next
+;; C-<up>     tempel-previous
+;; M-<up>     tempel-previous
+;; M->        tempel-end
+;; M-ESC ESC  tempel-abort
+;; M-k        tempel-kill
+;; C-g        tempel-done
+
+(use-package tempel
+  :defer t
+
+  :custom
+  (tempel-path (concat doom-private-dir "templates.el"))
+
+  :general
+  ("M-+" #'tempel-complete)    ;;  completes a template name at point in the buffer and subsequently expands the template
+  ("M-*" #'tempel-insert)      ;;  selects a template by name and insert it into the current buffer
+
+  (tempel-map "C-g" #'tempel-done)
+
+  :init
+
+  ;; Setup completion at point
+  (defun tempel-setup-capf ()
+    ;; Add the Tempel Capf to `completion-at-point-functions'. `tempel-expand'
+    ;; only triggers on exact matches. Alternatively use `tempel-complete' if
+    ;; you want to see all matches, but then Tempel will probably trigger too
+    ;; often when you don't expect it.
+    ;; NOTE: We add `tempel-expand' *before* the main programming mode Capf,
+    ;; such that it will be tried first.
+    (setq-local completion-at-point-functions
+                (cons #'tempel-expand
+                      completion-at-point-functions)))
+
+  (add-hook 'prog-mode-hook 'tempel-setup-capf)
+  (add-hook 'text-mode-hook 'tempel-setup-capf)
+
+  ;; Optionally make the Tempel templates available to Abbrev,
+  ;; either locally or globally. `expand-abbrev' is bound to C-x '.
+  ;; (add-hook 'prog-mode-hook #'tempel-abbrev-mode)
+  ;; (tempel-global-abbrev-mode)
+)
+
+
 ;;; Package: completion/vertico
 
 (after! vertico

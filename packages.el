@@ -76,6 +76,8 @@
 
 (package! symbol-overlay)       ;; https://github.com/wolray/symbol-overlay  -- highlight & jump
 
+(package! tempel)               ;; https://github.com/minad/tempel -- simple templates
+
 (package! wgrep)                ;; https://github.com/mhayashi1120/Emacs-wgrep  -- writable grep
 
 (unpin! embark embark-consult consult vertico marginalia orderless)
