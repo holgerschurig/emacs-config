@@ -214,9 +214,12 @@ If there are two windows displayed, act like \"C-x o\"."
 
 
 
+;;; Package: core/executable
+
+(use-package! executable
+  :hook
   ;; Make files with shebang ("#!" at start) executable when we save them
-  (add-hook 'after-save-hook
-            'executable-make-buffer-file-executable-if-script-p)
+  (after-save . executable-make-buffer-file-executable-if-script-p)
 )
 
 
@@ -236,8 +239,6 @@ If there are two windows displayed, act like \"C-x o\"."
   ;; Alternatively put backup files into their own directory
   (setq backup-directory-alist (list (cons "." (locate-user-emacs-file "tmp/bak/"))))
 
-  ;; Make files with shebang executable
-  (add-hook 'after-save-hook #'executable-make-buffer-file-executable-if-script-p))
 
 (map! "<f2>" #'save-buffer)
 
