@@ -226,22 +226,23 @@ If there are two windows displayed, act like \"C-x o\"."
 
 ;;; Package: core/files
 
-(after! files
-  (setq confirm-kill-emacs nil)
+(use-package! files
+  :custom
+  (confirm-kill-emacs nil)
 
   ;; Preserve hard links to the file you´re editing (this is
   ;; especially important if you edit system files)
-  (setq backup-by-copying-when-linked t)
+  (backup-by-copying-when-linked t)
 
   ;; Just never create backup files at all
   ;; (make-backup-files nil)
 
   ;; Alternatively put backup files into their own directory
-  (setq backup-directory-alist (list (cons "." (locate-user-emacs-file "tmp/bak/"))))
+  (backup-directory-alist (list (cons "." (locate-user-emacs-file "tmp/bak/"))))
 
-
-(map! "<f2>" #'save-buffer)
-
+  :general
+  ("<f2>" #'save-buffer)
+)
 
 
 
