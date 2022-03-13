@@ -203,15 +203,16 @@ If there are two windows displayed, act like \"C-x o\"."
 
 ;;; Package: core/dictionary
 
-(use-package dictionary
-  :defer t
+(use-package! dictionary
+  :custom
+  (dictionary-server "dict.org")
+  (dictionary-use-single-buffer t)
 
   :general
   ("C-c d" #'dictionary-lookup-definition)
+)
 
-  :config
-  (setq dictionary-server "dict.org")
-  (setq dictionary-use-single-buffer t)
+
 
   ;; Make files with shebang ("#!" at start) executable when we save them
   (add-hook 'after-save-hook
