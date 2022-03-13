@@ -413,6 +413,28 @@ If there are two windows displayed, act like \"C-x o\"."
 
 
 
+;;; Package: core/rectangle
+
+;; Turn the rectangle-mark-mode on with C-x <SPACE>
+
+(use-package! rect
+  :general
+  (rectangle-mark-mode-map "t" #'string-rectangle)                   ;; replace rectange with string
+  (rectangle-mark-mode-map "o" #'open-rectangle)                     ;; blank rectange, shifting text to right
+  (rectangle-mark-mode-map "c" #'clear-rectangle)                    ;; replace with blanks
+  (rectangle-mark-mode-map "k" #'kill-rectangle)                     ;; delete rectangle and save to kill-ring
+  (rectangle-mark-mode-map "d" #'delete-rectangle)                   ;; delete rectangle, don't save
+  (rectangle-mark-mode-map "y" #'yank-rectangle)                     ;; yank last killed rectange to upper left
+  (rectangle-mark-mode-map "w" #'copy-rectangle-as-kill)             ;; save rectange to kill-ring
+  (rectangle-mark-mode-map "n" #'rectangle-number-lines)
+  (rectangle-mark-mode-map "x" #'rectangle-exchange-point-and-mark)
+  (rectangle-mark-mode-map "s" #'string-rectangle)                   ;; replace rectange with string
+  ;; already defined:
+  ;; "n" rectangle-number-lines
+)
+
+
+
 ;;; Package: core/sendmail
 
 (after! sendmail
