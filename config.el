@@ -667,9 +667,12 @@ If there are two windows displayed, act like \"C-x o\"."
 
 (use-package! modus-vivendi-theme
   :custom
-  (modus-themes-slanted-constructs t)
+  (modus-themes-italic-constructs t)
   (modus-themes-bold-constructs t)
+  ;;(modus-themes-slanted-constructs t)
+  (modus-themes-mixed-fonts t)
   (modus-themes-intense-markup t)
+  (modus-themes-headings '((1 1.3) (2 1.2) (3 1.1)))
 
   :config
   ;; Make the marked region be much easier visible
