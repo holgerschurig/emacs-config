@@ -430,7 +430,8 @@ If there are two windows displayed, act like \"C-x o\"."
   (rectangle-mark-mode-map "x" #'rectangle-exchange-point-and-mark)
   (rectangle-mark-mode-map "s" #'string-rectangle)                   ;; replace rectange with string
   ;; already defined:
-  ;; "n" rectangle-number-lines
+  ;; "n"       rectangle-number-lines
+  ;; C-x C-x   cycle between the four corners
 )
 
 
