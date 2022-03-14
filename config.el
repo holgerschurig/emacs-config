@@ -490,6 +490,24 @@ If there are two windows displayed, act like \"C-x o\"."
   ;; Don't type C-u C-SPC C-u C-SPC to pop 2 marks, now you can do C-u C-SPC C-SPC
   (setq set-mark-command-repeat-pop t))
 
+(defun my-next-error (&optional arg)
+  "Tries first flymake-goto-next-error, then next-error."
+  (interactive)
+  (if (and (boundp 'flymake-mode) flymake-mode)
+      (condition-case nil
+          (call-interactively #'flymake-goto-next-error arg)
+        (error (next-error arg)))
+    (next-error arg)))
+
+(defun my-previous-error (&optional arg)
+  "Tries first flymake-goto-previous-error, then previous-error."
+  (interactive)
+  (if (and (boundp 'flymake-mode) flymake-mode)
+      (condition-case nil
+          (call-interactively #'flymake-goto-previous-error arg)
+        (error (previous-error arg)))
+    (previous-error arg)))
+
 (map! "C-x I" #'insert-buffer
 
       "M-SPC" #'cycle-spacing   ;; was: just-one-space
@@ -501,8 +519,8 @@ If there are two windows displayed, act like \"C-x o\"."
       "M-o" #'delete-blank-lines  ; opposite of C-o
 
       ;; Error navigation
-      "<f8>"   #'next-error
-      "S-<f8>"  #'previous-error)
+      "<f8>"    #'my-next-error
+      "S-<f8>"  #'my-previous-error)
 
 
 
@@ -1224,7 +1242,7 @@ buffer."
 
   ;; M-g bindings (goto-map)
   ("M-g e"    #'consult-compile-error)
-  ;;("M-g f"    #'consult-flymake)           ;; flymake is not activated in my config
+  ("M-g f"    #'consult-flymake)
   ("M-g g"    #'consult-goto-line)           ;; was: goto-line
   ("M-g M-g"  #'consult-goto-line)           ;; was: goto-line
   ("M-g o"    #'consult-outline)
@@ -1570,6 +1588,8 @@ buffer."
         "C-c a" #'eglot-code-actions                  ;; was embark-act, but that is also in C-;
         "C-c o" #'eglot-code-action-organize-imports  ;; unused in c-mode
         "C-c r" #'xref-find-references                ;; was dictionary-lookup-definition
+        ;; M-g f  consult-flymake                     ;; for errors, maybe even warnings
+        ;; M-.    xref-find-definitions
         )
 
   ;; This disables the overrides of general-override-mode-map, which steals C-c a
@@ -1577,6 +1597,17 @@ buffer."
   (defun turn-off-eldoc-mode ()
     (eldoc-mode -1))
   (add-hook 'eglot-managed-mode-hook #'turn-off-eldoc-mode)
+)
+
+
+
+;;; Package: lang/flymake
+
+(use-package flymake
+  :defer
+
+  :custom
+  (flymake-wrap-around nil)
 )
 
 
