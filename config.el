@@ -1180,96 +1180,86 @@ buffer."
 
 ;;; Package: completion/consult
 
-(after! consult
+(use-package! consult
+  :config
   ;; this forces recentf to load directly, not delayed. So a C-x C-b directly
   ;; after starting emacs will show previously used files
   (recentf-mode)
-
-  ;; different timeouts
-  ;; (setq consult-async-input-debounce 0.5)
-  ;; (setq consult-async-input-throttle 0.8)
-
-  ;; widen or narrow
-  ;; (setq consult-narrow-key ">")
-  ;; (setq consult-widen-key "<")
-
-  ;; don't show line numbers for consult-goto-line
-  (setq consult-goto-line-numbers nil)
-
-  ;; no previews
-  (setq consult-preview-key nil)
-
-  ;; use consult/vertico for completion
-  (setq completion-in-region-function #'consult-completion-in-region)
 
   ;; Optionally tweak the register preview window. This adds zebra stripes,
   ;; sorting and hides the mode line of the window.
   (advice-add #'register-preview :override #'consult-register-window)
 
-  (define-key!
-    ;; C-c bindings (mode-specific-map)
-    "C-c h"   #'consult-history
-    "C-c m"   #'consult-mode-command
-    "C-c k"   #'consult-kmacro
+  :custom
+  ;; don't show line numbers for consult-goto-line
+  (consult-goto-line-numbers nil)
 
-    ;; C-x bindings (ctl-x-map)
-    "C-x M-:"  #'consult-complex-command      ;; was: repeat-complex-command
-    "C-x b"    #'ibuffer                      ;; was: switch-to-buffer
-    "C-x C-b"  #'consult-buffer               ;; was: list-buffers
-    "C-x 4 b"  #'consult-buffer-other-window  ;; was: switch-to-buffer-other-window
-    "C-x 5 b"  #'consult-buffer-other-frame   ;; was: switch-to-buffer-other-frame
-    "C-x r b"  #'consult-bookmark
-    "C-x p b"  #'consult-project-buffer
+  ;; no previews
+  (consult-preview-key nil)
 
-    ;; Custom M-# bindings for fast register access
-    ;; How would I type this on a german keyboard?
-    "M-#"      #'consult-register-load
-    "M-'"      #'consult-register-store
-    "C-M-#"    #'consult-register
+  ;; use consult/vertico for completion
+  (completion-in-region-function #'consult-completion-in-region)
 
-    ;; M-g bindings (goto-map)
-    "M-g e"    #'consult-compile-error
-    ;;"M-g f"    #'consult-flymake            ;; flymake is not activated in my config
-    "M-g g"    #'consult-goto-line            ;; was: goto-line
-    "M-g M-g"  #'consult-goto-line            ;; was: goto-line
-    "M-g o"    #'consult-outline
-    "M-g k"    #'consult-mark
-    "M-g K"    #'consult-global-mark
-    "M-g i"    #'consult-imenu
-    "M-g I"    #'consult-imenu-multi
+  :general
+  ;; C-c bindings (mode-specific-map)
+  ("C-c h"   #'consult-history)
+  ("C-c m"   #'consult-mode-command)
+  ("C-c k"   #'consult-kmacro)
 
-    ;; M-s bindings (search-map)
-    "M-s e"    #'consult-isearch-history
-    "M-s f"    #'consult-find
-    "M-s F"    #'consult-locate
-    "M-s g"    #'consult-grep
-    "M-s G"    #'consult-git-grep
-    "M-s r"    #'consult-ripgrep
-    "M-s l"    #'consult-line                 ;; similar to swiper
-    "M-s L"    #'consult-line-multi
-    "M-s m"    #'consult-multi-occur
-    "M-s k"    #'consult-keep-lines
-    "M-s u"    #'consult-focus-lines          ;; run with "C-u M-s u" to show all lines again
-    )
-  (define-key! :keymaps '(isearch-mode-map)
-    "M-e"      #'consult-isearch-history      ;; was: isearch-edit-string
-    "M-s e"    #'consult-isearch-history      ;; was: isearch-edit-string
-    "M-s l"    #'consult-line                 ;; needed by consult-line to detect isearch
-    "M-s L"    #'consult-line-multi           ;; needed by consult-line to detect isearch
-  )
-  (define-key! :keymaps '(minibuffer-local-map)
-    "M-s" #'consult-isearch-history           ;; was: next-matching-history-element
-    "M-r" #'consult-isearch-history           ;; was: previous-matching-history-element
-  )
-  (define-key! :keymaps '(compilation-mode-map compilation-minor-mode-map)
-    "e" #'consult-compile-error
-  )
-  (define-key! :keymaps '(consult-narrow-map)
-    ;; Unfortunately, the DEL key is hijacked by vertico, so I cannot unnorrow
-    ;; But we don't really need the delete-forward-char function, so we can use
-    ;; that key to unnarrow.
-    "<deletechar>" consult--narrow-delete     ;; was: delete-forward-char
-  )
+  ;; C-x bindings (ctl-x-map)
+  ("C-x M-:"  #'consult-complex-command)     ;; was: repeat-complex-command)
+  ("C-x b"    #'ibuffer)                     ;; was: switch-to-buffer)
+  ("C-x C-b"  #'consult-buffer)              ;; was: list-buffers)
+  ("C-x 4 b"  #'consult-buffer-other-window) ;; was: switch-to-buffer-other-window)
+  ("C-x 5 b"  #'consult-buffer-other-frame)  ;; was: switch-to-buffer-other-frame)
+  ("C-x r b"  #'consult-bookmark)
+  ("C-x p b"  #'consult-project-buffer)
+
+  ;; Custom M-# bindings for fast register access
+  ;; How would I type this on a german keyboard?
+  ("M-#"      #'consult-register-load)
+  ("M-'"      #'consult-register-store)
+  ("C-M-#"    #'consult-register)
+
+  ;; M-g bindings (goto-map)
+  ("M-g e"    #'consult-compile-error)
+  ;;("M-g f"    #'consult-flymake)           ;; flymake is not activated in my config
+  ("M-g g"    #'consult-goto-line)           ;; was: goto-line
+  ("M-g M-g"  #'consult-goto-line)           ;; was: goto-line
+  ("M-g o"    #'consult-outline)
+  ("M-g k"    #'consult-mark)
+  ("M-g K"    #'consult-global-mark)
+  ("M-g i"    #'consult-imenu)
+  ("M-g I"    #'consult-imenu-multi)
+
+  ;; M-s bindings (search-map)
+  ("M-s e"    #'consult-isearch-history)
+  ("M-s f"    #'consult-find)
+  ("M-s F"    #'consult-locate)
+  ("M-s g"    #'consult-grep)
+  ("M-s G"    #'consult-git-grep)
+  ("M-s r"    #'consult-ripgrep)
+  ("M-s l"    #'consult-line)                ;; similar to swiper
+  ("M-s L"    #'consult-line-multi)
+  ("M-s m"    #'consult-multi-occur)
+  ("M-s k"    #'consult-keep-lines)
+  ("M-s u"    #'consult-focus-lines)         ;; run with "C-u M-s u" to show all lines again
+
+  (isearch-mode-map "M-e"   #'consult-isearch-history)     ;; was: isearch-edit-string
+  (isearch-mode-map "M-s e" #'consult-isearch-history)     ;; was: isearch-edit-string
+  (isearch-mode-map "M-s l" #'consult-line)                ;; needed by consult-line to detect isearch
+  (isearch-mode-map "M-s L" #'consult-line-multi)          ;; needed by consult-line to detect isearch
+
+  (minibuffer-local-map "M-s" #'consult-isearch-history)   ;; was: next-matching-history-element
+  (minibuffer-local-map "M-r" #'consult-isearch-history)   ;; was: previous-matching-history-element
+
+  (compilation-mode-map       "e" #'consult-compile-error)
+  (compilation-minor-mode-map "e" #'consult-compile-error)
+
+  ;; Unfortunately, the DEL key is hijacked by vertico, so I cannot unnorrow
+  ;; But we don't really need the delete-forward-char function, so we can use
+  ;; that key to unnarrow.
+  (consult-narrow-map "<deletechar>" #'consult--narrow-delete)     ;; was: delete-forward-char
 )
 
 
