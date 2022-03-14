@@ -1612,19 +1612,6 @@ buffer."
 
 
 
-;;; Package: lang/completion-compile
-
-(use-package! my-compile
-  :load-path doom-private-dir
-  :defer t
-
-  :general
-  ("S-<f7>" #'my-compile-select-command-and-run)
-  ("<f7>"   #'my-compile)
-)
-
-
-
 ;;; Package: lang/magit
 
 (after! magit
@@ -1661,6 +1648,19 @@ buffer."
   :config
   (setq meson-indent-basic 4))
 
+
+
+
+;;; Package: lang/my-compile
+
+(use-package! my-compile
+  :load-path doom-private-dir
+  :defer t
+
+  :general
+  ("S-<f7>" #'my-compile-select-command-and-run)
+  ("<f7>"   #'my-compile)
+)
 
 
 
