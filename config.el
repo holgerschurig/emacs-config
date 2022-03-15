@@ -504,7 +504,7 @@ If there are two windows displayed, act like \"C-x o\"."
   (interactive)
   (if (and (boundp 'flymake-mode) flymake-mode)
       (condition-case nil
-          (call-interactively #'flymake-goto-previous-error arg)
+          (call-interactively #'flymake-goto-prev-error arg)
         (error (previous-error arg)))
     (previous-error arg)))
 
