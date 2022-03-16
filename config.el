@@ -864,26 +864,47 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 ;; them. Then position the cursor somewhere and do "C-,". To see then which
 ;; actions are available, run "C-h".
 ;;
-;; embark-meta-map
-;; embark-symbol-map
-;; embark-collect-direct-action-minor-mode-map
-;; embark-become-shell-command-map
-;; embark-command-map
-;; embark-collect-mode-map
-;; embark-buffer-map
-;; embark-file-map
+;; +vertico/embark-doom-package-map
 ;; embark-become-file+buffer-map
-;; embark-variable-map
-;; embark-occur-direct-action-minor-mode-map
-;; embark-package-map
-;; embark-unicode-name-map
-;; embark-general-map
-;; embark-overriding-map
-;; embark-bookmark-map
 ;; embark-become-help-map
+;; embark-become-keymaps
 ;; embark-become-match-map
+;; embark-become-shell-command-map
+;; embark-bookmark-map
+;; embark-buffer-map
+;; embark-collect-direct-action-minor-mode-map
+;; embark-collect-mode-map
+;; embark-command-map
+;; embark-consult-async-search-map
+;; embark-consult-search-map
+;; embark-consult-sync-search-map
+;; embark-defun-map
+;; embark-email-map
+;; embark-encode-map
+;; embark-expression-map
+;; embark-face-map
+;; embark-file-map
+;; embark-function-map
+;; embark-general-map
+;; embark-heading-map
+;; embark-identifier-map
+;; embark-keymap-alist
+;; embark-keymap-prompter-key
+;; embark-kill-ring-map
+;; embark-library-map
+;; embark-meta-map
+;; embark-package-map
+;; embark-paragraph-map
+;; embark-prose-map
+;; embark-region-map
+;; embark-sentence-map
+;; embark-sort-map
+;; embark-symbol-map
+;; embark-tab-map
+;; embark-unicode-name-map
 ;; embark-url-map
-;; embark-consult-location-map
+;; embark-variable-map
+;; embark-vc-file-map
 
 ;; https://github.com/oantolin/embark
 ;; https://github.com/oantolin/embark/wiki/Default-Actions
@@ -947,6 +968,10 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
     ;; Used to be customize-variable, but that is locked on Doom. Better use "=" to set
     ;; the variable
     "u" nil)
+
+  (define-key!
+    :keymaps '(embark-function-map embark-variable-map embark-expression-map)
+    "l" #'eldoc)
 
   (define-key!
     :keymaps '(+vertico/embark-doom-package-map)
