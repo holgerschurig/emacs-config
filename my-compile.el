@@ -142,6 +142,7 @@ selected with completion help."
 (defun my-compile-select-command-and-run ()
   "Interactively select a compilation command and execute it."
   (interactive)
+  (my-compile-get-commands-from-buffers)
   (setq compile-command (my-compile-select-command))
   (add-to-list 'my-compile-commands compile-command)
   (unless (string= compile-command "")
