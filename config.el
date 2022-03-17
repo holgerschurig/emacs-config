@@ -491,22 +491,28 @@ If there are two windows displayed, act like \"C-x o\"."
   (setq set-mark-command-repeat-pop t))
 
 (defun my-next-error (&optional arg)
-  "Tries first flymake-goto-next-error, then next-error."
+  "Tries first flymake-goto-next-error, spell-fu-goto-next-error, then next-error."
   (interactive)
   (if (and (boundp 'flymake-mode) flymake-mode)
       (condition-case nil
           (call-interactively #'flymake-goto-next-error arg)
-        (error (next-error arg)))
-    (next-error arg)))
+        (error (if (and (boundp 'spell-fu-mode) spell-fu-mode)
+                   (condition-case nil
+                       (call-interactively #'spell-fu-goto-next-error)
+                     (error (next-error arg)))
+                 (next-error arg))))))
 
 (defun my-previous-error (&optional arg)
-  "Tries first flymake-goto-previous-error, then previous-error."
+  "Tries first flymake-goto-previous-error, spell-fu-goto-previous-error, then previous-error."
   (interactive)
   (if (and (boundp 'flymake-mode) flymake-mode)
       (condition-case nil
           (call-interactively #'flymake-goto-prev-error arg)
-        (error (previous-error arg)))
-    (previous-error arg)))
+        (error (if (and (boundp 'spell-fu-mode) spell-fu-mode)
+                   (condition-case nil
+                       (call-interactively #'spell-fu-goto-previous-error)
+                     (error (previous-error arg)))
+                 (previous-error arg))))))
 
 (map! "C-x I" #'insert-buffer
 
@@ -1194,6 +1200,19 @@ buffer."
 
 
 (map! "M-g s" #'my-scratch-buffer)
+
+
+
+;;; Package: modes/spell-fu
+
+(after! spell-fu
+  (spell-fu-dictionary-add (spell-fu-get-ispell-dictionary "de"))
+  (spell-fu-dictionary-add (spell-fu-get-ispell-dictionary "en"))
+  (spell-fu-dictionary-add
+   (spell-fu-get-personal-dictionary "de" (concat spell-fu-directory "/de.pws")))
+  (spell-fu-dictionary-add
+   (spell-fu-get-personal-dictionary "en" (concat spell-fu-directory "/en.pws")))
+)
 
 
 
