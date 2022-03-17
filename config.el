@@ -1829,7 +1829,7 @@ buffer."
 
 
 
-;;; Package: ox-hugo
+;;; Package: org/ox-hugo
 
 ;; https://ox-hugo.scripter.co/
 
