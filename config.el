@@ -616,23 +616,6 @@ If there are two windows displayed, act like \"C-x o\"."
 
 
 
-;;;; Package: gui/whitespace
-
-;; (after! whitespace
-;;   (setq whitespace-global-modes nil))
-;; ;; unfortunately, removing doom-highlight-non-default-indentation-h from
-;; ;; change-major-mode-hook didn't work, it was somehow added again so I define a
-;; ;; dummy function to override doom's weird behavior of turning white-space
-;; ;; mode on at unwanted times.
-;; (defun doom-highlight-non-default-indentation-h ()
-;;   "Dummy")
-
-;; (map! "C-c w" #'whitespace-mode)
-
-
-
-
-
 ;;; Package: theme/font-core
 
 ;; I got the idea from here:
