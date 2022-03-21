@@ -111,15 +111,17 @@ rst-mode
 
 org-mode
 
-(title "#+title: " p n "#+author: Daniel Mendler" n "#+language: en" n n)
-(quote "#+begin_quote" n> r> n> "#+end_quote")
-(example "#+begin_example" n> r> n> "#+end_example")
-(center "#+begin_center" n> r> n> "#+end_center")
-(comment "#+begin_comment" n> r> n> "#+end_comment")
-(verse "#+begin_verse" n> r> n> "#+end_verse")
-(src "#+begin_src " p n> r> n> "#+end_src")
-(elisp "#+begin_src emacs-lisp" n> r> n "#+end_src"
-       :post (progn (tempel-done) (org-edit-src-code)))
+(+q "#+begin_quote" n> r> n> "#+end_quote")
+(+e "#+begin_example" n> r> n> "#+end_example")
+(+c "#+begin_center" n> r> n> "#+end_center")
+(+s "#+begin_src" n> r> n> "#+end_src")
+(+o "#+begin_comment" n> r> n> "#+end_comment")
+(+v "#+begin_verse" n> r> n> "#+end_verse")
+(+l "#+begin_src emacs-lisp" n> r> n "#+end_src"
+    :post (progn (tempel-done) (org-edit-src-code)))
+
+
+
 c-mode :condition (re-search-backward "^\\w*$" (line-beginning-position) 'noerror)
 
 ;; (inc "#include <" (p (concat (file-name-base (or (buffer-file-name) (buffer-name))) ".h")) ">")
