@@ -818,25 +818,6 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
-
-;;; Package: edit/undo-tree
-
-(after! undo-tree
-  ;; Disable undo-in-region. It sounds like an interesting feature,
-  ;; but unfortunately the implementation is very buggy and regularly
-  ;; causes you to lose your undo history.
-  (setq undo-tree-enable-undo-in-region nil)
-
-  ;; don't save history persistently
-  (setq undo-tree-auto-save-history nil)
-
-  (setq undo-tree-visualizer-timestamps t)
-  (map! "C-z" #'undo-tree-visualize)
-)
-
-
-
-
 ;;; Package: misc/embark
 
 ;; The following keymaps are already existing, so you can just add actions to
