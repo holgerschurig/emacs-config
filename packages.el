@@ -69,6 +69,8 @@
 (package! nswbuff               ;; https://github.com/joostkremers/nswbuff  -- buffer switching
   :recipe (:host github :repo "joostkremers/nswbuff"))
 
+(unpin! org-contrib)            ;; to fix: Warning (straight): Could not reset to commit "e3183921779eb4f36a2170ebb58e43eb0e84a07e" in repository "org-contrib"
+
 ;; (package! ox-hugo            ;; https://github.com/kaushalmodi/ox-hugo
 ;;   :recipe (:host github :repo "kaushalmodi/ox-hugo" :branch "main"))
 
