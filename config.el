@@ -1403,12 +1403,14 @@ buffer."
   ;; Vertico commands are hidden in normal buffers.
   (setq read-extended-command-predicate #'command-completion-default-include-p)
 
-  ;; completion-read-multiple didn't allow my to quit it with C-g ...
-  (define-key! :keymaps 'vertico-map
-    "C-g" #'keyboard-quit
-    ;; re-allow page-wise scrolling
-    [next] nil
-    [prior] nil)
+  (map!
+   ("C-c k" #'vertico-repeat-last)
+   ("C-h"   #'embark-bindings)
+   :map vertico-map
+   ([next] nil)     ;; was next-history-element
+   ([prior] nil)   ;; was previous-history-element
+   ("M-<up>"  #'next-history-element)
+   ("M-<down>" #'previous-history-element))
 )
 
 
