@@ -684,7 +684,7 @@ If there are two windows displayed, act like \"C-x o\"."
 
 ;;; Package: edit/better-jumper
 
-I disabled it in my packages.el, but some other parts of Doom think its enabled.
+;; I disabled it in my packages.el, but some other parts of Doom think its enabled.
 
 (defun doom-set-jump-a (fn &rest args)
   "Dummy function."
