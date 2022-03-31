@@ -1295,7 +1295,7 @@ buffer."
   ("C-c p d"  #'cape-dabbrev)        ;; or dabbrev-completion
   ("C-c p f"  #'cape-file)
   ("C-c p k"  #'cape-keyword)
-  ("C-c p s"  #'cape-symbol)
+  ("C-c p s"  #'cape-symbol)         ;; completes emacs elisp symbols, even in non-elisp buffers
   ("C-c p a"  #'cape-abbrev)
   ("C-c p i"  #'cape-ispell)
   ("C-c p l"  #'cape-line)
@@ -1389,7 +1389,6 @@ buffer."
 
   (map!
    ("C-c k" #'vertico-repeat-last)
-   ("C-h"   #'embark-bindings)
    :map vertico-map
    ([next] nil)     ;; was next-history-element
    ([prior] nil)   ;; was previous-history-element
@@ -1791,6 +1790,21 @@ buffer."
   ("C-c n f" #'org-roam-node-find)
   ("C-c n i" #'org-roam-node-insert)
 )
+
+
+;;; Package: org/org-modern
+
+(use-package! org-modern
+  :defer t
+
+  :init
+  (add-hook 'org-mode-hook #'org-modern-mode)
+
+  :custom
+  (org-modern-star nil)
+  (org-modern-keyword nil)
+)
+
 
 
 ;;; Package: org/ox
