@@ -493,14 +493,14 @@ If there are two windows displayed, act like \"C-x o\"."
 (defun my-next-error (&optional arg)
   (interactive)
   (let ((p))
-    (ignore-errors
-      (save-excursion (call-interactively #'flymake-goto-next-error arg)
-                      ;; (message "FLYMAKE")
-                      (cl-pushnew (point) p)))
-    (ignore-errors
-      (save-excursion (call-interactively #'spell-fu-goto-next-error)
-                      ;; (message "SPELL-FU")
-                      (cl-pushnew (point) p)))
+    (when (and (boundp 'flymake-mode) flymake-mode)
+      (ignore-errors
+        (save-excursion (call-interactively #'flymake-goto-next-error arg)
+                        (cl-pushnew (point) p))))
+    (when (and (boundp 'spell-fu-mode) spell-fu-mode)
+      (ignore-errors
+        (save-excursion (call-interactively #'spell-fu-goto-next-error)
+                        (cl-pushnew (point) p))))
     (ignore-errors
       (save-excursion (call-interactively #'next-error arg)
                       (cl-pushnew (point) p)))
@@ -510,14 +510,14 @@ If there are two windows displayed, act like \"C-x o\"."
 (defun my-previous-error (&optional arg)
   (interactive)
   (let ((p))
-    (ignore-errors
-      (save-excursion (call-interactively #'flymake-goto-prev-error arg)
-                      ;; (message "FLYMAKE")
-                      (cl-pushnew (point) p)))
-    (ignore-errors
-      (save-excursion (call-interactively #'spell-fu-goto-previous-error)
-                      ;; (message "SPELL-FU")
-                      (cl-pushnew (point) p)))
+    (when (and (boundp 'flymake-mode) flymake-mode)
+      (ignore-errors
+        (save-excursion (call-interactively #'flymake-goto-prev-error arg)
+                        (cl-pushnew (point) p))))
+    (when (and (boundp 'spell-fu-mode) spell-fu-mode)
+      (ignore-errors
+        (save-excursion (call-interactively #'spell-fu-goto-previous-error)
+                        (cl-pushnew (point) p))))
     (ignore-errors
       (save-excursion (call-interactively #'previous-error arg)
                       (cl-pushnew (point) p)))
