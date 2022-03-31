@@ -1389,7 +1389,6 @@ buffer."
 
   (map!
    ("C-c k" #'vertico-repeat-last)
-   ("C-h"   #'embark-bindings)
    :map vertico-map
    ([next] nil)     ;; was next-history-element
    ([prior] nil)   ;; was previous-history-element
