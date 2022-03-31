@@ -40,7 +40,7 @@
        (modeline +light)   ; snazzy, Atom-inspired modeline, plus API
        nav-flash           ; blink cursor line line after big motions
        ;;neotree           ; a project drawer, like NERDTree for vim
-       ophints           ; highlight the region an operation acts on
+       ophints             ; highlight the region an operation acts on
        ;;(popup +defaults) ; tame sudden yet inevitable temporary windows
        ;;tabs              ; an tab bar for Emacs
        ;;treemacs          ; a project drawer, like neotree but cooler
