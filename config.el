@@ -1295,7 +1295,7 @@ buffer."
   ("C-c p d"  #'cape-dabbrev)        ;; or dabbrev-completion
   ("C-c p f"  #'cape-file)
   ("C-c p k"  #'cape-keyword)
-  ("C-c p s"  #'cape-symbol)
+  ("C-c p s"  #'cape-symbol)         ;; completes emacs elisp symbols, even in non-elisp buffers
   ("C-c p a"  #'cape-abbrev)
   ("C-c p i"  #'cape-ispell)
   ("C-c p l"  #'cape-line)
