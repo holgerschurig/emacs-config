@@ -111,13 +111,13 @@ rst-mode
 
 org-mode
 
-(+q "#+begin_quote" n> r> n> "#+end_quote")
-(+e "#+begin_example" n> r> n> "#+end_example")
-(+c "#+begin_center" n> r> n> "#+end_center")
-(+s "#+begin_src" n> r> n> "#+end_src")
-(+o "#+begin_comment" n> r> n> "#+end_comment")
-(+v "#+begin_verse" n> r> n> "#+end_verse")
-(+l "#+begin_src emacs-lisp" n> r> n "#+end_src"
+(+q "#+begin_quote" n> r> n> "#+end_quote\n")
+(+e "#+begin_example" n> r> n> "#+end_example\n")
+(+c "#+begin_center" n> r> n> "#+end_center\n")
+(+s "#+begin_src" n> r> n> "#+end_src\n")
+(+o "#+begin_comment" n> r> n> "#+end_comment\n")
+(+v "#+begin_verse" n> r> n> "#+end_verse\n")
+(+l "#+begin_src emacs-lisp" n> r> n "#+end_src\n"
     :post (progn (tempel-done) (org-edit-src-code)))
 
 
