@@ -1801,6 +1801,8 @@ buffer."
   (add-hook 'org-mode-hook #'org-modern-mode)
 
   :custom
+  (org-modern-hide-stars nil)
+  (org-modern-block nil)
   (org-modern-star nil)
   (org-modern-keyword nil)
 )
