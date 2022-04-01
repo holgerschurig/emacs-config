@@ -1351,7 +1351,7 @@ buffer."
   ("M-+" #'tempel-complete)    ;;  completes a template name at point in the buffer and subsequently expands the template
   ("M-*" #'tempel-insert)      ;;  selects a template by name and insert it into the current buffer
 
-  (tempel-map "C-g" #'tempel-done)
+  (tempel-map "C-c C-c" #'tempel-done)
 
   :init
 
@@ -1801,6 +1801,8 @@ buffer."
   (add-hook 'org-mode-hook #'org-modern-mode)
 
   :custom
+  (org-modern-hide-stars nil)
+  (org-modern-block nil)
   (org-modern-star nil)
   (org-modern-keyword nil)
 )
