@@ -915,6 +915,10 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
     "M-t" #'toggle-truncate-lines)
 
   (define-key!
+    :keymaps '(embark-file-map)
+    "U" #'0x0-upload-file)
+
+  (define-key!
     :keymaps '(embark-function-map embark-variable-map embark-expression-map)
     "l" #'eldoc)
 
@@ -925,6 +929,10 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
     ;; L used to be embark-collect-life, which isn't that helpful if one already uses
     ;; something like vertico or selectrum
     "L" nil)
+
+  (define-key!
+    :keymaps '(embark-region-map)
+    "U" #'0x0-upload-text)
 
   (define-key!
     :keymaps '(embark-variable-map)
