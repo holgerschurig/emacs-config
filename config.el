@@ -1392,6 +1392,7 @@ buffer."
 )
 
 
+
 ;;; Package: completion/vertico
 
 (after! vertico
@@ -1403,7 +1404,7 @@ buffer."
   (setq read-extended-command-predicate #'command-completion-default-include-p)
 
   (map!
-   ("C-c k" #'vertico-repeat-last)
+   ("C-c r" #'vertico-repeat)
    :map vertico-map
    ([next] nil)     ;; was next-history-element
    ([prior] nil)   ;; was previous-history-element
