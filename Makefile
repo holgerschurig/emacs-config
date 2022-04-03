@@ -87,7 +87,6 @@ pulldoom:
 	@# it also asks me something like "do you want to continue"? This sucks.
 	cd ~/.emacs.d; bin/doom clean
 	cd ~/.emacs.d; bin/doom upgrade
-	cd ~/.emacs.d; bin/doom sync
 	@# recompile pdf-tools
 	$(MAKE) comppdf
 help::
