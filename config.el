@@ -1322,6 +1322,25 @@ buffer."
 )
 
 
+
+;;; Package: completion/orderless
+
+(after! orderless
+  ;; The available styles are listed in completion-styles-alist.
+  ;; - +vertico-basic-remote: use basic completion on remote files only
+  ;; - orderless:             completion of multiple components, in any order
+  ;; - emacs21
+  ;; - emacs22
+  ;; - basic
+  ;; - partial
+  ;; - substring
+  ;; - flex
+  ;; - initials:              completion of acronyms and initialisms
+  ;; - shorthand
+  (setq completion-styles '(orderless initials)))
+
+
+
 ;;; Package: completion/tempel
 
 ;; Basically, one types the template name, and it appears. And then one uses keymaps from
