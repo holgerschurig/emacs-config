@@ -697,7 +697,8 @@ If there are two windows displayed, act like \"C-x o\"."
 ;;; Package: edit/expand-region
 
 (after! expand-region
-  (setq expand-region-reset-fast-key    "<ESC><ESC>"))
+  (setq expand-region-reset-fast-key    "<ESC><ESC>")
+  (setq expand-region-smart-cursor t))
 
 (map! "C-+" #'er/expand-region)
 
