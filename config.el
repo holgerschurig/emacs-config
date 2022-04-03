@@ -915,6 +915,10 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
     "M-t" #'toggle-truncate-lines)
 
   (define-key!
+    :keymaps '(embark-function-map embark-variable-map embark-expression-map)
+    "l" #'eldoc)
+
+  (define-key!
     :keymaps '(embark-general-map)
     ;; this is used to cycle where it works on (e.g. file, symbol, defun)
     "C-;" #'embark-cycle
@@ -927,10 +931,6 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
     ;; Used to be customize-variable, but that is locked on Doom. Better use "=" to set
     ;; the variable
     "u" nil)
-
-  (define-key!
-    :keymaps '(embark-function-map embark-variable-map embark-expression-map)
-    "l" #'eldoc)
 
   (define-key!
     :keymaps '(+vertico/embark-doom-package-map)
