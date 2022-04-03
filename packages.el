@@ -84,6 +84,8 @@
 
 (package! wgrep)                ;; https://github.com/mhayashi1120/Emacs-wgrep  -- writable grep
 
+(package! 0x0)                  ;; https://gitlab.com/willvaughn/emacs-0x0 -- pastebin like service
+
 (unpin! embark embark-consult consult vertico marginalia orderless)
 
 (unpin! notmuch)
