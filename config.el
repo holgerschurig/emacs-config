@@ -1854,23 +1854,6 @@ buffer."
 )
 
 
-;;; Package: org/org-modern
-
-(use-package! org-modern
-  :defer t
-
-  :init
-  (add-hook 'org-mode-hook #'org-modern-mode)
-
-  :custom
-  (org-modern-hide-stars nil)
-  (org-modern-block nil)
-  (org-modern-star nil)
-  (org-modern-keyword nil)
-)
-
-
-
 ;;; Package: org/ox
 
 (after! ox
