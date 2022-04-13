@@ -55,6 +55,12 @@
 (setenv "PATH" "/home/schurig/.local/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games")
 
 
+;; https://blog.lambda.cx/posts/emacs-align-columns/
+(defun my-align-non-space (BEG END)
+  "Align non-space columns in region BEG END."
+  (interactive "r")
+  (align-regexp BEG END "\\(\\s-*\\)\\S-+" 1 1 t))
+
 
 ;;; Misc keybindings
 ;; This is like the start of modules/config/default/+emacs-bindings.el:
@@ -71,12 +77,11 @@
 
 ;;; Package: core/align
 
-(after! align
-  (defadvice my-align-regexp (around align-regexp-with-spaces)
-    "Never use tabs for alignment."
-    (let ((indent-tabs-mode nil))
-      ad-do-it))
-  (ad-activate 'my-align-regexp))
+(defadvice my-align-regexp (around align-regexp-with-spaces)
+  "Never use tabs for alignment."
+  (let ((indent-tabs-mode nil))
+    ad-do-it))
+(ad-activate 'my-align-regexp)
 
 
 
