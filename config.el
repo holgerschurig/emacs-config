@@ -778,7 +778,6 @@ Convert      _ch_ ^^ RGB → Hex       _cr_ ^^ Hex → RGB       _cR_ ^^ Hex →
 cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   (interactive)
   (rainbow-mode t)
-  (defalias 'loop 'cl-loop)
   (hydra-kurecolor/body))
 
 
