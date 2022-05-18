@@ -241,6 +241,45 @@ If there are two windows displayed, act like \"C-x o\"."
 
 
 
+;;; Package: core/hippie-exp
+
+;; https://www.masteringemacs.org/article/text-expansion-hippie-expand
+(use-package! hippie-exp
+  :config
+
+  ;; Use C-h a ^try to see which try-* functions exist:
+  ;;
+  ;; try-complete-file-name                 Try to complete text as a file name.
+  ;; try-complete-file-name-partially       Try to complete text as a file name, as many characters a…
+  ;; try-complete-lisp-symbol               Try to complete word as an Emacs Lisp symbol.
+  ;; try-complete-lisp-symbol-partially     Try to complete as an Emacs Lisp symbol, as many characte…
+  ;; try-expand-all-abbrevs                 Try to expand word before point according to all abbrev t…
+  ;; try-expand-dabbrev                     Try to expand word "dynamically", searching the current b…
+  ;; try-expand-dabbrev-all-buffers         Try to expand word "dynamically", searching all other buf…
+  ;; try-expand-dabbrev-from-kill           Try to expand word "dynamically", searching the kill ring.
+  ;; try-expand-dabbrev-visible             Try to expand word "dynamically", searching visible windo…
+  ;; try-expand-line                        Try to complete the current line to an entire line in the…
+  ;; try-expand-line-all-buffers            Try to complete the current line, searching all other buf…
+  ;; try-expand-list                        Try to complete the current beginning of a list.
+  ;; try-expand-list-all-buffers            Try to complete the current list, searching all other buf…
+  ;; try-expand-whole-kill                  Try to complete text with something from the kill ring.
+  (setq hippie-expand-try-functions-list
+        '(try-complete-file-name-partially
+          try-complete-file-name
+          try-expand-all-abbrevs
+          try-expand-list
+          try-expand-line
+          try-expand-dabbrev
+          try-expand-dabbrev-all-buffers
+          try-expand-dabbrev-from-kill
+          try-complete-lisp-symbol-partially
+          try-complete-lisp-symbol))
+  :general
+  ("M-/" #'hippie-expand)
+)
+
+
+
 ;;; Package: core/ibuffer
 
 (after! ibuffer
