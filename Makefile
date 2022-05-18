@@ -5,7 +5,7 @@ instemacs:
 	$(MAKE) -C emacs.git install prefix=/usr/local/stow/emacs
 	cd /usr/local/stow; stow emacs
 help::
-	@echo "sudo make install         install compiled emacs"
+	@echo "sudo make instemacs       install compiled emacs"
 
 compemacs emacs.git/src/emacs: emacs.git/Makefile
 	$(MAKE) -C emacs.git
