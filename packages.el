@@ -91,6 +91,7 @@
 (disable-packages!
   better-jumper ;; looks like it only works in evil mode
   company-dict  ;; we don't load complete from dictionaries
+  code-review   ;; I like magit, but so far I don't think I need any in-emacs code-review
   demangle-mode ;; objdump can do this quite well
   dhall-mode    ;; no need for this "programmable configuration language"
   dired-rsync   ;; would be pulled in by modules/data, but I don't need it
