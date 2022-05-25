@@ -24,7 +24,6 @@ confemacs emacs.git/Makefile: emacs.git/configure
 		--with-json \
 		--with-modules \
 		--with-native-compilation \
-		--with-pgtk \
 		--with-rsvg \
 		--with-toolkit-scroll-bars \
 		--with-x-toolkit=gtk3 \
