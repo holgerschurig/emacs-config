@@ -18,13 +18,17 @@ confemacs emacs.git/Makefile: emacs.git/configure
 		-C \
 		--with-cairo \
 		--with-dbus \
+		--with-file-notification=inotify \
 		--with-gnutls \
 		--with-gpm=no \
+		--with-harfbuzz \
 		--with-imagemagick \
 		--with-json \
 		--with-modules \
 		--with-native-compilation \
 		--with-rsvg \
+		--with-sound=alsa \
+		--with-threads \
 		--with-toolkit-scroll-bars \
 		--with-x-toolkit=gtk3 \
 		--with-xml2 \
@@ -40,6 +44,7 @@ confemacs emacs.git/Makefile: emacs.git/configure
 		--without-pop \
 		--without-selinux \
 		--without-wide-int \
+		--without-xft \
 		--without-xim \
 		CFLAGS='-g -O2 -march=native -ffile-prefix-map=/home/holger=. -fstack-protector-strong -Wformat -Werror=format-security -Wall -fno-omit-frame-pointer'
 		CPPFLAGS='-Wdate-time -D_FORTIFY_SOURCE=2' \
