@@ -71,6 +71,11 @@
 
 (unpin! org-contrib)            ;; to fix: Warning (straight): Could not reset to commit "e3183921779eb4f36a2170ebb58e43eb0e84a07e" in repository "org-contrib"
 
+(package! org-reveal)           ;; https://github.com/yjwen/org-reveal/ -- slide shows
+(package! revealjs
+    :recipe (:host github :repo "hakimel/reveal.js"
+             :files ("css" "dist" "js" "plugin")))
+
 ;; (package! ox-hugo            ;; https://github.com/kaushalmodi/ox-hugo
 ;;   :recipe (:host github :repo "kaushalmodi/ox-hugo" :branch "main"))
 
