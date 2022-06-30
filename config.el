@@ -1970,6 +1970,29 @@ buffer."
 
 
 
+;; Package: ox-reveal
+
+;; https://github.com/yjwen/org-reveal
+;; https://revealjs.com/
+;; (customize-group "org-export-reveal")
+
+(use-package! ox-reveal
+  :commands (org-reveal-export-to-html)
+  :config
+  (setq org-reveal-root (concat "file://" doom-local-dir "straight/repos/reveal.js/"))
+  ;; Options here are:
+  ;; - const markdown  - render markdown
+  ;; - const highlight - don't highlight via Emacs theme, but use highlight.js instead
+  ;; - const zoom      - allow ctrl-click (Linux) or alt-clock (Windows) to zoom to some place
+  ;; - const notes     - allow speaker-notes. They would open a popup window.
+  ;; - const search    - search inside the slides
+  ;; - const remotes
+  ;; - const multiplex - provide slides also via a socket to clients
+  (setq org-reveal-plugins '(search))
+)
+
+
+
 ;;; Package: comm/circe
 
 
