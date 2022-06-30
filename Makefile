@@ -27,6 +27,7 @@ confemacs emacs.git/Makefile: emacs.git/configure
 		--with-modules \
 		--with-native-compilation \
 		--with-rsvg \
+		--with-small-ja-dic \
 		--with-sound=alsa \
 		--with-threads \
 		--with-toolkit-scroll-bars \
