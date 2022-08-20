@@ -1393,7 +1393,10 @@ buffer."
   ;; - flex
   ;; - initials:              completion of acronyms and initialisms
   ;; - shorthand
-  (setq completion-styles '(orderless initials)))
+  (setq completion-styles '(orderless initials))
+  ;; make it possible to use "\ " (backspace space) to match for an actual space
+  (setq orderless-component-separator #'orderless-escapable-split-on-space)
+)
 
 
 
