@@ -1319,8 +1319,9 @@ buffer."
   (isearch-mode-map "M-s l" #'consult-line)                ;; needed by consult-line to detect isearch
   (isearch-mode-map "M-s L" #'consult-line-multi)          ;; needed by consult-line to detect isearch
 
-  (minibuffer-local-map "M-s" #'consult-isearch-history)   ;; was: next-matching-history-element
-  (minibuffer-local-map "M-r" #'consult-isearch-history)   ;; was: previous-matching-history-element
+  ;; access history of minibuffer completions, e.g. do "M-s l" (consult-line) "M-r" (consult-history)
+  (minibuffer-local-map "M-s" #'consult-history)           ;; was: next-matching-history-element
+  (minibuffer-local-map "M-r" #'consult-history)           ;; was: previous-matching-history-element
 
   (compilation-mode-map       "e" #'consult-compile-error)
   (compilation-minor-mode-map "e" #'consult-compile-error)
