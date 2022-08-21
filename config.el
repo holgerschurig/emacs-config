@@ -1418,6 +1418,9 @@ buffer."
 (use-package tempel
   :defer t
 
+  :commands
+  (tempel-expand tempel-complete)
+
   :custom
   (tempel-path (concat doom-private-dir "templates.el"))
 
@@ -1428,21 +1431,7 @@ buffer."
   (tempel-map "C-c C-c" #'tempel-done)
 
   :init
-
-  ;; Setup completion at point
-  (defun tempel-setup-capf ()
-    ;; Add the Tempel Capf to `completion-at-point-functions'. `tempel-expand'
-    ;; only triggers on exact matches. Alternatively use `tempel-complete' if
-    ;; you want to see all matches, but then Tempel will probably trigger too
-    ;; often when you don't expect it.
-    ;; NOTE: We add `tempel-expand' *before* the main programming mode Capf,
-    ;; such that it will be tried first.
-    (setq-local completion-at-point-functions
-                (cons #'tempel-expand
-                      completion-at-point-functions)))
-
-  (add-hook 'prog-mode-hook 'tempel-setup-capf)
-  (add-hook 'text-mode-hook 'tempel-setup-capf)
+  (add-hook 'completion-at-point-functions #'tempel-expand)
 
   ;; Optionally make the Tempel templates available to Abbrev,
   ;; either locally or globally. `expand-abbrev' is bound to C-x '.
