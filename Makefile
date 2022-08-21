@@ -93,14 +93,11 @@ pulldoom:
 	cd ~/.emacs.d; git pull --rebase
 	cd ~/.emacs.d; bin/doom clean
 	cd ~/.emacs.d; bin/doom sync -u
-	@# recompile pdf-tools
-	$(MAKE) comppdf
 help::
 	@echo "make pulldoom             pull new doom changes from git"
 
 sync:
 	cd ~/.emacs.d; bin/doom sync
-	$(MAKE) comppdf
 help::
 	@echo "make sync                 sync doom repos with packages.el"
 
