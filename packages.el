@@ -91,7 +91,7 @@
 
 (unpin! embark embark-consult consult vertico marginalia orderless)
 
-(unpin! notmuch)
+(unpin! magit notmuch)
 
 (disable-packages!
   better-jumper ;; looks like it only works in evil mode
