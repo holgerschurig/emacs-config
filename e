@@ -5,6 +5,10 @@ stdin_mode=""
 
 args=()
 
+if [ "$UID" = "0" ]; then
+	args+=(--socket /run/user/1000/emacs/server)
+fi
+
 while :; do
 	case "$1" in
 		-t | -nw | --tty)
@@ -17,18 +21,18 @@ while :; do
 			stdin_mode=" ($2-mode)"
 			shift 2 ;;
 		-h | --help)
-			echo -e "Usage: e [-t] [-m MODE] [OPTIONS] FILE [-]
+			echo -e "\033[1mUsage: e [-t] [-m MODE] [OPTIONS] FILE [-]\033[0m
 
 Emacs client convenience wrapper.
 
-Options:
--h, --help            Show this message
--t, -nw, --tty        Force terminal mode
--w, --wait            Don't supply --no-wait to graphical emacsclient
--                     Take stdin (when last argument)
--m MODE, --mode MODE  Mode to open stdin with
+\033[1mOptions:\033[0m
+\033[0;34m-h, --help\033[0m            Show this message
+\033[0;34m-t, -nw, --tty\033[0m        Force terminal mode
+\033[0;34m-w, --wait\033[0m            Don't supply \033[0;34m--no-wait\033[0m to graphical emacsclient
+\033[0;34m-\033[0m                     Take \033[0;33mstdin\033[0m (when last argument)
+\033[0;34m-m MODE, --mode MODE\033[0m  Mode to open \033[0;33mstdin\033[0m with
 
-Run \033[0;32memacsclient --help to see help for the emacsclient."
+Run \033[0;32memacsclient --help\033[0m to see help for the emacsclient."
 			exit 0 ;;
 		--*=*)
 			set -- "$@" "${1%%=*}" "${1#*=}"
@@ -59,7 +63,7 @@ if [ -z "$DISPLAY" ] || $force_tty; then
 			TERM="$termstub-direct"; else
 			TERM="xterm-direct"; fi # should be fairly safe
 	fi
-	emacsclient --tty -create-frame --alternate-editor="" "${args[@]}"
+	emacsclient --tty --alternate-editor="" "${args[@]}"
 else
 	if ! $force_wait; then
 		args+=(--no-wait); fi
