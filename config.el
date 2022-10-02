@@ -1462,9 +1462,21 @@ buffer."
 
 
 
-;;; Package: lang/c-mode
+;;; Package: lang/cc-mode
 
 (after! cc-mode
+
+  ;; Make TAB in c-mode also complete
+  (defun my-indent-or-complete ()
+    (interactive)
+    (let (( p (point)))
+    (c-indent-line-or-region)
+    (when (= p (point))
+      (call-interactively 'complete-symbol))))
+  (map!
+   :map c-mode-base-map
+   ("TAB"  #'my-indent-or-complete))
+
   (defun my-c-mode-setup ()
     ;;(eglot-ensure)
 
