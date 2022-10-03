@@ -2,6 +2,8 @@ help::
 
 
 instemacs:
+	cd /usr/local/stow; stow --delete emacs
+	rm -rf /usr/local/stow/emacs
 	$(MAKE) -C emacs.git install prefix=/usr/local/stow/emacs
 	cd /usr/local/stow; stow emacs
 help::
