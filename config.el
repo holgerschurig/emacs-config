@@ -201,9 +201,22 @@ If there are two windows displayed, act like \"C-x o\"."
 
 
 
+;;; Package: core/dabbrev
+
+(use-package! dabbrev
+  :defer t
+
+  :custom
+  (dabbrev-ignored-buffer-regexps '("\\.\\(?:pdf\\|jpe?g\\|png\\)\\'"))
+)
+
+
+
 ;;; Package: core/dictionary
 
 (use-package! dictionary
+  :defer t
+
   :custom
   (dictionary-server "dict.org")
   (dictionary-use-single-buffer t)
@@ -250,6 +263,8 @@ If there are two windows displayed, act like \"C-x o\"."
 
 ;; https://www.masteringemacs.org/article/text-expansion-hippie-expand
 (use-package! hippie-exp
+  :disabled t
+
   :config
 
   ;; Use C-h a ^try to see which try-* functions exist:
@@ -1266,9 +1281,6 @@ buffer."
   ;; no previews
   (consult-preview-key nil)
 
-  ;; use consult/vertico for completion
-  (completion-in-region-function #'consult-completion-in-region)
-
   :general
   ;; C-c bindings (mode-specific-map)
   ("C-c h"   #'consult-history)
@@ -1333,6 +1345,7 @@ buffer."
 )
 
 
+
 ;;; Package: completion/cape
 
 ;; see https://github.com/minad/cape
@@ -1363,18 +1376,40 @@ buffer."
 
   :init
   ;; Add `completion-at-point-functions', used by `completion-at-point'.
-  ;; (add-to-list 'completion-at-point-functions #'cape-tex)
-  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
-  (add-to-list 'completion-at-point-functions #'cape-file)
-  ;; (add-to-list 'completion-at-point-functions #'cape-history)
-  ;; (add-to-list 'completion-at-point-functions #'cape-keyword)
-  ;; (add-to-list 'completion-at-point-functions #'cape-sgml)
-  ;; (add-to-list 'completion-at-point-functions #'cape-rfc1345)
-  ;; (add-to-list 'completion-at-point-functions #'cape-abbrev)
-  ;; (add-to-list 'completion-at-point-functions #'cape-ispell)
-  ;; (add-to-list 'completion-at-point-functions #'cape-dict)
-  ;; (add-to-list 'completion-at-point-functions #'cape-symbol)
-  ;; (add-to-list 'completion-at-point-functions #'cape-line)
+
+  (defalias 'my-capf (cape-super-capf #'cape-dabbrev #'cape-file #'cape-dict #'cape-keyword)
+    "completion at point functions")
+  (add-to-list 'completion-at-point-functions #'my-capf)
+)
+
+
+
+;;; Package: completion/corfu
+(use-package! corfu
+  :init
+  (global-corfu-mode 1)
+
+  ;; Adapted from Corfu's manual.
+  (defun contrib/corfu-enable-always-in-minibuffer ()
+    "Enable Corfu in the minibuffer if Vertico is not active.
+Useful for prompts such as `eval-expression' and `shell-command'."
+    (unless (bound-and-true-p vertico--input)
+      (corfu-mode 1)))
+  (add-hook 'minibuffer-setup-hook #'contrib/corfu-enable-always-in-minibuffer 1)
+
+  ;; Allow more editing in the corfu prompt by enabling the HOME/END C-a/C-e keys
+  (defun corfu-beginning-of-prompt ()
+    "Move to beginning of completion input."
+    (interactive)
+    (corfu--goto -1)
+    (goto-char (car completion-in-region--data)))
+  (defun corfu-end-of-prompt ()
+    "Move to end of completion input."
+    (interactive)
+    (corfu--goto -1)
+    (goto-char (cadr completion-in-region--data)))
+  (define-key corfu-map [remap move-beginning-of-line] #'corfu-beginning-of-prompt)
+  (define-key corfu-map [remap move-end-of-line] #'corfu-end-of-prompt)
 )
 
 
@@ -1672,6 +1707,11 @@ buffer."
 
   ;; This disables the overrides of general-override-mode-map, which steals C-c a
   (general-override-mode 0)
+
+  ;; Eglot modifies the completion defaults, undo this. Remove-hook is used as
+  ;; remove-from-list :-)
+  (remove-hook 'completion-category-defaults '(eglot (styles flex basic)))
+
   (defun turn-off-eldoc-mode ()
     (eldoc-mode -1))
   (add-hook 'eglot-managed-mode-hook #'turn-off-eldoc-mode)
