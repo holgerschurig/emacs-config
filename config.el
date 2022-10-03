@@ -1389,6 +1389,10 @@ buffer."
   :init
   (global-corfu-mode 1)
 
+  (map!
+   :map corfu-map
+   ("SPC" #'corfu-insert-separator))
+
   ;; Adapted from Corfu's manual.
   (defun contrib/corfu-enable-always-in-minibuffer ()
     "Enable Corfu in the minibuffer if Vertico is not active.
@@ -1428,7 +1432,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   ;; - flex
   ;; - initials:              completion of acronyms and initialisms
   ;; - shorthand
-  (setq completion-styles '(orderless initials))
+  (setq completion-styles '(orderless basic))
   ;; make it possible to use "\ " (backspace space) to match for an actual space
   (setq orderless-component-separator #'orderless-escapable-split-on-space)
 )
