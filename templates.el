@@ -133,9 +133,9 @@ c-mode :condition (re-search-backward "^\\w*$" (line-beginning-position) 'noerro
 ;; (inc "#include <" (p (concat (file-name-base (or (buffer-file-name) (buffer-name))) ".h")) ">")
 ;; (incc "#include \"" (p (concat (file-name-base (or (buffer-file-name) (buffer-name))) ".h")) "\"")
 
-(inch "#include \"" p ".h\"")
-(incs "#include <" p ".h>")
+(dd "/**\n * @brief " p "\n */")
+(ii "#include \"" p ".h\"")
+(is "#include <" p ".h>")
 (head "#ifndef " (p (concat (upcase (file-name-base (buffer-file-name))) "_H") clause) > n "#define " (s clause) n> p n "#endif" n>)
 (main > "int main(int argc, char *argv[])" n> "{" >  n> > r n "return 0;" > n "}" > n>)
 ;; Doxygen documentation
-(dd "/**\n * @brief " p "\n */")
