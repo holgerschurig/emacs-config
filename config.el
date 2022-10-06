@@ -1524,6 +1524,11 @@ Useful for prompts such as `eval-expression' and `shell-command'."
    :map c-mode-base-map
    ("TAB"  #'my-indent-or-complete))
 
+  (c-add-style "qt-gnu"
+               '("gnu" (c-access-key .
+                                     "\\<\\(signals\\|public\\|protected\\|private\\|public slots\\|protected slots\\|private slots\\):")))
+  (setq-default c-electric-flag nil)
+
   (defun my-c-mode-setup ()
     ;;(eglot-ensure)
 
@@ -1538,22 +1543,19 @@ Useful for prompts such as `eval-expression' and `shell-command'."
     (setq comment-start "// "
           comment-end "")
 
-    (c-add-style "qt-gnu"
-                 '("gnu" (c-access-key .
-                        "\\<\\(signals\\|public\\|protected\\|private\\|public slots\\|protected slots\\|private slots\\):")))
-
     (if (and buffer-file-name (string-match "/linux" buffer-file-name))
        ;; only for Linux C files
        (progn (c-set-style "linux-tabs-only")
             (setq tab-width 8
-              c-basic-offset 8))
+                  c-basic-offset 8))
+      ;; (message "qt-gnu tw 4")
       (c-set-style "qt-gnu")
       (setq tab-width 4
-            c-basic-offset 4)
-    ))
-  (add-hook 'c-mode-hook #'my-c-mode-setup)
+            c-basic-offset 4))
+    ;; (message "my-c-mode-setup done")
+    )
+  (add-hook 'c-mode-hook   #'my-c-mode-setup)
   (add-hook 'c++-mode-hook #'my-c-mode-setup)
-  (setq-default c-electric-flag nil)
   )
 
 
