@@ -603,6 +603,14 @@ If there are two windows displayed, act like \"C-x o\"."
 
 
 
+;;; Package: core/tramp-docker
+
+(after! tramp
+  (setq tramp-docker-docker-executable "podman")
+)
+
+
+
 ;;; Package: core/vc
 
 (after! vc-hooks
