@@ -1704,7 +1704,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 ;;; Package: lang/eglot
 
 
-;; Start eglot either with (eglot-ensure) or with Doom's (lsp!)
+;; Start eglot either with (eglot) or with Doom's (lsp!)
 ;;
 ;; If you don't have a compilation database (e.g. in projects not using
 ;; CMake or Meson), you can use https://github.com/rizsotto/Bear
@@ -1718,6 +1718,9 @@ Useful for prompts such as `eval-expression' and `shell-command'."
         ;; M-g f  consult-flymake                     ;; for errors, maybe even warnings
         ;; M-.    xref-find-definitions
         )
+
+  (add-to-list 'eglot-server-programs '(c++-mode . ("clangd-15" "-j=2" "--clang-tidy")))
+  (add-to-list 'eglot-server-programs '(c-mode  .  ("clangd-15" "-j=2" "--clang-tidy")))
 
   ;; This disables the overrides of general-override-mode-map, which steals C-c a
   (general-override-mode 0)
