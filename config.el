@@ -221,6 +221,13 @@ If there are two windows displayed, act like \"C-x o\"."
   (dictionary-server "dict.org")
   (dictionary-use-single-buffer t)
 
+  :config
+  (advice-add
+   'dictionary-lookup-definition
+   :after
+   (lambda (&rest r)
+     (delete-other-windows)))
+
   :general
   ("C-c d" #'dictionary-lookup-definition)
 )
