@@ -66,6 +66,8 @@
  :recipe (:host github :repo "protesilaos/modus-themes"
           :files ("*.el")))
 
+(package! notmuch-indicator)    ;; https://git.sr.ht/~protesilaos/notmuch-indicator -- do we have new mail?
+
 ;;(package! nov)                ;; https://depp.brause.cc/nov.el/  -- read ePUB
 
 (package! nswbuff               ;; https://github.com/joostkremers/nswbuff  -- buffer switching
