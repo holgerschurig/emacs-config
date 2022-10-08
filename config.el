@@ -2467,6 +2467,18 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 
 
 
+;;; Package: comm/notmuch-indicator
+
+(use-package notmuch-indicator
+  :config
+  (setq notmuch-indicator-args '((:terms "tag:unread and tag:inbox" :label "@")))
+  (setq notmuch-indicator-hide-empty-counters t)
+
+  (notmuch-indicator-mode +1)
+)
+
+
+
 
 ;;; Package: comm/sendmail
 
@@ -2481,6 +2493,8 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   ;; not sure if I need this ... but it doesn't hurt :-)
   (setq mail-specify-envelope-from t)
   )
+
+
 
 
 ;;; This and that
