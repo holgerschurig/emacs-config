@@ -95,12 +95,14 @@ pulldoom:
 	cd ~/.emacs.d; git pull --rebase
 	cd ~/.emacs.d; bin/doom clean
 	cd ~/.emacs.d; bin/doom sync -u
+	cd ~/.emacs.d; bin/doom purge -g
 	cd ~/.emacs.d; bin/doom build -r
 help::
 	@echo "make pulldoom             pull new doom changes from git"
 
 sync:
 	cd ~/.emacs.d; bin/doom sync
+	cd ~/.emacs.d; bin/doom purge -g
 help::
 	@echo "make sync                 sync doom repos with packages.el"
 
