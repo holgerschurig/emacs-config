@@ -1622,8 +1622,8 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 ;;; Package: lang/elisp
 
 (after! lisp-mode
-  ;; Replace evil-last-sexp with pp-eval-last-sexp, as this gives nicer results
-  (global-set-key [remap eval-last-sexp] 'pp-eval-last-sexp)
+  ;; You can replace evil-last-sexp with pp-eval-last-sexp
+  ;; (global-set-key [remap eval-last-sexp] 'pp-eval-last-sexp)
 
   (defun my-emacs-lisp-mode-setup ()
     (interactive)
