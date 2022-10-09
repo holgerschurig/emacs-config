@@ -27,7 +27,7 @@ confemacs emacs.git/Makefile: emacs.git/configure
 		--with-imagemagick \
 		--with-json \
 		--with-modules \
-		--with-native-compilation \
+		--with-native-compilation=aot \
 		--with-rsvg \
 		--with-small-ja-dic \
 		--with-sound=alsa \
