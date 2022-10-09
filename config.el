@@ -183,7 +183,28 @@ If there are two windows displayed, act like \"C-x o\"."
 
 
 
+;;; Package: core/bytecomp
+
+(setq byte-compile-warnings '(callargs
+                              constants
+                              ;;docstrings
+                              docstrings-non-ascii-quotes
+                              free-vars
+                              interactive-only
+                              lexical
+                              lexical-dynamic
+                              make-local
+                              mapcar
+                              noruntime
+                              not-unused
+                              obsolete
+                              redefine
+                              suspicious
+                              unresolved))
+
+
 ;;; Package: core/calc
+
 (after! calc
   (setq calc-angle-mode 'rad  ; radians are radians, 0..2*pi
         calc-symbolic-mode t))
