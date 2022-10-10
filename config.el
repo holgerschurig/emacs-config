@@ -303,6 +303,17 @@ If there are two windows displayed, act like \"C-x o\"."
 
 
 
+;;; Package: core/help
+
+;; makes things like  M-x describe bindings  pop up full screen
+(add-to-list 'display-buffer-alist
+             `(,(rx bos "*Help*" eos)
+               (display-buffer-reuse-window display-buffer-same-window)
+               (reusable-frames . visible))
+             )
+
+
+
 ;;; Package: core/hippie-exp
 
 ;; https://www.masteringemacs.org/article/text-expansion-hippie-expand
