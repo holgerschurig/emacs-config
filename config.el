@@ -566,6 +566,14 @@ If there are two windows displayed, act like \"C-x o\"."
 
 
 
+;;; Package: core/sh
+
+(eval-after-load 'sh
+  (setq sh-indent-statement-after-and nil)
+)
+
+
+
 ;;; Package: core/shr
 
 (after! shr
