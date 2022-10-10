@@ -2369,6 +2369,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
         (dolist (search (seq-take notmuch-search-history
                                   notmuch-hello-recent-searches-max))
           (widget-create 'notmuch-search-item :value search :size width)))))
+
   (defun my-notmuch-hello-insert-saved-searches ()
   "Insert the saved-searches section, but without the edit button."
   (let ((searches (notmuch-hello-query-counts
@@ -2382,6 +2383,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
       (let ((start (point)))
         (notmuch-hello-insert-buttons searches)
         (indent-rigidly start (point) notmuch-hello-indent)))))
+
   (defun my-notmuch-hello-insert-help ()
     (widget-insert "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――\n")
     (widget-insert "c compose         s notmuch search  u search unthreaded\n")
@@ -2465,6 +2467,9 @@ Useful for prompts such as `eval-expression' and `shell-command'."
           ("flagged" (propertize tag 'face 'notmuch-tag-flagged)
            (notmuch-tag-format-image-data tag (notmuch-tag-star-icon)))
           ))
+
+  (add-hook 'notmuch-after-tag-hook #'notmuch-indicator--refresh)
+
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; notmuch-tree
