@@ -751,8 +751,8 @@ If there are two windows displayed, act like \"C-x o\"."
 
   ;; Allow to type space chars in minibuffer input (for `timeclock-in',
   ;; for example).
-  (define-key minibuffer-local-completion-map " " nil)
-  (define-key minibuffer-local-must-match-map " " nil))
+  (define-key minibuffer-local-completion-map " " nil t)
+  (define-key minibuffer-local-must-match-map " " nil t))
 
 
 
