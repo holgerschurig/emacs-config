@@ -535,6 +535,16 @@ If there are two windows displayed, act like \"C-x o\"."
 
 
 
+;;; Package: core/proced
+
+(add-to-list 'display-buffer-alist
+             `(,(rx bos "*Proced*" eos)
+               (display-buffer-reuse-window display-buffer-same-window)
+               (reusable-frames . visible))
+             )
+
+
+
 ;;; Package: core/rectangle
 
 ;; Turn the rectangle-mark-mode on with C-x <SPACE>
