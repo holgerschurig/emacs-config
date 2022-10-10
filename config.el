@@ -502,6 +502,15 @@ If there are two windows displayed, act like \"C-x o\"."
 
 
 
+;;; Package: core/mouse
+
+(setq mouse-drag-mode-line-buffer t
+      mouse-drag-and-drop-region-cross-program t
+      mouse-drag-and-drop-region-scroll-margin t
+      mouse-drag-copy-region 'non-empty)
+
+
+
 ;;; Package: core/mule-util
 
 (after! mule-util
