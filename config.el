@@ -271,6 +271,12 @@ If there are two windows displayed, act like \"C-x o\"."
   :custom
   (confirm-kill-emacs nil)
 
+  ;; Look for sibling files (this is a list of (MATCH EXPANSION) entries)
+  (find-sibling-rules '(("\\([^/]+\\)\\.c\\'" "\\1.h")
+                        ("\\([^/]+\\)\\.cpp\\'" "\\1.h")
+                        ("\\([^/]+\\)\\.h\\'" "\\1.c")
+                        ("\\([^/]+\\)\\.hpp\\'" "\\1.cpp")))
+
   ;; Preserve hard links to the file you´re editing (this is
   ;; especially important if you edit system files)
   (backup-by-copying-when-linked t)
@@ -283,6 +289,7 @@ If there are two windows displayed, act like \"C-x o\"."
 
   :general
   ("<f2>" #'save-buffer)
+  ("M-<f6>" #'find-sibling-file)
 )
 
 
