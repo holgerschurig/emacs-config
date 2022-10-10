@@ -476,15 +476,13 @@ If there are two windows displayed, act like \"C-x o\"."
 
 
 
-;;; Package: core/minibuf
+;;; Package: core/minibuf.c
+
+(setq history-length 1000)
 
 (setq history-delete-duplicates t)
 
 (setq resize-mini-windows t)
-
-;; don't show "*Completions*" buffer
-(setq completion-auto-help nil)
-
 
 
 
@@ -690,17 +688,22 @@ If there are two windows displayed, act like \"C-x o\"."
 ;;; Package: gui/minibuffer
 
 (after! minibuffer
-  (setq history-length 1000)
+  ;; don't show "*Completions*" buffer
+  (setq completion-auto-help nil)
+
+  ;; Shorter default format formatting
+  (setq minibuffer-default-prompt-format " [%s]")
+
+  ;; Don't insert current directory into minubuffer
+  (setq insert-default-directory nil)
 
   (minibuffer-depth-indicate-mode 1)
 
   ;; Allow to type space chars in minibuffer input (for `timeclock-in',
   ;; for example).
   (define-key minibuffer-local-completion-map " " nil)
-  (define-key minibuffer-local-must-match-map " " nil)
+  (define-key minibuffer-local-must-match-map " " nil))
 
-  ;; Don't insert current directory into minubuffer
-  (setq insert-default-directory nil))
 
 
 
