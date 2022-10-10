@@ -529,6 +529,12 @@ If there are two windows displayed, act like \"C-x o\"."
 
 
 
+;;; Package: core/paren
+
+(setq show-paren-context-when-offscreen 'overlay)
+
+
+
 ;;; Package: core/rectangle
 
 ;; Turn the rectangle-mark-mode on with C-x <SPACE>
