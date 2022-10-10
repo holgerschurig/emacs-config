@@ -255,6 +255,15 @@ If there are two windows displayed, act like \"C-x o\"."
 
 
 
+;;; Package: core/dnd
+
+(after! dnd
+  (setq dnd-indicate-insertion-point t
+        dnd-scroll-margin 2)
+)
+
+
+
 ;;; Package: core/executable
 
 (use-package! executable
