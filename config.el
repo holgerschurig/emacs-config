@@ -2735,7 +2735,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 
 (use-package notmuch-indicator
   :config
-  (setq notmuch-indicator-args '((:terms "tag:unread and tag:inbox" :label "@")))
+  (setq notmuch-indicator-args '((:terms "tag:unread" :label "@")))
   (setq notmuch-indicator-hide-empty-counters t)
 
   (notmuch-indicator-mode +1)
