@@ -2582,23 +2582,3 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   ;; not sure if I need this ... but it doesn't hurt :-)
   (setq mail-specify-envelope-from t)
   )
-
-
-
-
-;;; This and that
-
-
-(defun notmuch-poll ()
-  "Run \"notmuch new\" or an external script to import mail.
-
-Invokes `notmuch-poll-script', \"notmuch new\", or does nothing
-depending on the value of `notmuch-poll-script'."
-  (interactive)
-  (message "Polling mail...")
-  (if (stringp notmuch-poll-script)
-      (unless (string-empty-p notmuch-poll-script)
-        (unless (equal (call-process notmuch-poll-script nil nil) 0)
-          (error "Notmuch: poll script `%s' failed!" notmuch-poll-script)))
-    (notmuch-call-notmuch-process "new"))
-  (message "Polling mail...done"))
