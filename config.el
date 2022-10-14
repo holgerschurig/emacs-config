@@ -1385,6 +1385,8 @@ buffer."
   ("C-c h"   #'consult-history)
   ("C-c m"   #'consult-mode-command)
   ("C-c k"   #'consult-kmacro)
+  ;; C-c r   -> vertico-repeat-last
+  ;; C-c C-r -> vertico-repeat
 
   ;; C-x bindings (ctl-x-map)
   ("C-x M-:"  #'consult-complex-command)     ;; was: repeat-complex-command)
@@ -1590,7 +1592,8 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   (setq read-extended-command-predicate #'command-completion-default-include-p)
 
   (map!
-   ("C-c R" #'vertico-repeat-last)
+   ("C-c r"   #'vertico-repeat-last) ;; always the last, but can be enter while inside a vertico prompt to recall the last one
+   ("C-c C-r" #'vertico-repeat)      ;; the last one, can be called with C-u to get a list of previous vertico calls
    :map vertico-map
    ([next] nil)     ;; was next-history-element
    ([prior] nil)   ;; was previous-history-element
