@@ -2534,7 +2534,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
            (notmuch-tag-format-image-data tag (notmuch-tag-star-icon)))
           ))
 
-  (add-hook 'notmuch-after-tag-hook #'notmuch-indicator--refresh)
+  (add-hook 'notmuch-after-tag-hook #'notmuch-indicator-refresh)
 
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
