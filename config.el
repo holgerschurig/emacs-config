@@ -1821,10 +1821,13 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   (map! :map eglot-mode-map
         "C-c R" #'eglot-rename                        ;; unused in c-mode
         "C-c a" #'eglot-code-actions                  ;; was embark-act, but that is also in C-;
+        "C-c d" #'eglot-looku
         "C-c o" #'eglot-code-action-organize-imports  ;; unused in c-mode
         "C-c r" #'xref-find-references                ;; was dictionary-lookup-definition
-        ;; M-g f  consult-flymake                     ;; for errors, maybe even warnings
+        ;; M-;    xref-go-back
         ;; M-.    xref-find-definitions
+        ;; M-g e  consult-compile-error               ;; for errors, maybe even warnings
+        ;; M-g f  consult-flymake                     ;; for errors, maybe even warnings
         )
 
   (add-to-list 'eglot-server-programs '(c++-mode . ("clangd-15" "-j=2" "--clang-tidy")))
