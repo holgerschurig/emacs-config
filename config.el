@@ -1866,6 +1866,8 @@ Useful for prompts such as `eval-expression' and `shell-command'."
         ;; M-s u  xref-find-reference                 ;; like "search usage"
         )
 
+  (setq eglot-stay-out-of '(eldoc company))
+
   (add-to-list 'eglot-server-programs '(c++-mode . ("clangd-15" "-j=2" "--clang-tidy")))
   (add-to-list 'eglot-server-programs '(c-mode  .  ("clangd-15" "-j=2" "--clang-tidy")))
 
@@ -1886,7 +1888,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 
   (defun my-eglot-hook ()
     (add-to-list 'completion-at-point-functions #'my-eglot-capf)
-    (eldoc-mode -1))
+    )
   (add-hook 'eglot-managed-mode-hook #'my-eglot-hook)
 )
 
