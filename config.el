@@ -2458,7 +2458,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 
   (define-key! :keymaps 'notmuch-hello-mode-map
     "G" #'my-notmuch-pollmail
-    "c" #'notmuch-mua-new-mail)
+    "c" #'consult-notmuch-address) ;; used to be notmuch-mua-new-mail
 
   ;; Tell the rest of Emacs that we are now using notmuch
   (setq mail-user-agent 'notmuch-user-agent)
@@ -2552,8 +2552,9 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   (notmuch-hello))
 
 (define-key!
-  "M-g n" #'my-notmuch-hello ;; was next-error
-  "M-g p" nil             ;; was previous-error
+  "M-g n"   #'my-notmuch-hello ;; was next-error
+  "M-g C-n" #'consult-notmuch-address
+  "M-g p"   nil             ;; was previous-error
 )
 
 
