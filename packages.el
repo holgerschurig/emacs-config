@@ -54,7 +54,8 @@
 
 (package! cape)                 ;; https://github.com/minad/cape -- completion at point extensions
 
-(package! corfu)                ;; https://github.com/minad/corfu -- completion overlay
+(package! corfu                 ;; https://github.com/minad/corfu -- completion overlay
+  :recipe (:files (:defaults "extensions/*.el")))
 
 (package! dts-mode)             ;; https://github.com/bgamari/dts-mode -- Device tree mode
 

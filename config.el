@@ -1542,6 +1542,7 @@ Used to preselect nearest headings and imenu items.")
 (use-package! corfu
   :init
   (global-corfu-mode 1)
+  (corfu-history-mode)
 
   (map!
    :map corfu-map
