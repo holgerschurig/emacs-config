@@ -1876,9 +1876,18 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   ;; remove-from-list :-)
   (remove-hook 'completion-category-defaults '(eglot (styles flex basic)))
 
-  (defun turn-off-eldoc-mode ()
+  (defalias 'my-eglot-capf (cape-super-capf #'eglot-completion-at-point
+                                            #'cape-dabbrev
+                                            #'cape-file
+                                            #'cape-dict
+                                            #'cape-keyword)
+    "completion at point functions for eglot")
+
+
+  (defun my-eglot-hook ()
+    (add-to-list 'completion-at-point-functions #'my-eglot-capf)
     (eldoc-mode -1))
-  (add-hook 'eglot-managed-mode-hook #'turn-off-eldoc-mode)
+  (add-hook 'eglot-managed-mode-hook #'my-eglot-hook)
 )
 
 
