@@ -729,6 +729,11 @@ If there are two windows displayed, act like \"C-x o\"."
   (xref-file-name-display 'project-relative) ;; was abs
   (xref-search-program 'ripgrep)             ;; was grep
 
+  :general
+  ("M-s u" #'xref-find-references)           ;; like "search usage"
+  (xref--xref-buffer-mode-map "RET" #'xref-quit-and-goto-xref) ;; was xref-goto-xref
+  (xref--xref-buffer-mode-map "TAB" #'xref-goto-xref)          ;; was xref-quit-and-goto-xref
+
   :config
   (advice-remove #'xref-push-marker-stack #'doom-set-jump-a)
 )
@@ -1823,11 +1828,11 @@ Useful for prompts such as `eval-expression' and `shell-command'."
         "C-c a" #'eglot-code-actions                  ;; was embark-act, but that is also in C-;
         "C-c d" #'eglot-looku
         "C-c o" #'eglot-code-action-organize-imports  ;; unused in c-mode
-        "C-c r" #'xref-find-references                ;; was dictionary-lookup-definition
         ;; M-;    xref-go-back
         ;; M-.    xref-find-definitions
         ;; M-g e  consult-compile-error               ;; for errors, maybe even warnings
         ;; M-g f  consult-flymake                     ;; for errors, maybe even warnings
+        ;; M-s u  xref-find-reference                 ;; like "search usage"
         )
 
   (add-to-list 'eglot-server-programs '(c++-mode . ("clangd-15" "-j=2" "--clang-tidy")))
