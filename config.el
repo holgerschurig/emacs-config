@@ -1528,7 +1528,10 @@ Used to preselect nearest headings and imenu items.")
   :init
   ;; Add `completion-at-point-functions', used by `completion-at-point'.
 
-  (defalias 'my-capf (cape-super-capf #'cape-dabbrev #'cape-file #'cape-dict #'cape-keyword)
+  (defalias 'my-capf (cape-super-capf #'cape-dabbrev
+                                      #'cape-file
+                                      #'cape-dict
+                                      #'cape-keyword)
     "completion at point functions")
   (add-to-list 'completion-at-point-functions #'my-capf)
 )
@@ -1663,7 +1666,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
     (let (( p (point)))
     (c-indent-line-or-region)
     (when (= p (point))
-      (call-interactively 'complete-symbol))))
+      (call-interactively 'completion-at-point))))
   (map!
    :map c-mode-base-map
    ("TAB"  #'my-indent-or-complete))
@@ -1878,16 +1881,18 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   ;; remove-from-list :-)
   (remove-hook 'completion-category-defaults '(eglot (styles flex basic)))
 
-  (defalias 'my-eglot-capf (cape-super-capf #'eglot-completion-at-point
-                                            #'cape-dabbrev
+  (defalias 'my-eglot-capf (cape-super-capf ;;#'tempel-expand
+                                            #'eglot-completion-at-point
                                             #'cape-file
+                                            #'cape-dabbrev
                                             #'cape-dict
-                                            #'cape-keyword)
+                                            )
     "completion at point functions for eglot")
-
 
   (defun my-eglot-hook ()
     (add-to-list 'completion-at-point-functions #'my-eglot-capf)
+    (add-to-list 'completion-at-point-functions #'tempel-expand)
+    (remove-hook 'completion-at-point-functions #'eglot-completion-at-point t)
     )
   (add-hook 'eglot-managed-mode-hook #'my-eglot-hook)
 )
