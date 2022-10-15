@@ -1418,14 +1418,28 @@ buffer."
   ("M-s e"    #'consult-isearch-history)
   ("M-s f"    #'consult-find)
   ("M-s F"    #'consult-locate)
-  ("M-s g"    #'consult-grep)
-  ("M-s G"    #'consult-git-grep)
+  ;; Searching (mostly)
+  ("M-s g"    #'consult-git-grep)
   ("M-s r"    #'consult-ripgrep)
   ("M-s l"    #'consult-line)                ;; similar to swiper
   ("M-s L"    #'consult-line-multi)
   ("M-s m"    #'consult-multi-occur)
   ("M-s k"    #'consult-keep-lines)
-  ("M-s u"    #'consult-focus-lines)         ;; run with "C-u M-s u" to show all lines again
+  ;; bound elsewhere:
+  ;; - C-M .   consul-eglot-symbols
+  ;; unbound:
+  ;; - consult-file-externally
+  ;; - consult-grep
+  ;; - consult-man
+  ;; - consult-focus-lines
+  ;; - consult-minor-mode-menu
+  ;; - consult-notmuch
+  ;; - consult-notmuch-tree
+  ;; - consult-org-agenda
+  ;; - consult-org-heading
+  ;; - consult-recent-file
+  ;; - consult-yank-from-kill-ring
+  ;; - consult-yank-replace
 
   (isearch-mode-map "M-e"   #'consult-isearch-history)     ;; was: isearch-edit-string
   (isearch-mode-map "M-s e" #'consult-isearch-history)     ;; was: isearch-edit-string
