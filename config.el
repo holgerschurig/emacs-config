@@ -925,11 +925,13 @@ If there are two windows displayed, act like \"C-x o\"."
   (apply fn args))
 
 
+
 ;;; Package: edit/clean-aindent-mode
 
 ;; Nice tip from tuhdo, see https://www.emacswiki.org/emacs/CleanAutoIndent
-(add-hook 'prog-mode-hook #'clean-aindent-mode)
+;; https://github.com/pmarinov/clean-aindent-mode
 
+(add-hook 'prog-mode-hook #'clean-aindent-mode)
 
 
 
