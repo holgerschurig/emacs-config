@@ -264,6 +264,48 @@ If there are two windows displayed, act like \"C-x o\"."
 
 
 
+;;; Package: core/eshell
+
+(use-package eshell
+  :commands eshell
+
+  :custom
+  (eshell-destroy-buffer-when-process-dies t)
+  (eshell-prefer-lisp-functions t)
+
+  :config
+  (eshell/addpath "~/.local/bin")
+)
+
+(use-package em-alias
+  :after eshell
+
+  :config
+  (defun my-eshell-setup ()
+    (eshell-read-aliases-list)
+    (setq-local show-trailing-whitespace nil)
+    (eshell/alias "v" "view-file $1")
+    (eshell/alias "x" "consult-file-externally $1")
+    )
+  (add-hook 'eshell-mode-hook #'my-eshell-setup)
+)
+
+(use-package em-banner
+  :after eshell
+
+  :custom
+  (eshell-banner-message "")
+)
+
+(use-package em-term
+  :after eshell
+
+  :config
+  (add-to-list 'eshell-visual-options '("git" "--help" "--paginate"))
+)
+
+
+
 ;;; Package: core/executable
 
 (use-package! executable
