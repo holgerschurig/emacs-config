@@ -50,6 +50,8 @@
 ;(unpin! t)
 
 
+(package! affe)                 ;; https://github.com/minad/affe -- Asynchronous Fuzzy Finder for Emacs
+
 (package! clean-aindent-mode)
 
 (package! cape)                 ;; https://github.com/minad/cape -- completion at point extensions

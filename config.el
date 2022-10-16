@@ -885,6 +885,28 @@ If there are two windows displayed, act like \"C-x o\"."
 
 
 
+;;; Package: edit/affe -- asynchronous finder
+
+;; https://github.com/minad/affe
+
+(use-package! affe
+  :general
+  ("M-s a"   #'affe-find)
+  ("M-s A"   #'affe-grep)
+
+  :config
+  (defun affe-orderless-regexp-compiler (input _type _ignorecase)
+    (setq input (orderless-pattern-compiler input))
+    (cons input (lambda (str) (orderless--highlight input str))))
+  (setq affe-regexp-compiler #'affe-orderless-regexp-compiler)
+
+  ;; Manual preview key for `affe-grep'
+  (consult-customize affe-find affe-grep :preview-key (kbd "M-."))
+)
+
+
+
+
 ;;; Package: edit/autorevert
 
 (after! autorevert
