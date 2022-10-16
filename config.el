@@ -485,7 +485,17 @@ If there are two windows displayed, act like \"C-x o\"."
 
 
 
+;;; Package: core/ispell
+
+(after! ispell
+  (add-to-list 'ispell-skip-region-alist ("+begin_src" . "+end_src"))
+)
+
+
+
+
 ;;; Package: core/register
+
 (after! register
   (setq register-preview-delay 1)
   (setq register-preview-function #'consult-register-format))
