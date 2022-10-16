@@ -1854,6 +1854,9 @@ Useful for prompts such as `eval-expression' and `shell-command'."
     ;; "-" is almost always part of a function- or variable-name
     (modify-syntax-entry ?- "w")
 
+    ;; make sure we cannot save syntax errors
+    (add-hook 'local-write-file-hooks 'check-parens)
+
     ;; The following changes the imenu "M-g i" to care most about my ";;;" comments
     (setq lisp-imenu-generic-expression '())
     (setq imenu-generic-expression
