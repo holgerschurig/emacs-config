@@ -866,21 +866,26 @@ If there are two windows displayed, act like \"C-x o\"."
 ;; https://gitlab.com/protesilaos/modus-themes
 ;; https://github.com/protesilaos/modus-themes/blob/main/doc/modus-themes.org
 
+;; Note: don't set doom-theme to modus-vivendi. Because if you do this, then
+;; somehow comments are rendered in italic, if you customize
+;; modus-themes-italic-constructs or not. Unfortunately the backslash \ just
+;; looks thrash then.
 
-(setq doom-theme 'modus-vivendi)
-
-(use-package! modus-vivendi-theme
+(use-package! modus-themes
   :custom
   (modus-themes-bold-constructs t)
+  (modus-themes-italic-constructs nil)
   (modus-themes-paren-match '(intense))
   (modus-themes-mode-line '(borderless accented))
   (modus-themes-region '(bg-only))
   (modus-themes-completions '(opinionated))
   (modus-themes-syntax '(alt-syntax))
 
+  :init
+  (modus-themes-load-themes)
+
   :config
-  ;; Make the marked region be much easier visible
-  (set-face-attribute 'region nil :background "#6c6c6c")
+  (load-theme 'modus-vivendi t)
 )
 
 
