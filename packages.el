@@ -86,6 +86,8 @@
 ;; (package! ox-hugo            ;; https://github.com/kaushalmodi/ox-hugo
 ;;   :recipe (:host github :repo "kaushalmodi/ox-hugo" :branch "main"))
 
+(package! pdf-tools)            ;; https://github.com/vedang/pdf-tools  -- PDF viewer on steroids
+
 (package! rainbow-mode)         ;; https://github.com/emacs-straight/rainbow-mode  -- Colorize color names
 
 (package! symbol-overlay)       ;; https://github.com/wolray/symbol-overlay  -- highlight & jump
