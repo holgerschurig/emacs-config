@@ -1544,10 +1544,21 @@ Used to preselect nearest headings and imenu items.")
   (global-corfu-mode 1)
   (corfu-history-mode)
 
-  (map!
-   :map corfu-map
-   ("SPC" #'corfu-insert-separator))
+  :custom
+  (corfu-cycle t)                  ; Allows cycling through candidates
 
+  ;; (corfu-auto t)
+  ;; (corfu-auto-prefix 2)
+  ;; (corfu-auto-delay 0.0)
+  ;; (corfu-echo-documentation 0.25)
+  ;; (corfu-preview-current 'insert)
+  ;; (corfu-preselect-first nil)
+
+  :general
+  (corfu-map "TAB" #'corfu-complete)
+  (corfu-map "SPC" #'corfu-insert-separator)
+
+  :config
   ;; Adapted from Corfu's manual.
   (defun contrib/corfu-enable-always-in-minibuffer ()
     "Enable Corfu in the minibuffer if Vertico is not active.
