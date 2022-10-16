@@ -1666,8 +1666,8 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   ;; - flex
   ;; - initials:              completion of acronyms and initialisms
   ;; - shorthand
-  (setq completion-styles '(orderless basic))
-  ;; make it possible to use "\ " (backspace space) to match for an actual space
+  (setq completion-styles '(orderless flex))
+  ;; make it possible to use "\ " (backslash space) to match for an actual space
   (setq orderless-component-separator #'orderless-escapable-split-on-space)
 )
 
