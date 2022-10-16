@@ -1640,6 +1640,14 @@ Useful for prompts such as `eval-expression' and `shell-command'."
     (goto-char (cadr completion-in-region--data)))
   (define-key corfu-map [remap move-beginning-of-line] #'corfu-beginning-of-prompt)
   (define-key corfu-map [remap move-end-of-line] #'corfu-end-of-prompt)
+
+  ;; Corfu in eshell
+  (defun my-corfu-setup ()
+    (setq-local corfu-quit-at-boundary t
+                corfu-quit-no-match t
+                corfu-auto nil))
+  (add-hook 'eshell-mode-hook #'my-corfu-setup)
+
 )
 
 
