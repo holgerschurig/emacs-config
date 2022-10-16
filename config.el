@@ -1240,7 +1240,10 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
                  (display-buffer-reuse-window display-buffer-same-window)
                  (reusable-frames . visible))
                )
-  (add-hook 'helpful-mode-hook #'visual-line-mode))
+  (add-hook 'helpful-mode-hook #'visual-line-mode)
+
+  (map! :map helpful-mode-map
+        "a" #'consult-apropos))
 
 (map! "<f1> h" #'helpful-at-point
       :map helpful-mode-map
@@ -1531,6 +1534,8 @@ Used to preselect nearest headings and imenu items.")
   ;; - consult-recent-file
   ;; - consult-yank-from-kill-ring
   ;; - consult-yank-replace
+
+  (help-map "a" #'consult-apropos)
 
   (isearch-mode-map "M-e"   #'consult-isearch-history)     ;; was: isearch-edit-string
   (isearch-mode-map "M-s e" #'consult-isearch-history)     ;; was: isearch-edit-string
