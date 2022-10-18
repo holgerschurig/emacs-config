@@ -1811,6 +1811,15 @@ Useful for prompts such as `eval-expression' and `shell-command'."
     ;; make sure we cannot save syntax errors
     (add-hook 'local-write-file-hooks 'check-parens)
 
+    ;; Modify completions, elisp-completion-at-point wouldn't allow me to
+    ;; complete elisp things in comments.
+    (defalias 'my-elisp-capf (cape-super-capf #'elisp-completion-at-point
+                                              #'cape-dabbrev
+                                              #'cape-file
+                                              #'cape-dict
+                                              #'cape-symbol))
+    (setq-local completion-at-point-functions '(my-elisp-capf t))
+
     ;; The following changes the imenu "M-g i" to care most about my ";;;" comments
     (setq lisp-imenu-generic-expression '())
     (setq imenu-generic-expression
