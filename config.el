@@ -1725,18 +1725,9 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 
 (after! cc-mode
 
-  ;; Make TAB in c-mode also complete
-  (defun my-indent-or-complete (&optional arg)
-    (interactive)
-    (message "TRY")
-    (let (( p (point)))
-      (c-indent-line-or-region arg (c-region-is-active-p))
-      (when (and (= p (point)) (not (c-region-is-active-p)))
-        (call-interactively 'completion-at-point))))
-
   (map!
    :map c-mode-base-map
-   ("TAB"  #'my-indent-or-complete))
+   ("TAB"  #'indent-for-tab-command))  ;; was c-indent-line-or-region
 
   (c-add-style "qt-gnu"
                '("gnu" (c-access-key .
