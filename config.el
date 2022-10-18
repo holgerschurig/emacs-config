@@ -488,7 +488,7 @@ If there are two windows displayed, act like \"C-x o\"."
 ;;; Package: core/ispell
 
 (after! ispell
-  (add-to-list 'ispell-skip-region-alist ("+begin_src" . "+end_src"))
+  (add-to-list 'ispell-skip-region-alist '("+begin_src" . "+end_src"))
 )
 
 
