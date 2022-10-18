@@ -2158,6 +2158,16 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 )
 
 
+;;; Package: org/org-tempo
+
+(use-package org-tempo
+  :after org
+  :config
+  (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
+)
+
+
+
 ;;; Package: org/ox
 
 (after! ox
