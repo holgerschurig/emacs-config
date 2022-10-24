@@ -1134,8 +1134,6 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 ;; display more entries than which-keys
 
 (after! embark
-  (message "EMBARK")
-  (require 'embark-consult)
 
   (defun which-key--hide-popup-ignore-command ()
     "Empty dummy function.")
