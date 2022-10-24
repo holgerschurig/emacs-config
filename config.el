@@ -894,7 +894,6 @@ If there are two windows displayed, act like \"C-x o\"."
   (modus-themes-paren-match '(intense))
   (modus-themes-mode-line '(borderless accented))
   (modus-themes-region '(bg-only))
-  (modus-themes-completions '(opinionated))
   (modus-themes-syntax '(alt-syntax))
 
   :init
