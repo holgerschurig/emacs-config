@@ -597,6 +597,22 @@ If there are two windows displayed, act like \"C-x o\"."
 
 
 
+;;; Package: core/project
+
+;; Switch projects:  C-x p p
+;; Remove project:   M-x project-forget-project
+;; otherwise, see (describe-map project-prefix-map)
+
+(defun my-find-file (&optional arg)
+  (interactive)
+  "Without ARG calls project-find-file. With ARG, call project-find-file."
+  (if arg
+      (call-interactively #'find-file)
+    (call-interactively #'project-find-file)))
+(general-define-key [remap find-file] #'my-find-file)
+
+
+
 ;;; Package: core/rectangle
 
 ;; Turn the rectangle-mark-mode on with C-x <SPACE>
