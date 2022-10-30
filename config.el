@@ -2179,7 +2179,13 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 (use-package org-tempo
   :after org
   :config
+  (add-to-list 'org-structure-template-alist '("cc" . "src C"))
+  (add-to-list 'org-structure-template-alist '("cp" . "src cpp"))
   (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
+  (add-to-list 'org-structure-template-alist '("js" . "src js"))
+  (add-to-list 'org-structure-template-alist '("mk" . "src makefile"))
+  (add-to-list 'org-structure-template-alist '("py" . "src python"))
+  (add-to-list 'org-structure-template-alist '("sh" . "src bash"))
 )
 
 
