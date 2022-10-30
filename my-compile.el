@@ -129,14 +129,8 @@ selected with completion help."
                          nil nil 1))
   (if (string= (substring compile-command 0 1) "(")
       (eval (car (read-from-string compile-command)))
-    (let ((default-directory (or (locate-dominating-file "." ".git")
-                                 (locate-dominating-file "." ".svn")
-                                 (locate-dominating-file "." "CMakeLists.txt")
-                                 (locate-dominating-file "." "GNUmakefile")
-                                 (locate-dominating-file "." "Makefile")
-                                 default-directory)))
-      (cd (or (locate-dominating-file (buffer-file-name) ".git") "."))
-      (compile (substring-no-properties compile-command)))))
+    (let ((default-directory (project-root (project-current nil))))
+      ((call-interactively #'compile (substring-no-properties compile-command))))))
 
 
 (defun my-compile-select-command-and-run ()
