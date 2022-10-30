@@ -117,6 +117,13 @@ rst-mode
 
 org-mode
 
+(elisp "#+begin_src emacs-lisp" n> r> n "#+end_src")
+(c "#+begin_src C" n> r> n "#+end_src")
+(cpp "#+begin_src cpp" n> r> n "#+end_src")
+(python "#+begin_src python" n> r> n "#+end_src")
+(js "#+begin_src js" n> r> n "#+end_src")
+(bash "#+begin_src bash" n> r> n "#+end_src")
+(latex "#+begin_src latex" n> r> n "#+end_src")
 (+q "#+begin_quote" n> r> n> "#+end_quote\n")
 (+e "#+begin_example" n> r> n> "#+end_example\n")
 (+c "#+begin_center" n> r> n> "#+end_center\n")
