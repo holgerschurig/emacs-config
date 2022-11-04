@@ -130,7 +130,7 @@ selected with completion help."
   (if (string= (substring compile-command 0 1) "(")
       (eval (car (read-from-string compile-command)))
     (let ((default-directory (project-root (project-current nil))))
-      ((call-interactively #'compile (substring-no-properties compile-command))))))
+      (compile (substring-no-properties compile-command)))))
 
 
 (defun my-compile-select-command-and-run ()
