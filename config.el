@@ -644,6 +644,29 @@ If there are two windows displayed, act like \"C-x o\"."
 
 
 
+;;; Package: core/simple
+
+(defun my-scratch-buffer ()
+  "Produce / switch to a scratch buffer.
+
+If region is active, copy its contents to the new scratch
+buffer."
+  (interactive)
+  (let ((region (with-current-buffer (current-buffer)
+                  (if (region-active-p)
+                      (buffer-substring-no-properties
+                       (region-beginning)
+                       (region-end))
+                    "")))
+         (m))
+    (scratch-buffer)
+    (insert region)
+    (pop-to-buffer "*scratch*")))
+
+(map! "M-g s" #'my-scratch-buffer)
+
+
+
 ;;; Package: core/sh
 
 (eval-after-load 'sh
@@ -1342,70 +1365,6 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   ;;              '("\\.pdf\\'" . (lambda (file link)
   ;;                                (org-pdfview-open link)))))
 )
-
-
-
-;;; Package: modes/scratch
-
-;; Adapted from the `scratch.el' package by Ian Eure.
-(defun my-list-scratch-modes ()
-  "List known major modes."
-  (cl-loop for sym the symbols of obarray
-           for name = (symbol-name sym)
-           when (and (functionp sym)
-                     (not (member sym minor-mode-list))
-                     (string-match "-mode$" name)
-                     (not (string-match "--" name)))
-           collect name))
-
-(defun my-scratch-buffer-setup (text &optional mode)
-  "Add contents to `scratch' buffer and name it accordingly.
-
-REGION is added to the contents to the new buffer.
-
-Use the current buffer's major mode by default.  With optional
-MODE use that major mode instead."
-  (let* ((major (or mode major-mode))
-         (buf (format "*Scratch for %s*" major)))
-    (with-current-buffer (get-buffer-create buf)
-      (funcall major)
-      (save-excursion
-        (insert text)
-        (goto-char (point-min)))
-      (vertical-motion 2))
-    (pop-to-buffer buf)))
-
-(add-to-list 'display-buffer-alist
-             `(,(rx bos "*Scratch for ")
-               (display-buffer-reuse-window display-buffer-same-window)
-               (reusable-frames . visible))
-             )
-
-(defun my-scratch-buffer (&optional arg)
-  "Produce a bespoke scratch buffer matching current major mode.
-
-With optional ARG argument, prompt for a major mode
-with completion.
-
-If region is active, copy its contents to the new scratch
-buffer."
-  (interactive "P")
-  (let ((modes (my-list-scratch-modes))
-        (region (with-current-buffer (current-buffer)
-                  (if (region-active-p)
-                      (buffer-substring-no-properties
-                       (region-beginning)
-                       (region-end))
-                    "")))
-         (m))
-    (pcase (prefix-numeric-value arg)
-      (4 (progn
-            (setq m (intern (completing-read "Scratch buffer mode: " modes nil t)))
-            (my-scratch-buffer-setup region m)))
-      (_ (my-scratch-buffer-setup region)))))
-
-
-(map! "M-g s" #'my-scratch-buffer)
 
 
 
