@@ -14,9 +14,16 @@ compemacs emacs.git/src/emacs: emacs.git/Makefile
 help::
 	@echo "make [-j] comp            compile emacs from source"
 
+ifeq ($(shell hostname),holger)
+EMACS_EXTRA_CONF=--with-pgtk
+else
+EMACS_EXTRA_CONF=--with-toolkit-scroll-bars --with-xwidgets
+endif
+
 confemacs emacs.git/Makefile: emacs.git/configure
 	cd emacs.git; \
 	./configure \
+		$(EMACS_EXTRA_CONF) \
 		-C \
 		--with-cairo \
 		--with-dbus \
@@ -32,10 +39,8 @@ confemacs emacs.git/Makefile: emacs.git/configure
 		--with-small-ja-dic \
 		--with-sound=alsa \
 		--with-threads \
-		--with-toolkit-scroll-bars \
 		--with-x-toolkit=gtk3 \
 		--with-xml2 \
-		--with-xwidgets \
 		--without-gconf \
 		--without-gpm \
 		--without-gsettings \
