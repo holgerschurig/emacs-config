@@ -2411,14 +2411,14 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 
   (defhydra mastodon-help (:color blue :hint nil)
     "
-Timelines^^   Toots^^^^            Own Toots^^  Profiles^^        Users/Follows^^  Misc^^
-^^-----------------^^^^---------------------^^----------^^---------------------^^------^^-----
-_H_ome        _n_ext _p_rev        _r_eply      _A_uthors         follo_W_         _X_ lists
-_L_ocal       _T_hread of toot^^   wri_t_e      user _P_rofile    _N_otifications  f_I_lter
-_F_ederated   (un) _b_oost^^       _e_dit       ^^                _R_equests       _C_opy URL
-fa_V_orites   (un) _f_avorite^^    _d_elete     _O_wn             su_G_estions     _S_earch
-_#_ tagged    (un) p_i_n^^         ^^           _U_pdate own      _M_ute user      _h_elp
-_@_ mentions  (un) boo_k_mark^^    show _E_dits ^^                _B_lock user
+Timelines^^   Toots^^^^           Own Toots^^   Profiles^^      Users/Follows^^  Misc^^
+^^-----------------^^^^--------------------^^----------^^-------------------^^------^^-----
+_H_ome        _n_ext _p_rev       _r_eply       _A_uthors       follo_W_         _X_ lists
+_L_ocal       _T_hread of toot^^  wri_t_e       user _P_rofile  _N_otifications  f_I_lter
+_F_ederated   (un) _b_oost^^      _e_dit        ^^              _R_equests       _C_opy URL
+fa_V_orites   (un) _f_avorite^^   _d_elete      _O_wn           su_G_estions     _S_earch
+_#_ tagged    (un) p_i_n^^        ^^            _U_pdate own    _M_ute user      _h_elp
+_@_ mentions  (un) boo_k_mark^^   show _E_dits  ^^              _B_lock user
 boo_K_marks   _v_ote^^
 trendin_g_
 _u_pdate
