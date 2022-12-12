@@ -2388,78 +2388,90 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 
 ;; https://codeberg.org/martianh/mastodon.el
 
-;; Toots
-;; -----
-;; n                            Next toot
-;; p                            Previous toot
-;; b                            Boost / unboost toot
-;; c                            get spoiler text for toots with content warning
-;; C                            Copy toot URL to clipboard
-;; f                            Favorite / unfavorite toot (see also V command)
-;; i                            pIn / unpin toot
-;; k                            bookmarK / unbookmark toot (see also K command)
-;; r                            Reply to toot
-;; T                            Threat display of toots
-
-;; Own toots
-;; ---------
-;; D                            mastodon-toot--delete-and-redraft-toot
-;; E                            mastodon-toot--view-toot-edits
-;; d                            mastodon-toot--delete-toot
-;; e                            mastodon-toot--edit-toot-at-point
-;; t                            Toot write
-;; V                            Vote on toot (if poll is open)
-
-;; Timelines
-;; ---------
-;; H                            Home (private) timeline
-;; F                            Federated timeline
-;; #                            Tag timeline, e.g. #emacs
-;; L                            Local timeline (from connected mastodon server?)
-;; V                            faVorite display (see also f command)
-;; I                            fIlter settings
-
-;; Following
-;; ---------
-;; B                            Block user
-;; C-S-B                        Unblock user
-;; W                            folloW user
-;; C-S-W                        unfolloW user
-;; G                            mastodon-tl--get-follow-suggestions
-;; N                            mastodon-notifications-get
-;; R                            work on follow Request
-
-;; Profiles
-;; --------
-;; A                            Author of toot's profile
-;; O                            Own profile
-;; U                            Update own profile
-;; @                            my mentions
-;; P                            Profile of a user
-;; X                            show own lists
-
-;; Misc
-;; ----
-;; ?                            help
-;; h                            Help
-;; g                            update timeline
-;; u                            Update timeline
-;; TAB                          mastodon-tl--next-tab-item
-;; <backtab>                    mastodon-tl--previous-tab-item
-;; Q                            kill-buffer-and-window
-;; q                            kill-current-buffer
-;; K                            mastodon-profile--view-bookmarks (see also k command)
-;; M                            Mute user
-;; S-RET                        unmute user
-;; S                            mastodon-search--search-query
-
-
 (after! mastodon
   (setq mastodon-active-user "holgerschurig@gmail.com"
         mastodon-instance-url "https://social.tchncs.de"
         ;; mastodon-tl--enable-proportional-fonts t
         mastodon-tl--symbols nil
         mastodon-toot-display-orig-in-reply-buffer t)
+
+  ;; Not in the following hydra, but mentioned in "M-x describe-mode". Also, the README.org
+  ;; contains several functions that aren't in my hydra.
+  ;;
+  ;; TAB                     mastodon-tl--next-tab-item
+  ;; D                       mastodon-toot--delete-and-redraft-toot
+  ;; C-S-b                   mastodon-tl--unblock-user
+  ;; S-TAB                   mastodon-tl--previous-tab-item
+  ;; S-RET                   mastodon-tl--unmute-user
+  ;; C-S-w                   mastodon-tl--unfollow-user
+  ;; S-SPC                   scroll-down-command
+  ;; <backtab>               mastodon-tl--previous-tab-item
+  ;; C-M-i                   mastodon-tl--previous-tab-item
+  ;; M-n                     mastodon-tl--next-tab-item
+  ;; M-p                     mastodon-tl--previous-tab-item
+
+  (defhydra mastodon-help (:color blue :hint nil)
+    "
+Timelines^^   Toots^^^^            Own Toots^^  Profiles^^        Users/Follows^^  Misc^^
+^^-----------------^^^^---------------------^^----------^^---------------------^^------^^-----
+_H_ome        _n_ext _p_rev        _r_eply      _A_uthors         follo_W_         _X_ lists
+_L_ocal       _T_hread of toot^^   wri_t_e      user _P_rofile    _N_otifications  f_I_lter
+_F_ederated   (un) _b_oost^^       _e_dit       ^^                _R_equests       _C_opy URL
+fa_V_orites   (un) _f_avorite^^    _d_elete     _O_wn             su_G_estions     _S_earch
+_#_ tagged    (un) p_i_n^^         ^^           _U_pdate own      _M_ute user      _h_elp
+_@_ mentions  (un) boo_k_mark^^    show _E_dits ^^                _B_lock user
+boo_K_marks   _v_ote^^
+trendin_g_
+_u_pdate
+"
+    ("H" mastodon-tl--get-home-timeline)
+    ("L" mastodon-tl--get-local-timeline)
+    ("F" mastodon-tl--get-federated-timeline)
+    ("V" mastodon-profile--view-favourites)
+    ("#" mastodon-tl--get-tag-timeline)
+    ("@" mastodon-notifications--get-mentions)
+    ("K" mastodon-profile--view-bookmarks)
+    ("g" mastodon-search--trending-tags)
+    ("u" mastodon-tl--update :exit nil)
+
+    ("n" mastodon-tl--goto-next-toot)
+    ("p" mastodon-tl--goto-prev-toot)
+    ("T" mastodon-tl--thread)
+    ("b" mastodon-toot--toggle-boost :exit nil)
+    ("f" mastodon-toot--toggle-favourite :exit nil)
+    ("i" mastodon-toot--pin-toot-toggle :exit nil)
+    ("k" mastodon-toot--bookmark-toot-toggle :exit nil)
+    ("c" mastodon-tl--toggle-spoiler-text-in-toot)
+    ("v" mastodon-tl--poll-vote)
+
+    ("A" mastodon-profile--get-toot-author)
+    ("P" mastodon-profile--show-user)
+    ("O" mastodon-profile--my-profile)
+    ("U" mastodon-profile--update-user-profile-note)
+
+    ("W" mastodon-tl--follow-user)
+    ("N" mastodon-notifications-get)
+    ("R" mastodon-profile--view-follow-requests)
+    ("G" mastodon-tl--get-follow-suggestions)
+    ("M" mastodon-tl--mute-user)
+    ("B" mastodon-tl--block-user)
+
+    ("r" mastodon-toot--reply)
+    ("t" mastodon-toot)
+    ("e" mastodon-toot--edit-toot-at-point)
+    ("d" mastodon-toot--delete-toot)
+    ("E" mastodon-toot--view-toot-edits)
+
+    ("I" mastodon-tl--view-filters)
+    ("X" mastodon-tl--view-lists)
+    ("C" mastodon-toot--copy-toot-url)
+    ("S" mastodon-search--search-query)
+    ("h" describe-mode)
+
+    ("q" doom/escape)
+  )
+  (map! :map mastodon-mode-map
+        "?" #'mastodon-help/body)
 )
 
 
