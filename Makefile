@@ -40,7 +40,6 @@ confemacs emacs.git/Makefile: emacs.git/configure
 		--without-gpm \
 		--without-gsettings \
 		--without-hesiod \
-		--without-imagemagick \
 		--without-kerberos \
 		--without-kerberos5 \
 		--without-ns \
