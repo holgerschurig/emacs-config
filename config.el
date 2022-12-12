@@ -2470,7 +2470,8 @@ _u_pdate
     ("q" doom/escape)
   )
   (map! :map mastodon-mode-map
-        "?" #'mastodon-help/body)
+        "?" #'mastodon-help/body
+        "SPC" #'mastodon-tl--more)
 )
 
 
