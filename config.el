@@ -2384,6 +2384,86 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 
 
 
+;;; Package: comm/mastodon
+
+;; https://codeberg.org/martianh/mastodon.el
+
+;; Toots
+;; -----
+;; n                            Next toot
+;; p                            Previous toot
+;; b                            Boost / unboost toot
+;; c                            get spoiler text for toots with content warning
+;; C                            Copy toot URL to clipboard
+;; f                            Favorite / unfavorite toot (see also V command)
+;; i                            pIn / unpin toot
+;; k                            bookmarK / unbookmark toot (see also K command)
+;; r                            Reply to toot
+;; T                            Threat display of toots
+
+;; Own toots
+;; ---------
+;; D                            mastodon-toot--delete-and-redraft-toot
+;; E                            mastodon-toot--view-toot-edits
+;; d                            mastodon-toot--delete-toot
+;; e                            mastodon-toot--edit-toot-at-point
+;; t                            Toot write
+;; V                            Vote on toot (if poll is open)
+
+;; Timelines
+;; ---------
+;; H                            Home (private) timeline
+;; F                            Federated timeline
+;; #                            Tag timeline, e.g. #emacs
+;; L                            Local timeline (from connected mastodon server?)
+;; V                            faVorite display (see also f command)
+;; I                            fIlter settings
+
+;; Following
+;; ---------
+;; B                            Block user
+;; C-S-B                        Unblock user
+;; W                            folloW user
+;; C-S-W                        unfolloW user
+;; G                            mastodon-tl--get-follow-suggestions
+;; N                            mastodon-notifications-get
+;; R                            work on follow Request
+
+;; Profiles
+;; --------
+;; A                            Author of toot's profile
+;; O                            Own profile
+;; U                            Update own profile
+;; @                            my mentions
+;; P                            Profile of a user
+;; X                            show own lists
+
+;; Misc
+;; ----
+;; ?                            help
+;; h                            Help
+;; g                            update timeline
+;; u                            Update timeline
+;; TAB                          mastodon-tl--next-tab-item
+;; <backtab>                    mastodon-tl--previous-tab-item
+;; Q                            kill-buffer-and-window
+;; q                            kill-current-buffer
+;; K                            mastodon-profile--view-bookmarks (see also k command)
+;; M                            Mute user
+;; S-RET                        unmute user
+;; S                            mastodon-search--search-query
+
+
+(after! mastodon
+  (setq mastodon-active-user "holgerschurig@gmail.com"
+        mastodon-instance-url "https://social.tchncs.de"
+        ;; mastodon-tl--enable-proportional-fonts t
+        mastodon-tl--symbols nil
+        mastodon-toot-display-orig-in-reply-buffer t)
+)
+
+
+
 ;;; Package: comm/notmuch
 
 ;; https://github.com/gauteh/lieer

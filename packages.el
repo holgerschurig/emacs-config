@@ -71,6 +71,8 @@
 
 (package! notmuch-indicator)    ;; https://git.sr.ht/~protesilaos/notmuch-indicator -- do we have new mail?
 
+(package! mastodon)             ;; https://codeberg.org/martianh/mastodon.el
+
 ;;(package! nov)                ;; https://depp.brause.cc/nov.el/  -- read ePUB
 
 (package! nswbuff               ;; https://github.com/joostkremers/nswbuff  -- buffer switching
