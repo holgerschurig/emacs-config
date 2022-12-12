@@ -67,6 +67,7 @@ emacs.git/configure: emacs.git/.git/HEAD
 pullemacs emacs.git/.git/HEAD:
 ifeq ("$(wildcard emacs.git)","")
 	git clone git://git.savannah.gnu.org/emacs.git emacs.git
+	git checkout -b emacs-29 origin/emacs-29
 else
 	cd emacs.git; git pull
 endif
