@@ -2390,7 +2390,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 
 (after! mastodon
   (setq mastodon-active-user "holgerschurig@gmail.com"
-        mastodon-instance-url "https://social.tchncs.de"
+        mastodon-instance-url "https://emacs.ch" ;; "https://social.tchncs.de"
         ;; mastodon-tl--enable-proportional-fonts t
         mastodon-tl--symbols nil)
 
