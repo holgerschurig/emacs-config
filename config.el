@@ -2392,8 +2392,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   (setq mastodon-active-user "holgerschurig@gmail.com"
         mastodon-instance-url "https://social.tchncs.de"
         ;; mastodon-tl--enable-proportional-fonts t
-        mastodon-tl--symbols nil
-        mastodon-toot-display-orig-in-reply-buffer t)
+        mastodon-tl--symbols nil)
 
   ;; Not in the following hydra, but mentioned in "M-x describe-mode". Also, the README.org
   ;; contains several functions that aren't in my hydra.
