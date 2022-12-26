@@ -1527,7 +1527,7 @@ Used to preselect nearest headings and imenu items.")
   :general
   ("C-c p p"  #'completion-at-point) ;; capf
   ("C-c p t"  #'complete-tag)        ;; etags
-  ("C-c p d"  #'cape-dabbrev)        ;; or dabbrev-completion
+  ("C-c p d"  #'dabbrev-capf)        ;; or dabbrev-completion
   ("C-c p f"  #'cape-file)
   ("C-c p h"  #'cape-history)
   ("C-c p k"  #'cape-keyword)
