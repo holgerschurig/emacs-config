@@ -2,12 +2,16 @@ help::
 
 
 instemacs:
+ifeq ($(UID),0)
 	cd /usr/local/stow; stow --delete emacs
 	rm -rf /usr/local/stow/emacs
 	$(MAKE) -C emacs.git install prefix=/usr/local/stow/emacs
 	cd /usr/local/stow; stow emacs
+else
+	sudo $(MAKE) instemacs
+endif
 help::
-	@echo "sudo make instemacs       install compiled emacs"
+	@echo "make instemacs            install compiled emacs"
 
 compemacs emacs.git/src/emacs: emacs.git/Makefile
 	$(MAKE) -C emacs.git
