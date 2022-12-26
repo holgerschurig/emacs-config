@@ -12,7 +12,7 @@ help::
 compemacs emacs.git/src/emacs: emacs.git/Makefile
 	$(MAKE) -C emacs.git
 help::
-	@echo "make [-j] comp            compile emacs from source"
+	@echo "make [-j] compemacs       compile emacs from source"
 
 ifeq ($(shell hostname),holger)
 EMACS_EXTRA_CONF=--with-pgtk
@@ -59,12 +59,12 @@ confemacs emacs.git/Makefile: emacs.git/configure
 
 
 help::
-	@echo "make conf                 configure emacs"
+	@echo "make confemacs            configure emacs"
 
 emacs.git/configure: emacs.git/.git/HEAD
 	cd emacs.git; ./autogen.sh
 
-pullemacs emacs.git/.git/HEAD:
+getemacs emacs.git/.git/HEAD:
 ifeq ("$(wildcard emacs.git)","")
 	git clone git://git.savannah.gnu.org/emacs.git emacs.git
 	git checkout -b emacs-29 origin/emacs-29
@@ -72,7 +72,7 @@ else
 	cd emacs.git; git pull
 endif
 help::
-	@echo "make pullemacs            pull new emacs changes from git"
+	@echo "make getemacs             pull new emacs changes from git"
 
 clean:
 	cd emacs.git; git clean -fdx
