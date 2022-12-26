@@ -1088,9 +1088,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 ;;; Package: edit/symbol-overlay - jump / manipulate to symbols
 ;; https://github.com/wolray/symbol-overlay
 
-(map! "M-p"      #'symbol-overlay-jump-prev
-      "M-n"      #'symbol-overlay-jump-next
-      "M-<up>"   #'symbol-overlay-jump-prev
+(map! "M-<up>"   #'symbol-overlay-jump-prev
       "M-<down>" #'symbol-overlay-jump-next
       )
 
