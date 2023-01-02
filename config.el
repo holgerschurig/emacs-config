@@ -925,9 +925,6 @@ buffer."
   (modus-themes-region '(bg-only))
   (modus-themes-syntax '(alt-syntax))
 
-  :init
-  (modus-themes-load-themes)
-
   :config
   (load-theme 'modus-vivendi t)
 )
