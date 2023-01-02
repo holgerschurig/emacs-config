@@ -1475,7 +1475,6 @@ Used to preselect nearest headings and imenu items.")
   ("M-s r"    #'consult-ripgrep)
   ("M-s l"    #'consult-line)                ;; similar to swiper
   ("M-s L"    #'consult-line-multi)
-  ("M-s m"    #'consult-multi-occur)
   ("M-s k"    #'consult-keep-lines)
   ;; bound elsewhere:
   ;; - C-M .   consul-eglot-symbols
