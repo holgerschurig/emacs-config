@@ -285,7 +285,7 @@ If there are two windows displayed, act like \"C-x o\"."
     (eshell-read-aliases-list)
     (setq-local show-trailing-whitespace nil)
     (eshell/alias "v" "view-file $1")
-    (eshell/alias "x" "consult-file-externally $1")
+    (eshell/alias "x" "embark-open-externally $1")
     )
   (add-hook 'eshell-mode-hook #'my-eshell-setup)
 )
@@ -1479,7 +1479,6 @@ Used to preselect nearest headings and imenu items.")
   ;; bound elsewhere:
   ;; - C-M .   consul-eglot-symbols
   ;; unbound:
-  ;; - consult-file-externally
   ;; - consult-grep
   ;; - consult-man
   ;; - consult-focus-lines
