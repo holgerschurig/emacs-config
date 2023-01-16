@@ -90,9 +90,6 @@
 
 (package! rainbow-mode)         ;; https://github.com/emacs-straight/rainbow-mode  -- Colorize color names
 
-(package! straight              ;; fix "bin/doom sync" error
-  :pin "3eca39d")
-
 (package! symbol-overlay)       ;; https://github.com/wolray/symbol-overlay  -- highlight & jump
 
 (package! tempel)               ;; https://github.com/minad/tempel -- simple templates
