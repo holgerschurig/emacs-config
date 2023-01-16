@@ -50,8 +50,6 @@
 ;(unpin! t)
 
 
-(package! affe)                 ;; https://github.com/minad/affe -- Asynchronous Fuzzy Finder for Emacs
-
 (package! clean-aindent-mode)   ;; https://github.com/pmarinov/clean-aindent-mode -- clean auto-indent and backspace unindent
 
 (package! cape)                 ;; https://github.com/minad/cape -- completion at point extensions
