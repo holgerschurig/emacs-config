@@ -91,15 +91,13 @@ uninstall:
 
 
 
-# PDF_BUILD=~/.emacs.d/.local/straight/build-28.0.91/pdf-tools/build/server
-# $(PDF_BUILD)/configure:
-# 	cd $(PDF_BUILD); ./autogen.sh
-# $(PDF_BUILD)/Makefile: $(PDF_BUILD)/configure
-# 	cd $(PDF_BUILD); ./configure
-# comppdf: $(PDF_BUILD)/Makefile
-# 	$(MAKE) -C $(PDF_BUILD)
-# help::
-# 	@echo "make comppdf              compile pdf-utils"
+PDF_BUILD=~/.emacs.d/.local/straight/build-$(shell emacs -Q --batch --eval '(princ emacs-version)')/pdf-tools
+foo:
+	@echo $(PDF_BUILD)
+comppdf $(PDF_BUILD)/build/server/epdfinfo:
+	cd $(PDF_BUILD)/build/server; ./autobuild -i $(PDF_BUILD)
+help::
+	@echo "make comppdf              compile pdf-utils"
 
 
 
