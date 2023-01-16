@@ -1,5 +1,7 @@
 help::
 
+UID := (shell -u)
+
 
 instemacs:
 ifeq ($(UID),0)
