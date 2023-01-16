@@ -70,15 +70,18 @@ help::
 emacs.git/configure: emacs.git/.git/HEAD
 	cd emacs.git; ./autogen.sh
 
-getemacs emacs.git/.git/HEAD:
 ifeq ("$(wildcard emacs.git)","")
+getemacs emacs.git/.git/HEAD:
 	git clone git://git.savannah.gnu.org/emacs.git emacs.git
 	git checkout -b emacs-29 origin/emacs-29
-else
-	cd emacs.git; git pull
-endif
 help::
-	@echo "make getemacs             pull new emacs changes from git"
+	@echo "make getemacs             get current emacs-29 git"
+else
+pullemacs emacs.git/.git/HEAD:
+	cd emacs.git; git pull
+help::
+	@echo "make pullemacs            pull new emacs changes from git"
+endif
 
 clean:
 	cd emacs.git; git clean -fdx
