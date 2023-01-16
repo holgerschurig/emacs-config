@@ -114,13 +114,13 @@ pulldoom:
 help::
 	@echo "make pulldoom             pull new doom changes from git"
 
-sync:
+syncdoom:
 	cd ~/.emacs.d; bin/doom sync
+help::
+	@echo "make syncdoom             sync doom repos with packages.el"
+
+builddoom:
+	cd ~/.emacs.d; bin/doom build -r
 	cd ~/.emacs.d; bin/doom purge -g
 help::
-	@echo "make sync                 sync doom repos with packages.el"
-
-build:
-	cd ~/.emacs.d; bin/doom build
-help::
-	@echo "make build                rebuild binary doom modules"
+	@echo "make builddoom            rebuild binary doom modules"
