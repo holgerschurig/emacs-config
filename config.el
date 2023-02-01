@@ -907,9 +907,8 @@ buffer."
 
 
 ;;; Package: theme/modus-themes
-;; https://protesilaos.com/codelog/2019-08-07-emacs-modus-themes/
+;; https://protesilaos.com/emacs/modus-themes
 ;; https://gitlab.com/protesilaos/modus-themes
-;; https://github.com/protesilaos/modus-themes/blob/main/doc/modus-themes.org
 
 ;; Note: don't set doom-theme to modus-vivendi. Because if you do this, then
 ;; somehow comments are rendered in italic, if you customize
@@ -924,6 +923,17 @@ buffer."
   (modus-themes-mode-line '(borderless accented))
   (modus-themes-region '(bg-only))
   (modus-themes-syntax '(alt-syntax))
+  ;;(modus-themes-headings '((t . (rainbow))) )
+  (modus-themes-common-palette-overrides '((fg-heading-0 blue-cooler)
+                                           (fg-heading-1 magenta-cooler)
+                                           (fg-heading-2 magenta-warmer)
+                                           (fg-heading-3 blue)
+                                           (fg-heading-4 cyan)
+                                           (fg-heading-5 green-warmer)
+                                           (fg-heading-6 yellow)
+                                           (fg-heading-7 red)
+                                           (fg-heading-8 magenta)))
+
 
   :config
   (load-theme 'modus-vivendi t)
@@ -2078,6 +2088,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
         org-fontify-quote-and-verse-blocks nil
         org-fontify-whole-heading-line nil
         org-hide-leading-stars nil
+        org-hide-emphasis-markers t
         org-startup-indented nil)
   (electric-indent-mode -1)
   ;; PlantUML
