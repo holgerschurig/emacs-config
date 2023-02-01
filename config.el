@@ -1359,6 +1359,9 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 ;;; Package: modes/spell-fu
 
+;; To disable it in one org buffer
+;; -*- mode: Org; eval: (spell-fu-mode 0) -*-
+
 (after! spell-fu
   (spell-fu-dictionary-add (spell-fu-get-ispell-dictionary "de"))
   (spell-fu-dictionary-add (spell-fu-get-ispell-dictionary "en"))
