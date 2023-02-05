@@ -102,6 +102,8 @@
 
 ;;(unpin! magit notmuch)
 
+(unpin! mastodon)
+
 (disable-packages!
   better-jumper ;; looks like it only works in evil mode
   company-dict  ;; we don't load complete from dictionaries
