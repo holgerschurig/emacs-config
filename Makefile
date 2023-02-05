@@ -92,7 +92,7 @@ uninstall:
 
 
 PDF_BUILD=~/.emacs.d/.local/straight/build-$(shell emacs -Q --batch --eval '(princ emacs-version)')/pdf-tools
-foo:
+showbuild:
 	@echo $(PDF_BUILD)
 comppdf $(PDF_BUILD)/build/server/epdfinfo:
 	cd $(PDF_BUILD)/build/server; ./autobuild -i $(PDF_BUILD)
