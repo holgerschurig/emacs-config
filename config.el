@@ -794,6 +794,76 @@ buffer."
 
 
 
+;;; Package: core/treesit
+
+
+;; The compiled grammars are in ~/.emacs.d/.local/cache/tree-sitter/
+
+(use-package treesit
+  :init
+  (setq treesit-language-source-alist
+        '(;; Format:    (URL REVISION SOURCE-DIR CC C++))
+          ;;
+          ;; These treesitters have entries below to add them to major-mode-alist:
+          (bash       . ("https://github.com/tree-sitter/tree-sitter-bash"))
+          (c          . ("https://github.com/tree-sitter/tree-sitter-c"))
+          (cpp        . ("https://github.com/tree-sitter/tree-sitter-cpp"))
+          (css        . ("https://github.com/tree-sitter/tree-sitter-css"))
+          (go         . ("https://github.com/tree-sitter/tree-sitter-go"))
+          (javascript . ("https://github.com/tree-sitter/tree-sitter-javascript"))
+          (json       . ("https://github.com/tree-sitter/tree-sitter-json"))
+          (python     . ("https://github.com/tree-sitter/tree-sitter-python"))
+          (rust       . ("https://github.com/tree-sitter/tree-sitter-rust"))
+          (toml       . ("https://github.com/tree-sitter/tree-sitter-toml"))
+          (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src"))
+
+          ;; And these here don't have this yet
+          (html       . ("https://github.com/tree-sitter/tree-sitter-html"))
+          (lua        . ("https://github.com/Azganoth/tree-sitter-lua"))
+          (make       . ("https://github.com/alemuller/tree-sitter-make"))
+          (php        . ("https://github.com/tree-sitter/tree-sitter-php"))
+          (sql        . ("https://github.com/m-novikov/tree-sitter-sql"))
+
+          ;; Others tresitters grammars in https://github.com/orgs/tree-sitter/repositories
+          ;; julia, scala, java, c-sharp, jsdoc, embedded-template, haskell, ql-dbscheme,
+          ;; regex, verifog, qt (codeql)
+          ;; (zig     . ("https://github.com/GrayJack/tree-sitter-zig"))
+          ))
+
+  (setq major-mode-remap-alist
+        '((sh-mode . bash-ts-mode)
+          (c-mode . c-or-c++-ts-mode)
+          (c++-mode . c++-ts-mode)
+          (css-mode . css-ts-mode)
+          (go-mode . go-mod-ts-mode)
+          (javascript-mode . js-ts-mode)
+          (js-json-mode . json-ts-mode)
+          (python-mode . python-ts-mode)
+          (rust-mode . rust-ts-mode)
+          (toml-mode . toml-ts-mode)
+          (typescript-mode . typescript-ts-mode)
+
+          ;; Other modes in current Emacs GIT not yet utilized
+          ;; tsx-ts-mode
+          ;; cmake-ts-mode
+          ;; java-ts-mode
+          ;; ruby-ts-mode
+          ;; yaml-ts-mode
+          ))
+
+  :config
+  ;; https://www.nathanfurnal.xyz/posts/building-tree-sitter-langs-emacs/
+  (defun my-treesit-install-all-languages ()
+    "Install all languages specified by `treesit-language-source-alist'."
+    (interactive)
+    (let ((languages (mapcar 'car treesit-language-source-alist)))
+      (dolist (lang languages)
+        (treesit-install-language-grammar lang)
+        (message "`%s' parser was installed." lang)
+        (sit-for 0.75))))
+)
+
+
 ;;; Package: core/vc
 
 (after! vc-hooks
