@@ -45,6 +45,7 @@ confemacs emacs.git/Makefile: emacs.git/configure
 		--with-small-ja-dic \
 		--with-sound=alsa \
 		--with-threads \
+		--with-tree-sitter \
 		--with-x-toolkit=gtk3 \
 		--with-xml2 \
 		--without-gconf \
