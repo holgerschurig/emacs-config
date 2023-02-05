@@ -20,10 +20,10 @@ compemacs emacs.git/src/emacs: emacs.git/Makefile
 help::
 	@echo "make [-j] compemacs       compile emacs from source"
 
-ifeq ($(shell hostname),holger)
-EMACS_EXTRA_CONF=--with-pgtk
-else
+ifeq ($(WAYLAND_DISPLAY),)
 EMACS_EXTRA_CONF=--with-toolkit-scroll-bars --with-xwidgets
+else
+EMACS_EXTRA_CONF=--with-pgtk
 endif
 
 confemacs emacs.git/Makefile: emacs.git/configure
