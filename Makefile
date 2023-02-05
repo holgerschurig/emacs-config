@@ -1,6 +1,6 @@
 help::
 
-UID := (shell -u)
+UID := $(shell id -u)
 
 
 instemacs:
