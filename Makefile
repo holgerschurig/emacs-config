@@ -7,16 +7,16 @@ instemacs:
 ifeq ($(UID),0)
 	cd /usr/local/stow; stow --delete emacs
 	rm -rf /usr/local/stow/emacs
-	$(MAKE) -C emacs.git install prefix=/usr/local/stow/emacs
+	$(MAKE) --no-print-directory -C emacs.git install prefix=/usr/local/stow/emacs
 	cd /usr/local/stow; stow emacs
 else
-	sudo $(MAKE) instemacs
+	sudo $(MAKE) --no-print-directory instemacs
 endif
 help::
 	@echo "make instemacs            install compiled emacs"
 
 compemacs emacs.git/src/emacs: emacs.git/Makefile
-	$(MAKE) -C emacs.git
+	$(MAKE) --no-print-directory -C emacs.git
 help::
 	@echo "make [-j] compemacs       compile emacs from source"
 
