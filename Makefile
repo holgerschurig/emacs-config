@@ -3,6 +3,65 @@ help::
 UID := $(shell id -u)
 
 
+#############################################################################
+#
+#  Tree Sitter
+#
+#############################################################################
+
+
+# Get / Pull tree-sitter
+
+ifeq ("$(wildcard treesit.git)","")
+getts treesit.git/.git/HEAD:
+	git clone https://github.com/tree-sitter/tree-sitter.git treesit.git
+help::
+	@echo "make getts                get current tree-sitter"
+else
+pullts treesit.git/.git/HEAD:
+	cd treesit.git; git pull
+help::
+	@echo "make pullts               pull new tree-sitter changes from git"
+endif
+
+
+# Compile tree-siter
+
+compts: treesit.git/.git/HEAD
+	$(MAKE) --no-print-directory -C treesit.git
+cleants treesit.git/libtree-sitter.a:
+	cd treesit.git; git clean -fdx
+help::
+	@echo "make [-j] compts          compile tree-sitter from source"
+	@echo "make cleants              clean tree-sitter source tree"
+
+
+# Install / Uninstall
+
+instts: treesit.git/libtree-sitter.a
+ifeq ($(UID),0)
+	cd /usr/local/stow; stow --delete tree-sitter || true
+	rm -rf /usr/local/stow/tree-sitter
+	mkdir -p /usr/local/stow/tree-sitter
+	@echo ---------------
+	$(MAKE) --no-print-directory -C treesit.git install PREFIX=/usr/local/stow/tree-sitter
+	@echo ---------------
+	cd /usr/local/stow; stow tree-sitter
+	ldconfig
+else
+	sudo $(MAKE) --no-print-directory instts
+endif
+uninstts:
+	cd /usr/local/stow; stow --delete tree-sitter
+help::
+	@echo "make instts               install compiled tree-sitter"
+	@echo "make uninstts             uninstall tree-sitter"
+
+
+help::
+	@echo
+
+
 
 
 #############################################################################
