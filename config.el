@@ -796,59 +796,92 @@ buffer."
 
 ;;; Package: core/treesit
 
-
-;; The compiled grammars are in ~/.emacs.d/.local/cache/tree-sitter/
+;; https://archive.casouri.cc/note/2023/tree-sitter-starter-guide/index.html
+;; https://archive.casouri.cc/note/2023/tree-sitter-in-emacs-29/index.html
 
 (use-package treesit
   :init
   (setq treesit-language-source-alist
+        ;; The compiled grammars are in ~/.emacs.d/.local/cache/tree-sitter/
         '(;; Format:    (URL REVISION SOURCE-DIR CC C++))
-          ;;
-          ;; These treesitters have entries below to add them to major-mode-alist:
+          ;; see also: https://tree-sitter.github.io/tree-sitter/#parsers
+          ;; (agda       . ("https://github.com/tree-sitter/tree-sitter-agda")) ;; version mismatch
           (bash       . ("https://github.com/tree-sitter/tree-sitter-bash"))
           (c          . ("https://github.com/tree-sitter/tree-sitter-c"))
+          (c-sharp    . ("https://github.com/tree-sitter/tree-sitter-c-sharp"))
+          (clojure    . ("https://github.com/sogaiu/tree-sitter-clojure"))
+          (cmake      . ("https://github.com/uyha/tree-sitter-cmake"))
+          (cpp        . ("https://github.com/tree-sitter/tree-sitter-cpp"))
           (cpp        . ("https://github.com/tree-sitter/tree-sitter-cpp"))
           (css        . ("https://github.com/tree-sitter/tree-sitter-css"))
+          (d          . ("https://github.com/CyberShadow/tree-sitter-d"))
+          (dockerfile . ("https://github.com/camdencheek/tree-sitter-dockerfile"))
+          (elisp      . ("https://github.com/Wilfred/tree-sitter-elisp"))
+          (elixier    . ("https://github.com/elixir-lang/tree-sitter-elixir"))
+          (elm        . ("https://github.com/razzeee/tree-sitter-elm"))
+          (erlang     . ("https://github.com/WhatsApp/tree-sitter-erlang"))
+          (fennel     . ("https://github.com/TravonteD/tree-sitter-fennel"))
+          ;; (fluent     . ("https://github.com/tree-sitter/tree-sitter-fluent"))  ;; version mismatch
+          (glsl       . ("https://github.com/theHamsta/tree-sitter-glsl"))
           (go         . ("https://github.com/tree-sitter/tree-sitter-go"))
-          (javascript . ("https://github.com/tree-sitter/tree-sitter-javascript"))
-          (json       . ("https://github.com/tree-sitter/tree-sitter-json"))
-          (python     . ("https://github.com/tree-sitter/tree-sitter-python"))
-          (rust       . ("https://github.com/tree-sitter/tree-sitter-rust"))
-          (toml       . ("https://github.com/tree-sitter/tree-sitter-toml"))
-          (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src"))
-
-          ;; And these here don't have this yet
+          (haskell    . ("https://github.com/tree-sitter/tree-sitter-haskell"))
+          (hcl        . ("https://github.com/MichaHoffmann/tree-sitter-hcl"))
+          (heex       . ("https://github.com/phoenixframework/tree-sitter-heex"))
           (html       . ("https://github.com/tree-sitter/tree-sitter-html"))
+          (janet-simple . ("https://github.com/sogaiu/tree-sitter-janet-simple"))
+          (java       . ("https://github.com/tree-sitter/tree-sitter-java"))
+          (javascript . ("https://github.com/tree-sitter/tree-sitter-javascript"))
+          (jsdoc      . ("https://github.com/tree-sitter/tree-sitter-jsdoc"))
+          (json       . ("https://github.com/tree-sitter/tree-sitter-json"))
+          (julia      . ("https://github.com/tree-sitter/tree-sitter-julia"))
           (lua        . ("https://github.com/Azganoth/tree-sitter-lua"))
           (make       . ("https://github.com/alemuller/tree-sitter-make"))
+          (markdown   . ("https://github.com/ikatyang/tree-sitter-markdown"))
+          (nix        . ("https://github.com/cstrahan/tree-sitter-nix"))
+          (ocaml      . ("https://github.com/tree-sitter/tree-sitter-ocaml" "master" "ocaml/src"))
+          (org        . ("https://github.com/milisims/tree-sitter-org"))
+          (perl       . ("https://github.com/ganezdragon/tree-sitter-perl"))
+          (pgn        . ("https://github.com/rolandwalker/tree-sitter-pgn"))
           (php        . ("https://github.com/tree-sitter/tree-sitter-php"))
-          (sql        . ("https://github.com/m-novikov/tree-sitter-sql"))
-
-          ;; Others tresitters grammars in https://github.com/orgs/tree-sitter/repositories
-          ;; julia, scala, java, c-sharp, jsdoc, embedded-template, haskell, ql-dbscheme,
-          ;; regex, verifog, qt (codeql)
-          ;; (zig     . ("https://github.com/GrayJack/tree-sitter-zig"))
+          (prisma     . ("https://github.com/LumaKernel/tree-sitter-prisma"))
+          (proto      . ("https://github.com/mitchellh/tree-sitter-proto"))
+          (python     . ("https://github.com/tree-sitter/tree-sitter-python"))
+          (ql         . ("https://github.com/tree-sitter/tree-sitter-ql"))
+          (r          . ("https://github.com/r-lib/tree-sitter-r"))
+          (regex      . ("https://github.com/tree-sitter/tree-sitter-regex"))
+          (ruby       . ("https://github.com/tree-sitter/tree-sitter-ruby"))
+          (rust       . ("https://github.com/tree-sitter/tree-sitter-rust"))
+          (scala      . ("https://github.com/tree-sitter/tree-sitter-scala"))
+          (sqlite     . ("https://github.com/dhcmrlchtdj/tree-sitter-sqlite"))
+          (swift      . ("https://github.com/tree-sitter/tree-sitter-swift"))
+          (toml       . ("https://github.com/tree-sitter/tree-sitter-toml"))
+          (tsx        . ("https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src"))
+          (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src"))
+          (verilog    . ("https://github.com/tree-sitter/tree-sitter-verilog"))
+          (vhdl       . ("https://github.com/alemuller/tree-sitter-vhdl"))
+          (wgsl       . ("https://github.com/mehmetoguzderin/tree-sitter-wgsl"))
+          (yaml       . ("https://github.com/ikatyang/tree-sitter-yaml"))
+          (zig        . ("https://github.com/GrayJack/tree-sitter-zig"))
           ))
 
   (setq major-mode-remap-alist
-        '((sh-mode . bash-ts-mode)
-          (c-mode . c-or-c++-ts-mode)
+        '(;; Other modes in current Emacs GIT not yet utilized:
+          ;; see: rg -l -- -ts-mode emacs.git/lisp/ | sort
           (c++-mode . c++-ts-mode)
+          (c-mode . c-or-c++-ts-mode)
+          (csharp-mode . csharp-ts-mode)
+          (cmake-mode . cmake-ts-mode)
           (css-mode . css-ts-mode)
-          (go-mode . go-mod-ts-mode)
-          (javascript-mode . js-ts-mode)
+          (go-mode . go-ts-mode) ;; go-mod-ts-mode?
+          (java-mode . java-ts-mode)
+          (js-mode . js-ts-mode)
           (js-json-mode . json-ts-mode)
           (python-mode . python-ts-mode)
+          (ruby-mode . ruby-ts-mode)
           (rust-mode . rust-ts-mode)
-          (toml-mode . toml-ts-mode)
-          (typescript-mode . typescript-ts-mode)
-
-          ;; Other modes in current Emacs GIT not yet utilized
-          ;; tsx-ts-mode
-          ;; cmake-ts-mode
-          ;; java-ts-mode
-          ;; ruby-ts-mode
-          ;; yaml-ts-mode
+          (sh-mode . bash-ts-mode)
+          (conf-toml-mode . toml-ts-mode)
+          (yaml-mode . yaml-ts-mode)
           ))
 
   :config
