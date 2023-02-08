@@ -1566,6 +1566,7 @@ Used to preselect nearest headings and imenu items.")
   ("M-s F"    #'consult-locate)
   ;; Searching (mostly)
   ("M-s g"    #'consult-git-grep)
+  ("M-s i"    #'consult-info)
   ("M-s r"    #'consult-ripgrep)
   ("M-s l"    #'consult-line)                ;; similar to swiper
   ("M-s L"    #'consult-line-multi)
