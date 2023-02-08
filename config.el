@@ -1789,7 +1789,26 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 
 ;;; Package: lang/cc-mode
 
+(after! c-ts-mode
+  ;;(message "C-TS-MODE")
+
+  (defun my-c-ts-base-mode-setup ()
+    ;;(message "MY-C-TS-BASE-MODE-SETUP")
+
+    (c-ts-mode-set-style 'gnu)
+
+    (setq-local c-ts-mode-indent-offset 4)
+
+    ;; Default, might be overwrriten by dtrt-indent
+    (setq-local indent-tabs-mode t)
+
+    ;; use "// " for commenting in both C and C++
+    (setq comment-start "// "
+          comment-end ""))
+  (add-hook 'c-ts-base-mode-hook  #'my-c-ts-base-mode-setup))
+
 (after! cc-mode
+  ;;(message "CC-MODE")
 
   (map!
    :map c-mode-base-map
@@ -1807,7 +1826,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
     (modify-syntax-entry ?_ "w")
     (setq c-recognize-knr-p nil)
 
-    ;; might later be changed by dtrt-indent, but this is the default for new files
+    ;; Default, might be overwrriten by dtrt-indent
     (setq indent-tabs-mode t)
 
     ;; use "// " for commenting in both C and C++
