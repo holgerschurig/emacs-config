@@ -867,7 +867,7 @@ buffer."
   (setq major-mode-remap-alist
         '(;; Other modes in current Emacs GIT not yet utilized:
           ;; see: rg -l -- -ts-mode emacs.git/lisp/ | sort
-          (c++-mode . c++-ts-mode)
+          ;; (c++-mode . c++-ts-mode)   ;; c++ts-mode cannot handle Qt/C++
           (c-mode . c-or-c++-ts-mode)
           (csharp-mode . csharp-ts-mode)
           (cmake-mode . cmake-ts-mode)
