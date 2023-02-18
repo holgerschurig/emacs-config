@@ -121,6 +121,14 @@
                (reusable-frames . visible))
              )
 
+(defun my-kill-without-query ()
+  "Mark a buffer not modified, to make it killable without a
+ query. Use with kill-buffer-query-functions."
+  (not-modified) t)
+
+(setq kill-buffer-query-functions '(my-kill-without-query))
+
+
 
 ;; revert buffer with one keystroke
 (defun revert-buffer-no-confirm ()
@@ -321,6 +329,7 @@ If there are two windows displayed, act like \"C-x o\"."
 (use-package! files
   :custom
   (confirm-kill-emacs nil)
+  (confirm-kill-processes nil)
 
   ;; Look for sibling files (this is a list of (MATCH EXPANSION) entries)
   (find-sibling-rules '(("\\([^/]+\\)\\.c\\'" "\\1.h")
@@ -1362,7 +1371,12 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   ;; revert when revisiting
   (setq dired-auto-revert-buffer t)
   ;; work in a Norton Commander like mode if 2 panes are open
-  (setq dired-dwim-target t))
+  (setq dired-dwim-target t)
+  ;; less confirmations
+  (setq dired-confirm-shell-command nil
+        dired-no-confirm t
+        dired-deletion-confirmer '(lambda (x) t)
+        dired-recursive-deletes 'always))
 
 (after! dired-aux
   ;; If dwim, Isearch matches file names when initial point position
