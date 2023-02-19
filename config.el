@@ -1274,6 +1274,12 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
                                             (xref-location . list)
                                             (t . list)))
 
+  ;; Always come up with the various options
+  ;; use @ <key binding> or narrowing
+  ;;(setq embark-prompter #'embark-completing-read-prompter)
+  ;; or use the default, then use C-h
+  (setq embark-prompter #'embark-keymap-prompter)
+
   ;; Now that we don't use which-keys anymore, remove this indicator
   (remove-hook 'embark-indicators #'+vertico-embark-which-key-indicator)
   (remove-hook 'embark-indicators #'embark-minimal-indicator)
