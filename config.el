@@ -1122,6 +1122,14 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
+;;; Package: edit/link-hint
+
+(after! link-hint
+  (map! "M-g l"   #'link-hint-open-link)
+)
+
+
+
 ;;; Package: edit/indent
 
 ;; This variable is used in indent-for-tab-command and calls and calls out to
