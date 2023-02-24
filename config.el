@@ -2056,6 +2056,9 @@ Useful for prompts such as `eval-expression' and `shell-command'."
     (add-to-list 'completion-at-point-functions #'my-eglot-capf)
     (add-to-list 'completion-at-point-functions #'tempel-expand)
     (remove-hook 'completion-at-point-functions #'eglot-completion-at-point t)
+    ;; New feature in emacs-29 branch:
+    (when (boundp 'eglot-inlay-hints-mode)
+      (eglot-inlay-hints-mode))
     )
   (add-hook 'eglot-managed-mode-hook #'my-eglot-hook)
 )
