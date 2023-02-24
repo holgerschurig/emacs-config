@@ -356,7 +356,7 @@ If there are two windows displayed, act like \"C-x o\"."
 
 
 
-;;; Package: core/hippie-exp
+;;; Package: core/hippie-exp (disabled)
 
 ;; https://www.masteringemacs.org/article/text-expansion-hippie-expand
 (use-package! hippie-exp
@@ -794,7 +794,7 @@ buffer."
 
 
 
-;;; Package: core/treesit
+;;; Package: core/treesit (disabled)
 
 ;; https://archive.casouri.cc/note/2023/tree-sitter-starter-guide/index.html
 ;; https://archive.casouri.cc/note/2023/tree-sitter-in-emacs-29/index.html
