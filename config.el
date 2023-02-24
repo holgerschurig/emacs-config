@@ -800,6 +800,7 @@ buffer."
 ;; https://archive.casouri.cc/note/2023/tree-sitter-in-emacs-29/index.html
 
 (use-package treesit
+  :disabled t
   :init
   (setq treesit-language-source-alist
         ;; The compiled grammars are in ~/.emacs.d/.local/cache/tree-sitter/
@@ -811,7 +812,6 @@ buffer."
           (c-sharp    . ("https://github.com/tree-sitter/tree-sitter-c-sharp"))
           (clojure    . ("https://github.com/sogaiu/tree-sitter-clojure"))
           (cmake      . ("https://github.com/uyha/tree-sitter-cmake"))
-          (cpp        . ("https://github.com/tree-sitter/tree-sitter-cpp"))
           (cpp        . ("https://github.com/tree-sitter/tree-sitter-cpp"))
           (css        . ("https://github.com/tree-sitter/tree-sitter-css"))
           (d          . ("https://github.com/CyberShadow/tree-sitter-d"))
