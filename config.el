@@ -365,7 +365,7 @@ If there are two windows displayed, act like \"C-x o\"."
 
 
 
-;;; Package: core/hippie-exp
+;;; Package: core/hippie-exp (disabled)
 
 ;; https://www.masteringemacs.org/article/text-expansion-hippie-expand
 (use-package! hippie-exp
@@ -803,12 +803,13 @@ buffer."
 
 
 
-;;; Package: core/treesit
+;;; Package: core/treesit (disabled)
 
 ;; https://archive.casouri.cc/note/2023/tree-sitter-starter-guide/index.html
 ;; https://archive.casouri.cc/note/2023/tree-sitter-in-emacs-29/index.html
 
 (use-package treesit
+  :disabled t
   :init
   (setq treesit-language-source-alist
         ;; The compiled grammars are in ~/.emacs.d/.local/cache/tree-sitter/
@@ -820,7 +821,6 @@ buffer."
           (c-sharp    . ("https://github.com/tree-sitter/tree-sitter-c-sharp"))
           (clojure    . ("https://github.com/sogaiu/tree-sitter-clojure"))
           (cmake      . ("https://github.com/uyha/tree-sitter-cmake"))
-          (cpp        . ("https://github.com/tree-sitter/tree-sitter-cpp"))
           (cpp        . ("https://github.com/tree-sitter/tree-sitter-cpp"))
           (css        . ("https://github.com/tree-sitter/tree-sitter-css"))
           (d          . ("https://github.com/CyberShadow/tree-sitter-d"))
@@ -1128,6 +1128,14 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   (rainbow-mode t)
   (hydra-kurecolor/body))
 
+
+
+
+;;; Package: edit/link-hint
+
+(after! link-hint
+  (map! "M-g l"   #'link-hint-open-link)
+)
 
 
 
@@ -2068,6 +2076,9 @@ Useful for prompts such as `eval-expression' and `shell-command'."
     (add-to-list 'completion-at-point-functions #'my-eglot-capf)
     (add-to-list 'completion-at-point-functions #'tempel-expand)
     (remove-hook 'completion-at-point-functions #'eglot-completion-at-point t)
+    ;; New feature in emacs-29 branch:
+    (when (boundp 'eglot-inlay-hints-mode)
+      (eglot-inlay-hints-mode))
     )
   (add-hook 'eglot-managed-mode-hook #'my-eglot-hook)
 )

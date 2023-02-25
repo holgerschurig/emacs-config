@@ -93,9 +93,10 @@ As a special case for elisp, also consider '(setq compile-command
     "Remove element s from my-compile-commands."
     (setq my-compile-commands (remove s my-compile-commands)))
 
-  (embark-define-keymap embark-compile-map
-    "Keymap with compile commands actions"
-    ("d" my-compile-del))
+  (defvar-keymap embark-compile-map
+    :doc "Keymap with compile commands actions."
+    :parent embark-general-map
+    "d" #'my-compile-del)
 
   (add-to-list 'embark-keymap-alist '(compile . embark-compile-map)))
 
