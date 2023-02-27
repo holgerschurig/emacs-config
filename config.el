@@ -928,7 +928,24 @@ buffer."
 
 ;;; Package: core/window
 
+(setq ;;auto-window-vscroll nil
+      fast-but-imprecise-scrolling nil)
+
 (map! "C-x k" #'kill-buffer-and-window)
+
+
+
+;;; Package: core/xdisp
+
+(setq ;; hscroll-step 1
+      hscroll-margin 0
+      scroll-step 1
+      ;; scroll-margin 0
+      scroll-conservatively 101
+      scroll-up-aggressively 0.01
+      scroll-down-aggressively 0.01
+      scroll-preserve-screen-position 'always)
+
 
 
 ;;; Package: core/xref
