@@ -98,6 +98,9 @@
 
 (package! 0x0)                  ;; https://gitlab.com/willvaughn/emacs-0x0 -- pastebin like service
 
+;; use the built-in eglot from emacs-29 branch
+(package! eglot :built-in 'prefer)
+
 ;; Keeping this pinned make consult-buffer throw an error
 (unpin! embark consult vertico marginalia orderless)
 
