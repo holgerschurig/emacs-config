@@ -107,12 +107,13 @@ As a special case for elisp, also consider '(setq compile-command
 (defun my-compile-select-command ()
   "Interactively select a compilation command."
   (interactive)
-  (cond ((and (featurep 'consult) (featurep 'embark))
-         (consult--read my-compile-commands
-                        :prompt "cmd: "
-                        :category 'compile))
-         (t
-          (completing-read "cmd: " my-compile-commands))))
+  (let ((completion-styles '(substring)))
+    (cond ((and (featurep 'consult) (featurep 'embark))
+           (consult--read my-compile-commands
+                          :prompt "cmd: "
+                          :category 'compile))
+          (t
+           (completing-read "cmd: " my-compile-commands)))))
 
 
 (defun my-compile ()
