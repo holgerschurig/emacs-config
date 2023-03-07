@@ -2057,19 +2057,8 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 ;; CMake or Meson), you can use https://github.com/rizsotto/Bear
 
 (after! eglot
-  (map! :map eglot-mode-map
-        "C-c R" #'eglot-rename                        ;; unused in c-mode
-        "C-c a" #'eglot-code-actions                  ;; was embark-act, but that is also in C-;
-        "C-c d" #'eglot-looku
-        "C-c o" #'eglot-code-action-organize-imports  ;; unused in c-mode
-        ;; M-;    xref-go-back
-        ;; M-.    xref-find-definitions
-        ;; M-g e  consult-compile-error               ;; for errors, maybe even warnings
-        ;; M-g f  consult-flymake                     ;; for errors, maybe even warnings
-        ;; M-s u  xref-find-reference                 ;; like "search usage"
-        )
 
-  (setq eglot-stay-out-of '(eldoc company))
+  (setq eglot-stay-out-of '(company))
 
   (add-to-list 'eglot-server-programs '(c++-mode . ("clangd-15" "-j=2" "--clang-tidy")))
   (add-to-list 'eglot-server-programs '(c-mode  .  ("clangd-15" "-j=2" "--clang-tidy")))
@@ -2093,12 +2082,56 @@ Useful for prompts such as `eval-expression' and `shell-command'."
     (add-to-list 'completion-at-point-functions #'my-eglot-capf)
     (add-to-list 'completion-at-point-functions #'tempel-expand)
     (remove-hook 'completion-at-point-functions #'eglot-completion-at-point t)
-    ;; New feature in emacs-29 branch:
-    (when (boundp 'eglot-inlay-hints-mode)
-      (eglot-inlay-hints-mode))
     )
   (add-hook 'eglot-managed-mode-hook #'my-eglot-hook)
+
+  (defhydra eglot-help (:color blue :hint nil)
+    "
+^^Actions      ^^Find              ^^Modify       Toggles
+^^-------------^^------------------^^-------------^^-------
+_a_ctions      _r_eferences        _f_ormat       el_D_oc
+_E_xtract      de_c_laration       _B_ormat buf   _h_ints
+_I_nline       _d_efinition        _F_ix buf      fly_m_ake
+_R_ename var   _i_mplementation    _I_mports
+re_W_rite      _t_ype definition
+^^             consult _s_ymbol
+"
+    ("a" eglot-code-actions)
+    ("E" eglot-code-action-extract)
+    ("I" eglot-code-action-inline)
+    ("R" eglot-rename)
+    ("W" eglot-code-action-rewrite)
+
+    ("r" xref-find-references)
+    ("c" eglot-find-declaration)
+    ("d" xref-find-definitions)
+    ("i" eglot-find-implementation)
+    ("t" eglot-find-typeDefinition)
+    ("s" consult-eglot-symbols)
+
+    ("f" eglot-format)
+    ("B" eglot-format-buffer)
+    ("F" eglot-code-action-quickfix)
+    ("I" eglot-code-action-organize-imports)
+
+    ("D" eldoc-mode :exit nil)
+    ("h" eglot-inlay-hints-mode :exit nil)
+    ("m" flymake-mode :exit nil)
+  )
+
+
+  (map! :map eglot-mode-map
+        "C-c a" #'eglot-code-actions                  ;; was embark-act, but that is also in C-;
+        "C-c e" #'eglot-help/body
+        "C-c R" #'eglot-rename                        ;; unused in c-mode
+        ;; M-;    xref-go-back
+        ;; M-.    xref-find-definitions
+        ;; M-g e  consult-compile-error               ;; for errors, maybe even warnings
+        ;; M-g f  consult-flymake                     ;; for errors, maybe even warnings
+        ;; M-s u  xref-find-reference                 ;; like "search usage"
+        )
 )
+
 
 
 
