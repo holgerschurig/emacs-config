@@ -48,6 +48,9 @@ Example:
 '(\"make\"
  (\"make -C ~/test\")")
 
+(defvar my-compile-commands-max 100
+  "Max amount of compile history commands")
+
 
 ;; automatically save our my-compile-commands
 ;; (defvar savehist-minibuffer-history-variables)
@@ -82,7 +85,7 @@ As a special case for elisp, also consider '(setq compile-command
         ;; \s- whitespace character class
         (message "FOUND '%s'" s)
         (setq s (replace-regexp-in-string "\s-*\\*/$" "" s))
-        (add-to-list 'my-compile-commands s)))
+        (add-to-history 'my-compile-commands s my-compile-commands-max)))
     (goto-char (point-min))))
 
 
@@ -122,7 +125,7 @@ selected with completion help."
   (save-some-buffers t)
   (when (string= compile-command "")
       (setq compile-command (my-compile-select-command))
-      (add-to-list 'my-compile-commands compile-command))
+      (add-to-history 'my-compile-commands compile-command my-compile-commands-max))
   (setq compile-command (replace-regexp-in-string
                          " \\(%\\)"
                          (buffer-file-name (window-buffer))
@@ -139,7 +142,7 @@ selected with completion help."
   (interactive)
   (my-compile-get-commands-from-buffers)
   (setq compile-command (my-compile-select-command))
-  (add-to-list 'my-compile-commands compile-command)
+  (add-to-history 'my-compile-commands compile-command my-compile-commands-max)
   (unless (string= compile-command "")
     (my-compile)))
 
