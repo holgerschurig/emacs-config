@@ -94,7 +94,7 @@ As a special case for elisp, also consider '(setq compile-command
 (when (and (featurep 'consult) (featurep 'embark))
   (defun my-compile-del (s)
     "Remove element s from my-compile-commands."
-    (setq my-compile-commands (remove s my-compile-commands)))
+    (delete s my-compile-commands))
 
   (defvar-keymap embark-compile-map
     :doc "Keymap with compile commands actions."
