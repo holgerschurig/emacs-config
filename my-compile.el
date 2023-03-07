@@ -83,10 +83,11 @@ As a special case for elisp, also consider '(setq compile-command
     (while (re-search-forward "^..? @compile: \\(.*\\)$" nil t)
       (let ((s (match-string-no-properties 1)))
         ;; \s- whitespace character class
-        (message "FOUND '%s'" s)
         (setq s (replace-regexp-in-string "\s-*\\*/$" "" s))
-        (add-to-history 'my-compile-commands s my-compile-commands-max)))
-    (goto-char (point-min))))
+        ;; (message "FOUND '%s'" s)
+        (unless (member s my-compile-commands)
+          ;; (message "ADD '%s'" s)
+          (add-to-history 'my-compile-commands s my-compile-commands-max))))))
 
 
 (require 'consult nil nil)
