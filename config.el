@@ -658,80 +658,39 @@ If there are two windows displayed, act like \"C-x o\"."
 
 ;;; Package: core/simple
 
-(defun my-scratch-buffer ()
-  "Produce / switch to a scratch buffer.
+;; The following may be of interest to people who (a) are happy with
+;; "C-w" and friends for killing and yanking, (b) use
+;; "transient-mark-mode", (c) also like the traditional Unix tty
+;; behaviour that "C-w" deletes a word backwards. It tweaks "C-w" so
+;; that, if the mark is inactive, it deletes a word backwards instead
+;; of killing the region. Without that tweak, the C-w would create an
+;; error text without an active region.
+;; http://www.emacswiki.org/emacs/DefaultKillingAndYanking#toc2
 
-If region is active, copy its contents to the new scratch
-buffer."
-  (interactive)
-  (let ((region (with-current-buffer (current-buffer)
-                  (if (region-active-p)
-                      (buffer-substring-no-properties
-                       (region-beginning)
-                       (region-end))
-                    "")))
-         (m))
-    (scratch-buffer)
-    (insert region)
-    (pop-to-buffer "*scratch*")))
-
-(map! "M-g s" #'my-scratch-buffer)
-
-
-
-;;; Package: core/sh
-
-(eval-after-load 'sh
-  (setq sh-indent-statement-after-and nil)
-)
-
-
-
-;;; Package: core/shr
-
-(after! shr
-  (setq shr-color-visible-luminance-min 80
-        shr-bullet "• "
-        shr-folding-mode t))
-
-
-;;; Package: core/simple
-
-(after! simple
-  ;; The following may be of interest to people who (a) are happy with
-  ;; "C-w" and friends for killing and yanking, (b) use
-  ;; "transient-mark-mode", (c) also like the traditional Unix tty
-  ;; behaviour that "C-w" deletes a word backwards. It tweaks "C-w" so
-  ;; that, if the mark is inactive, it deletes a word backwards instead
-  ;; of killing the region. Without that tweak, the C-w would create an
-  ;; error text without an active region.
-  ;; http://www.emacswiki.org/emacs/DefaultKillingAndYanking#toc2
-
-  (defadvice kill-region (before unix-werase activate compile)
-    "When called interactively with no active region, delete a single word
+(defadvice kill-region (before unix-werase activate compile)
+  "When called interactively with no active region, delete a single word
   backwards instead."
-    (interactive
-     (if mark-active (list (region-beginning) (region-end))
-       (list (save-excursion (backward-word 1) (point)) (point)))))
+  (interactive
+   (if mark-active (list (region-beginning) (region-end))
+     (list (save-excursion (backward-word 1) (point)) (point)))))
 
+;; React faster to keystrokes
+(setq idle-update-delay 0.35)
 
-  ;; React faster to keystrokes
-  (setq idle-update-delay 0.35)
+;; Be silent when killing text from read only buffer:
+(setq kill-read-only-ok t)
 
-  ;; Be silent when killing text from read only buffer:
-  (setq kill-read-only-ok t)
+;; Read quoted chars with radix 16 --- octal is sooooo 1960
+(setq read-quoted-char-radix 16)
 
-  ;; Read quoted chars with radix 16 --- octal is sooooo 1960
-  (setq read-quoted-char-radix 16)
+;; Deleting past a tab normally changes tab into spaces. Don't do
+;; that, kill the tab instead.
+(setq backward-delete-char-untabify-method nil)
 
-  ;; Deleting past a tab normally changes tab into spaces. Don't do
-  ;; that, kill the tab instead.
-  (setq backward-delete-char-untabify-method nil)
+(setq kill-ring-max 500)
 
-  (setq kill-ring-max 500)
-
-  ;; Don't type C-u C-SPC C-u C-SPC to pop 2 marks, now you can do C-u C-SPC C-SPC
-  (setq set-mark-command-repeat-pop t))
+;; Don't type C-u C-SPC C-u C-SPC to pop 2 marks, now you can do C-u C-SPC C-SPC
+(setq set-mark-command-repeat-pop t)
 
 (defun my-next-error (&optional arg)
   (interactive)
@@ -783,6 +742,41 @@ buffer."
       "S-<f8>"  #'my-previous-error)
 
 
+(defun my-scratch-buffer ()
+  "Produce / switch to a scratch buffer.
+
+If region is active, copy its contents to the new scratch
+buffer."
+  (interactive)
+  (let ((region (with-current-buffer (current-buffer)
+                  (if (region-active-p)
+                      (buffer-substring-no-properties
+                       (region-beginning)
+                       (region-end))
+                    "")))
+         (m))
+    (scratch-buffer)
+    (insert region)
+    (pop-to-buffer "*scratch*")))
+
+(map! "M-g s" #'my-scratch-buffer)
+
+
+
+;;; Package: core/sh
+
+(eval-after-load 'sh
+  (setq sh-indent-statement-after-and nil)
+)
+
+
+
+;;; Package: core/shr
+
+(after! shr
+  (setq shr-color-visible-luminance-min 80
+        shr-bullet "• "
+        shr-folding-mode t))
 
 
 ;;; Package: core/timer-list
