@@ -2079,6 +2079,11 @@ Useful for prompts such as `eval-expression' and `shell-command'."
     )
   (add-hook 'eglot-managed-mode-hook #'my-eglot-hook)
 
+  ;; Default to have the hints mode off in managed buffers
+  (defun my-eglot-managed-hook ()
+    (eglot-inlay-hints-mode -1))
+  (add-hook 'eglot-managed-mode-hook #'my-eglot-managed-hook)
+
   (defhydra eglot-help (:color blue :hint nil)
     "
 ^^Actions      ^^Find              ^^Modify       Toggles
