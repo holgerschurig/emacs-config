@@ -692,6 +692,9 @@ If there are two windows displayed, act like \"C-x o\"."
 ;; Don't type C-u C-SPC C-u C-SPC to pop 2 marks, now you can do C-u C-SPC C-SPC
 (setq set-mark-command-repeat-pop t)
 
+;; If we copy an unmarked region, don't move the cursor
+(setq copy-region-blink-predicate nil)
+
 (defun my-next-error (&optional arg)
   (interactive)
   (let ((p))
