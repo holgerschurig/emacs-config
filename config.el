@@ -738,31 +738,13 @@ If there are two windows displayed, act like \"C-x o\"."
       "M-l" #'downcase-dwim
       "M-u" #'upcase-dwim
 
+      "M-g s" #'scratch-buffer
+
       "M-o" #'delete-blank-lines  ; opposite of C-o
 
       ;; Error navigation
       "<f8>"    #'my-next-error
       "S-<f8>"  #'my-previous-error)
-
-
-(defun my-scratch-buffer ()
-  "Produce / switch to a scratch buffer.
-
-If region is active, copy its contents to the new scratch
-buffer."
-  (interactive)
-  (let ((region (with-current-buffer (current-buffer)
-                  (if (region-active-p)
-                      (buffer-substring-no-properties
-                       (region-beginning)
-                       (region-end))
-                    "")))
-         (m))
-    (scratch-buffer)
-    (insert region)
-    (pop-to-buffer "*scratch*")))
-
-(map! "M-g s" #'my-scratch-buffer)
 
 
 
