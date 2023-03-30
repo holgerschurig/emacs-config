@@ -75,8 +75,7 @@ help::
 
 ifeq ("$(wildcard emacs.git)","")
 getemacs emacs.git/.git/HEAD:
-	git clone git://git.savannah.gnu.org/emacs.git emacs.git
-	git checkout -b emacs-29 origin/emacs-29
+	git clone --single-branch --branch=emacs-29 git://git.savannah.gnu.org/emacs.git emacs.git
 help::
 	@echo "make getemacs             get current emacs-29 git"
 else
