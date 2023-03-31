@@ -705,7 +705,7 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 (setq set-mark-command-repeat-pop t)
 
 ;; If we copy an unmarked region, don't move the cursor
-(setq copy-region-blink-predicate nil)
+;; (setq copy-region-blink-predicate #'region-indistinguishable-p)
 
 (defun my-next-error (&optional arg)
   (interactive)
