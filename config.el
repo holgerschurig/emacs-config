@@ -943,11 +943,13 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 
 (use-package! xref
   :custom
-  (xref-file-name-display 'project-relative) ;; was abs
-  (xref-search-program 'ripgrep)             ;; was grep
+  (xref-file-name-display 'project-relative)                   ;; was abs
+  (xref-search-program 'ripgrep)                               ;; was grep
+  (xref-show-xrefs-function #'consult-xref)                    ;; was xref--show-xref-buffer
+  (xref-show-definitions-function #'consult-xref)              ;; was xref-definition-xref-buffer
 
   :general
-  ("M-s u" #'xref-find-references)           ;; like "search usage"
+  ("M-s u" #'xref-find-references)                             ;; like "search usage"
   (xref--xref-buffer-mode-map "RET" #'xref-quit-and-goto-xref) ;; was xref-goto-xref
   (xref--xref-buffer-mode-map "TAB" #'xref-goto-xref)          ;; was xref-quit-and-goto-xref
 
