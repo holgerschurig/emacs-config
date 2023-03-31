@@ -909,6 +909,9 @@ If there are two windows displayed, act like \"C-x o\"."
 
 (map! "C-x k" #'kill-buffer-and-window)
 
+(map! "S-<f5>" #'previous-buffer
+      "S-<f6>" #'next-buffer)
+
 
 
 ;;; Package: core/xdisp
@@ -970,19 +973,6 @@ If there are two windows displayed, act like \"C-x o\"."
   ;; for example).
   (define-key minibuffer-local-completion-map " " nil t)
   (define-key minibuffer-local-must-match-map " " nil t))
-
-
-
-
-
-;;; Package: gui/nswbuff
-
-(after! nswbuff
-  (setq nswbuff-display-intermediate-buffers t
-        nswbuff-exclude-buffer-regexps '("^ .*" "^\\*.*\\*")))
-
-(map! "S-<f5>" #'nswbuff-switch-to-previous-buffer
-      "S-<f6>" #'nswbuff-switch-to-next-buffer)
 
 
 
