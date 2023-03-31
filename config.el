@@ -344,6 +344,18 @@ If there are two windows displayed, act like \"C-x o\"."
   ;; Alternatively put backup files into their own directory
   (backup-directory-alist (list (cons "." (locate-user-emacs-file "tmp/bak/"))))
 
+  :config
+  ;; prevent "Modification-flag cleared" message spam
+  (defun not-modified (&optional arg)
+    "Mark current buffer as unmodified, not needing to be saved.
+With prefix ARG, mark buffer as modified, so \\[save-buffer] will save.
+
+It is not a good idea to use this function in Lisp programs, because it
+prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
+  (declare (interactive-only set-buffer-modified-p))
+  (interactive "P")
+  (set-buffer-modified-p arg))
+
   :general
   ("<f2>" #'save-buffer)
   ("M-<f6>" #'find-sibling-file)
