@@ -1582,8 +1582,8 @@ Used to preselect nearest headings and imenu items.")
   ("M-g o"    #'consult-outline)
   ("M-g k"    #'consult-mark)
   ("M-g K"    #'consult-global-mark)
-  ("M-g i"    #'consult-imenu)
-  ("M-g I"    #'consult-imenu-multi)
+  ("M-g i"    #'consult-imenu-multi)
+  ("M-g I"    #'consult-imenu)               ;; prefer M-s o (consult-outline) instead of this
 
   ;; M-s bindings (search-map)
   ("M-s e"    #'consult-isearch-history)
