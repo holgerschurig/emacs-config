@@ -1032,7 +1032,12 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
                                            (fg-heading-5 green-warmer)
                                            (fg-heading-6 yellow)
                                            (fg-heading-7 red)
-                                           (fg-heading-8 magenta)))
+                                           (fg-heading-8 magenta)
+
+                                           (bg-tab-current "#ff4000")
+                                           (bg-tab-other   "#777777")
+                                           (bg-tab-bar     "#777777")
+                                          ))
 
 
   :config
