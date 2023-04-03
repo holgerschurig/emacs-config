@@ -1416,7 +1416,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   (add-hook 'helpful-mode-hook #'visual-line-mode)
 
   (map! :map helpful-mode-map
-        "a" #'consult-apropos))
+        "a" #'describe-symbol))
 
 (map! "<f1> h" #'helpful-at-point
       :map helpful-mode-map
@@ -1612,7 +1612,7 @@ Used to preselect nearest headings and imenu items.")
   ;; - consult-yank-from-kill-ring
   ;; - consult-yank-replace
 
-  (help-map "a" #'consult-apropos)
+  (help-map "a" #'describe-symbol)
 
   (isearch-mode-map "M-e"   #'consult-isearch-history)     ;; was: isearch-edit-string
   (isearch-mode-map "M-s e" #'consult-isearch-history)     ;; was: isearch-edit-string
