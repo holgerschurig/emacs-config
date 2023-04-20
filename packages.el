@@ -59,6 +59,8 @@
 
 (package! dts-mode)             ;; https://github.com/bgamari/dts-mode -- Device tree mode
 
+(package! jinx)                 ;; https://github.com/minad/jinx -- Spell checker
+
 (package! kurecolor)            ;; https://github.com/emacsfodder/kurecolor  -- edit colors inline
 
 (package! meson-mode)           ;; https://github.com/wentasah/meson-mode
