@@ -503,15 +503,6 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 
 
 
-;;; Package: core/ispell
-
-(after! ispell
-  (add-to-list 'ispell-skip-region-alist '("+begin_src" . "+end_src"))
-)
-
-
-
-
 ;;; Package: core/register
 
 (after! register
@@ -1434,6 +1425,32 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
+;;; Package: modes/js-jink
+
+;; use: left mouse button for jinx-correct
+;;      M-x jinx-languages
+;;      M-$ correct this word
+;;      C-u M-$ correct whole buffer
+;;      ~/.config/enchant/enchant.ordering to set back ends, see
+;; https://abiword.github.io/enchant/ and
+;; https://abiword.github.io/enchant/src/enchant.html for more info
+
+(use-package jinx
+  :defer t
+
+  ;; jinx-camel-modes add maybe python-mode and nim-mode?
+
+  :init
+  (dolist (hook '(text-mode-hook prog-mode-hook conf-mode-hook))
+    (add-hook hook #'jinx-mode))
+
+  :general
+  ;; since we don't ue ispell, we can re-assign it's keybinding
+  ("M-$"   #'jinx-correct)
+)
+
+
+
 ;;; Package: modes/js-mode
 
 (use-package! js-mode
@@ -1485,23 +1502,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
-;;; Package: modes/spell-fu
-
-;; To disable it in one org buffer
-;; -*- mode: Org; eval: (spell-fu-mode 0) -*-
-
-(after! spell-fu
-  (spell-fu-dictionary-add (spell-fu-get-ispell-dictionary "de"))
-  (spell-fu-dictionary-add (spell-fu-get-ispell-dictionary "en"))
-  (spell-fu-dictionary-add
-   (spell-fu-get-personal-dictionary "de" (concat spell-fu-directory "/de.pws")))
-  (spell-fu-dictionary-add
-   (spell-fu-get-personal-dictionary "en" (concat spell-fu-directory "/en.pws")))
-)
-
-
-
-;;; Package: completion/consult
+;; Package: completion/consult
 
 (use-package! consult
   :config
