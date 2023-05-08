@@ -598,7 +598,12 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 
 ;;; Package: core/pixel-scroll
 
-(pixel-scroll-precision-mode 1)
+(use-package! pixel-scroll
+  :defer t
+
+  :hook
+  (org-mode-hook . pixel-scroll-precision-mode)
+)
 
 
 
