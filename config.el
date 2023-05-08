@@ -618,14 +618,6 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 ;; Remove project:   M-x project-forget-project
 ;; otherwise, see (describe-map project-prefix-map)
 
-(defun my-find-file (&optional arg)
-  (interactive)
-  "Without ARG calls project-find-file. With ARG, call project-find-file."
-  (if arg
-      (call-interactively #'find-file)
-    (call-interactively #'project-find-file)))
-(general-define-key [remap find-file] #'my-find-file)
-
 
 
 ;;; Package: core/rectangle
