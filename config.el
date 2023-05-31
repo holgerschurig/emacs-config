@@ -1300,7 +1300,8 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   ;; Always prompt via vertico?  Something like "C-a u" won't then work :-(
   ;; (setq embark-prompter 'embark-completing-read-prompter)
 
-  (define-key! :keymaps '(embark-collect-mode-map)
+  (define-key!
+    :keymaps '(embark-collect-mode-map)
     "M-t" #'toggle-truncate-lines)
 
   (define-key!
