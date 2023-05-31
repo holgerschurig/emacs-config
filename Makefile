@@ -80,6 +80,8 @@ help::
 	@echo "make getemacs             get current emacs-29 git"
 else
 pullemacs emacs.git/.git/HEAD:
+	@# sometimes, if we have old compilation artefacts, the configure step will behave weird.
+	cd ~/.emacs.d; git clean -fdx
 	cd emacs.git; git pull
 help::
 	@echo "make pullemacs            pull new emacs changes from git"
