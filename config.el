@@ -476,6 +476,13 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
   ;; Scrolling (including C-s) while searching:
   (setq isearch-allow-scroll t)
 
+  ;; Show number of matches
+  (setq isearch-lazy-count t)
+
+  ;; Whitespace searches for anything nongreedy. Note that
+  ;; isearch-forward-regexp still matches literal space
+  (setq search-whitespace-regexp ".*?")
+
   ;; Do less flickering be removing highlighting immediately
   (setq lazy-highlight-initial-delay 0))
 
