@@ -180,7 +180,7 @@ are two windows displayed, act like C-x1:"
 If there are two windows displayed, act like \"C-x o\"."
   (interactive)
   (if (one-window-p t)
-      (switch-to-buffer (other-buffer (current-buffer) 1))
+      (mode-line-other-buffer)
     (other-window -1)))
 
 (map! "<f6>" #'my-switch-to-buffer)
