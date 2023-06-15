@@ -668,7 +668,7 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 ;; The following may be of interest to people who (a) are happy with
 ;; "C-w" and friends for killing and yanking, (b) use
 ;; "transient-mark-mode", (c) also like the traditional Unix tty
-;; behaviour that "C-w" deletes a word backwards. It tweaks "C-w" so
+;; behavior that "C-w" deletes a word backwards. It tweaks "C-w" so
 ;; that, if the mark is inactive, it deletes a word backwards instead
 ;; of killing the region. Without that tweak, the C-w would create an
 ;; error text without an active region.
@@ -713,6 +713,10 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
       (ignore-errors
         (save-excursion (call-interactively #'spell-fu-goto-next-error)
                         (cl-pushnew (point) p))))
+    (when (and (boundp 'jinx-mode) jinx-mode)
+      (ignore-errors
+        (save-excursion (call-interactively #'jinx-next)
+                        (cl-pushnew (point) p))))
     (ignore-errors
       (save-excursion (call-interactively #'next-error arg)
                       (cl-pushnew (point) p)))
@@ -729,6 +733,10 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
     (when (and (boundp 'spell-fu-mode) spell-fu-mode)
       (ignore-errors
         (save-excursion (call-interactively #'spell-fu-goto-previous-error)
+                        (cl-pushnew (point) p))))
+    (when (and (boundp 'jinx-mode) jinx-mode)
+      (ignore-errors
+        (save-excursion (call-interactively #'jinx-previous)
                         (cl-pushnew (point) p))))
     (ignore-errors
       (save-excursion (call-interactively #'previous-error arg)
@@ -1437,11 +1445,17 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 ;;; Package: modes/js-jink
 
+;; https://github.com/minad/jinx
+;;
 ;; use: left mouse button for jinx-correct
-;;      M-x jinx-languages
-;;      M-$ correct this word
+;;      M-x     jinx-languages
+;;      C-M-$   also calls jinx-languages
+;;      M-$     correct this word
 ;;      C-u M-$ correct whole buffer
-;;      ~/.config/enchant/enchant.ordering to set back ends, see
+;;      ~/.config/enchant/enchant.ordering to set back ends
+;;              better have it contain this line: *:hunspell,nuspell,aspell
+;;
+;; For more info on Libenchant, consider:
 ;; https://abiword.github.io/enchant/ and
 ;; https://abiword.github.io/enchant/src/enchant.html for more info
 
@@ -1457,6 +1471,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   :general
   ;; since we don't ue ispell, we can re-assign it's keybinding
   ("M-$"   #'jinx-correct)
+  ("C-M-$" #'jinx-languages)
 )
 
 
