@@ -1390,13 +1390,16 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   (setq dired-listing-switches "-laGh1v --group-directories-first")
   ;; revert when revisiting
   (setq dired-auto-revert-buffer t)
-  ;; work in a Norton Commander like mode if 2 panes are open
+  ;; work in a Norton Commander like mode if 2 dired panes are open
   (setq dired-dwim-target t)
   ;; less confirmations
   (setq dired-confirm-shell-command nil
         dired-no-confirm t
         dired-deletion-confirmer '(lambda (x) t)
-        dired-recursive-deletes 'always))
+        dired-recursive-deletes 'always)
+  ;; less details, use '(' inside dired to toggle them
+  (add-hook 'dired-mode-hook #'dired-hide-details-mode)
+  )
 
 (after! dired-aux
   ;; If dwim, Isearch matches file names when initial point position
