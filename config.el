@@ -91,6 +91,26 @@
 
 
 
+;;; Package: core/bookmark
+
+;; taken from https://protesilaos.com/codelog/2023-06-28-emacs-mark-register-basics/
+
+(defun my-bookmark-save-no-prompt (&rest _)
+  "Run `bookmark-save' without prompts.
+
+The intent of this function is to be added as an :after advice to
+`bookmark-set-internal'.  Concretely, this means that when
+`bookmark-set-internal' is called, this function is called right
+afterwards.  We set this up because there is no hook after
+setting a bookmark and we want to automatically save bookmarks at
+that point."
+  (funcall 'bookmark-save))
+
+(advice-add 'bookmark-set-internal :after 'my-bookmark-save-no-prompt)
+
+
+
+
 ;;; Package: core/browse-url
 
 ;; see https://www.emacswiki.org/emacs/BrowseUrl#h5o-7
