@@ -75,6 +75,9 @@
 
 ;;(package! nov)                ;; https://depp.brause.cc/nov.el/  -- read ePUB
 
+(package! current-window-only   ;; https://www.youtube.com/watch?v=Qut1oO6nqgA
+  :recipe (:host github :repo "FrostyX/current-window-only"))
+
 (unpin! org-contrib)            ;; to fix: Warning (straight): Could not reset to commit "e3183921779eb4f36a2170ebb58e43eb0e84a07e" in repository "org-contrib"
 
 (package! org-reveal)           ;; https://github.com/yjwen/org-reveal/ -- slide shows
