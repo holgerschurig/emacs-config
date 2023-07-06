@@ -130,6 +130,13 @@ that point."
 ;; attached to it:
 (remove-hook 'kill-buffer-query-functions 'process-kill-buffer-query-function)
 
+;; Make the messages be displayed full-screen
+(add-to-list 'display-buffer-alist
+             `(,(rx bos "*Messages*" eos)
+               (display-buffer-reuse-window display-buffer-same-window)
+               (reusable-frames . visible))
+             )
+
 (defun my-kill-without-query ()
   "Mark a buffer not modified, to make it killable without a
  query. Use with kill-buffer-query-functions."
@@ -377,6 +384,16 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 
 
 
+;;; Package: core/help
+
+;; makes things like  M-x describe bindings  pop up full screen
+(add-to-list 'display-buffer-alist
+             `(,(rx bos "*Help*" eos)
+               (display-buffer-reuse-window display-buffer-same-window)
+               (reusable-frames . visible))
+             )
+
+
 
 ;;; Package: core/hippie-exp (disabled)
 
@@ -615,6 +632,16 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
   :hook
   (org-mode-hook . pixel-scroll-precision-mode)
 )
+
+
+
+;;; Package: core/proced
+
+(add-to-list 'display-buffer-alist
+             `(,(rx bos "*Proced*" eos)
+               (display-buffer-reuse-window display-buffer-same-window)
+               (reusable-frames . visible))
+             )
 
 
 
@@ -990,14 +1017,15 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 
 ;;; Package: gui/current-window-only
 
-(require 'current-window-only)
-(current-window-only-mode)
+(after! current-window-only
+  (current-window-only-mode)
 
-;; The advice break delete-other-window and also my F5 `my-explode-window`, so
-;; let's undo this:
-(advice-remove
+  ;; The advice break delete-other-window and also my F5 `my-explode-window`, so
+  ;; let's undo this:
+  (advice-remove
    'delete-other-windows
    #'current-window-only--delete-other-windows)
+)
 
 
 
@@ -1436,6 +1464,12 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 ;;; Package: modes/helpful
 
 (after! helpful
+  ;; Make helpful frames displayed "full-screen"
+  (add-to-list 'display-buffer-alist
+               `(,(rx bos "*helpful" )
+                 (display-buffer-reuse-window display-buffer-same-window)
+                 (reusable-frames . visible))
+               )
   (add-hook 'helpful-mode-hook #'visual-line-mode)
 
   (map! :map helpful-mode-map
