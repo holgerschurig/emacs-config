@@ -515,7 +515,7 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 ;;; Package: core/register
 
 (after! register
-  (setq register-preview-delay 1)
+  (setq register-preview-delay 0)
   (setq register-preview-function #'consult-register-format))
 
 
