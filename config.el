@@ -2258,6 +2258,8 @@ re_W_rite      _t_ype definition
 
 ;;; Package: lang/python
 
+;; Don't forget that we can indent/detent blocks with C-x TAB ...
+
 (after! python
     (defun my-python-setup ()
       (interactive)
