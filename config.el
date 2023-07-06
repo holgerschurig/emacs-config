@@ -170,6 +170,8 @@ that point."
       ;;(princ (format "new buffer: %s.\n" firstbuf))
       (bury-buffer)
       (switch-to-buffer firstbuf))))
+
+
 (defun my-explode-window ()
   "If there is only one window displayed, act like C-x2. If there
 are two windows displayed, act like C-x1:"
