@@ -991,6 +991,12 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 (require 'current-window-only)
 (current-window-only-mode)
 
+;; The advice break delete-other-window and also my F5 `my-explode-window`, so
+;; let's undo this:
+(advice-remove
+   'delete-other-windows
+   #'current-window-only--delete-other-windows)
+
 
 
 
