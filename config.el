@@ -2346,7 +2346,6 @@ re_W_rite      _t_ype definition
         org-fontify-quote-and-verse-blocks nil
         org-fontify-whole-heading-line nil
         org-hide-leading-stars nil
-        org-hide-emphasis-markers t
         org-startup-indented nil
         org-agenda-files '("~/.doom.d/todo.org"))
   (electric-indent-mode -1)
