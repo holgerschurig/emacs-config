@@ -2358,6 +2358,9 @@ re_W_rite      _t_ype definition
   (remove-hook 'org-open-at-point-functions #'doom-set-jump-h)
 
   (setq org-return-follows-link t)
+
+  (map! "C-c l"   #'org-store-link
+        "C-c C-l" #'org-insert-link)
 )
 
 
