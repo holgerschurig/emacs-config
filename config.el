@@ -1503,9 +1503,10 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
   ;; jinx-camel-modes add maybe python-mode and nim-mode?
 
-  :init
-  (dolist (hook '(text-mode-hook prog-mode-hook conf-mode-hook))
-    (add-hook hook #'jinx-mode))
+  :hook
+  (text-mode-hook . jinx-mode)
+  (conf-mode-hook . jinx-mode)
+  ;; (prog-mode-hook . jinx-mode)
 
   :general
   ;; since we don't ue ispell, we can re-assign it's keybinding
