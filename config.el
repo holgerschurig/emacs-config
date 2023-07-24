@@ -1482,7 +1482,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
-;;; Package: modes/js-jink
+;;; Package: modes/jinx
 
 ;; https://github.com/minad/jinx
 ;;
