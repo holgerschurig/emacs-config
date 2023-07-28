@@ -312,8 +312,11 @@ If there are two windows displayed, act like \"C-x o\"."
     (setq-local show-trailing-whitespace nil)
     (eshell/alias "v" "view-file $1")
     (eshell/alias "x" "embark-open-externally $1")
+    (eshell/alias "ll" "ls -l $*")
     )
   (add-hook 'eshell-mode-hook #'my-eshell-setup)
+
+  ;; (add-to-list 'eshell-modules-list 'eshell-smart)
 )
 
 (use-package em-banner
@@ -322,6 +325,22 @@ If there are two windows displayed, act like \"C-x o\"."
   :custom
   (eshell-banner-message "")
 )
+
+(use-package em-hist
+  :after eshell
+
+  :config
+  (setq eshell-hist-ignoredups t)
+)
+
+;; (use-package em-smart
+;;   :after eshell
+;;   :config
+;;   ;; Put cursor at end of last command, so that I can easily change command line options
+;;   (setq eshell-where-to-jump 'end)
+;;   ;; don't keep cursor at end of commands without output
+;;   (setq eshell-review-quick-commands t)
+;; )
 
 (use-package em-term
   :after eshell
