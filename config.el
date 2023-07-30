@@ -1420,6 +1420,9 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   (add-hook 'embark-indicators #'embark-highlight-indicator 20)
   (add-hook 'embark-indicators #'embark-isearch-highlight-indicator 30)
 
+  ;; Emphasize current line a bit better
+  (add-hook 'embark-collect-mode #'hl-line-mode)
+
   ;; This allows you to use C-; after a prefix key, e.g. "C-x C-;" to get
   ;; an embark-narrowable list of items
   (setq prefix-help-command #'embark-prefix-help-command)
