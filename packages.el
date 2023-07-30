@@ -111,7 +111,7 @@
 (unpin! mastodon)
 
 ;; Behaves weird with emacs-29
-(unpin! magit magit-popup mastodon)
+(unpin! magit magit-popup)
 
 (disable-packages!
   better-jumper ;; looks like it only works in evil mode
