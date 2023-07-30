@@ -1122,6 +1122,68 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 
 
 
+;;; Package: edit/avy
+
+;; https://github.com/abo-abo/avy
+;; https://karthinks.com/software/avy-can-do-anything/
+;; https://github.com/karthink/.emacs.d/blob/master/lisp/setup-avy.el
+;; https://melpa.org/#/?q=avy
+
+;; Jump to char(s): M-j <quickly enter char(s)> <wait 0.2s> <enter highligher>
+;; Action:          M-j <quickly enter char(s)> <wait 0.2s> <enter action> <enter highligher>
+
+(use-package! avy
+  :commands (avy-goto-word-1 avy-goto-char-2 avy-goto-char-timer)
+
+  :config
+  (setq avy-timeout-seconds 0.20)
+
+  ;; Use more letters for targets (i.E. not just the home row
+  ;; HINT: Only use keyss here that aren't in avy-dispatch-alist
+  (setq avy-keys '(?a ?s ?d ?f ?g ?h ?j ?l ?o
+                   ?v ?b ?n ?, ?, ?. ?-))
+
+  ;; ORIGINAL:
+  ;; HINT: Only use keys here that aren't in avy-keys
+  ;; HINT: use ?\C-m or ?M-m for modifier keys
+  (setq avy-dispatch-alist'((?c . avy-action-mark-to-char)
+                            (?e . avy-action-embark)
+                            ;;(?h . avy-action-helpful) ;; do this via embark
+                            (?i . avy-action-ispell)    ;; TODO: do this with jinx-correct, without turning on jinx-mode?
+                            (?k . avy-action-kill-stay)
+                            (?t . avy-action-teleport)
+                            (?m . avy-action-mark)
+                            (?n . avy-action-copy)
+                            (?x . avy-action-exchange)
+                            (?y . avy-action-yank)
+                            (?Y . avy-action-yank-line)
+                            (?z . avy-action-zap-to-char)
+                            ))
+
+  (defun avy-action-embark (pt)
+    (unwind-protect
+        (save-excursion
+          (goto-char pt)
+          (embark-act))
+      (select-window
+       (cdr (ring-ref avy-ring 0))))
+    t)
+
+  (defun avy-action-exchange (pt)
+    "Exchange sexp at PT with the one at point."
+    (set-mark pt)
+    (transpose-sexps 0))
+
+  (defun avy-action-mark-to-char (pt)
+    (activate-mark)
+    (goto-char pt))
+
+  :general
+  ("M-j"        '(avy-goto-char-timer       :wk "Avy goto char timer"))
+  (isearch-mode-map "M-j" #'avy-isearch)
+)
+
+
 ;;; Package: edit/better-jumper
 
 ;; I disabled it in my packages.el, but some other parts of Doom think its enabled.

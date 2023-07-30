@@ -50,6 +50,8 @@
 ;(unpin! t)
 
 
+(package! avy)                  ;; https://github.com/abo-abo/avy -- cursor jumping and more
+
 (package! clean-aindent-mode)   ;; https://github.com/pmarinov/clean-aindent-mode -- clean auto-indent and backspace unindent
 
 (package! cape)                 ;; https://github.com/minad/cape -- completion at point extensions
@@ -103,6 +105,8 @@
 ;; use the built-in packages from emacs-29 branch
 (package! eglot :built-in 'prefer)
 (package! project :built-in 'prefer)
+
+(unpin! avy)
 
 ;; Keeping this pinned make consult-buffer throw an error
 (unpin! embark consult vertico marginalia orderless)
