@@ -1386,6 +1386,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 ;;      go to an URL        and hit "C-; e" to open the URL in eww (or "C-, b" to browse it normally)
 ;; generally hit "C-, C-h" to get help on available actions, which sometimes
 ;; display more entries than which-keys
+;; Switch scope with                "C-; C-;"
 
 (after! embark
 
