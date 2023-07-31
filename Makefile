@@ -196,7 +196,7 @@ help::
 
 
 syncdoom:
-	cd ~/.emacs.d; bin/doom sync
+	cd ~/.emacs.d; bin/doom sync -u -j 4
 help::
 	@echo "make syncdoom             sync doom repos with packages.el"
 
