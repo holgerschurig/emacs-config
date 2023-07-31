@@ -316,6 +316,25 @@ If there are two windows displayed, act like \"C-x o\"."
     )
   (add-hook 'eshell-mode-hook #'my-eshell-setup)
 
+  (defun eshell/pro (project)
+    (interactive)
+    (let* ((home  (getenv "HOME"))
+           (prodir (concat home "/d/" project))
+           (srcdir (concat "/usr/src/" project)))
+      (if (f-directory-p prodir)
+          (eshell/cd prodir)
+        (if (f-directory-p srcdir)
+            (eshell/cd srcdir)
+          (error "project %s not found" project)))))
+
+  (defun my-eshell-clear ()
+    (interactive)
+    (eshell/clear-scrollback)
+    (eshell-send-input))
+
+  (map! :map eshell-mode-map
+        "C-l" #'my-eshell-clear)
+
   ;; (add-to-list 'eshell-modules-list 'eshell-smart)
 )
 
