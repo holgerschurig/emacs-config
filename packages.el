@@ -59,7 +59,12 @@
 (package! corfu                 ;; https://github.com/minad/corfu -- completion overlay
   :recipe (:files (:defaults "extensions/*.el")))
 
+(package! current-window-only   ;; https://www.youtube.com/watch?v=Qut1oO6nqgA
+  :recipe (:host github :repo "FrostyX/current-window-only"))
+
 (package! dts-mode)             ;; https://github.com/bgamari/dts-mode -- Device tree mode
+
+(package! eglot :built-in 'prefer)
 
 (package! jinx)                 ;; https://github.com/minad/jinx -- Spell checker
 
@@ -77,9 +82,6 @@
 
 ;;(package! nov)                ;; https://depp.brause.cc/nov.el/  -- read ePUB
 
-(package! current-window-only   ;; https://www.youtube.com/watch?v=Qut1oO6nqgA
-  :recipe (:host github :repo "FrostyX/current-window-only"))
-
 (unpin! org-contrib)            ;; to fix: Warning (straight): Could not reset to commit "e3183921779eb4f36a2170ebb58e43eb0e84a07e" in repository "org-contrib"
 
 (package! org-reveal)           ;; https://github.com/yjwen/org-reveal/ -- slide shows
@@ -92,6 +94,8 @@
 
 (package! pdf-tools)            ;; https://github.com/vedang/pdf-tools  -- PDF viewer on steroids
 
+(package! project :built-in 'prefer)
+
 (package! rainbow-mode)         ;; https://github.com/emacs-straight/rainbow-mode  -- Colorize color names
 
 (package! symbol-overlay)       ;; https://github.com/wolray/symbol-overlay  -- highlight & jump
@@ -100,11 +104,9 @@
 
 (package! wgrep)                ;; https://github.com/mhayashi1120/Emacs-wgrep  -- writable grep
 
-(package! 0x0)                  ;; https://gitlab.com/willvaughn/emacs-0x0 -- pastebin like service
+(package! use-package :built-in 'prefer)
 
-;; use the built-in packages from emacs-29 branch
-(package! eglot :built-in 'prefer)
-(package! project :built-in 'prefer)
+(package! 0x0)                  ;; https://gitlab.com/willvaughn/emacs-0x0 -- pastebin like service
 
 (unpin! avy)
 
