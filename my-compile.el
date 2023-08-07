@@ -53,8 +53,8 @@ Example:
 
 
 ;; automatically save our my-compile-commands
-;; (defvar savehist-minibuffer-history-variables)
-;; (add-to-list 'savehist-minibuffer-history-variables 'my-compile-commands)
+(defvar savehist-minibuffer-history-variables)
+(add-to-list 'savehist-minibuffer-history-variables 'my-compile-commands)
 
 
 (defun my-compile-get-commands-from-buffers ()
