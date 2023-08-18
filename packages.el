@@ -76,6 +76,8 @@
  :recipe (:host github :repo "protesilaos/modus-themes"
           :files ("*.el")))
 
+(package! nerd-icons)           ;; M-x nerd-icons-install-fonts
+
 (package! notmuch-indicator)    ;; https://git.sr.ht/~protesilaos/notmuch-indicator -- do we have new mail?
 
 (package! mastodon)             ;; https://codeberg.org/martianh/mastodon.el
