@@ -706,6 +706,14 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 
 
 
+;;; Package: core/savehist
+
+;; The kill-ring can blow up the .local/cache/savehist to 8 megabytes or more
+
+(remove-hook 'savehist-additional-variables 'kill-ring)
+
+
+
 ;;; Package: core/sendmail
 
 (after! sendmail
