@@ -535,7 +535,18 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
   (setq isearch-lazy-count t)
 
   ;; Do less flickering be removing highlighting immediately
-  (setq lazy-highlight-initial-delay 0))
+  (setq lazy-highlight-initial-delay 0)
+
+  ;; Let isearch wrap
+  (setq isearch-wrap-function
+        (lambda ()
+          (if isearch-forward
+              (goto-char (window-start))
+            (goto-char (window-end))))
+        isearch-wrap-pause 'no)
+)
+
+
 
 
 
