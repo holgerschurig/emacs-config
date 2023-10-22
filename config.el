@@ -1287,12 +1287,6 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
-;;; Package: edit/newcomment
-
-(map! "C-c c" #'comment-dwim)
-
-
-
 ;;; Package: edit/smartparens
 
 ;; I hate this package, so I don't want it. But I must define some fake functions
