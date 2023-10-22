@@ -97,6 +97,7 @@
 (package! pdf-tools)            ;; https://github.com/vedang/pdf-tools  -- PDF viewer on steroids
 
 (package! project :built-in 'prefer)
+(package! use-package :built-in 'prefer)
 
 (package! rainbow-mode)         ;; https://github.com/emacs-straight/rainbow-mode  -- Colorize color names
 
