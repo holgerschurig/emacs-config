@@ -140,6 +140,7 @@
   ivy-bibtex    ;; I won't write bibliographic entries
   ivy-rtags     ;; I'll use lsp/eglot. And no ivy
   jsonnet-mode  ;; would be pulled in by modules/data, but I don't need it
+  link-hint     ;; I use embark
   org-yt        ;; youtube links in org-mode?  Who wants that?  :-)
   rtags         ;; I'll use lsp/eglot
   smartparens   ;; makes many M-<cursor keypad> keys behave weird
