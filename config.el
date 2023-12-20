@@ -2443,6 +2443,30 @@ re_W_rite      _t_ype definition
 
 
 
+;;; Package: org/org-agenda
+
+(use-package org-agenda
+  :config
+  (setq org-capture-templates
+        '(("e" "Einkaufen" entry (file+headline "~/Sync/Data/TODO.org" "Einkaufen Neu")
+           "* TODO %?\n")
+          ("t" "TODO" entry (file+headline "~/Sync/Data/TODO.org" "Aufgaben")
+           "* TODO %?\n")))
+  :general
+  ("C-c a" #'org-agenda)
+)
+
+
+
+
+;;; Package: org/org-capture
+
+(use-package org-capture
+  :general
+  ("C-c c" #'org-capture))
+
+
+
 ;;; Package: org/org-roam
 
 (use-package! org-roam
