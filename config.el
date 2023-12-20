@@ -1807,7 +1807,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   :init
   ;; Add `completion-at-point-functions', used by `completion-at-point'.
 
-  (defalias 'my-capf (cape-super-capf #'cape-dabbrev
+  (defalias 'my-capf (cape-capf-super #'cape-dabbrev
                                       #'cape-file
                                       #'cape-dict
                                       #'cape-keyword)
