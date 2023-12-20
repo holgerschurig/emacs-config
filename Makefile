@@ -91,8 +91,18 @@ endif
 # Configure Emacs
 
 ifeq ($(WAYLAND_DISPLAY),)
-EMACS_EXTRA_CONF=--with-toolkit-scroll-bars --with-xwidgets
+# The NOX settings:
+# EMACS_EXTRA_CONF+=--with-x-toolkit=no
+# EMACS_EXTRA_CONF+=--without-toolkit-scroll-bars
+# EMACS_EXTRA_CONF+=--without-xft
+# EMACS_EXTRA_CONF+=--without-xaw3d
+# The Lucid settings:
+EMACS_EXTRA_CONF+=--with-x-toolkit=lucid
+EMACS_EXTRA_CONF+=--without-toolkit-scroll-bars
+EMACS_EXTRA_CONF+=--without-xft
+EMACS_EXTRA_CONF+=--without-xaw3d
 else
+# Optimize for Wayland
 EMACS_EXTRA_CONF=--with-pgtk
 endif
 
@@ -110,7 +120,7 @@ confemacs emacs.git/Makefile: emacs.git/configure
 		--with-gnutls \
 		--with-gpm=no \
 		--with-harfbuzz \
-		--with-imagemagick \
+		--without-imagemagick \
 		--with-json \
 		--with-modules \
 		--with-native-compilation=aot \
@@ -121,6 +131,7 @@ confemacs emacs.git/Makefile: emacs.git/configure
 		--with-tree-sitter \
 		--with-x-toolkit=gtk3 \
 		--with-xml2 \
+		--without-compress-install \
 		--without-gconf \
 		--without-gpm \
 		--without-gsettings \
@@ -131,6 +142,7 @@ confemacs emacs.git/Makefile: emacs.git/configure
 		--without-pop \
 		--without-selinux \
 		--without-wide-int \
+		--without-xinput2 \
 		--without-xft \
 		--without-xim \
 		CFLAGS='-g -O2 -march=native -ffile-prefix-map=/home/holger=. -fstack-protector-strong -Wformat -Werror=format-security -Wall -fno-omit-frame-pointer'
