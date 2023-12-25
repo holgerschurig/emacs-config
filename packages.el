@@ -66,8 +66,6 @@
 
 (package! eglot :built-in 'prefer)
 
-(package! websocket)            ;; https://github.com/ahyatt/emacs-websocket
-
 (package! jinx)                 ;; https://github.com/minad/jinx -- Spell checker
 
 (package! kurecolor)            ;; https://github.com/emacsfodder/kurecolor  -- edit colors inline
@@ -106,6 +104,8 @@
 (package! symbol-overlay)       ;; https://github.com/wolray/symbol-overlay  -- highlight & jump
 
 (package! tempel)               ;; https://github.com/minad/tempel -- simple templates
+
+(package! websocket)            ;; https://github.com/ahyatt/emacs-websocket
 
 (package! wgrep)                ;; https://github.com/mhayashi1120/Emacs-wgrep  -- writable grep
 
