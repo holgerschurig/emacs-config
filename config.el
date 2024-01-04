@@ -1355,6 +1355,28 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
+;;; Package: misc/gptel
+
+(use-package! gptel
+  :commands (gptel gptel-menu gptel-send gptel-set-topic)
+
+  :config
+  ;; (setq! gptel-api-key "your key")
+
+  (setq-default gptel-model "mistral:latest")
+
+  (setq-default gptel-backend (gptel-make-ollama
+                               "Ollama"                               ;Any name of your choosing
+                               :host "localhost:11434"
+                                        ; Installed models:
+                               :models '("mistral:latest" "nous-hermes:latest")
+                               :stream t))
+
+  (add-to-list 'gptel-directives '(english . "Translate the following to english:"))
+  (add-to-list 'gptel-directives '(deutsch . "Translate the following to german:"))
+  (add-to-list 'gptel-directives '(typo  . "Fix typos, grammar and style of the following:"))
+)
+
 ;;; Package: misc/embark
 
 ;; The following keymaps are already existing, so you can just add actions to
