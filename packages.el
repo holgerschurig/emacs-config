@@ -66,6 +66,8 @@
 
 (package! eglot :built-in 'prefer)
 
+(package! gptel)                ;; https://github.com/karthink/gptel
+
 (package! jinx)                 ;; https://github.com/minad/jinx -- Spell checker
 
 (package! kurecolor)            ;; https://github.com/emacsfodder/kurecolor  -- edit colors inline
