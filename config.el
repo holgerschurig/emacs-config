@@ -2088,7 +2088,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 
     ;; Modify completions, elisp-completion-at-point wouldn't allow me to
     ;; complete elisp things in comments.
-    (defalias 'my-elisp-capf (cape-super-capf #'elisp-completion-at-point
+    (defalias 'my-elisp-capf (cape-capf-super #'elisp-completion-at-point
                                               #'cape-dabbrev
                                               #'cape-file
                                               #'cape-dict
@@ -2215,7 +2215,7 @@ Useful for prompts such as `eval-expression' and `shell-command'."
   ;; remove-from-list :-)
   (remove-hook 'completion-category-defaults '(eglot (styles flex basic)))
 
-  (defalias 'my-eglot-capf (cape-super-capf ;;#'tempel-expand
+  (defalias 'my-eglot-capf (cape-capf-super ;;#'tempel-expand
                                             #'eglot-completion-at-point
                                             #'cape-file
                                             #'cape-dabbrev
