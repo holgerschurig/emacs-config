@@ -93,8 +93,7 @@
     :recipe (:host github :repo "hakimel/reveal.js"
              :files ("css" "dist" "js" "plugin")))
 
-;; (package! ox-hugo            ;; https://github.com/kaushalmodi/ox-hugo
-;;   :recipe (:host github :repo "kaushalmodi/ox-hugo" :branch "main"))
+(package! ox-hugo)              ;; https://github.com/kaushalmodi/ox-hugo
 
 (package! pdf-tools)            ;; https://github.com/vedang/pdf-tools  -- PDF viewer on steroids
 

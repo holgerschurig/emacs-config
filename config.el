@@ -2563,12 +2563,12 @@ re_W_rite      _t_ype definition
 
 ;; https://ox-hugo.scripter.co/
 
-;; (use-package! ox-hugo
-;;   :commands (org-hugo-export-wim-to-md)
-;;   :after ox
-;; )
+(use-package! ox-hugo
+  :commands (org-hugo-export-wim-to-md)
+  :after ox
+)
 (after! org
-    (defun org2hugo-ensure-properties ()
+  (defun org2hugo-ensure-properties ()
     (let ((mandatory `(("EXPORT_HUGO_SECTION" . "en")
                        ("EXPORT_FILE_NAME" . "filename")
                        ("EXPORT_DATE" . ,(format-time-string "%Y-%m-%d" (org-current-time)))))
@@ -2577,7 +2577,7 @@ re_W_rite      _t_ype definition
           (first))
 
       ;; Insert path to content directory
-      (unless (car (plist-get (org-export-get-environment 'hugo) :hugo-base-dir))
+      (unless (plist-get (org-export-get-environment 'hugo) :hugo-base-dir)
         (save-excursion
           (goto-char 1)
           (insert "#+HUGO_BASE_DIR: ../\n\n")))
@@ -2608,22 +2608,23 @@ re_W_rite      _t_ype definition
 
   (defun org2hugo ()
     (interactive)
-    (save-window-excursion
-      (unless (org2hugo-ensure-properties)
-        (let ((title (org-entry-get nil "TITLE" t))
-              (file "/tmp/blog.md") ;; TODO
-              (blog
-               ))
+    (progn ;save-window-excursion
+      (save-excursion
+        (unless (org2hugo-ensure-properties)
+          (let ((title (org-entry-get nil "TITLE" t))
+                (file "/tmp/blog.md") ;; TODO
+                (blog
+                 ))
 
-          ;; Create block
-          (end-of-line)
-          (search-backward ":EXPORT_HUGO_SECTION:")
-          (org-hugo-export-wim-to-md)
-          ))))
+            ;; Create block
+            (end-of-line)
+            (search-backward ":EXPORT_HUGO_SECTION:")
+            (org-hugo-export-wim-to-md)
+            )))))
 
   (map! :map org-mode-map
         "C-c h" #'org2hugo)
-)
+  )
 
 
 
