@@ -2205,8 +2205,8 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 
   (setq eglot-stay-out-of '(company))
 
-  (add-to-list 'eglot-server-programs '(c++-mode . ("clangd-15" "-j=2" "--clang-tidy")))
-  (add-to-list 'eglot-server-programs '(c-mode  .  ("clangd-15" "-j=2" "--clang-tidy")))
+  (add-to-list 'eglot-server-programs '(c++-mode . ("clangd-15" "-j=2" "--clang-tidy" "--compile-commands-dir=build")))
+  (add-to-list 'eglot-server-programs '(c-mode  .  ("clangd-15" "-j=2" "--clang-tidy" "--compile-commands-dir=build")))
 
   ;; This disables the overrides of general-override-mode-map, which steals C-c a
   (general-override-mode 0)
