@@ -1566,6 +1566,8 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
         dired-recursive-deletes 'always)
   ;; less details, use '(' inside dired to toggle them
   (add-hook 'dired-mode-hook #'dired-hide-details-mode)
+  ;; Copy things in the background, better for large files / subtrees
+  (dired-async-mode 1)
   )
 
 (after! dired-aux
