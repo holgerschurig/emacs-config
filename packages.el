@@ -52,6 +52,9 @@
 
 (package! avy)                  ;; https://github.com/abo-abo/avy -- cursor jumping and more
 
+(package! bb-mode               ;; https://github.com/mferland/bb-mode
+  :recipe (:host github :repo "mferland/bb-mode"))
+
 (package! clean-aindent-mode)   ;; https://github.com/pmarinov/clean-aindent-mode -- clean auto-indent and backspace unindent
 
 (package! cape)                 ;; https://github.com/minad/cape -- completion at point extensions

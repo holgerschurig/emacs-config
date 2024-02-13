@@ -1530,6 +1530,18 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 )
 
 
+;;; Package: modes/bb-mode
+
+(use-package! bb-mode
+  :mode (("\\.bb$" . bb-mode)
+         ("src/poky/.*\\.inc$" . bb-mode)
+         ("\\.bbappend$" . bb-mode)
+         ("\\.bbclass$" . bb-mode)
+         ("src/poky/.*\\.conf$" . bb-mode)
+         ))
+
+
+
 ;;; Package: modes/dts-mode
 
 (use-package! dts-mode
