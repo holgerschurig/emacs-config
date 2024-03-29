@@ -2243,6 +2243,12 @@ re_W_rite      _t_ype definition
   ;; Anything longer will be highlighted
   (setq git-commit-summary-max-length 70))
 
+(add-to-list 'display-buffer-alist
+             `(,(rx bos "magit-revision: ")
+               (display-buffer-reuse-window display-buffer-same-window)
+               (reusable-frames . visible))
+             )
+
 (map!
  "M-g m" #'magit-status
  "M-g M" #'magit-list-repositories)
