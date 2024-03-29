@@ -57,11 +57,6 @@
 
 (package! clean-aindent-mode)   ;; https://github.com/pmarinov/clean-aindent-mode -- clean auto-indent and backspace unindent
 
-(package! cape)                 ;; https://github.com/minad/cape -- completion at point extensions
-
-(package! corfu                 ;; https://github.com/minad/corfu -- completion overlay
-  :recipe (:files (:defaults "extensions/*.el")))
-
 (package! current-window-only   ;; https://www.youtube.com/watch?v=Qut1oO6nqgA
   :recipe (:host github :repo "FrostyX/current-window-only"))
 

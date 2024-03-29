@@ -1374,12 +1374,12 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
                                "Ollama"                               ;Any name of your choosing
                                :host "localhost:11434"
                                         ; Installed models:
-                               :models '("mistral:latest" "nous-hermes:latest")
+                               :models '("mistral:latest" "stablelm2:latest")
                                :stream t))
 
-  (add-to-list 'gptel-directives '(english . "Translate the following to english:"))
-  (add-to-list 'gptel-directives '(deutsch . "Translate the following to german:"))
-  (add-to-list 'gptel-directives '(typo  . "Fix typos, grammar and style of the following:"))
+  (add-to-list 'gptel-directives '(english . "Translate the following to english: "))
+  (add-to-list 'gptel-directives '(deutsch . "Translate the following to german: "))
+  (add-to-list 'gptel-directives '(typo    . "Fix typos, grammar and style of the following: "))
 )
 
 ;;; Package: misc/embark
@@ -1814,100 +1814,6 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   ;; But we don't really need the delete-forward-char function, so we can use
   ;; that key to unnarrow.
   (consult-narrow-map "<deletechar>" #'consult--narrow-delete)     ;; was: delete-forward-char
-)
-
-
-
-;;; Package: completion/cape
-
-;; see https://github.com/minad/cape
-
-(use-package! cape
-  ;; Bind dedicated completion commands
-  :general
-  ("C-c p <"  #'cape-sgml)           ;; see (describe-input-method "sgml")
-  ("C-c p \\" #'cape-tex)            ;; see (describe-input-method "TeX")
-  ("C-c p ^"  #'cape-tex)
-  ("C-c p _"  #'cape-tex)
-  ("C-c p a"  #'cape-abbrev)
-  ("C-c p d"  #'cape-dabbrev)        ;; or dabbrev-completion
-  ("C-c p f"  #'cape-file)
-  ("C-c p h"  #'cape-history)
-  ("C-c p k"  #'cape-keyword)
-  ("C-c p l"  #'cape-line)
-  ("C-c p p"  #'completion-at-point) ;; capf
-  ("C-c p r"  #'cape-rfc1345)        ;; unicode characters, see (describe-input-method "rfc1345")
-  ("C-c p s"  #'cape-symbol)         ;; completes emacs elisp symbols, even in non-elisp buffers
-  ("C-c p t"  #'complete-tag)        ;; etags
-  ("C-c p w"  #'cape-dict)           ;; see cape-dict-file
-
-  :custom
-  (cape-dabbrev-min-length 2)
-  ;; (cape-dabbrev-check-other-buffers nul)
-
-  :init
-  ;; Add `completion-at-point-functions', used by `completion-at-point'.
-
-  (defalias 'my-capf (cape-capf-super #'cape-dabbrev
-                                      #'cape-file
-                                      #'cape-dict
-                                      #'cape-keyword)
-    "completion at point functions")
-  (add-to-list 'completion-at-point-functions #'my-capf)
-)
-
-
-
-;;; Package: completion/corfu
-(use-package! corfu
-  :init
-  (global-corfu-mode 1)
-  (corfu-history-mode)
-
-  :custom
-  (corfu-cycle t)                  ; Allows cycling through candidates
-
-  ;; (corfu-auto t)
-  ;; (corfu-auto-prefix 2)
-  ;; (corfu-auto-delay 0.0)
-  ;; (corfu-echo-documentation 0.25)
-  ;; (corfu-preview-current 'insert)
-  ;; (corfu-preselect-first nil)
-
-  :general
-  (corfu-map "TAB" #'corfu-complete)
-  (corfu-map "SPC" #'corfu-insert-separator)
-
-  :config
-  ;; Adapted from Corfu's manual.
-  (defun contrib/corfu-enable-always-in-minibuffer ()
-    "Enable Corfu in the minibuffer if Vertico is not active.
-Useful for prompts such as `eval-expression' and `shell-command'."
-    (unless (bound-and-true-p vertico--input)
-      (corfu-mode 1)))
-  (add-hook 'minibuffer-setup-hook #'contrib/corfu-enable-always-in-minibuffer 1)
-
-  ;; Allow more editing in the corfu prompt by enabling the HOME/END C-a/C-e keys
-  (defun corfu-beginning-of-prompt ()
-    "Move to beginning of completion input."
-    (interactive)
-    (corfu--goto -1)
-    (goto-char (car completion-in-region--data)))
-  (defun corfu-end-of-prompt ()
-    "Move to end of completion input."
-    (interactive)
-    (corfu--goto -1)
-    (goto-char (cadr completion-in-region--data)))
-  (define-key corfu-map [remap move-beginning-of-line] #'corfu-beginning-of-prompt)
-  (define-key corfu-map [remap move-end-of-line] #'corfu-end-of-prompt)
-
-  ;; Corfu in eshell
-  (defun my-corfu-setup ()
-    (setq-local corfu-quit-at-boundary t
-                corfu-quit-no-match t
-                corfu-auto nil))
-  (add-hook 'eshell-mode-hook #'my-corfu-setup)
-
 )
 
 
