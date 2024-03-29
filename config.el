@@ -1384,10 +1384,11 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 ;;; Package: misc/embark
 
-;; The following keymaps are already existing, so you can just add actions to
-;; them. Then position the cursor somewhere and do "C-,". To see then which
-;; actions are available, run "C-h".
-;;
+
+;; The following keymaps already exist, so you can simply add actions to them.
+;; Position the cursor somewhere and press "C-,". To view which actions are
+;; available, run "M-x describe-keybinding" or "C-h".
+
 ;; +vertico/embark-doom-package-map
 ;; embark-become-file+buffer-map
 ;; embark-become-help-map
