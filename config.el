@@ -1081,6 +1081,11 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 
 ;;; Package: theme/font-core
 
+(setq doom-font (font-spec :family "JetBrainsMono" :size 13) ;; :weight 'light)
+      doom-variable-pitch-font (font-spec :family "DejaVu Sans" :size 13)
+      doom-symbol-font (font-spec :family "JuliaMono")
+      doom-big-font (font-spec :family "JetBrainsMono" :size 24))
+
 ;; I got the idea from here:
 ;; http://amitp.blogspot.de/2013/05/emacs-highlight-active-buffer.html
 
