@@ -233,6 +233,14 @@ If there are two windows displayed, act like \"C-x o\"."
 
 
 
+;;; Package: core/calender
+
+(setopt calendar-date-style 'iso
+        calendar-mark-holidays-flag t
+        calendar-week-start-day 1)
+
+
+
 ;;; Package: core/cus-edit
 
 (after! cus-edit
