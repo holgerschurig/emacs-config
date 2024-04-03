@@ -2390,30 +2390,47 @@ re_W_rite      _t_ype definition
         org-startup-indented nil
         org-agenda-files '("~/.doom.d/todo.org"))
   (electric-indent-mode -1)
+
+  (setopt org-todo-keywords
+    (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
+            ;; "@" means to add a note (with time) WHEN ENTERING STATE
+            ;; "!" means to record only the time of the state change WHEN LEAVING STATE
+            (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)"))))
+
   ;; PlantUML
-  (setq org-plantuml-jar-path "/usr/local/bin/plantuml.1.2020.16.jar")
+  (after! org-plantuml
+    (setq org-plantuml-jar-path "/usr/local/bin/plantuml.1.2020.16.jar"))
   (org-babel-do-load-languages 'org-babel-load-languages
                                  '(plantuml . t))
   (remove-hook 'org-mode-hook #'org-superstar-mode)
   (remove-hook 'org-open-at-point-functions #'doom-set-jump-h)
 
-  (setq org-return-follows-link t)
+  (setopt org-return-follows-link t)
 
   (map! "C-c l"   #'org-store-link
         "C-c C-l" #'org-insert-link)
 )
 
 
-
 ;;; Package: org/org-agenda
 
 (use-package org-agenda
+  :defer t
+
   :config
-  (setq org-capture-templates
-        '(("e" "Einkaufen" entry (file+headline "~/Sync/Data/TODO.org" "Einkaufen Neu")
-           "* TODO %?\n")
-          ("t" "TODO" entry (file+headline "~/Sync/Data/TODO.org" "Aufgaben")
-           "* TODO %?\n")))
+  (setopt org-capture-templates
+          '(("e" "Einkaufen" entry (file+headline "~/Sync/Data/TODO.org" "Einkaufen Neu")
+             "* TODO %?\n")
+            ("t" "TODO" entry (file+headline "~/Sync/Data/TODO.org" "Aufgaben")
+             "* TODO %?\n")))
+
+  (setopt org-agenda-skip-scheduled-if-done t  ; Don't show scheduled items in agenda when they are done
+          org-agenda-skip-deadline-if-done t   ; Don't show deadlines when the corresponding item is done
+          org-agenda-compact-blocks t          ; Make the block agenda more compact
+          org-agenda-start-with-log-mode t
+          org-agenda-clockreport-parameter-plist
+          (quote (:link t :maxlevel 5 :fileskip0 t :compact t :narrow 80)))
+
   :general
   ("C-c a" #'org-agenda)
 )
