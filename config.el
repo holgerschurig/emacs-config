@@ -1095,16 +1095,18 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
       doom-big-font (font-spec :family "JetBrainsMono" :size 24))
 
 ;; I got the idea from here:
-;; http://amitp.blogspot.de/2013/05/emacs-highlight-active-buffer.html
+;; http://amitp.blogspot.de/2013/05/emacs-highlight-active-buffer.html but I
+;; disabled it for now since my Wayland compositor "hyprland" can dim inactive
+;; windows.
 
-(defun highlight-focus:app-focus-in ()
-  (global-font-lock-mode 1))
+;; (defun highlight-focus:app-focus-in ()
+;;   (global-font-lock-mode 1))
 
-(defun highlight-focus:app-focus-out ()
-  (global-font-lock-mode -1))
+;; (defun highlight-focus:app-focus-out ()
+;;   (global-font-lock-mode -1))
 
-(add-hook 'focus-in-hook  #'highlight-focus:app-focus-in)
-(add-hook 'focus-out-hook #'highlight-focus:app-focus-out)
+;; (add-hook 'focus-in-hook  #'highlight-focus:app-focus-in)
+;; (add-hook 'focus-out-hook #'highlight-focus:app-focus-out)
 
 
 
