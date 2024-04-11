@@ -825,7 +825,7 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 
 (map! "C-x I" #'insert-buffer
 
-      "M-SPC" #'cycle-spacing   ;; was: just-one-space
+      "M-SPC" #'cycle-spacing   ;; TODO was: just-one-space
 
       "M-c" #'capitalize-dwim
       "M-l" #'downcase-dwim
@@ -838,6 +838,17 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
       ;; Error navigation
       "<f8>"    #'my-next-error
       "S-<f8>"  #'my-previous-error)
+
+
+;; From https://www.masteringemacs.org/article/fixing-mark-commands-transient-mark-mode and
+;; https://www.youtube.com/watch?v=ppbcLsc-F20
+(defun exchange-point-and-mark-no-activate ()
+  "Identical to \\[exchange-point-and-mark] but will not activate the region."
+  (interactive)
+  (exchange-point-and-mark)
+  (deactivate-mark nil))
+
+(define-key global-map [remap exchange-point-and-mark] 'exchange-point-and-mark-no-activate)
 
 
 
@@ -2364,6 +2375,9 @@ re_W_rite      _t_ype definition
     (setq tab-stop-list '(4 8 12 16 20 24 28 32 36 40 44 48 52 56 60 64 68 72 76 80 84))
 
     ;; (setq smie-config--buffer-local '((4 :after "{" 4)))
+
+    ;; if you have the "shellcheck" debian package installed you can actually see your shell DONTs
+    (flymake-mode 1)
     )
 
   (add-hook 'sh-mode-hook  #'my-sh-mode-setup))
@@ -2429,7 +2443,7 @@ re_W_rite      _t_ype definition
   (setopt org-agenda-skip-scheduled-if-done t  ; Don't show scheduled items in agenda when they are done
           org-agenda-skip-deadline-if-done t   ; Don't show deadlines when the corresponding item is done
           org-agenda-compact-blocks t          ; Make the block agenda more compact
-          org-agenda-start-with-log-mode t
+          org-agenda-start-with-log-mode 'clockcheck
           org-agenda-clockreport-parameter-plist
           (quote (:link t :maxlevel 5 :fileskip0 t :compact t :narrow 80)))
 
@@ -2718,9 +2732,7 @@ re_W_rite      _t_ype definition
 
 (after! mastodon
   (setq mastodon-active-user "holgerschurig@gmail.com"
-        mastodon-instance-url "https://emacs.ch" ;; "https://social.tchncs.de"
-        ;; mastodon-tl--enable-proportional-fonts t
-        mastodon-tl--symbols nil)
+        mastodon-instance-url "https://emacs.ch")
 
   ;; Not in the following hydra, but mentioned in "M-x describe-mode". Also, the README.org
   ;; contains several functions that aren't in my hydra.
@@ -2800,6 +2812,8 @@ _u_pdate
   (map! :map mastodon-mode-map
         "?" #'mastodon-help/body
         "SPC" #'mastodon-tl--more)
+
+  ;; (mastodon-discover)
 )
 
 
