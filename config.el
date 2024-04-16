@@ -2539,7 +2539,10 @@ re_W_rite      _t_ype definition
 (use-package! ox-hugo
   :commands (org-hugo-export-wim-to-md)
   :after ox
-)
+  :custom
+  (org-hugo-base-dir "~/src/hpg/")
+
+  )
 (after! org
   (defun org2hugo-ensure-properties ()
     (let ((mandatory `(("EXPORT_HUGO_SECTION" . "en")
@@ -2549,11 +2552,6 @@ re_W_rite      _t_ype definition
                       ("EXPORT_HUGO_CATEGORIES" . "")))
           (first))
 
-      ;; Insert path to content directory
-      (unless (plist-get (org-export-get-environment 'hugo) :hugo-base-dir)
-        (save-excursion
-          (goto-char 1)
-          (insert "#+HUGO_BASE_DIR: ../\n\n")))
       ;; loop through mandatory entries, enter them into property if not there, note first missing one
       (dolist (elem mandatory)
         (unless (org-entry-get nil (car elem) t)
