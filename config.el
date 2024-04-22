@@ -1840,6 +1840,22 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
+;;; Package: completion/corfu
+
+(after! corfu
+  ;; keep if off
+  (setopt corfu-auto nil)
+  ;; but if we turn it on, use original times/limits
+  (setopt corfu-auto-delay 0.2)
+  (setopt corfu-auto-prefix 3)
+
+  ;; Experiment with these:
+  ;; (setopt corfu-quit-at-boundary t)
+  ;; (setopt corfu-quit-no-match t)
+)
+
+
+
 ;;; Package: completion/orderless
 
 (after! orderless
