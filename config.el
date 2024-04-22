@@ -2039,7 +2039,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
                                               #'cape-dabbrev
                                               #'cape-file
                                               #'cape-dict
-                                              #'cape-symbol))
+                                              #'cape-elisp-symbol))
     (setq-local completion-at-point-functions '(my-elisp-capf t))
 
     ;; The following changes the imenu "M-g i" to care most about my ";;;" comments
