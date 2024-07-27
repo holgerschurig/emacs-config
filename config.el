@@ -1100,9 +1100,10 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 
 ;;; Package: theme/font-core
 
-(setq doom-font (font-spec :family "JetBrainsMono" :size 13) ;; :weight 'light)
+;; MesloLGS NF comes from https://github.com/romkatv/powerlevel10k/blob/master/font.md#manual-font-installation
+(setq doom-font (font-spec :family "MesloLGS NF" :size 13)
       doom-variable-pitch-font (font-spec :family "DejaVu Sans" :size 13)
-      doom-symbol-font (font-spec :family "JuliaMono")
+      doom-symbol-font (font-spec :family "MesloLGS NF")
       doom-big-font (font-spec :family "JetBrainsMono" :size 24))
 
 ;; I got the idea from here:
