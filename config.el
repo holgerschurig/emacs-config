@@ -2416,12 +2416,12 @@ re_W_rite      _t_ype definition
 (setq org-replace-disputed-keys t)
 
 (after! org
-  (setq org-directory "~/org/"
-        org-fontify-quote-and-verse-blocks nil
-        org-fontify-whole-heading-line nil
-        org-hide-leading-stars nil
-        org-startup-indented nil
-        org-agenda-files '("~/.doom.d/todo.org"))
+  (setopt org-directory "~/Sync/Data"
+          org-fontify-quote-and-verse-blocks nil
+          org-fontify-whole-heading-line nil
+          org-hide-leading-stars nil
+          org-startup-indented nil
+          org-agenda-files (directory-files-recursively org-directory "\\.org$"))
   (electric-indent-mode -1)
 
   (setopt org-todo-keywords
