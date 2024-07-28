@@ -1101,6 +1101,14 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 ;;; Package: theme/font-core
 
 ;; MesloLGS NF comes from https://github.com/romkatv/powerlevel10k/blob/master/font.md#manual-font-installation
+(unless (file-exists-p "~/.fonts/MesloLGS NF Regular.ttf")
+  (url-copy-file "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf" "~/.fonts/MesloLGS NF Regular.ttf"))
+(unless (file-exists-p "~/.fonts/MesloLGS NF Bold.ttf")
+  (url-copy-file "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf" "~/.fonts/MesloLGS NF Bold.ttf"))
+(unless (file-exists-p "~/.fonts/MesloLGS NF Italic.ttf")
+  (url-copy-file "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf" "~/.fonts/MesloLGS NF Italic.ttf"))
+(unless (file-exists-p "~/.fonts/MesloLGS NF Bold Italic.ttf")
+  (url-copy-file "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf" "~/.fonts/MesloLGS NF Bold Italic.ttf"))
 (setq doom-font (font-spec :family "MesloLGS NF" :size 13)
       doom-variable-pitch-font (font-spec :family "DejaVu Sans" :size 13)
       doom-symbol-font (font-spec :family "MesloLGS NF")
