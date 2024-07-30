@@ -78,7 +78,8 @@
 
 (package! nerd-icons)           ;; M-x nerd-icons-install-fonts
 
-(package! notmuch-indicator)    ;; https://git.sr.ht/~protesilaos/notmuch-indicator -- do we have new mail?
+(package! notmuch-indicator     ;; https://git.sr.ht/~protesilaos/notmuch-indicator -- do we have new mail?
+  :disable (not (string= system-name "desktop")))
 
 (package! mastodon)             ;; https://codeberg.org/martianh/mastodon.el
 
