@@ -3136,23 +3136,27 @@ _u_pdate
 
 )
 
-(defun my-notmuch-hello ()
-  (interactive)
-  (require 'notmuch)
-  (notmuch-hello))
 
-(define-key!
-  "M-g n"   #'my-notmuch-hello ;; was next-error
-  "M-g C-n" #'consult-notmuch-address
-  "M-g p"   nil             ;; was previous-error
+(when (string= system-name "desktop")
+  (defun my-notmuch-hello ()
+    (interactive)
+    (require 'notmuch)
+    (notmuch-hello))
+
+  (define-key!
+    "M-g n"   #'my-notmuch-hello ;; was next-error
+    "M-g C-n" #'consult-notmuch-address
+    "M-g p"   nil             ;; was previous-error
+    )
 )
-
 
 
 
 ;;; Package: comm/notmuch-indicator
 
 (use-package notmuch-indicator
+  :if (string= system-name "desktop")
+  :disabled t
   :config
   (setq notmuch-indicator-args '((:terms "tag:unread" :label "@")))
   (setq notmuch-indicator-hide-empty-counters t)
