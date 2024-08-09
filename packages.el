@@ -60,6 +60,10 @@
 
 (package! casual-dired)         ;; https://github.com/kickingvegas/casual-dired
 
+(package! casual-isearch        ;; https://github.com/kickingvegas/casual-isearch
+  :recipe (:host github :repo "kickingvegas/casual-isearch"))
+
+
 (package! clean-aindent-mode)   ;; https://github.com/pmarinov/clean-aindent-mode -- clean auto-indent and backspace unindent
 
 (package! current-window-only   ;; https://www.youtube.com/watch?v=Qut1oO6nqgA
