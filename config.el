@@ -1061,6 +1061,17 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 
 
 
+;;; Package: gui/indent-bars-mode
+
+(use-package! indent-bars
+  :hook
+  (python-mode   . indent-bars-mode)
+  (yaml-mode     . indent-bars-mode)
+  ;; (makefile-mode . indent-bars-mode)
+)
+
+
+
 ;;; Package: gui/minibuffer
 
 (after! minibuffer
