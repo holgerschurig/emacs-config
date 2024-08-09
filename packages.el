@@ -66,6 +66,9 @@
 
 (package! gptel)                ;; https://github.com/karthink/gptel
 
+(package! indent-bars           ;; https://github.com/jdtsmith/indent-bars
+  :recipe (:host github :repo "jdtsmith/indent-bars"))
+
 (package! jinx)                 ;; https://github.com/minad/jinx -- Spell checker
 
 (package! kurecolor)            ;; https://github.com/emacsfodder/kurecolor  -- edit colors inline
