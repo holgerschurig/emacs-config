@@ -1589,6 +1589,16 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
+;;; Package: modes/casual-calc
+
+(use-package! casual-calc
+  :after calc
+  :general
+  (calc-mode-map "C-o" #'casual-calc-tmenu)
+  (calc-alg-map  "C-o" #'casual-calc-tmenu)
+)
+
+
 ;;; Package: modes/dts-mode
 
 (use-package! dts-mode

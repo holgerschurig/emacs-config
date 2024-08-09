@@ -55,6 +55,9 @@
 (package! bb-mode               ;; https://github.com/mferland/bb-mode
   :recipe (:host github :repo "mferland/bb-mode"))
 
+(package! casual-calc           ;; https://github.com/kickingvegas/casual-calc
+  :recipe (:host github :repo "kickingvegas/casual-calc"))
+
 (package! clean-aindent-mode)   ;; https://github.com/pmarinov/clean-aindent-mode -- clean auto-indent and backspace unindent
 
 (package! current-window-only   ;; https://www.youtube.com/watch?v=Qut1oO6nqgA
