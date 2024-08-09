@@ -1599,6 +1599,16 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 )
 
 
+;;; Package: modes/casual-dired
+
+(use-package! casual-dired
+  :after dired
+  :general
+  (dired-mode-map "C-o" #'casual-dired-tmenu)
+  (dired-mode-map "s"   #'casual-dired-sort-by-tmenu)
+)
+
+
 ;;; Package: modes/dts-mode
 
 (use-package! dts-mode
