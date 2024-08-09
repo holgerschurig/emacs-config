@@ -1609,6 +1609,15 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 )
 
 
+;;; Package: modes/casual-isearch
+
+(use-package! casual-isearch
+  :after isearch
+  :general
+  (isearch-mode-map "C-o" #'casual-isearch-tmenu)
+)
+
+
 ;;; Package: modes/dts-mode
 
 (use-package! dts-mode
