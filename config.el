@@ -279,8 +279,8 @@ If there are two windows displayed, act like \"C-x o\"."
    (lambda (&rest r)
      (delete-other-windows)))
 
-  :general
-  ("C-c d" #'dictionary-lookup-definition)
+  :bind
+  ("C-c d" . dictionary-lookup-definition)
 )
 
 
@@ -419,9 +419,9 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
   (interactive "P")
   (set-buffer-modified-p arg))
 
-  :general
-  ("<f2>" #'save-buffer)
-  ("M-<f6>" #'find-sibling-file)
+  :bind
+  ("<f2>"   . save-buffer)
+  ("M-<f6>" . find-sibling-file)
 )
 
 
@@ -472,8 +472,8 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
           try-expand-dabbrev-from-kill
           try-complete-lisp-symbol-partially
           try-complete-lisp-symbol))
-  :general
-  ("M-/" #'hippie-expand)
+  :bind
+  ("M-/" . hippie-expand)
 )
 
 
@@ -707,17 +707,19 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 ;; Turn the rectangle-mark-mode on with C-x <SPACE>
 
 (use-package! rect
-  :general
-  (rectangle-mark-mode-map "t" #'string-rectangle)                   ;; replace rectange with string
-  (rectangle-mark-mode-map "o" #'open-rectangle)                     ;; blank rectange, shifting text to right
-  (rectangle-mark-mode-map "c" #'clear-rectangle)                    ;; replace with blanks
-  (rectangle-mark-mode-map "k" #'kill-rectangle)                     ;; delete rectangle and save to kill-ring
-  (rectangle-mark-mode-map "d" #'delete-rectangle)                   ;; delete rectangle, don't save
-  (rectangle-mark-mode-map "y" #'yank-rectangle)                     ;; yank last killed rectange to upper left
-  (rectangle-mark-mode-map "w" #'copy-rectangle-as-kill)             ;; save rectange to kill-ring
-  (rectangle-mark-mode-map "n" #'rectangle-number-lines)
-  (rectangle-mark-mode-map "x" #'rectangle-exchange-point-and-mark)
-  (rectangle-mark-mode-map "s" #'string-rectangle)                   ;; replace rectange with string
+  :bind (
+  :map rectangle-mark-mode-map
+  ("t" . string-rectangle)                   ;; replace rectange with string
+  ("o" . open-rectangle)                     ;; blank rectange, shifting text to right
+  ("c" . clear-rectangle)                    ;; replace with blanks
+  ("k" . kill-rectangle)                     ;; delete rectangle and save to kill-ring
+  ("d" . delete-rectangle)                   ;; delete rectangle, don't save
+  ("y" . yank-rectangle)                     ;; yank last killed rectange to upper left
+  ("w" . copy-rectangle-as-kill)             ;; save rectange to kill-ring
+  ("n" . rectangle-number-lines)
+  ("x" . rectangle-exchange-point-and-mark)
+  ("s" . string-rectangle)                   ;; replace rectange with string
+  )
   ;; already defined:
   ;; "n"       rectangle-number-lines
   ;; C-x C-x   cycle between the four corners
@@ -1040,10 +1042,12 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
   (xref-show-xrefs-function #'consult-xref)                    ;; was xref--show-xref-buffer
   (xref-show-definitions-function #'consult-xref)              ;; was xref-definition-xref-buffer
 
-  :general
-  ("M-s u" #'xref-find-references)                             ;; like "search usage"
-  (xref--xref-buffer-mode-map "RET" #'xref-quit-and-goto-xref) ;; was xref-goto-xref
-  (xref--xref-buffer-mode-map "TAB" #'xref-goto-xref)          ;; was xref-quit-and-goto-xref
+  :bind (
+    ("M-s u" . xref-find-references)                             ;; like "search usage"
+    :map xref--xref-buffer-mode-map
+    ( "RET" . xref-quit-and-goto-xref) ;; was xref-goto-xref
+    ( "TAB" . xref-goto-xref)          ;; was xref-quit-and-goto-xref
+  )
 
   :config
   (advice-remove #'xref-push-marker-stack #'doom-set-jump-a)
@@ -1254,9 +1258,11 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
     (activate-mark)
     (goto-char pt))
 
-  :general
-  ("M-j"        '(avy-goto-char-timer       :wk "Avy goto char timer"))
-  (isearch-mode-map "M-j" #'avy-isearch)
+  :bind (
+    ("M-j" . avy-goto-char-timer)
+    :map isearch-mode-map
+    ("M-j" . avy-isearch)
+  )
 )
 
 
@@ -1593,9 +1599,12 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 (use-package! casual-calc
   :after calc
-  :general
-  (calc-mode-map "C-o" #'casual-calc-tmenu)
-  (calc-alg-map  "C-o" #'casual-calc-tmenu)
+  :bind (
+    :map calc-mode-map
+    ("C-o" . casual-calc-tmenu)
+    :map calc-alg-map
+    ("C-o" . casual-calc-tmenu)
+  )
 )
 
 
@@ -1603,9 +1612,11 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 (use-package! casual-dired
   :after dired
-  :general
-  (dired-mode-map "C-o" #'casual-dired-tmenu)
-  (dired-mode-map "s"   #'casual-dired-sort-by-tmenu)
+  :bind (
+    :map dired-mode-map
+    ("C-o" . casual-dired-tmenu)
+    ("s"   . casual-dired-sort-by-tmenu)
+  )
 )
 
 
@@ -1613,8 +1624,10 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 (use-package! casual-isearch
   :after isearch
-  :general
-  (isearch-mode-map "C-o" #'casual-isearch-tmenu)
+  :bind (
+    :map isearch-mode-map
+    ("C-o" . casual-isearch-tmenu)
+  )
 )
 
 
@@ -1729,10 +1742,10 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   (conf-mode-hook . jinx-mode)
   ;; (prog-mode-hook . jinx-mode)
 
-  :general
+  :bind
   ;; since we don't ue ispell, we can re-assign it's keybinding
-  ("M-$"   #'jinx-correct)
-  ("C-M-$" #'jinx-languages)
+  ("M-$"   . jinx-correct)
+  ("C-M-$" . jinx-languages)
 )
 
 
@@ -1788,7 +1801,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
-;; Package: completion/consult
+;;; Package: completion/consult
 
 (use-package! consult
   :config
@@ -1807,84 +1820,91 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   ;; no previews
   (consult-preview-key nil)
 
-  :general
-  ;; C-c bindings (mode-specific-map)
-  ("C-c h"   #'consult-history)
-  ("C-c m"   #'consult-mode-command)
-  ("C-c k"   #'consult-kmacro)
-  ;; C-c r   -> vertico-repeat-last
-  ;; C-c C-r -> vertico-repeat
+  :bind (
+    ;; C-c bindings (mode-specific-map)
+    ("C-c h"   . consult-history)
+    ("C-c m"   . consult-mode-command)
+    ("C-c k"   . consult-kmacro)
+    ;; C-c r   -> vertico-repeat-last
+    ;; C-c C-r -> vertico-repeat
 
-  ;; C-x bindings (ctl-x-map)
-  ("C-x M-:"  #'consult-complex-command)     ;; was: repeat-complex-command)
-  ("C-x b"    #'ibuffer)                     ;; was: switch-to-buffer)
-  ("C-x C-b"  #'consult-buffer)              ;; was: list-buffers)
-  ("C-x 4 b"  #'consult-buffer-other-window) ;; was: switch-to-buffer-other-window)
-  ("C-x 5 b"  #'consult-buffer-other-frame)  ;; was: switch-to-buffer-other-frame)
-  ("C-x r b"  #'consult-bookmark)
-  ("C-x p b"  #'consult-project-buffer)
+    ;; C-x bindings (ctl-x-map)
+    ("C-x M-:"  . consult-complex-command)     ;; was: repeat-complex-command)
+    ("C-x b"    . ibuffer)                     ;; was: switch-to-buffer)
+    ("C-x C-b"  . consult-buffer)              ;; was: list-buffers)
+    ("C-x 4 b"  . consult-buffer-other-window) ;; was: switch-to-buffer-other-window)
+    ("C-x 5 b"  . consult-buffer-other-frame)  ;; was: switch-to-buffer-other-frame)
+    ("C-x r b"  . consult-bookmark)
+    ("C-x p b"  . consult-project-buffer)
 
-  ;; Custom M-# bindings for fast register access
-  ;; How would I type this on a german keyboard?
-  ("M-#"      #'consult-register-load)
-  ("M-'"      #'consult-register-store)
-  ("C-M-#"    #'consult-register)
+    ;; Custom M-# bindings for fast register access
+    ;; How would I type this on a german keyboard?
+    ("M-#"      . consult-register-load)
+    ("M-'"      . consult-register-store)
+    ("C-M-#"    . consult-register)
 
-  ;; M-g bindings (goto-map)
-  ("M-g e"    #'consult-compile-error)
-  ("M-g f"    #'consult-flymake)
-  ("M-g g"    #'consult-goto-line)           ;; was: goto-line
-  ("M-g M-g"  #'consult-goto-line)           ;; was: goto-line
-  ("M-g o"    #'consult-outline)
-  ("M-g k"    #'consult-mark)
-  ("M-g K"    #'consult-global-mark)
-  ("M-g i"    #'consult-imenu-multi)
-  ("M-g I"    #'consult-imenu)               ;; prefer M-s o (consult-outline) instead of this
+    ;; M-g bindings (goto-map)
+    ("M-g e"    . consult-compile-error)
+    ("M-g f"    . consult-flymake)
+    ("M-g g"    . consult-goto-line)           ;; was: goto-line
+    ("M-g M-g"  . consult-goto-line)           ;; was: goto-line
+    ("M-g o"    . consult-outline)
+    ("M-g k"    . consult-mark)
+    ("M-g K"    . consult-global-mark)
+    ("M-g i"    . consult-imenu-multi)
+    ("M-g I"    . consult-imenu)               ;; prefer M-s o (consult-outline) instead of this
 
-  ;; M-s bindings (search-map)
-  ("M-s e"    #'consult-isearch-history)
-  ("M-s f"    #'consult-find)
-  ("M-s F"    #'consult-locate)
-  ;; Searching (mostly)
-  ("M-s g"    #'consult-git-grep)
-  ("M-s i"    #'consult-info)
-  ("M-s r"    #'consult-ripgrep)
-  ("M-s l"    #'consult-line)                ;; similar to swiper
-  ("M-s L"    #'consult-line-multi)
-  ("M-s k"    #'consult-keep-lines)
-  ;; bound elsewhere:
-  ;; - C-M .   consul-eglot-symbols
-  ;; unbound:
-  ;; - consult-grep
-  ;; - consult-man
-  ;; - consult-focus-lines
-  ;; - consult-minor-mode-menu
-  ;; - consult-notmuch
-  ;; - consult-notmuch-tree
-  ;; - consult-org-agenda
-  ;; - consult-org-heading
-  ;; - consult-recent-file
-  ;; - consult-yank-from-kill-ring
-  ;; - consult-yank-replace
+    ;; M-s bindings (search-map)
+    ("M-s e"    . consult-isearch-history)
+    ("M-s f"    . consult-find)
+    ("M-s F"    . consult-locate)
+    ;; Searching (mostly)
+    ("M-s g"    . consult-git-grep)
+    ("M-s i"    . consult-info)
+    ("M-s r"    . consult-ripgrep)
+    ("M-s l"    . consult-line)                ;; similar to swiper
+    ("M-s L"    . consult-line-multi)
+    ("M-s k"    . consult-keep-lines)
+    ;; bound elsewhere:
+    ;; - C-M .   consul-eglot-symbols
+    ;; unbound:
+    ;; - consult-grep
+    ;; - consult-man
+    ;; - consult-focus-lines
+    ;; - consult-minor-mode-menu
+    ;; - consult-notmuch
+    ;; - consult-notmuch-tree
+    ;; - consult-org-agenda
+    ;; - consult-org-heading
+    ;; - consult-recent-file
+    ;; - consult-yank-from-kill-ring
+    ;; - consult-yank-replace
 
-  (help-map "a" #'describe-symbol)
+    :map help-map
+    ("a" . describe-symbol)
 
-  (isearch-mode-map "M-e"   #'consult-isearch-history)     ;; was: isearch-edit-string
-  (isearch-mode-map "M-s e" #'consult-isearch-history)     ;; was: isearch-edit-string
-  (isearch-mode-map "M-s l" #'consult-line)                ;; needed by consult-line to detect isearch
-  (isearch-mode-map "M-s L" #'consult-line-multi)          ;; needed by consult-line to detect isearch
+    :map isearch-mode-map
+    ("M-e"   . consult-isearch-history)     ;; was: isearch-edit-string
+    ("M-s e" . consult-isearch-history)     ;; was: isearch-edit-string
+    ("M-s l" . consult-line)                ;; needed by consult-line to detect isearch
+    ("M-s L" . consult-line-multi)          ;; needed by consult-line to detect isearch
 
-  ;; access history of minibuffer completions, e.g. do "M-s l" (consult-line) "M-r" (consult-history)
-  (minibuffer-local-map "M-s" #'consult-history)           ;; was: next-matching-history-element
-  (minibuffer-local-map "M-r" #'consult-history)           ;; was: previous-matching-history-element
+    ;; access history of minibuffer completions, e.g. do "M-s l" (consult-line) "M-r" (consult-history)
+    :map minibuffer-local-map
+    ("M-s" . consult-history)               ;; was: next-matching-history-element
+    ("M-r" . consult-history)               ;; was: previous-matching-history-element
 
-  (compilation-mode-map       "e" #'consult-compile-error)
-  (compilation-minor-mode-map "e" #'consult-compile-error)
+    :map compilation-mode-map
+    ("e" . consult-compile-error)
+    :map compilation-minor-mode-map
+    ("e" . consult-compile-error)
 
-  ;; Unfortunately, the DEL key is hijacked by vertico, so I cannot unnorrow
-  ;; But we don't really need the delete-forward-char function, so we can use
-  ;; that key to unnarrow.
-  (consult-narrow-map "<deletechar>" #'consult--narrow-delete)     ;; was: delete-forward-char
+    ;; Unfortunately, the DEL key is hijacked by vertico, so I cannot unnarrow
+    ;; But we don't really need the delete-forward-char function, so we can use
+    ;; that key to unnarrow.
+    :map consult-narrow-map
+    ("<deletechar>" . consult--narrow-delete)     ;; was: delete-forward-char
+  )
 )
 
 
@@ -1950,11 +1970,12 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   :custom
   (tempel-path (concat doom-private-dir "templates.el"))
 
-  :general
-  ("M-+" #'tempel-complete)    ;;  completes a template name at point in the buffer and subsequently expands the template
-  ("M-*" #'tempel-insert)      ;;  selects a template by name and insert it into the current buffer
-
-  (tempel-map "C-c C-c" #'tempel-done)
+  :bind (
+    ("M-+" . tempel-complete)    ;;  completes a template name at point in the buffer and subsequently expands the template
+    ("M-*" . tempel-insert)      ;;  selects a template by name and insert it into the current buffer
+    :map tempel-map
+    ("C-c C-c" . tempel-done)
+  )
 
   :init
   (add-hook 'completion-at-point-functions #'tempel-expand)
@@ -2359,9 +2380,9 @@ re_W_rite      _t_ype definition
   :load-path doom-private-dir
   :defer t
 
-  :general
-  ("S-<f7>" #'my-compile-select-command-and-run)
-  ("<f7>"   #'my-compile)
+  :bind
+  ("S-<f7>" . my-compile-select-command-and-run)
+  ("<f7>"   . my-compile)
 )
 
 
@@ -2512,8 +2533,8 @@ re_W_rite      _t_ype definition
           org-agenda-clockreport-parameter-plist
           (quote (:link t :maxlevel 5 :fileskip0 t :compact t :narrow 80)))
 
-  :general
-  ("C-c a" #'org-agenda)
+  :bind
+  ("C-c a" . org-agenda)
 )
 
 
@@ -2522,8 +2543,9 @@ re_W_rite      _t_ype definition
 ;;; Package: org/org-capture
 
 (use-package org-capture
-  :general
-  ("C-c c" #'org-capture))
+  :bind
+  ("C-c c" . org-capture)
+)
 
 
 
@@ -2532,13 +2554,15 @@ re_W_rite      _t_ype definition
 (use-package! org-roam
   :init
   (setq org-roam-v2-ack t)
+
   :custom
   (org-roam-directory "~/Sync/Org")
   (org-roam-completion-everywhere t)
-  :general
-  ("C-c n l" #'org-roam-buffer-toggle)
-  ("C-c n f" #'org-roam-node-find)
-  ("C-c n i" #'org-roam-node-insert)
+
+  :bind
+  ("C-c n l" . org-roam-buffer-toggle)
+  ("C-c n f" . org-roam-node-find)
+  ("C-c n i" . org-roam-node-insert)
 )
 
 
@@ -2664,7 +2688,7 @@ re_W_rite      _t_ype definition
 
 
 
-;; Package: ox-reveal
+;;; Package: ox-reveal
 
 ;; https://github.com/yjwen/org-reveal
 ;; https://revealjs.com/
