@@ -1122,7 +1122,7 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
   (url-copy-file "https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf" "~/.fonts/MesloLGS NF Bold Italic.ttf"))
 (setq doom-font (font-spec :family "MesloLGS NF" :size 13)
       doom-variable-pitch-font (font-spec :family "DejaVu Sans" :size 13)
-      doom-symbol-font (font-spec :family "MesloLGS NF")
+      doom-symbol-font (font-spec :family "JuliaMono")
       doom-big-font (font-spec :family "JetBrainsMono" :size 24))
 
 ;; I got the idea from here:
