@@ -12,7 +12,7 @@
 (setq user-full-name "Holger Schurig")
 (setq user-mail-address "holgerschurig@gmail.com")
 (defvar my-irc-password nil "Password for the IRC networks")
-(require 'private (expand-file-name "private.el" user-emacs-directory) 'noerror)
+(require 'private (locate-user-emacs-file "private.el") 'noerror)
 
 
 
@@ -70,9 +70,9 @@ Unlike `setopt', this won't needlessly pull in dependencies."
 ;;                        M-x elpaca-manager
 
 (defvar elpaca-installer-version 0.7)
-(defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
-(defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
-(defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
+(defvar elpaca-directory (locate-user-emacs-file "elpaca/"))
+(defvar elpaca-builds-directory (locate-user-emacs-file "elpaca/builds/"))
+(defvar elpaca-repos-directory (locate-user-emacs-file "elpaca/repos/"))
 (defvar elpaca-order '(elpaca :repo "https://github.com/progfolio/elpaca.git"
                               :ref nil :depth 1
                               :files (:defaults "elpaca-test.el" (:exclude "extensions"))
@@ -132,7 +132,7 @@ Unlike `setopt', this won't needlessly pull in dependencies."
 
 (use-package auth-source
   :config
-  (setq! auth-sources (list (expand-file-name "authinfo.gpg" user-emacs-directory)
+  (setq! auth-sources (list (locate-user-emacs-file "authinfo.gpg")
                              "~/.authinfo.gpg"
                              "~/.authinfo"))
 )
@@ -2922,7 +2922,7 @@ re_W_rite      _t_ype definition
   (tempel-expand tempel-complete)
 
   :custom
-  (tempel-path (expand-file-name "templates.el" user-emacs-directory))
+  (tempel-path (locate-user-emacs-file "templates.el"))
 
   :init
   (add-hook 'completion-at-point-functions #'tempel-expand)
