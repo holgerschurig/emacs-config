@@ -3,6 +3,9 @@
 ;; Based on: James Cherti, https://github.com/jamescherti/minimal-emacs.d
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 
+(defvar is-mac (string= system-type "darwin") "Is this running on macOS?")
+
+
 (setq custom-theme-directory (locate-user-emacs-file "themes/"))
 (setq custom-file (locate-user-emacs-file "custom.el"))
 
@@ -123,7 +126,8 @@
 ;; a superfluous and potentially expensive frame redraw at startup, depending
 ;; on the window system. The variables must also be set to `nil' so users don't
 ;; have to call the functions twice to re-enable them.
-(push '(menu-bar-lines . 0)   default-frame-alist)
+(unless is-mac
+  (push '(menu-bar-lines . 0)   default-frame-alist))
 (push '(tool-bar-lines . 0)   default-frame-alist)
 (push '(vertical-scroll-bars) default-frame-alist)
 (push '(horizontal-scroll-bars) default-frame-alist)
