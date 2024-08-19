@@ -1,4 +1,8 @@
-private.el
-custom.el
-emacs.git
-emacs-i386.git
+# Temporary single letter files, like a b c
+/?
+# Test files, like a.py a.sh a.nim etc
+/?.*
+# Where elpaca stores its data
+/elpaca
+# Many Emacs files like savehist, saveplace, but also the eln-cache (Emacs Native Compilation)
+/var

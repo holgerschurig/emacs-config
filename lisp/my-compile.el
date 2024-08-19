@@ -123,6 +123,7 @@ As a special case for elisp, also consider '(setq compile-command
 If we haven't yet defined a compile command, a new one will be
 selected with completion help."
   (interactive)
+  (require 'project)
   (delete-other-windows)
   (save-some-buffers t)
   (when (string= compile-command "")
