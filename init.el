@@ -1410,6 +1410,16 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 
 
 
+;;; Package: gui/delight
+
+;; https://www.emacswiki.org/emacs/DelightedModes
+
+(use-package delight
+  :ensure t
+)
+
+
+
 ;;; Package: gui/indent-bars-mode
 
 ;; Make indentation level visible with bars
@@ -1690,6 +1700,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 (use-package which-key
   :ensure t
   :defer 1
+  :delight
 
   :config
   (which-key-mode)
@@ -2169,6 +2180,7 @@ successfully sets indent_style/indent_size.")
 
 (use-package editorconfig
   :ensure t
+  :delight
 
   :config
   ;; Archives don't need editorconfig settings, and they may otherwise
