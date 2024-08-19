@@ -3631,7 +3631,7 @@ re_W_rite      _t_ype definition
 
 
 (use-package persist
-  ;; installed by mastodon
+  :ensure (:host github :repo "emacsmirror/persist" :branch "master")
   :defer t
 
   :config
