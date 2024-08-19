@@ -6,6 +6,12 @@ stdin_mode=""
 args=()
 
 if [ "$UID" = "0" ]; then
+	if [ `uname` = Linux ]; then
+		args+=(--socket /run/user/1000/emacs/server)
+	else
+		echo "running under root not supported"
+		exit 1
+	fi
 	args+=(--socket /run/user/1000/emacs/server)
 fi
 
@@ -52,20 +58,21 @@ if [ ! "${#args[*]}" = 0 ] && [ "${args[-1]}" = "-" ]; then
 	args+=(--eval "(let ((b (generate-new-buffer \"*stdin*\"))) (switch-to-buffer b) (insert-file-contents \"$TMP\") (delete-file \"$TMP\")${stdin_mode})")
 fi
 
-if [ -z "$DISPLAY" ] || $force_tty; then
-	# detect terminals with sneaky 24-bit support
-	if { [ "$COLORTERM" = truecolor ] || [ "$COLORTERM" = 24bit ]; } \
-		&& [ "$(tput colors 2>/dev/null)" -lt 257 ]; then
-		if echo "$TERM" | grep -q "^\w\+-[0-9]"; then
-			termstub="${TERM%%-*}"; else
-			termstub="${TERM#*-}"; fi
-		if infocmp "$termstub-direct" >/dev/null 2>&1; then
-			TERM="$termstub-direct"; else
-			TERM="xterm-direct"; fi # should be fairly safe
+if [ `uname` = Linux ]; then
+	if [ -z "$DISPLAY" ] || $force_tty; then
+		# detect terminals with sneaky 24-bit support
+		if { [ "$COLORTERM" = truecolor ] || [ "$COLORTERM" = 24bit ]; } \
+			&& [ "$(tput colors 2>/dev/null)" -lt 257 ]; then
+			if echo "$TERM" | grep -q "^\w\+-[0-9]"; then
+				termstub="${TERM%%-*}"; else
+				termstub="${TERM#*-}"; fi
+			if infocmp "$termstub-direct" >/dev/null 2>&1; then
+				TERM="$termstub-direct"; else			TERM="xterm-direct"; fi # should be fairly safe
+		fi
+		exec emacsclient --tty --alternate-editor="" "${args[@]}"
 	fi
-	emacsclient --tty --alternate-editor="" "${args[@]}"
-else
-	if ! $force_wait; then
-		args+=(--no-wait); fi
-	emacsclient --alternate-editor="" "${args[@]}"
 fi
+
+
+test $force_wait && args+=(--no-wait)
+emacsclient --alternate-editor="" "${args[@]}"
