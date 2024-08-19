@@ -2135,6 +2135,7 @@ successfully sets indent_style/indent_size.")
     so-long-mode
     c-mode  ;; uses it's own call to dtrt-indent-mode
     c++-mode
+    sh-mode
     ;; Automatic indent detection in org files is meaningless. Not to mention, a
     ;; non-standard `tab-width' causes an error in org-mode.
     org-mode)
