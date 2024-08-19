@@ -22,7 +22,8 @@
 
 ;;; Package: core/startup
 
-(startup-redirect-eln-cache (expand-file-name  "var/" user-emacs-directory))
+(when (native-comp-available-p)
+  (startup-redirect-eln-cache (expand-file-name  "var/" user-emacs-directory)))
 
 ;;; Package: core/advice
 
@@ -55,11 +56,10 @@
 ;;; Package: core/comp (compilation and byte-compilation)
 
 ;; Suppress compiler warnings and don't inundate users with their popups.
-(setopt native-comp-async-report-warnings-errors
-      (or my-debug 'silent))
-
-(setopt native-comp-warning-on-missing-source my-debug)
-(setq native-comp-jit-compilation t)
+(when (native-comp-available-p)
+  (setopt native-comp-async-report-warnings-errors (or my-debug 'silent))
+  (setopt native-comp-warning-on-missing-source my-debug)
+  (setq native-comp-jit-compilation t))
 
 (setopt byte-compile-warnings my-debug)
 (setopt byte-compile-verbose my-debug)
