@@ -15,9 +15,6 @@
 (require 'private (locate-user-emacs-file "private.el") 'noerror)
 
 
-
-(defvar is-mac (string= system-type "darwin") "Is this running on macOS?")
-
 ;; (setenv "PATH" "/home/schurig/.local/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games")
 ;; (getenv "PATH")
 
