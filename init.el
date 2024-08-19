@@ -16,12 +16,14 @@
 
 
 
+(defvar is-mac (string= system-type "darwin") "Is this running on macOS?")
+
 ;; (setenv "PATH" "/home/schurig/.local/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games")
 ;; (getenv "PATH")
 
 
 
-;;; Functions
+;;; functions
 
 (defun 822date ()
   "Insert date at point format the RFC822 way."
@@ -822,7 +824,32 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 
 
 
-;;; Package: core/paragraphs
+;;; Package: core/ns
+
+;; | is option 7
+;; ~ is option shift 8
+;; { is option 8
+;; } is option 9
+;; [ is option [
+;; ] is option [
+
+
+(when is-mac
+  ;; Behavior of left option key
+  ;;(setopt ns-alternate-modifier 'meta)
+  ;; Behavior of left command key
+  ;;(setopt ns-command-modifier 'meta)
+
+  ;; Bevarior of the right ALT-GR key. Setting it 'none make macOS handle it, which in turn allows us to enter ALT-GR 7 to get a |
+  (setopt ns-right-option-modifier 'none)
+)
+
+;; each SYMBOL is control, meta, alt, super, hyper or none.
+;; If none, the key is ignored by Emacs and retains its standard meaning.
+
+
+
+;;; package: core/paragraphs
 
 ;; Disable the obsolete practice of end-of-line spacing from the typewriter era.
 (setq! sentence-end-double-space nil)
@@ -1079,6 +1106,10 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 (bind-key "M-u" #'upcase-dwim)
 (bind-key "M-g s" #'scratch-buffer)
 (bind-key "M-o" #'delete-blank-lines)  ;; opposite of C-o)
+
+;; On MacOS these are normally doing begin-of-buffer / end-of-buffer
+(bind-key "<home>" #'move-beginning-of-line)
+(bind-key "<end>" #'move-end-of-line)
 
 
 ;; From https://www.masteringemacs.org/article/fixing-mark-commands-transient-mark-mode and
