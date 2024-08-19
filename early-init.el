@@ -3,9 +3,9 @@
 ;; Based on: James Cherti, https://github.com/jamescherti/minimal-emacs.d
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 
+(setq custom-theme-directory (locate-user-emacs-file "themes/"))
+(setq custom-file (locate-user-emacs-file "custom.el"))
 
-(setq custom-theme-directory (expand-file-name "themes/" user-emacs-directory))
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 
 
 ;;; Variables
@@ -23,7 +23,7 @@
 ;;; Package: core/startup
 
 (when (native-comp-available-p)
-  (startup-redirect-eln-cache (expand-file-name  "var/" user-emacs-directory)))
+  (startup-redirect-eln-cache (locate-user-emacs-file  "var/")))
 
 ;;; Package: core/advice
 
