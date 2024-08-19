@@ -2123,6 +2123,23 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
+;;; Package: ide/direnv
+
+;; https://github.com/wbolster/emacs-direnv
+
+;; I like this a bit better than Purcell's envrc. Mainly because of
+;; what the tool emits to the message area.
+
+(use-package direnv
+  :ensure t
+  :defer 2
+
+  :init
+  (direnv-mode)
+)
+
+
+
 ;;; Package: ide/dtrt-indent
 
 (defvar-local inhibit-dtrt-detection nil
