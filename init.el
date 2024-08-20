@@ -3495,7 +3495,7 @@ re_W_rite      _t_ype definition
   (require 'casual-lib)
 
   (defun my-mastoron-more ()
-    "Work around a mastodon.el bug:"
+    "Can now load without the PgDn function"
     (interactive)
     (mastodon-tl--more))
 
