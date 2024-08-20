@@ -741,28 +741,32 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 
 
 
-;;; Package: core/ns
-
-;; | is option 7
-;; ~ is option shift 8
-;; { is option 8
-;; } is option 9
-;; [ is option [
-;; ] is option [
-
+;;; Package: core/ns & core/mac
 
 (when is-mac
-  ;; Behavior of left option key
-  ;;(setopt ns-alternate-modifier 'meta)
-  ;; Behavior of left command key
-  ;;(setopt ns-command-modifier 'meta)
+  ;; https://emacsformacosx.com/ uses ns- prefixes
+  ;; https://goykhman.ca/gene/blog/2024-08-17-upgrading-to-emacs-294-on-apple-silicon-macs.html which uses Mituhari's work uses mac- prefixes
 
-  ;; Bevarior of the right ALT-GR key. Setting it 'none make macOS handle it, which in turn allows us to enter ALT-GR 7 to get a |
-  (setopt ns-right-option-modifier 'none)
-)
+  (when (boundp 'ns-alternate-modifier)
+    ;; Behavior of left command key
+    (setopt ns-command-modifier 'meta)
+    ;; Behavior of left option key
+    (setopt ns-alternate-modifier 'meta))
 
-;; each SYMBOL is control, meta, alt, super, hyper or none.
-;; If none, the key is ignored by Emacs and retains its standard meaning.
+  (when (boundp 'mac-command-modifier)
+    ;; Ctrl key, has 'control as default so no need to change
+    ;;(setopt mac-control-modifier 'control)
+    ;; Windows key, now the Mac command key
+    (setopt mac-command-modifier 'super)
+    (bind-key "s-c" #'kill-ring-save)    ;; emulate Command-C
+    (bind-key "s-x" #'kill-region)       ;; emulate Command-X
+    (bind-key "s-v" #'yank)              ;; emulate Command-V
+    (bind-key "s-a" #'mark-hwole-buffer) ;; emulate Command-A
+    (bind-key "s-z" #'undo)              ;; emulate Command-Z
+    ;; Alt key
+    (setopt mac-option-modifier 'meta)
+    ;; ALTGR key, now we can type ALTGR-Q to get a @
+    (setopt mac-right-option-modifier nil)))
 
 
 
