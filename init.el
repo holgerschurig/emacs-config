@@ -1662,6 +1662,42 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 )
 
 
+;;; Package: gui/pulsar
+
+;; https://protesilaos.com/emacs/pulsar
+
+(use-package pulsar
+  :ensure t
+
+  :custom
+  (pulsar-pulse t)
+  (pulsar-delay 0.03)
+  (pulsar-iterations 20) ;; 0.03*20 = 0.6 seconds
+  (pulsar-face 'pulsar-magenta)
+
+  :config
+  (add-to-list 'pulsar-pulse-functions 'my-explode-window)
+  (add-to-list 'pulsar-pulse-functions 'my-switch-to-buffer)
+
+  (add-hook 'next-error-hook #'pulsar-pulse-line)
+  (add-hook 'minibuffer-setup-hook #'pulsar-pulse-line)
+  (add-hook 'focus-in-hook  #'pulsar-pulse-line)
+
+  ;; integration with the `consult' package:
+  (with-eval-after-load 'consult
+    (add-hook 'consult-after-jump-hook #'pulsar-recenter-top)
+    (add-hook 'consult-after-jump-hook #'pulsar-reveal-entry))
+
+  ;; integration with the built-in `imenu':
+  (with-eval-after-load 'imenu
+    (add-hook 'imenu-after-jump-hook #'pulsar-recenter-top)
+    (add-hook 'imenu-after-jump-hook #'pulsar-reveal-entry))
+
+  (pulsar-global-mode 1)
+)
+
+
+
 ;;; Package: gui/which-key
 
 (use-package which-key
