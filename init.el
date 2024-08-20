@@ -1362,6 +1362,23 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 
 
 
+;;; Package: gui/info
+
+;; https://github.com/kickingvegas/casual-info
+
+(use-package casual-info
+  :ensure t
+  :defer t
+  :after info
+
+  :bind (
+    :map Info-mode-map
+    ("C-o" . casual-info-tmenu)
+  )
+)
+
+
+
 ;;; Package: gui/helpful
 
 ;; https://github.com/Wilfred/helpful
