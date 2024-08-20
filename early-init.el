@@ -4,6 +4,10 @@
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 
 (defvar is-mac (string= system-type "darwin") "Is this running on macOS?")
+(defvar is-lnx (string= system-type "gnu/linux") "Is this running on Linux?")
+(defvar is-win (string= system-type "windows-nt") "Is this running under Windows?")
+(defvar is-way (getenv "WAYLAND_DISPLAY") "Is this running under Wayland?")
+(defvar is-x11 (and (getenv "DISPLAY") (not is-way)) "Is this running under X11?")
 
 
 (setq custom-theme-directory (locate-user-emacs-file "themes/"))

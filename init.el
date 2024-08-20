@@ -576,6 +576,27 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 
 
 
+;;; Package: core/font-core
+
+;; I got the idea from here:
+;; http://amitp.blogspot.de/2013/05/emacs-highlight-active-buffer.html
+
+;; With Wayland I use the window manager Hyprland, which can dim
+;; windows without focus by itself, so no need to do that in Emacs via
+;; font-lock games.
+
+(unless is-way
+  (defun highlight-focus:app-focus-in ()
+    (global-font-lock-mode 1))
+
+  (defun highlight-focus:app-focus-out ()
+    (global-font-lock-mode -1))
+
+  (add-hook 'focus-in-hook  #'highlight-focus:app-focus-in)
+  (add-hook 'focus-out-hook #'highlight-focus:app-focus-out))
+
+
+
 ;;; Package: core/font-lock
 
 (use-package font-lock
