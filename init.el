@@ -770,6 +770,17 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 
 
 
+;;; package: core/nsm
+
+(use-package nsm
+  :defer t
+
+  :custom
+  (nsm-settings-file (locate-user-emacs-file "var/network-security.data"))
+)
+
+
+
 ;;; package: core/paragraphs
 
 ;; Disable the obsolete practice of end-of-line spacing from the typewriter era.
