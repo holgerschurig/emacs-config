@@ -3472,6 +3472,11 @@ re_W_rite      _t_ype definition
   (mastodon-discover)
   (require 'casual-lib)
 
+  (defun my-mastoron-more ()
+    "Work around a mastodon.el bug:"
+    (interactive)
+    (mastodon-tl--more))
+
   (transient-define-prefix casual-mastodon-tmenu ()
     "Transient menu for Mastodon."
     [["Timelines"
@@ -3568,7 +3573,7 @@ re_W_rite      _t_ype definition
 
   :bind (:map mastodon-mode-map
          ("C-o" . casual-mastodon-tmenu)
-         ("SPC" . mastodon-tl--more))
+         ("SPC" . my-mastoron-more))
 )
 
 
