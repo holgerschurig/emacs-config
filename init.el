@@ -1311,6 +1311,7 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 ;;; Package: core/xref
 
 (use-package xref
+  :ensure t  ;; we need a newer version
   :defer t
 
   :custom
@@ -2316,11 +2317,7 @@ re_W_rite      _t_ype definition
   :ensure t
   :defer t
   :functions (project-root)
-)
 
-(use-package xref
-  :ensure t
-  :defer t
 )
 
 
