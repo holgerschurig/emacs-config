@@ -3012,6 +3012,10 @@ re_W_rite      _t_ype definition
   (require 'async)
   (dired-async-mode 1)
 
+  (when is-mac
+    (setq! insert-directory-program "gls" dired-use-ls-dired t)
+    (setq! dired-use-ls-dired nil))
+
   :bind (("C-x C-d" . dired)   ;; was: list-directory (an IMHO entirely useless command)
          :map dired-mode-map
          ("C-x C-p" . wdired-change-to-wdired-mode))
