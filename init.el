@@ -1386,6 +1386,23 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
   :bind (
     :map Info-mode-map
     ("C-o" . casual-info-tmenu)
+
+    ;; Use web-browser history navigation bindings
+    ("M-[" . Info-history-back)
+    ("M-]" . Info-history-forward)
+    ;; Bind p and n to paragraph navigation
+    ("p" . casual-info-browse-backward-paragraph)
+    ("n" . casual-info-browse-forward-paragraph)
+    ;; Bind h and l to navigate to previous and next nodes
+    ;; Bind j and k to navigate to next and previous references
+    ("h" . Info-prev)
+    ("j" . Info-next-reference)
+    ("k" . Info-prev-reference)
+    ("l" . Info-next)
+    ;; Bind / to search
+    ("/" . Info-search)
+    ;; Set Bookmark
+    ("B" . bookmark-set)
   )
 )
 
