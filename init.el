@@ -1321,12 +1321,12 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
   (xref-show-definitions-function #'consult-xref)              ;; was xref-definition-xref-buffer
 
   :bind (
-  ("M-s u" . xref-find-references)                             ;; like "search usage"
+   ("M-s u" . xref-find-references)                             ;; like "search usage"
 
-  ;; This basically swaps TAB and RET
-  :map xref--xref-buffer-mode-map
-  ( "RET" . xref-quit-and-goto-xref) ;; was xref-goto-xref
-  ( "TAB" . xref-goto-xref)          ;; was xref-quit-and-goto-xref
+   ;; This basically swaps TAB and RET
+   :map xref--xref-buffer-mode-map
+   ("RET" . xref-quit-and-goto-xref) ;; was xref-goto-xref
+   ("TAB" . xref-goto-xref)          ;; was xref-quit-and-goto-xref
   )
 )
 
