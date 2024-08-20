@@ -3473,7 +3473,7 @@ re_W_rite      _t_ype definition
   (require 'casual-lib)
 
   (transient-define-prefix casual-mastodon-tmenu ()
-    "Transient menu for MastodonKurecolor."
+    "Transient menu for Mastodon."
     [["Timelines"
       ("H" "home"            mastodon-tl--get-home-timeline)
       ("L" "local"           mastodon-tl--get-local-timeline)
@@ -3519,7 +3519,7 @@ re_W_rite      _t_ype definition
      ;; S                    mastodon-views--view-scheduled-toots
 
      ["Users"
-      ("W" "folloW"          mastodon-tl--follow-user)
+      ("W" "follow"          mastodon-tl--follow-user)
       ("R" "follow req"      mastodon-views--view-follow-requests)
       ("G" "suggestions"     mastodon-views--view-follow-suggestions)
       ("M" "mute user"       mastodon-tl--mute-user)
