@@ -15,8 +15,9 @@
 (require 'private (locate-user-emacs-file "private.el") 'noerror)
 
 
-;; (setenv "PATH" "/home/schurig/.local/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games")
-;; (getenv "PATH")
+;; Add local bin
+(when is-mac
+  (setenv "PATH" (concat "~/bin:" (getenv "PATH"))))
 
 
 
