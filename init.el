@@ -785,6 +785,8 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
     (bind-key "s-v" #'yank)              ;; emulate Command-V
     (bind-key "s-a" #'mark-hwole-buffer) ;; emulate Command-A
     (bind-key "s-z" #'undo)              ;; emulate Command-Z
+    (bind-key "s-a" #'mark-whole-buffer) ;; emulate Command-A
+    (bind-key "s-z" #'undo)              ;; emulate Command-Z
     ;; Alt key
     (setopt mac-option-modifier 'meta)
     ;; ALTGR key, now we can type ALTGR-Q to get a @
