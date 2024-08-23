@@ -2164,6 +2164,9 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   :ensure t
   :defer 2
 
+  :custom
+  (direnv-always-show-summary nil)
+
   :init
   (direnv-mode)
 )
