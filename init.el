@@ -2277,17 +2277,15 @@ successfully sets indent_style/indent_size.")
 
 
 
-;;; Package: ide/eglot
+;;; Package: ide/eglot (disabled, trying lsp again)
 
-
-;; Start eglot either with (eglot) or with Doom's (lsp!)
-;;
 ;; If you don't have a compilation database (e.g. in projects not using
 ;; CMake or Meson), you can use https://github.com/rizsotto/Bear
 
 ;; TODO: convert hydra to transient
 
 (use-package eglot
+  :disabled t
   :defer t
 
   :custom
