@@ -2194,20 +2194,10 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 ;;; Package: ide/direnv
 
 ;; https://github.com/wbolster/emacs-direnv
+;; https://github.com/purcell/envrc
 
-;; I like this a bit better than Purcell's envrc. Mainly because of
-;; what the tool emits to the message area.
-
-(use-package direnv
-  :ensure t
-  :defer 2
-
-  :custom
-  (direnv-always-show-summary nil)
-
-  :init
-  (direnv-mode)
-)
+;; Both are IMHO too chatty, create *envrc* buffers here and there,
+;; emmitting messages warnings and whatnot.
 
 
 
