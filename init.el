@@ -840,6 +840,13 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 
 
 
+;;; Package: core/process
+
+
+(setopt read-process-output-max (* 1024 1024))
+
+
+
 ;;; Package: core/recentf
 
 (use-package recentf
