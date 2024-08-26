@@ -2444,7 +2444,6 @@ re_W_rite      _t_ype definition
   :ensure t
   :defer t
   :functions (project-root)
-
 )
 
 
@@ -2609,6 +2608,8 @@ re_W_rite      _t_ype definition
                                                 #'cape-dict
                                                 #'cape-elisp-symbol))
       (setq-local completion-at-point-functions '(my-elisp-capf t)))
+
+    (corfu-mode)
 
     (add-to-list 'imenu-generic-expression
                  '("Section" "^;;[;]\\{1,8\\} \\(.*$\\)" 1))
@@ -2988,6 +2989,38 @@ re_W_rite      _t_ype definition
 )
 
 
+
+;;; Package: completion/corfu
+
+;; https://github.com/minad/corfu
+
+(use-package corfu
+  :ensure t
+  :defer
+  :commands (corfu-mode)
+
+  :custom
+  (corfu-cycle t)
+  (corfu-auto t)
+  (corfu-auto-prefix 2)
+  (corfu-auto-delay 0)
+  (corfu-popupinfo-delay '(0.5 . 0.2))
+  (corfu-preview-current 'insert)
+  (corfu-preselect 'prompt)
+  (corfu-on-exact-match nil)
+  :bind (:map corfu-map
+              ("TAB"        . corfu-next)
+              ([tab]        . corfu-next)
+              ("S-TAB"      . corfu-previous)
+              ([backtab]    . corfu-previous)
+              ("S-<return>" . corfu-insert)
+              ("RET"        . corfu-insert))
+  :config
+  (corfu-history-mode)
+)
+
+
+;; https://github.com/LuigiPiucco/nerd-icons-corfu
 
 ;;; Package: completion/orderless
 
