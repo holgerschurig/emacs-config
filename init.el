@@ -62,6 +62,7 @@ Unlike `setopt', this won't needlessly pull in dependencies."
 ;;; Package: elpaca
 
 ;; https://github.com/progfolio/elpaca
+;; https://github.com/progfolio/elpaca/blob/master/doc/manual.md
 ;; https://www.youtube.com/watch?v=5Ud-TE3iIQY
 
 ;; Search for packages?   M-x elpaca-menu-item
