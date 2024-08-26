@@ -1020,6 +1020,10 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 (defun my-next-error (&optional arg)
   (interactive)
   (let ((p))
+    (when (and (boundp 'flycheck-mode) flycheck-mode)
+      (ignore-errors
+        (save-excursion (call-interactively #'flycheck-next-error arg)
+                        (cl-pushnew (point) p))))
     (when (and (boundp 'flymake-mode) flymake-mode)
       (ignore-errors
         (save-excursion (call-interactively #'flymake-goto-next-error arg)
@@ -1041,6 +1045,10 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 (defun my-previous-error (&optional arg)
   (interactive)
   (let ((p))
+    (when (and (boundp 'flycheck-mode) flycheck-mode)
+      (ignore-errors
+        (save-excursion (call-interactively #'flycheck-prev-error arg)
+                        (cl-pushnew (point) p))))
     (when (and (boundp 'flymake-mode) flymake-mode)
       (ignore-errors
         (save-excursion (call-interactively #'flymake-goto-prev-error arg)
