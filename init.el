@@ -2498,6 +2498,22 @@ re_W_rite      _t_ype definition
 
 
 
+;;; Package: ide/lsp-ui
+
+;; https://emacs-lsp.github.io/lsp-ui/
+
+
+(use-package lsp-ui
+  :ensure t
+  :commands (lsp-ui-mode)
+
+  :bind
+  ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
+  ([remap xref-find-references] . lsp-ui-peek-find-references)
+)
+
+
+
 ;;; Package: ide/project
 
 (use-package project
