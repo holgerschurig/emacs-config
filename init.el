@@ -2143,6 +2143,21 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
+;;; Package: ide/comment-dwim-2
+
+(use-package comment-dwim-2
+  :disabled t
+  :ensure t
+  :defer t
+
+  :bind (
+   ("M-;" . comment-dwim-2)
+   :map org-mode-map
+   ("M-;" . org-comment-dwim-2))
+)
+
+
+
 ;;; Package: ide/compile
 
 (use-package compile
