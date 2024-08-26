@@ -2584,6 +2584,15 @@ re_W_rite      _t_ype definition
 
 
 
+;;; Package: prog/lua
+
+(use-package lua-mode
+  :ensure t
+  :mode (".lua$" . lua-mode)
+)
+
+
+
 ;;; Package: prog/prog-mode
 
 (defun show-trailing-whitespace ()
