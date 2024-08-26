@@ -2436,6 +2436,68 @@ re_W_rite      _t_ype definition
 
 
 
+;;; Package: ide/lsp
+
+;; https://emacs-lsp.github.io/lsp-mode/
+
+
+(use-package lsp-mode
+  :ensure t
+  :defer t
+  :commands (lsp lsp-deferred)
+
+  :custom
+  ;; (lsp-completion-provider :none) ;; was :capf, which means company-capf ... but also corfu, as it also uses capf
+  (lsp-warn-no-matched-clients nil)
+  (lsp-keymap-prefix "C-c") ;; was s-l
+  ;; (lsp-log-io t) ;; if you want to debug the LSP daemon interaction
+
+  :config
+  (transient-define-prefix casual-lsp-tmenu ()
+    ;; see also lsp-command-map
+    "Transient menu for Mastodon."
+    [["Actions"
+      ("a" "Action"     lsp-execute-code-action)
+      ("R" "rename Var" lsp-rename)]
+
+     ["Find"
+      ("r" "References"     lsp-find-references)
+      ("c" "deClaration"    lsp-find-declaration)
+      ("d" "Definition"     lsp-find-definition)
+      ("i" "Implementation" lsp-find-implementation)
+      ("t" "Type defintion" lsp-find-type-definition)]
+
+     ["Modify"
+      ("f" "Format region"  lsp-format-region)
+      ("b" "format Buffer"  lsp-format-buffer)
+      ("i" "sort Imports"   lsp-organize-imports)]
+
+     ["Toggles"
+      ("D" "doc mode"       lsp-ui-doc-mode :transient t)
+      ("s" "ui Sideline"    lsp-ui-sideline-mode :transient t)
+      ("A" "modeline Actions"     lsp-modeline-code-actions-mode :transient t)
+      ("B" "Breadcrumps"    lsp-headerline-breadcrumb-mode :transient t)
+      ("S" "Signature"      lsp-toggle-signature-auto-activate :transient t)
+      ("h" "inlay Hints"    lsp-inlay-hints-mode :transient t)
+      ("c" "flycheck"       flycheck-mode :transient t)]
+
+    ["Misc"
+      ("?" "help"            describe-mode)
+      ("q" "quit"            transient-quit-one)
+      ]])
+
+  :bind (:map lsp-command-map
+              ("C-o" . casual-lsp-tmenu))
+
+  :hook
+  (lsp-mode . lsp-enable-which-key-integration)
+  (lsp-mode . lsp-ui-mode)
+  (lsp-mode . corfu-mode)
+  (lsp-mode . corfu-popup-mode)
+)
+
+
+
 ;;; Package: ide/project
 
 (use-package project
