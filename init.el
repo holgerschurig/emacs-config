@@ -1452,13 +1452,21 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
   (add-hook 'helpful-mode-hook #'visual-line-mode)
 
   :bind (
-   ("C-h f" . helpful-callable)
+   ;;("C-h f" . helpful-callable)
+   ([remap describe-function] . helpful-callable)
    ("C-h v" . helpful-variable)
-   ("C-h k" . helpful-key)
-   ("C-h s" . helpful-symbol)
-   ("C-h x" . helpful-command)
+   ;;("C-h k" . helpful-key)
+   ([remap describe-key] . helpful-key)
+   ;;("C-h s" . helpful-symbol)
+   ([remap describe-symbol] . helpful-symbol)
+   ;;("C-h x" . helpful-command)
+   ([remap describe-command] . helpful-command)
    ("C-h h" . helpful-at-point)   ;; was: display-hello-file
+   ("C-h K" . describe-keymap)
+   ("C-h F" . helpful-function)
+
    :map helpful-mode-map
+   ([remap revert-buffer] . helpful-update)
    ("a" . describe-symbol)
    ("q" . kill-buffer-and-window)
   )
