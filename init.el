@@ -1766,7 +1766,6 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
   :config
   (which-key-mode)
-  (which-key-setup-side-window-bottom)
 )
 
 
