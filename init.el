@@ -169,9 +169,13 @@ that point."
   :defer t
 
   :custom
-  (browse-url-browser-function 'browse-url-firefox)
   (browse-url-new-window-flag  t)
   (browse-url-firefox-new-window-is-tab t)
+
+  :config
+  (if is-mac
+      (setopt browse-url-browser-function 'browse-url-chromium)
+    (setopt browse-url-browser-function 'browse-url-firefox))
 )
 
 
