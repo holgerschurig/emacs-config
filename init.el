@@ -2447,10 +2447,10 @@ re_W_rite      _t_ype definition
 (use-package lsp-mode
   :ensure t
   :defer t
-  :commands (lsp lsp-deferred)
+  :commands (lsp-mode lsp-deferred)
 
   :custom
-  ;; (lsp-completion-provider :none) ;; was :capf, which means company-capf ... but also corfu, as it also uses capf
+  (lsp-completion-provider :none) ;; it wants to setup company mode if kept at it's default
   (lsp-warn-no-matched-clients nil)
   (lsp-keymap-prefix "C-c") ;; was s-l
   ;; (lsp-log-io t) ;; if you want to debug the LSP daemon interaction
@@ -2496,7 +2496,7 @@ re_W_rite      _t_ype definition
   (lsp-mode . lsp-enable-which-key-integration)
   (lsp-mode . lsp-ui-mode)
   (lsp-mode . corfu-mode)
-  (lsp-mode . corfu-popup-mode)
+  (lsp-mode . corfu-popupinfo-mode)
 )
 
 
