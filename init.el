@@ -2201,6 +2201,20 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
+;;; Package: ide/consult-lsp
+
+(use-package consult-lsp
+  :ensure t
+  :defer t
+  :after (consult lsp)
+
+  :commands (consult-lsp-diagnostics consult-lsp-symbols consult-lsp-file-symbols)
+
+  :bind (:map lsp-mode-map
+              ([remap xref-find-apropos] . consult-lsp-symbols))
+)
+
+
 
 ;;; Package: ide/direnv
 
