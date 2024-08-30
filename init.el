@@ -3630,6 +3630,18 @@ re_W_rite      _t_ype definition
 
 
 
+;;; Package: org/org-persist
+
+(use-package org-persist
+  :ensure nil  ;; comes with org-mode
+  :defer t
+
+  :custom
+  (org-persist-directory (locate-user-emacs-file "var/org-persist/"))
+)
+
+
+
 ;;; Package: org/org-tempo
 
 ;; https://orgmode.org/manual/Structure-Templates.html
