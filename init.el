@@ -2571,32 +2571,17 @@ re_W_rite      _t_ype definition
 
   :defer t
 
-  :mode (("\\.bazel\\'" . bazel-mode)
-         ("\\.bzl\\'"   . bazel-mode)
-         ("BUILD$"      . bazel-build-mode)
-         ("WORKSPACE"   . bazel-workspace-mode)
-         ("^.bazelrc.*"  . bazelrc-mode)
-         ("^.bazeliskrc.*"  . bazelrc-mode)
-         ("^.bazelignore.*"  . bazelignore-mode)
-         ("\\.mod\\'"   . bazel-module-mode)
-         ("\\.star\\'"  . bazel-starlark-mode)
-         )
-
-  ;; :config
-  ;; (defun my/bazel-format-and-save ()
-  ;;   (interactive)
-  ;;   (let* ((fn (file-name-nondirectory buffer-file-name))
-  ;;          (ext (file-name-extension fn))
-  ;;          (tp (cond
-  ;;               ((string= fn "BUILD.bazel") "build")
-  ;;               ((string= ext "bzl") "bzl")
-  ;;               (t (user-error (format "Not a bazel file extension: %s" ext))))))
-  ;;     (my/format-and-save "buildifier" "--type" tp))
-  ;;   (save-buffer))
-
-  ;; (my/define-major-mode-key 'bazel-mode "s" #'my/bazel-format-and-save))
+  :mode
+  ;; This are the same additons to auto-mode-alist that bazel.el would
+  ;; set, but here we set it before loading it (which is faster)
+  ("/\\.bazeliskrc\\'" . bazeliskrc-mode)
+  ("/\\.bazelignore\\'" . bazelignore-mode)
+  ("/\\(?:\\(?:bazel\\)?\\.bazelrc\\)\\'" . bazelrc-mode)
+  ("/.+\\.bzl\\'" . bazel-starlark-mode)
+  ("/MODULE\\.bazel\\'" . bazel-module-mode)
+  ("/\\(?:WORKSPACE\\(?:\\.b\\(?:azel\\|zlmod\\)\\)?\\)\\'" . bazel-workspace-mode)
+  ("/\\(?:BUILD\\(?:\\.bazel\\)?\\)\\'" . bazel-build-mode)
 )
-
 
 
 ;;; Package: prog/bb-mode (Bitbake)
