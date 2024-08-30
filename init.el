@@ -1099,6 +1099,8 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 
 (define-key global-map [remap exchange-point-and-mark] 'exchange-point-and-mark-no-activate)
 
+;; Make overly long lines at least visible in all their glory
+(global-visual-line-mode)
 
 
 ;;; Package: core/savehist
