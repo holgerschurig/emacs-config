@@ -16,8 +16,8 @@
 
 
 ;; Add local bin
-(when is-mac
-  (setenv "PATH" (concat "~/bin:" (getenv "PATH"))))
+;; Add local bin (note tha exec-path doesn't propagate into $PATH)
+(add-to-list 'exec-path (concat (getenv "HOME") "/bin"))
 
 
 
