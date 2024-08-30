@@ -2424,9 +2424,11 @@ re_W_rite      _t_ype definition
   (magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1)
   ;; When calling magit-status, save all buffers without further ado
   (magit-save-repository-buffers 'dontask)
-
   ;; make [MASTER] appear at the end of the summary line
   (magit-log-show-refname-after-summary t)
+  ;; I want my (yet) untracked files to be diplayed at all times
+  (magit-section-initial-visibility-alist '((untracked . show)
+                                            (stashes . hide)))
 
   ;; Switch repositories with magit-list-repositories
   (magit-repository-directories
