@@ -422,6 +422,7 @@ If there are two windows displayed, act like \"C-x o\"."
   :custom
   (eshell-destroy-buffer-when-process-dies t)
   (eshell-prefer-lisp-functions t)
+  (eshell-directory-name (locate-user-emacs-file "var/eshell/"))
 
   :config
   (eshell/addpath "~/.local/bin")
