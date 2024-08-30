@@ -3554,10 +3554,8 @@ re_W_rite      _t_ype definition
 
   :custom
   (org-directory "~/Sync/Data") ;; TODO
-  (org-fontify-quote-and-verse-blocks nil)
-  (org-fontify-whole-heading-line nil)
-  (org-hide-leading-stars nil)
-  (org-startup-indented nil)
+  (org-fontify-whole-heading-line t)
+  ;;(org-hide-leading-stars t)
   (org-agenda-files (directory-files-recursively org-directory "\\.org$"))
   (org-todo-keywords (quote
                       ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
@@ -3567,9 +3565,6 @@ re_W_rite      _t_ype definition
   (org-return-follows-link t)
 
   :config
-  ;; -1 is disable
-  ;(electric-indent-mode -1)
-
   ;; Enable PlantUML
   (org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t)))
 
