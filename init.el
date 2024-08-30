@@ -2426,6 +2426,18 @@ re_W_rite      _t_ype definition
 )
 
 
+
+;;; Package: ide/make-mode
+
+(use-package make-mode
+  :ensure nil
+  :defer t
+
+  :mode (("\\.mk\\'" . makefile-gmake-mode))
+)
+
+
+
 ;;; Package: ide/my-compile
 
 (use-package my-compile
