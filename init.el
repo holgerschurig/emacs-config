@@ -2480,6 +2480,7 @@ re_W_rite      _t_ype definition
   (lsp-completion-provider :none) ;; it wants to setup company mode if kept at it's default
   (lsp-warn-no-matched-clients nil)
   (lsp-keymap-prefix "C-c") ;; was s-l
+  (lsp-session-file (locate-user-emacs-file "var/lsp-session-v1"))
   ;; (lsp-log-io t) ;; if you want to debug the LSP daemon interaction
 
   :config
