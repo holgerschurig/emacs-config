@@ -1753,6 +1753,22 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
+;;; Package: gui/transient
+
+; We need to :ensure this so that elpaca loads it, the bundled transient is too old
+(use-package transient
+  :ensure t
+  :defer t
+
+  :custom
+  (transient-history-file (locate-user-emacs-file "var/history.el") )
+
+  :config
+  (transient-bind-q-to-quit)
+)
+
+
+
 ;;; Package: gui/which-key
 
 (use-package which-key
@@ -3268,15 +3284,6 @@ re_W_rite      _t_ype definition
     ("C-o" . casual-calc-tmenu)
   )
 )
-
-;; We need to :ensure this so that elpaca loads it, the bundled transient is too old
-(use-package transient
-  :ensure t
-
-  :custom
-  (transient-history-file (locate-user-emacs-file "var/history.el") )
-)
-
 
 
 
