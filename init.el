@@ -2758,11 +2758,8 @@ re_W_rite      _t_ype definition
     (corfu-mode)
 
     (add-to-list 'imenu-generic-expression
-                 '("Section" "^;;[;]\\{1,8\\} \\(.*$\\)" 1))
-
-    )
+                 '("Section" "^;;[;]\\{1,8\\} \\(.*$\\)" 1)))
   (add-hook 'emacs-lisp-mode-hook #'my-emacs-lisp-mode-setup)
-
 )
 
 ;; Flycheck used checkdoc. And checkdoc checks for various Emacs
