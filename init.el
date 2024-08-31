@@ -2822,7 +2822,7 @@ re_W_rite      _t_ype definition
   :mode (("\\meson.build\\'" . meson-mode))
 
   :config
-  (setq meson-indent-basic 4)
+  (setq! meson-indent-basic 4)
 )
 
 
