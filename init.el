@@ -3842,7 +3842,6 @@ re_W_rite      _t_ype definition
   :config
   (setq! mastodon-client--token-file (locate-user-emacs-file "var/mastodon.plstore"))
   (mastodon-discover)
-  (require 'casual-lib)
 
   (defun my-mastoron-more ()
     "Can now load without the PgDn function"
