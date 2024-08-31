@@ -122,6 +122,7 @@ Unlike `setopt', this won't needlessly pull in dependencies."
 ;;; Package: core/align
 
 (defadvice align-regexp (around align-regexp-with-spaces activate)
+  "Make `align-regexp` not use tabs."
   (let ((indent-tabs-mode nil))
     ad-do-it))
 
@@ -2390,6 +2391,7 @@ re_W_rite      _t_ype definition
 
     ("D" eldoc-mode :exit nil)
     ("h" eglot-inlay-hints-mode :exit nil)
+    ;; eglot is built in, and flymake is built in. So let's toggle flymake here
     ("m" flymake-mode :exit nil)
   )
 
@@ -2408,10 +2410,28 @@ re_W_rite      _t_ype definition
 
 
 
-;;; Package: ide/flymake
+;;; Package: ide/flycheck
+
+;; https://www.flycheck.org/en/latest/user/flycheck-versus-flymake.html
+
+(use-package flycheck
+  :ensure t
+  :defer t
+  :commands (flycheck-mode)
+
+  :config
+  (remove-hook 'flycheck-checkers 'emacs-lisp-checkdoc)
+)
+
+
+
+;;; Package: ide/flymake (disabled)
+
+;; we're using flycheck, since lsp kind-of depends on it (there are many lsp-flycheck-XXX functions
 
 (use-package flymake
-  :defer
+  :disabled t
+  :defer t
 
   :custom
   (flymake-wrap-around nil)
@@ -2499,6 +2519,7 @@ re_W_rite      _t_ype definition
   :commands (lsp-mode lsp-deferred)
 
   :custom
+  (lsp-diagnostics-provider :flycheck)
   (lsp-completion-provider :none) ;; it wants to setup company mode if kept at it's default
   (lsp-warn-no-matched-clients nil)
   (lsp-keymap-prefix "C-c") ;; was s-l
@@ -2755,6 +2776,21 @@ re_W_rite      _t_ype definition
     )
   (add-hook 'emacs-lisp-mode-hook #'my-emacs-lisp-mode-setup)
 
+)
+
+;; Flycheck used checkdoc. And checkdoc checks for various Emacs
+;; specific things that absolutely makes no sense. I mean, who needs
+;; 'foo end here' comments? Or who cannot differentiate between a
+;; header and the code and need a special ';; Code:' entry? I don't,
+;; and I dislike being told by (flycheck/flymake)+checkdoc how to
+;; write comments.
+(use-package checkdoc
+  :defer t
+
+  :config
+  (defun checkdoc-file-comments-engine()
+    "Dummy replacement function."
+    nil)
 )
 
 
@@ -3064,7 +3100,8 @@ re_W_rite      _t_ype definition
 
     ;; M-g bindings (goto-map)
     ("M-g e"    . consult-compile-error)
-    ("M-g f"    . consult-flymake)
+    ;; We're now using flycheck
+    ;; ("M-g f"    . consult-flymake)
     ("M-g g"    . consult-goto-line)           ;; was: goto-line
     ("M-g M-g"  . consult-goto-line)           ;; was: goto-line
     ("M-g o"    . consult-outline)
