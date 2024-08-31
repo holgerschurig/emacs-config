@@ -2538,6 +2538,7 @@ re_W_rite      _t_ype definition
   ;; (lsp-intelephense-global-storage-path (locate-user-emacs-file "var/intelephense"))
   ;; if you want to debug the LSP daemon interaction
   ;; (lsp-log-io t)
+  (lsp-server-install-dir (locate-user-emacs-file "var/lsp"))
 
   :config
   (transient-define-prefix casual-lsp-tmenu ()
