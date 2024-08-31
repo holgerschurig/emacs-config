@@ -800,7 +800,7 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 
 
 
-;;; package: core/nsm
+;;; Package: core/nsm
 
 (use-package nsm
   :defer t
@@ -1621,6 +1621,8 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
     (require 'kurecolor)
     (casual-kurecolor-tmenu))
 )
+
+
 
 ;;; Package: gui/minibuffer
 
@@ -2508,8 +2510,8 @@ re_W_rite      _t_ype definition
     ;; see also lsp-command-map
     "Transient menu for Mastodon."
     [["Actions"
-      ("a" "Action"     lsp-execute-code-action)
-      ("R" "rename Var" lsp-rename)]
+      ("a" "Action"         lsp-execute-code-action)
+      ("R" "rename Var"     lsp-rename)]
 
      ["Find"
       ("r" "References"     lsp-find-references)
@@ -2533,8 +2535,8 @@ re_W_rite      _t_ype definition
       ("c" "flycheck"       flycheck-mode :transient t)]
 
     ["Misc"
-      ("?" "help"            describe-mode)
-      ("q" "quit"            transient-quit-one)
+      ("?" "help"           describe-mode)
+      ("q" "quit"           transient-quit-one)
       ]])
 
   :bind (:map lsp-command-map
@@ -2584,7 +2586,6 @@ re_W_rite      _t_ype definition
 (use-package bazel
   :ensure t
   ;;:ensure (:host github :repo "bazelbuild/emacs-bazel-mode")
-
   :defer t
 
   :mode
@@ -3385,7 +3386,6 @@ re_W_rite      _t_ype definition
 
 ;;; Package: misc/ibuffer
 
-
 (use-package ibuffer
   :defer t
 
@@ -3439,6 +3439,7 @@ re_W_rite      _t_ype definition
   :bind
   ("C-x b" . ibuffer)                     ;; was: switch-to-buffer)
 )
+
 
 
 ;; https://github.com/kickingvegas/casual-ibuffer
@@ -3895,7 +3896,9 @@ re_W_rite      _t_ype definition
       ("q" "quit"            transient-quit-one)
       ]])
 
-     ;; These won't ever go into the transient:
+     ;; These won't go into the transient ... except when I find out
+     ;; if/how these functions are actually useful for me
+     ;;
      ;; TAB             mastodon-tl--next-tab-item
      ;; SPC             mastodon-tl--more
      ;; !               mastodon-tl--fold-post-toggle
