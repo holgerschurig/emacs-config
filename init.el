@@ -1609,8 +1609,8 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
      "Hex → CSS-RGBA"
      kurecolor-hexcolor-at-point-or-region-to-css-rgba)]
 
-  ["Quit"
-   (casual-lib-quit-one)]])
+   ["Misc"
+    ("q" "Quit" transient-quit-one)]])
 
   :init
   (defun kurecolor ()
