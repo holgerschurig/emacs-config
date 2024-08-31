@@ -1207,6 +1207,16 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 
 
 
+;;; Package: core/uniqify
+(use-package url
+  :defer t
+
+  :custom
+  (url-configuration-directory (locate-user-emacs-file "var/url/"))
+)
+
+
+
 ;;; Package: core/window
 
 (use-package window
