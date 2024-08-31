@@ -2748,13 +2748,12 @@ re_W_rite      _t_ype definition
 
     ;; Modify completions, elisp-completion-at-point wouldn't allow me to
     ;; complete elisp things in comments.
-    (when (fboundp 'cape-capf-super)
-      (defalias 'my-elisp-capf (cape-capf-super #'elisp-completion-at-point
-                                                #'cape-dabbrev
-                                                #'cape-file
-                                                #'cape-dict
-                                                #'cape-elisp-symbol))
-      (setq-local completion-at-point-functions '(my-elisp-capf t)))
+    ;; (defalias 'my-elisp-capf (cape-capf-super #'elisp-completion-at-point
+    ;;                                           #'cape-dabbrev
+    ;;                                           #'cape-file
+    ;;                                           #'cape-dict
+    ;;                                           #'cape-elisp-symbol))
+    ;;   (setq-local completion-at-point-functions '(my-elisp-capf t)))
 
     (corfu-mode)
 
