@@ -1946,18 +1946,6 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   (defun which-key--hide-popup-ignore-command ()
     "Empty dummy function.")
 
-  (setq embark-collect-initial-view-alist '((buffer . list)                ;; was grid
-                                            (consult-grep . list)
-                                            (consult-location . list)
-                                            (consult-register . zebra)
-                                            (consult-yank . zebra)
-                                            (file . list)                  ;; was grid
-                                            (kill-ring . zebra)
-                                            (line . list)
-                                            (symbol . list)                ;; was grid
-                                            (xref-location . list)
-                                            (t . list)))
-
   ;; Always come up with the various options
   ;; use @ <key binding> or narrowing
   ;;(setq embark-prompter #'embark-completing-read-prompter)
