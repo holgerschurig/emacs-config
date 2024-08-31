@@ -2598,6 +2598,31 @@ re_W_rite      _t_ype definition
   ("/MODULE\\.bazel\\'" . bazel-module-mode)
   ("/\\(?:WORKSPACE\\(?:\\.b\\(?:azel\\|zlmod\\)\\)?\\)\\'" . bazel-workspace-mode)
   ("/\\(?:BUILD\\(?:\\.bazel\\)?\\)\\'" . bazel-build-mode)
+
+  :config
+  (transient-define-prefix casual-bazel-tmenu ()
+    "Transient menu for Bazel."
+    [:pad-keys t
+     ["Bazel"
+      ("b"   "Build"         bazel-build)
+      ("C-c" "Compile this"  bazel-compile-current-file)
+      ("t"   "test"          bazel-test)
+      ("C-t" "test at point" bazel-test-at-point)
+      ("c"   "Coverage"      bazel-coverage)
+      ("r"   "Run"           bazel-run)
+      ("f"   "buildiFier"    bazel-buildifier)]
+
+     ["Visit"
+      ("R" "consuming Rule" bazel-show-consuming-rule)
+      ("B" "Build file"     bazel-find-build-file)
+      ("W" "Workspace file" bazel-find-workspace-file)]
+
+     ["Misc"
+      ("d" "remove coverage Display" bazel-remove-coverage-display)
+      ("q" transient-quit-one)]])
+
+  :bind (:map bazel-mode-map
+         ("C-c C-o" . casual-bazel-tmenu))
 )
 
 
