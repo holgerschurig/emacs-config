@@ -2510,33 +2510,33 @@ re_W_rite      _t_ype definition
     ;; see also lsp-command-map
     "Transient menu for Mastodon."
     [["Actions"
-      ("a" "Action"         lsp-execute-code-action)
-      ("R" "rename Var"     lsp-rename)]
+      ("a" "Action"           lsp-execute-code-action)
+      ("R" "rename Var"       lsp-rename)]
 
      ["Find"
-      ("r" "References"     lsp-find-references)
-      ("c" "deClaration"    lsp-find-declaration)
-      ("d" "Definition"     lsp-find-definition)
-      ("i" "Implementation" lsp-find-implementation)
-      ("t" "Type defintion" lsp-find-type-definition)]
+      ("r" "References"       lsp-find-references)
+      ("c" "deClaration"      lsp-find-declaration)
+      ("d" "Definition"       lsp-find-definition)
+      ("i" "Implementation"   lsp-find-implementation)
+      ("t" "Type defintion"   lsp-find-type-definition)]
 
      ["Modify"
-      ("f" "Format region"  lsp-format-region)
-      ("b" "format Buffer"  lsp-format-buffer)
-      ("i" "sort Imports"   lsp-organize-imports)]
+      ("f" "Format region"    lsp-format-region)
+      ("b" "format Buffer"    lsp-format-buffer)
+      ("i" "sort Imports"     lsp-organize-imports)]
 
      ["Toggles"
-      ("D" "doc mode"       lsp-ui-doc-mode :transient t)
-      ("s" "ui Sideline"    lsp-ui-sideline-mode :transient t)
-      ("A" "modeline Actions"     lsp-modeline-code-actions-mode :transient t)
-      ("B" "Breadcrumps"    lsp-headerline-breadcrumb-mode :transient t)
-      ("S" "Signature"      lsp-toggle-signature-auto-activate :transient t)
-      ("h" "inlay Hints"    lsp-inlay-hints-mode :transient t)
-      ("c" "flycheck"       flycheck-mode :transient t)]
+      ("D" "doc mode"         lsp-ui-doc-mode :transient t)
+      ("s" "ui Sideline"      lsp-ui-sideline-mode :transient t)
+      ("A" "modeline Actions" lsp-modeline-code-actions-mode :transient t)
+      ("B" "Breadcrumps"      lsp-headerline-breadcrumb-mode :transient t)
+      ("S" "Signature"        lsp-toggle-signature-auto-activate :transient t)
+      ("h" "inlay Hints"      lsp-inlay-hints-mode :transient t)
+      ("c" "flycheck"         flycheck-mode :transient t)]
 
     ["Misc"
-      ("?" "help"           describe-mode)
-      ("q" "quit"           transient-quit-one)
+      ("?" "help"             describe-mode)
+      ("q" "quit"             transient-quit-one)
       ]])
 
   :bind (:map lsp-command-map
