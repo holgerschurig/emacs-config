@@ -2512,11 +2512,16 @@ re_W_rite      _t_ype definition
   (lsp-warn-no-matched-clients nil)
   (lsp-keymap-prefix "C-c") ;; was s-l
   (lsp-session-file (locate-user-emacs-file "var/lsp-session-v1"))
-  ;; (lsp-log-io t) ;; if you want to debug the LSP daemon interaction
+  ;; That's for PHP, which I'll probably never do
+  ;; (lsp-intelephense-storage-path (locate-user-emacs-file "var/lsp-cache"))
+  ;; (lsp-intelephense-global-storage-path (locate-user-emacs-file "var/intelephense"))
+  ;; if you want to debug the LSP daemon interaction
+  ;; (lsp-log-io t)
 
   :config
   (transient-define-prefix casual-lsp-tmenu ()
-    ;; see also lsp-command-map
+    ;; see also lsp-command-map for examples of what we could add, and
+    ;; what predicates might be applicable
     "Transient menu for Mastodon."
     [["Actions"
       ("a" "Action"           lsp-execute-code-action)
@@ -2590,7 +2595,7 @@ re_W_rite      _t_ype definition
 
 ;; https://github.com/bazelbuild/emacs-bazel-mode
 
-;; TODO: investigate buildifier & bazel-mode-flymake, see https://github.com/bazelbuild/buildtools/tree/main/buildifier
+;; TODO: investigate buildifier, see https://github.com/bazelbuild/buildtools/tree/main/buildifier
 
 (use-package bazel
   :ensure t
