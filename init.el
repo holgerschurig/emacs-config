@@ -2744,7 +2744,7 @@ re_W_rite      _t_ype definition
     (modify-syntax-entry ?- "w")
 
     ;; make sure we cannot save with imbalanced parenthesisa
-    (add-hook 'local-write-file-hooks 'check-parens)
+    (add-hook 'write-file-functions 'check-parens)
 
     ;; Modify completions, elisp-completion-at-point wouldn't allow me to
     ;; complete elisp things in comments.
