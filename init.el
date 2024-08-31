@@ -2738,8 +2738,8 @@ re_W_rite      _t_ype definition
 
   :config
   (defun my-emacs-lisp-mode-setup ()
-    (interactive)
     "My emacs lisp mode setup function."
+    (interactive)
     ;; "-" is almost always part of a function- or variable-name
     (modify-syntax-entry ?- "w")
 
