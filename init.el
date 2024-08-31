@@ -811,6 +811,16 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 )
 
 
+;;; package: core/package
+
+(use-package package
+  :defer t
+
+  :custom
+  (package-user-dir (locate-user-emacs-file "var/elpa"))
+)
+
+
 
 ;;; package: core/paragraphs
 
@@ -1208,6 +1218,7 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 
 
 ;;; Package: core/uniqify
+
 (use-package url
   :defer t
 
