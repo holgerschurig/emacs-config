@@ -2458,7 +2458,7 @@ re_W_rite      _t_ype definition
   (global-flycheck-mode +1)
 
   :config
-  (remove-hook 'flycheck-checkers 'emacs-lisp-checkdoc) ;; TODO maybe there is a better way?
+  (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
 )
 
 
