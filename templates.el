@@ -1,7 +1,6 @@
 ;; -*- mode: lisp -*-
 ;; see: https://github.com/minad/tempel#template-syntax
 ;; see: https://www.emacswiki.org/emacs/tempo-c-cpp.el
-;; see: https://www.emacswiki.org/emacs/tempo-c-cpp.el
 ;;
 ;; "string"                      Inserts a string literal.
 ;; p                             Inserts an unnamed placeholder field.
@@ -23,6 +22,7 @@
 ;; (r> PROMPT <NAME> <NOINSERT>) Act like (r ...), but indent region.
 ;; (p FORM <NAME> <NONINS>)      Like p described above, but FORM is evaluated.
 ;; (FORM ...)                    Other Lisp forms are evaluated. Named fields are lexically bound.
+;; q                             Quits the containing template when jumped to
 
 
 
@@ -146,3 +146,55 @@ c-mode :condition (re-search-backward "^\\w*$" (line-beginning-position) 'noerro
 (head "#ifndef " (p (concat (upcase (file-name-base (buffer-file-name))) "_H") clause) > n "#define " (s clause) n> p n "#endif" n>)
 (main > "int main(int argc, char *argv[])" n> "{" >  n> > r n "return 0;" > n "}" > n>)
 ;; Doxygen documentation
+
+
+rustic-mode
+
+;; https://github.com/rksm/emacs-rust-config/tree/master/snippets/rustic-mode
+(as "assert!(" (s TRUTH) ");" )
+(ase "assert_eq!(" p ", " p ");" )
+(d "dbg!(" p ")" )
+(der "#(derive(" p ")]" n> )
+(dcc "#[derive(Debug, Clone, Copy)]" n> )
+;;drop-trait
+(drop "impl Drop for " (s TYPE) " {" n> "fn drop(&mut self) {" n> r n> "}" n> "}" )
+(enum "enum " (s NAME) " {" n> (s VARIANT) ":(" (s DATA) ")," n> "}" )
+(ep "eprintln!(\"" p "\");" )
+(epa "eprintln!(\"{}," p "\");" )
+(fmt "format!(\"" p "\")")
+(fn  "fn " p "(" p ") {"          n> r> n "}" )
+(fnr "fn " p "(" p ") -> " p " {" n> r> n "}" )
+(for "for " p " in " p " {" n> r> n> "}" )
+(ifl "if let " p " = " p " {" n> r> n> "}" )
+(imp "impl " (s NAME) " {" n> "fn " (s METHOD) "(" (p "&self") ") " p " {" n> p "}" n>"}" > )
+;;imp-add
+;;imp-debug
+;;imp-display
+;;imp-iter
+;;imp-for
+;;imp-from
+;;let-match-option
+;;let-match-result
+;;macro
+;;macro
+;;macro-debug
+;;main
+;;match
+(match "match " p " {" n> p " => " p "," n "}" )
+;;measure-time
+;;method
+;;mod-tests
+;;new-fn
+;;print-debug
+;;println
+(p "println!(\"" p "\");" )
+;;println-with-arg
+(pa "println!(\"{}\", " p ");" )
+;;struct
+;;struct_tuple
+;;struct_unit
+;;test
+;;todo
+;;trait
+;;type
+;;unsafe
