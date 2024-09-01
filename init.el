@@ -2561,6 +2561,10 @@ re_W_rite      _t_ype definition
   ;; if you want to debug the LSP daemon interaction
   ;; (lsp-log-io t)
   (lsp-server-install-dir (locate-user-emacs-file "var/lsp"))
+  ;; uncomment for less flashiness
+  ;; (setq eldoc-documentation-functions nil)
+  (lsp-enable-symbol-highlighting nil)
+  ;; (setq lsp-signature-auto-activate nil)
 
   :config
   (transient-define-prefix casual-lsp-tmenu ()
