@@ -2524,9 +2524,10 @@ re_W_rite      _t_ype definition
 
 
 
-;;; Package: ide/lsp
+;;; Package: ide/lsp-mode
 
 ;; https://emacs-lsp.github.io/lsp-mode/
+;; https://emacs-lsp.github.io/lsp-mode/tutorials/how-to-turn-off/  <-- shows what LSP displays
 
 
 (use-package lsp-mode
@@ -2535,65 +2536,120 @@ re_W_rite      _t_ype definition
   :commands (lsp-mode lsp-deferred)
 
   :custom
+  ;; from: https://emacs-lsp.github.io/lsp-mode/tutorials/how-to-turn-off/
+  ;; 1. Symbol highlighting
+  (lsp-enable-symbol-highlighting nil)
+  ;; 2. lsp-io-doc is in the lsp-ui section
+  ;; 3. Lenses
+  (lsp-lens-enable nil)
+  ;; 4. Headerline
+  (lsp-headerline-breadcrumb-enable t)
+  ;; 5. Sideline code actions is in the lsp-ui section
+  (eldoc-documentation-functions nil)
+  (lsp-signature-auto-activate nil)
+  ;; 6. Symbols info in sideline is in the lsp-ui section
+  ;; 7. Modeline code actions
+  (lsp-modeline-code-acions-enable t)
+  ;; 8. Flycheck/Flymake
   (lsp-diagnostics-provider :flycheck)
-  (lsp-completion-provider :none) ;; it wants to setup company mode if kept at it's default
-  (lsp-warn-no-matched-clients nil)
+  ;; 9. Sideline diagnostics is in the lsp-ui section
+  ;; 10. Eldoc
+  (lsp-eldoc-render-all t)
+  (lsp-eldoc-enable-hover t)
+  ;; 11. Modeline diagnostics statistics
+  (lsp-modeline-diagnostics-enable t)
+  ;; 12. Signature help
+  (lsp-signature-auto-activate t) ;; you could manually request them via `lsp-signature-activate`
+  ;; 13. Signature help documentation
+  (lsp-signature-render-documentation t)
+  ;; 14. Completion
+  (lsp-completion-provider :none) ;; needs to be :none if we use corfu, because otherwise LSP wants to configure company-mode ...
+  ;; 15. Completion item detail
+  (lsp-completion-show-detail nil)
+  ;; 16. Completion item kind
+  (lsp-completion-show-kind nil)
+
+  ;; Using the easier to type C-c
   (lsp-keymap-prefix "C-c") ;; was s-l
+
+  ;; Don't litter my .emacs.d
   (lsp-session-file (locate-user-emacs-file "var/lsp-session-v1"))
-  ;; That's for PHP, which I'll probably never do
-  ;; (lsp-intelephense-storage-path (locate-user-emacs-file "var/lsp-cache"))
-  ;; (lsp-intelephense-global-storage-path (locate-user-emacs-file "var/intelephense"))
+  (lsp-server-install-dir (locate-user-emacs-file "var/lsp"))
+
+  ;; I'm using tempel currently, this is only for yasnippet
+  (lsp-enable-snippet nil)
+
+  ;; The default error handler is a bit useless, emit even "contents modified"
+  (lsp-default-create-error-handler-fn (lambda (&rest ignored) #'ignore))
+
   ;; if you want to debug the LSP daemon interaction
   ;; (lsp-log-io t)
-  (lsp-server-install-dir (locate-user-emacs-file "var/lsp"))
-  ;; uncomment for less flashiness
-  ;; (setq eldoc-documentation-functions nil)
-  (lsp-enable-symbol-highlighting nil)
-  ;; (setq lsp-signature-auto-activate nil)
 
-  :config
-  (transient-define-prefix casual-lsp-tmenu ()
-    ;; see also lsp-command-map for examples of what we could add, and
-    ;; what predicates might be applicable
-    "Transient menu for Mastodon."
-    [["Actions"
-      ("a" "Action"           lsp-execute-code-action)
-      ("R" "rename Var"       lsp-rename)]
+  ;; (lsp-inlay-hint-enable t)
 
-     ["Find"
-      ("r" "References"       lsp-find-references)
-      ("c" "deClaration"      lsp-find-declaration)
-      ("d" "Definition"       lsp-find-definition)
-      ("i" "Implementation"   lsp-find-implementation)
-      ("t" "Type defintion"   lsp-find-type-definition)]
-
-     ["Modify"
-      ("f" "Format region"    lsp-format-region)
-      ("b" "format Buffer"    lsp-format-buffer)
-      ("i" "sort Imports"     lsp-organize-imports)]
-
-     ["Toggles"
-      ("D" "doc mode"         lsp-ui-doc-mode :transient t)
-      ("s" "ui Sideline"      lsp-ui-sideline-mode :transient t)
-      ("A" "modeline Actions" lsp-modeline-code-actions-mode :transient t)
-      ("B" "Breadcrumps"      lsp-headerline-breadcrumb-mode :transient t)
-      ("S" "Signature"        lsp-toggle-signature-auto-activate :transient t)
-      ("h" "inlay Hints"      lsp-inlay-hints-mode :transient t)
-      ("c" "flycheck"         flycheck-mode :transient t)]
-
-    ["Misc"
-      ("?" "help"             describe-mode)
-      ("q" "quit"             transient-quit-one)
-      ]])
+  ;; :config
+  ;; (transient-define-prefix casual-lsp-tmenu ()
+  ;;   ;; see also lsp-command-map for examples of what we could add, and
+  ;;   ;; what predicates might be applicable
+  ;;   "Transient menu for Mastodon."
+  ;;   [["Actions"
+  ;;     ("a" "Action"           lsp-execute-code-action)
+  ;;     ("R" "rename Var"       lsp-rename)]
+  ;;    ["Find"
+  ;;     ("r" "References"       lsp-find-references)
+  ;;     ("c" "deClaration"      lsp-find-declaration)
+  ;;     ("d" "Definition"       lsp-find-definition)
+  ;;     ("i" "Implementation"   lsp-find-implementation)
+  ;;     ("t" "Type defintion"   lsp-find-type-definition)]
+  ;;    ["Modify"
+  ;;     ("f" "Format region"    lsp-format-region)
+  ;;     ("b" "format Buffer"    lsp-format-buffer)
+  ;;     ("i" "sort Imports"     lsp-organize-imports)]
+  ;;    ["Toggles"
+  ;;     ("D" "doc mode"         lsp-ui-doc-mode :transient t)
+  ;;     ("s" "ui Sideline"      lsp-ui-sideline-mode :transient t)
+  ;;     ("A" "modeline Actions" lsp-modeline-code-actions-mode :transient t)
+  ;;     ("B" "Breadcrumps"      lsp-headerline-breadcrumb-mode :transient t)
+  ;;     ("S" "Signature"        lsp-toggle-signature-auto-activate :transient t)
+  ;;     ("h" "inlay Hints"      lsp-inlay-hints-mode :transient t)
+  ;;     ("c" "flycheck"         flycheck-mode :transient t)]
+  ;;   ["Misc"
+  ;;     ("?" "help"             describe-mode)
+  ;;     ("q" "quit"             transient-quit-one)
+  ;;     ]])
 
   :bind (:map lsp-command-map
-              ("C-o" . casual-lsp-tmenu))
+         ("C-o" . casual-lsp-tmenu)
+         ;; :map lsp-mode-map
+         ;; ("M-." . lsp-find-definition)
+        )
 
   :hook
   (lsp-mode . lsp-enable-which-key-integration)
-  (lsp-mode . lsp-ui-mode)
+  ;;(lsp-mode . lsp-ui-mode)
   (lsp-mode . corfu-mode)
   (lsp-mode . corfu-popupinfo-mode)
+)
+
+
+
+
+;;; Package: ide/lsp-rust
+
+;: https://emacs-lsp.github.io/lsp-mode/page/lsp-rust-analyzer/
+
+(use-package lsp-rust
+  :ensure nil ;; comes with LSP
+  :defer t
+
+  ;; :custom
+  ;; Lenses are this "> Run > Debug" overlays in the source code
+  ;; (lsp-rust-analyzer-lens-enable nil)
+  ;; (lsp-rust-analyzer-cargo-watch-command "clippy") ;; was "check"
+  ;; (lsp-rust-analyzer-display-chaining-hints t)
+  ;; (lsp-rust-analyzer-display-lifetime-elision-hints-use-parameter-names t)
+  ;; (lsp-rust-analyzer-display-closure-return-type-hints t)
+  ;; (lsp-rust-analyzer-display-parameter-hints t)
 )
 
 
@@ -2602,14 +2658,26 @@ re_W_rite      _t_ype definition
 
 ;; https://emacs-lsp.github.io/lsp-ui/
 
-
 (use-package lsp-ui
   :ensure t
+  :defer t
+
   :commands (lsp-ui-mode)
 
-  :bind
-  ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
-  ([remap xref-find-references] . lsp-ui-peek-find-references)
+  :custom
+  ;; from: https://emacs-lsp.github.io/lsp-mode/tutorials/how-to-turn-off/
+  ;; 2. Docs on hovering
+  (lsp-ui-doc-enable t)
+  (lsp-ui-doc-show-with-cursor nil)
+  (lsp-ui-doc-show-with-mouse t)
+  ;; 5. Sideline code actions
+  (lsp-ui-sideline-enable t)  ;; this is the whole sideline
+  (lsp-ui-sideline-show-code-actions t)
+  ;; 6. Symbols info in sideline, see also M-x lsp-ui-sideline-toggle-symbols-info
+  (lsp-ui-sideline-show-hover nil)
+  (lsp-ui-sideline-show-symbol nil)
+  ;; 9. Sideline diagnostics is in the lsp-ui section
+  (lsp-ui-sideline-show-diagnostics nil) ;; show only errors if nil
 )
 
 
