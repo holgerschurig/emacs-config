@@ -2369,22 +2369,6 @@ successfully sets indent_style/indent_size.")
   ;; remove-from-list :-)
   (remove-hook 'completion-category-defaults '(eglot (styles flex basic)))
 
-  (when (featurep 'cape)
-                  (defalias 'my-eglot-capf (cape-capf-super ;;#'tempel-expand
-                                            #'eglot-completion-at-point
-                                            #'cape-file
-                                            #'cape-dabbrev
-                                            #'cape-dict
-                                            ))
-    "completion at point functions for eglot")
-
-  (defun my-eglot-hook ()
-    (add-to-list 'completion-at-point-functions #'my-eglot-capf)
-    (add-to-list 'completion-at-point-functions #'tempel-expand)
-    (remove-hook 'completion-at-point-functions #'eglot-completion-at-point t)
-    )
-  (add-hook 'eglot-managed-mode-hook #'my-eglot-hook)
-
   ;; Default to have the hints mode off in managed buffers
   (defun my-eglot-managed-hook ()
     (eglot-inlay-hints-mode -1))
