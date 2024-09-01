@@ -2253,6 +2253,19 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
+;;; Package: ide/consult-flycheck
+
+(use-package consult-flycheck
+  :ensure t
+  :defer t
+  :after (consult flycheck)
+
+  :bind
+  ("M-g f" . consult-flycheck)
+)
+
+
+
 ;;; Package: ide/consult-lsp
 
 (use-package consult-lsp
@@ -2417,7 +2430,6 @@ re_W_rite      _t_ype definition
   ;; (M-;   . xref-go-back)
   ;; (M-.   . xref-find-definitions)
   ;; (M-g e . consult-compile-error)               ;; for errors, maybe even warnings
-  ;; (M-g f . consult-flymake)                     ;; for errors, maybe even warnings
   ;; (M-s u . xref-find-reference)                 ;; like "search usage"
   )
 )
@@ -3190,8 +3202,6 @@ re_W_rite      _t_ype definition
 
     ;; M-g bindings (goto-map)
     ("M-g e"    . consult-compile-error)
-    ;; We're now using flycheck
-    ;; ("M-g f"    . consult-flymake)
     ("M-g g"    . consult-goto-line)           ;; was: goto-line
     ("M-g M-g"  . consult-goto-line)           ;; was: goto-line
     ("M-g o"    . consult-outline)
