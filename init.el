@@ -1812,20 +1812,23 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 ;;; Package: gui/which-key
 
+;; Original: https://github.com/justbur/emacs-which-key
+
 (use-package which-key
   :ensure t
-  :defer 1
+  :defer nil
 
   :custom
   (which-key-compute-remaps t)
   (which-key-dont-use-unicode nil)
-  (which-key-preserve-window-configuration t)
+  ;; (which-key-preserve-window-configuration t)
   (which-key-show-remaining-keys t)
-  (which-key-sort-order 'which-key-prefix-then-key-order)
+  ;; (which-key-sort-order 'which-key-prefix-then-key-order)
   (which-key-lighter "")
 
   :config
   (which-key-mode)
+  (which-key-setup-minibuffer)
 )
 
 
