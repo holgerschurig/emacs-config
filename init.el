@@ -1788,7 +1788,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
   (add-hook 'next-error-hook #'pulsar-pulse-line)
   (add-hook 'minibuffer-setup-hook #'pulsar-pulse-line)
-  (add-hook 'focus-in-hook  #'pulsar-pulse-line)
+  (add-hook 'after-focus-change-function  #'pulsar-pulse-line)
 
   ;; integration with the `consult' package:
   (with-eval-after-load 'consult
