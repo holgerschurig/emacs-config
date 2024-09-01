@@ -2843,7 +2843,7 @@ re_W_rite      _t_ype definition
 (use-package js-mode
   :defer t
 
-  :mode "\\.ns\\'"  ;; bitburner .ns files
+  :mode ("\\.ns\\'")  ;; bitburner .ns files
 )
 
 
@@ -2903,7 +2903,7 @@ re_W_rite      _t_ype definition
 
 (use-package lua-mode
   :ensure t
-  :mode (".lua$" . lua-mode)
+  :mode ("\\.lua\\'" . lua-mode)
 )
 
 
@@ -2939,7 +2939,7 @@ re_W_rite      _t_ype definition
   :ensure t
   :defer t
 
-  :mode (("\\meson.build\\'" . meson-mode))
+  :mode (("/meson.build\\'" . meson-mode))
 
   :config
   (setq! meson-indent-basic 4)
@@ -2954,7 +2954,7 @@ re_W_rite      _t_ype definition
   :ensure t
   :defer t
 
-  :mode ((".build$'" . nim-mode))
+  :mode (("\\.build\\'" . nim-mode))
 
   :config
   (setq nim-pretty-triple-double-quotes nil)
