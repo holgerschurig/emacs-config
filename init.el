@@ -2445,11 +2445,13 @@ re_W_rite      _t_ype definition
 
 (use-package flycheck
   :ensure t
-  :defer t
-  :commands (flycheck-mode)
+  :defer 1
+
+  :init
+  (global-flycheck-mode +1)
 
   :config
-  (remove-hook 'flycheck-checkers 'emacs-lisp-checkdoc)
+  (remove-hook 'flycheck-checkers 'emacs-lisp-checkdoc) ;; TODO maybe there is a better way?
 )
 
 
