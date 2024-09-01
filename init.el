@@ -1805,6 +1805,44 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
+;;; Package: gui/shackle
+
+;; https://depp.brause.cc/shackle/
+
+(use-package shackle
+  :ensure t
+
+  :custom
+  ;; :select                select the popped up window
+  ;; :inhibit-window-quit   disable the q key
+  ;; :custom                override with custom action
+  ;; :ignore                ignore specified buffer
+  ;; :other                 use or re-use other window
+  ;; :same                  use this window
+  ;; :popup                 pop up a new window
+  ;; :align                 align 'above, 'below, 'left or 'right, t or (function)
+  ;; :size                  fractonal=ratio, integer=lines
+  ;; :frame                 pop up a frame instead of a new window
+  (shackle-rules '(
+           (compilation-mode       :select nil :align 'bottom :size 0.3)
+		   (proced-mode            :select t   :same t)
+		   (dired-mode             :select t   :same t)
+		   (messages-buffer-mode   :select nil :other t :inhibit-window-quit t)
+           (helpful-mode           :select t   :same t  :inhibit-window-quit t)
+		   ("\\*magit"   :regexp t :select t   :same t)
+		   ("\\*shell.*" :regexp t :select t   :same t)
+		   ("\\*Cargo.*" :regexp t :select nil :other t)
+		   ("\\*Pp Eval" :regexp t :select t   :other t)
+                 ))
+
+  (shackle-default-rule nil)
+
+  :config
+  (shackle-mode)
+)
+
+
+
 ;;; Package: gui/transient
 
 ; We need to :ensure this so that elpaca loads it, the bundled transient is too old
