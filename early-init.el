@@ -3,6 +3,20 @@
 ;; Based on: James Cherti, https://github.com/jamescherti/minimal-emacs.d
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 
+
+
+;;; Directories
+
+(when (native-comp-available-p)
+  (startup-redirect-eln-cache (locate-user-emacs-file  "var/")))
+
+(setq custom-theme-directory (locate-user-emacs-file "themes/"))
+(setq custom-file (locate-user-emacs-file "custom.el"))
+
+
+
+;;; Device type definitions
+
 (defvar is-mac (string= system-type "darwin") "Is this running on macOS?")
 (defvar is-lnx (string= system-type "gnu/linux") "Is this running on Linux?")
 (defvar is-win (string= system-type "windows-nt") "Is this running under Windows?")
@@ -10,12 +24,9 @@
 (defvar is-x11 (and (getenv "DISPLAY") (not is-way)) "Is this running under X11?")
 
 
-(setq custom-theme-directory (locate-user-emacs-file "themes/"))
-(setq custom-file (locate-user-emacs-file "custom.el"))
-
-
 
 ;;; Variables
+
 (defvar my-debug nil
   "Non-nil to enable debug.")
 
@@ -26,11 +37,6 @@
   "Default value of `mode-line-format'.")
 
 
-
-;;; Package: core/startup
-
-(when (native-comp-available-p)
-  (startup-redirect-eln-cache (locate-user-emacs-file  "var/")))
 
 ;;; Package: core/advice
 
