@@ -15,12 +15,6 @@
 (require 'private (locate-user-emacs-file "private.el") 'noerror)
 
 
-;; Add local bin
-;; Add local bin (note tha exec-path doesn't propagate into $PATH)
-(add-to-list 'exec-path (concat (getenv "HOME") "/bin"))
-
-
-
 ;;; functions
 
 (defun 822date ()
@@ -117,6 +111,29 @@ Unlike `setopt', this won't needlessly pull in dependencies."
   (elpaca-use-package-mode))
 
 (bind-key "q" #'kill-buffer-and-window 'elpaca-log-mode-map)
+
+
+;;; Package: pre/exec-path-from-shell
+
+;; https://github.com/purcell/exec-path-from-shell
+
+(use-package exec-path-from-shell
+  :ensure t
+  :defer nil
+
+  :custom
+  (exec-path-from-shell-arguments '("-l")) ;; no -i (interactive shell)
+  (exec-path-from-shell-variables '("PATH"
+                                    "SSH_AUTH_SOCK" "SSH_AGENT_PID"
+                                    "GPG_AGENT_INFO"
+                                    "LANG"
+                                    "LC_CTYPE"
+                                    ;; "NIX_SSL_CERT_FILE" "NIX_PATH"
+                                    ))
+  :init
+  (exec-path-from-shell-initialize)
+)
+
 
 
 ;;; Package: core/align
