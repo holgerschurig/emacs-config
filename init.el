@@ -3036,47 +3036,52 @@ re_W_rite      _t_ype definition
 
 
 
-;;; Package: prog/rust
+;;; Package: prog/rustic
 
 ;; https://github.com/emacs-rustic/rustic
+;; https://robert.kra.hn/posts/rust-emacs-setup/
+;; https://emacs-lsp.github.io/lsp-mode/page/lsp-rust-analyzer/
+;; https://rust-analyzer.github.io/manual.html#assists-code-actions
+
+;; General: C-c C-c
+;; Popup:   C-c C-p
 
 (use-package rustic
   :ensure t
   :defer t
 
-  :mode ("\\.rs$" . rustic-mode)
+  :mode ("\\.rs\\'" . rustic-mode)
 
   :custom
   (rustic-lsp-setup-p nil) ;; don't ask if I want to install LSP
   (rustic-indent-method-chain t)
   (rustic-babel-format-src-block nil) ;; TODO -> rustic-babel
+  ;; See also rust-mode's lsp-rust-XXX variables!
 
-  ;; (rustic-lsp-client 'eglot)
+  :config
+  ;; (add-hook 'rustic-mode-hook #'lsp-mode)
 
-  ;; :config
   ;; (add-to-list 'flycheck-checkers 'rustic-clippy))
-
-  ;; (add-hook 'rustic-mode-local-vars-hook #'rustic-setup-lsp 'append)
   ;; (add-hook 'rustic-mode-local-vars-hook #'tree-sitter! 'append))
 
-  ;; from Doom:
-  ;; (map! :map rustic-mode-map
-  ;;       :localleader
-  ;;       (:prefix ("b" . "build")
-  ;;                :desc "cargo audit"      "a" #'+rust/cargo-audit
-  ;;                :desc "cargo build"      "b" #'rustic-cargo-build
-  ;;                :desc "cargo bench"      "B" #'rustic-cargo-bench
-  ;;                :desc "cargo check"      "c" #'rustic-cargo-check
-  ;;                :desc "cargo clippy"     "C" #'rustic-cargo-clippy
-  ;;                :desc "cargo doc"        "d" #'rustic-cargo-build-doc
-  ;;                :desc "cargo doc --open" "D" #'rustic-cargo-doc
-  ;;                :desc "cargo fmt"        "f" #'rustic-cargo-fmt
-  ;;                :desc "cargo new"        "n" #'rustic-cargo-new
-  ;;                :desc "cargo outdated"   "o" #'rustic-cargo-outdated
-  ;;                :desc "cargo run"        "r" #'rustic-cargo-run)
-  ;;       (:prefix ("t" . "cargo test")
-  ;;                :desc "all"              "a" #'rustic-cargo-test
-  ;;                :desc "current test"     "t" #'rustic-cargo-current-test))
+  ;; These bindings bind some keys that are already in flycheck or lsp
+  ;; again, but then they are all nicely in C-c C-c which faster to
+  ;; type than e.g. C-c = or C-c !
+  :bind (:map rustic-mode-map
+         ("C-c C-c Q" . lsp-workspace-shutdown)
+         ("C-c C-c q" . lsp-workspace-restart)
+         ("C-c C-c e" . lsp-rust-analyzer-expand-macro)
+         ("C-c C-c a" . lsp-execute-code-action)
+         ("C-c C-c r" . lsp-rename) ;; was: rustic-cargo-rename
+
+         ;; Handling crates in Cargo.toml
+         ("C-c C-c A" . rustic-cargo-add)
+         ("C-c C-c R" . rustic-cargo-rm)
+         ("C-c C-c m" . rustic-cargo-add-missing-dependencies)
+         ;; C-c C-c u is already bound to rustic-cargo-upgrade
+
+         ("C-c C-c s" . lsp-rust-analyzer-status)
+         ("C-c w a" . lsp-rust-analyzer-status))
 )
 
 
