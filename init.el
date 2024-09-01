@@ -1774,6 +1774,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   :config
   (add-to-list 'pulsar-pulse-functions 'my-explode-window)
   (add-to-list 'pulsar-pulse-functions 'my-switch-to-buffer)
+  (add-to-list 'pulsar-pulse-functions 'consult-imenu)
 
   (add-hook 'next-error-hook #'pulsar-pulse-line)
   (add-hook 'minibuffer-setup-hook #'pulsar-pulse-line)
