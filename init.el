@@ -3722,9 +3722,6 @@ re_W_rite      _t_ype definition
   :defer t
 
   :mode (("\\epub\\'" . nov-mode))
-
-  :hook
-  (nov-mode-hook . visual-line-mode)
 )
 
 
