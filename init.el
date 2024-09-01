@@ -1245,6 +1245,16 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 
 
 
+;;; Package: core/man
+
+;; Well, woman can't render the page, but at least it doesn't appear to hang ...
+
+(when is-mac
+  (defalias 'man #'woman
+    "On mac, M-x woman is fast, but M-x man is dead-slow."))
+
+
+
 ;;; Package: core/window
 
 (use-package window
