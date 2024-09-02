@@ -3813,6 +3813,10 @@ You are a helpful assistant. Respond concisely.")
   (org-return-follows-link t)
 
   :config
+  (defun my-org-setup ()
+    (setq indent-line-function #'indent-relative-first-indent-point))
+  (add-hook 'org-mode-hook #'my-org-setup)
+
   ;; Enable PlantUML
   (org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t)))
 
