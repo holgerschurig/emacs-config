@@ -1830,6 +1830,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 		   (dired-mode             :select t   :same t)
 		   (messages-buffer-mode   :select nil :other t :inhibit-window-quit t)
            (helpful-mode           :select t   :same t  :inhibit-window-quit t)
+           (help-mode              :select t   :same t  :inhibit-window-quit t)
 		   ("\\*magit"   :regexp t :select t   :same t)
 		   ("\\*shell.*" :regexp t :select t   :same t)
 		   ("\\*Cargo.*" :regexp t :select nil :other t)
@@ -3734,32 +3735,47 @@ re_W_rite      _t_ype definition
   :defer t
   :if (locate-file "ollama" exec-path)
 
-  :commands (gptel gptel-menu gptel-send gptel-set-topic)
+  :commands (gptel gptel-menu)
 
   :custom
-  (gptel-model "mistral:latest")
+  ;; (gptel-model "mistral:latest")
 
   (gptel-directives '(
      ;; Removed the "living in Emacs", as some models get back rather snarky with "I don't live in Emacs"
-     (default     . "You are a large language model and a helpful assistant. Respond concisely.")
-     (programming . "You are a large language model and a careful programmer. Provide code and only code as output without any additional text, prompt or note.")
-     (writing     . "You are a large language model and a writing assistant. Respond concisely.")
-     (chat        . "You are a large language model and a conversation partner. Respond concisely.")
+     (default     . "To assist: Be terse. Do not offer unprompted advice or clarifications. Speak in specific,
+ topic relevant terminology. Do NOT hedge or qualify. Do not waffle. Speak
+ directly and be willing to make creative guesses. Explain your reasoning. if you
+ don’t know, say you don’t know.
+
+ Remain neutral on all topics. Be willing to reference less reputable sources for
+ ideas.
+
+ Never apologize. Ask questions when unsure.
+You are a helpful assistant. Respond concisely.")
+     (programming . "You are a careful programmer. Provide code and only code as output without any additional text, prompt or note. Do NOT use markdown backticks (```) to format your response.")
+     (cli         . "You are a command line helper. Generate command line commands that do what is requested, without any additional description or explanation. Generate ONLY the command, without any markdown code fences.")
+     (emacser     . "You are an Emacs maven. Reply only with the most appropriate built-in Emacs command for the task I specify. Do NOT generate any additional description or explanation.")
+     (chat        . "You are a conversation partner. Respond concisely.")
+     (explain     . "Explain what this code does to a novice programmer.")
      (english     . "Translate the following to english: ")
      (deutsch     . "Translate the following to german: ")
      (typo        . "Fix typos, grammar and style of the following: ")))
 
   :config
-  ;; Weird, I cannot put this into the :custom section
-  (setq-default gptel-backend (gptel-make-ollama "Ollama"
-                                :host "localhost:11434"
-                                ;; Installed models:
-                                :models '("mistral:latest" "stablelm2:latest")
-                                :stream t))
+  (setq! gptel-backend (gptel-make-ollama "Ollama"              ; Any name of your choosing
+                         :host "localhost:11434"                ; Where it's running
+                         :stream t                              ; Stream responses
+                         :models '("llama3.1:latest"))          ; List of models
+         gptel-model "llama3.1:latest")
+
+  ;; Scroll automatically, move cursor to next pronpt automatically
+  (add-hook 'gptel-post-stream-hook 'gptel-auto-scroll)
+  (add-hook 'gptel-post-response-functions 'gptel-end-of-response)
 
   ;; Weird, this didn't work in a :bind clause
   (bind-key "C-c C-c" #'gptel-send gptel-mode-map)
 )
+
 
 
 ;;; Package: misc/nov (reading epubs)
