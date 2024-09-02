@@ -3705,8 +3705,8 @@ re_W_rite      _t_ype definition
 (use-package jinx
   :ensure t
   :defer t
-  ;; it actually doesn't need the hunspell, but since we use hunspell setup in
-  ;; libenchant's odrdering, we might have installed anyway.
+  ;; it actually doesn't need hunspell, but since we use hunspell
+  ;; setup in libenchant's ordering, we might have installed anyway.
   :if (locate-file "hunspell" exec-path)
 
   ;; jinx-camel-modes: add maybe python-mode and nim-mode?
