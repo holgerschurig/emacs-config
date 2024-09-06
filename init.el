@@ -1570,6 +1570,8 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 
   :init
   (add-hook 'prog-mode-hook #'hl-todo-mode)
+  (add-hook 'rust-mode-hook #'hl-todo-mode)
+  (add-hook 'org-mode-hook #'hl-todo-mode)
   (add-hook 'yaml-mode-hook #'hl-todo-mode)
 )
 
