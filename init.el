@@ -1247,11 +1247,13 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 
   :custom
   (uniquify-buffer-name-style 'forward)
+  (uniquify-ignore-buffers-re "^\\*") ; don't muck with special buffers
+  (uniquify-separator "/")
 )
 
 
 
-;;; Package: core/uniqify
+;;; Package: core/url
 
 (use-package url
   :defer t
