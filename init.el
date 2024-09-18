@@ -3934,6 +3934,24 @@ You are a helpful assistant. Respond concisely.")
 
 
 
+;;; Package: org/org-refile
+
+(use-package org-refile
+  :defer t
+  :after org
+
+  :custom
+  ;; Use any org-agendas file as refile target, only first level
+  (org-refile-targets '((org-agenda-files :maxlevel . 1)))
+  ;; Use full outline paths for refile targets
+  (org-refile-use-outline-path t)
+  ;; Targets complete directly
+  (org-outline-path-complete-in-steps nil)
+)
+
+
+
+
 ;;; Package: org/ox
 
 (use-package ox
