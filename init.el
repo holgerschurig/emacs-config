@@ -391,6 +391,12 @@ If there are two windows displayed, act like \"C-x o\"."
 
 
 
+;;; Package: core/delsel
+
+(delete-selection-mode)
+
+
+
 ;;; Package: core/dictionary
 
 (use-package dictionary
