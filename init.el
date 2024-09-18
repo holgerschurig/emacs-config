@@ -207,7 +207,7 @@ that point."
 (setq-default right-fringe-width 8)
 
 ;; Do not show an arrow at the top/bottomin the fringe and empty lines
-(setq-default indicate-buffer-boundaries nil)
+(setq-default indicate-buffer-boundaries 'right)
 (setq-default indicate-empty-lines nil)
 
 ;; Continue wrapped lines at whitespace rather than breaking in the middle of a
