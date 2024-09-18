@@ -1140,6 +1140,13 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 
 (toggle-truncate-lines -1)
 
+;; remove text property when copying, see https://emacs.stackexchange.com/questions/4187
+(defun my-unpropertize-kill-ring ()
+  "Remove text properties for kill ring entries."
+  (setq kill-ring (mapcar 'substring-no-properties kill-ring)))
+(add-hook 'kill-emacs-hook #'my-unpropertize-kill-ring)
+
+
 
 ;;; Package: core/savehist
 
