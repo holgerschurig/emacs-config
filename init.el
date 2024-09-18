@@ -1136,6 +1136,8 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 ;; Make overly long lines at least visible in all their glory
 (global-visual-line-mode)
 
+(column-number-mode)
+
 
 ;;; Package: core/savehist
 
