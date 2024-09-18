@@ -1138,6 +1138,8 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 
 (column-number-mode)
 
+(toggle-truncate-lines -1)
+
 
 ;;; Package: core/savehist
 
