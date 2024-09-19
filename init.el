@@ -3861,6 +3861,8 @@ You are a helpful assistant. Respond concisely.")
   (org-agenda-compact-blocks t)          ; Make the block agenda more compact
   (org-agenda-start-with-log-mode 'clockcheck)
   (org-agenda-clockreport-parameter-plist (quote (:link t :maxlevel 5 :fileskip0 t :compact t :narrow 80)))
+  ;; Start agenda at today
+  (org-agenda-start-on-weekday nil)
 
   :bind
   ("C-c a" . org-agenda)
