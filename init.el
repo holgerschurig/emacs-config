@@ -2791,11 +2791,12 @@ re_W_rite      _t_ype definition
   ;; set, but here we set it before loading it (which is faster)
   ("/\\.bazeliskrc\\'" . bazeliskrc-mode)
   ("/\\.bazelignore\\'" . bazelignore-mode)
-  ("/\\(?:\\(?:bazel\\)?\\.bazelrc\\)\\'" . bazelrc-mode)
+  ("\\.bazelrc\\'" . bazelrc-mode)
   ("/.+\\.bzl\\'" . bazel-starlark-mode)
   ("/MODULE\\.bazel\\'" . bazel-module-mode)
   ("/\\(?:WORKSPACE\\(?:\\.b\\(?:azel\\|zlmod\\)\\)?\\)\\'" . bazel-workspace-mode)
   ("/\\(?:BUILD\\(?:\\.bazel\\)?\\)\\'" . bazel-build-mode)
+  ("\\.BUILD\\'" . bazel-build-mode)
 
   :config
   (transient-define-prefix casual-bazel-tmenu ()
