@@ -775,14 +775,10 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 
 
 
-;;; Package: core/mule-util
+;;; Package: core/mule
 
-(use-package mule-util
-  :defer t
-
-  :custom
-  (truncate-string-ellipsis "…")
-)
+(prefer-coding-system 'utf-8-unix)
+(setq! truncate-string-ellipsis "…")
 
 
 
