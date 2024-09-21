@@ -586,6 +586,9 @@ If there are two windows displayed, act like \"C-x o\"."
   ;; Resolve symlinks when opening files
   (find-file-visit-truename t)
 
+  ;; Make auto-revert not ask annoying questions
+  (revert-without-query '("."))
+
   :config
   ;; prevent "Modification-flag cleared" message spam
   (defun not-modified (&optional arg)
@@ -1907,7 +1910,6 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   (auto-revert-interval 1)
   (auto-revert-verbose nil)
 
-  ;; TODO needed? (revert-without-query '(".")  ; Do not prompt
   (auto-revert-stop-on-user-input nil)
   ;; TODO revisit (auto-revert-verbose t)
 
