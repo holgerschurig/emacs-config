@@ -3026,8 +3026,6 @@ re_W_rite      _t_ype definition
   :ensure t
   :defer t
 
-  :mode (("\\.build\\'" . nim-mode))
-
   :config
   (setq nim-pretty-triple-double-quotes nil)
 
