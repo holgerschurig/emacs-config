@@ -3341,7 +3341,7 @@ re_W_rite      _t_ype definition
 
 (use-package corfu
   :ensure t
-  :defer
+  :defer t
   :commands (corfu-mode)
 
   :custom
