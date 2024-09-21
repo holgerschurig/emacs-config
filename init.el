@@ -1371,15 +1371,6 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 (setq! hscroll-margin 2) ;; TODO maybe 0?
 (setq! hscroll-step 1)
 
-;; Emacs spends excessive time recentering the screen when the cursor
-;; moves more than N lines past the window edges (where N is the value of
-;; `scroll-conservatively`). This can be particularly slow in larger files
-;; during extensive scrolling. If `scroll-conservatively` is set above
-;; 100, the window is never automatically recentered. The default value of
-;; 0 triggers recentering too aggressively. Setting it to 10 reduces
-;; excessive recentering and only recenters the window when scrolling
-;; significantly off-screen.
-(setq! scroll-conservatively 10)
 
 
 ;;; Package: core/vc
