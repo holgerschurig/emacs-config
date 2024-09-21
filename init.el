@@ -1868,7 +1868,9 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   :defer t
 
   :custom
-  (transient-history-file (locate-user-emacs-file "var/history.el") )
+  (transient-history-file (locate-user-emacs-file "var/transient_history.el"))
+  (transient-levels-file (locate-user-emacs-file "var/transient_levels.el"))
+  (transient-values-file (locate-user-emacs-file "var/transient_values.el"))
 
   :config
   (transient-bind-q-to-quit)
