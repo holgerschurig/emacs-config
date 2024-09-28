@@ -3848,6 +3848,10 @@ You are a helpful assistant. Respond concisely.")
                        ;; "!" means to record only the time of the state change WHEN LEAVING STATE
                        (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)"))))
   (org-return-follows-link t)
+  (org-startup-with-inline-images t)
+  ;; Insead of "..." show "…" when there's hidden folded content
+  ;; Some characters to choose from: …, ⤵, ▼, ↴, ⬎, ⤷, and ⋱
+  (org-ellipsis "⤵")
 
   :config
   (defun my-org-setup ()
