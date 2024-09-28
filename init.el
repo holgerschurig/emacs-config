@@ -2762,6 +2762,29 @@ re_W_rite      _t_ype definition
   :ensure t
   :defer t
   :functions (project-root)
+
+  :custom
+  (project-list-file (locate-user-emacs-file "var/projects"))
+  (project-vc-extra-root-markers '("WORKSPACE" "WORKSPACE.bazel" "WORKSPACE.bzlmod"))
+
+  ;; :config
+  ;; (setopt project-switch-commands '((project-find-file             "Find file"        ?f)
+  ;;                                   (project-find-regexp           "find reGexp"      ?g)
+  ;;                                   (project-query-replace-regexp  "Query/replace"    ?q)
+  ;;                                   (project-dired                 "Dired"            ?d)
+  ;;                                   (project-find-dir              "find diRectory"   ?r)
+  ;;                                   (project-buffer                "Buffer"           ?b)
+  ;;                                   (project-kill-buffers          "Kill buffers"     ?k)
+  ;;                                   (project-magit-status          "Magit"            ?m)
+  ;;                                   (project-vc-dir                "VC-Dir"           ?v)
+  ;;                                   (project-eshell                "Eshell"           ?e)
+  ;;                                   (project-shell-command         "shell command"    ?!)
+  ;;                                   (project-any-command           "Other")))
+  :bind (:map project-prefix-map
+              ("d" . project-dired)
+              ("D" . project-find-dir)
+        )
+
 )
 
 
