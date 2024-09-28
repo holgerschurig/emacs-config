@@ -3855,7 +3855,8 @@ You are a helpful assistant. Respond concisely.")
 
   :config
   (defun my-org-setup ()
-    (setq indent-line-function #'indent-relative-first-indent-point))
+    (setq indent-line-function #'indent-relative-first-indent-point)
+    (auto-fill-mode))
   (add-hook 'org-mode-hook #'my-org-setup)
 
   ;; Enable PlantUML
