@@ -3756,6 +3756,9 @@ re_W_rite      _t_ype definition
   ("C-M-$" . jinx-languages)
 )
 
+;; ignore code block in spellcheck
+(add-to-list 'ispell-skip-region-alist '("^```" . "```$"))
+
 
 
 ;;; Package: misc/gptel
