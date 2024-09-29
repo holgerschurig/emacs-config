@@ -2952,6 +2952,25 @@ re_W_rite      _t_ype definition
 
 
 
+;;; Package: ide/terminal-here
+
+;; https://github.com/davidshepherd7/terminal-here
+
+(use-package terminal-here
+  :ensure t
+  :defer t
+
+  :config
+  (when is-way
+    (setq! terminal-here-linux-terminal-command 'foot))
+  (setq terminal-here-mac-terminal-command 'wezterm)
+
+  :bind
+  ("C-c t" . terminal-here)
+)
+
+
+
 ;;; Package: prog/bazel
 
 ;; https://github.com/bazelbuild/emacs-bazel-mode
