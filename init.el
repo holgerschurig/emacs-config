@@ -2883,6 +2883,8 @@ re_W_rite      _t_ype definition
   :custom
   (project-list-file (locate-user-emacs-file "var/projects"))
   (project-vc-extra-root-markers '("WORKSPACE" "WORKSPACE.bazel" "WORKSPACE.bzlmod"))
+  (project-switch-use-entire-map t)
+  (project-mode-line t)
 
   :bind (:map project-prefix-map
               ("a" . project-any-command)
