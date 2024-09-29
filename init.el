@@ -3676,8 +3676,8 @@ re_W_rite      _t_ype definition
   (("C-c r"   . vertico-repeat-last) ;; always the last, but can be enter while inside a vertico prompt to recall the last one
    ("C-c C-r" . vertico-repeat)      ;; the last one, can be called with C-u to get a list of previous vertico calls
    :map vertico-map
-   ([next] . nil)     ;; was next-history-element
-   ([prior] . nil)   ;; was previous-history-element
+   ([next]     . vertico-scroll-up)          ;; was next-history-element
+   ([prior]    . vertico-scroll-down)        ;; was previous-history-element
    ("M-<up>"   . next-history-element)
    ("M-<down>" . previous-history-element))
 )
