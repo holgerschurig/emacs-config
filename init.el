@@ -455,6 +455,63 @@ If there are two windows displayed, act like \"C-x o\"."
 
 
 
+;;; Package: core/dired
+
+(use-package dired
+  :defer t
+
+  :custom
+  ;; adding -Gh1v --group-directories-first
+  ;; -G  no group
+  ;; -h  human readable sizes
+  ;; -1  one column
+  ;; -v  natural sort of versions numbers within text
+  (dired-listing-switches "-laGhv --group-directories-first")
+  ;; revert when revisiting
+  (dired-auto-revert-buffer t)
+  ;; work in a Norton Commander like mode if 2 dired panes are open
+  (dired-dwim-target t)
+
+  :config
+  ;; less confirmations (some of them don't work in :custom)
+  (setq! dired-no-confirm t)
+  (setq! dired-deletion-confirmer '(lambda (x) t))
+  (setq! dired-confirm-shell-command nil)
+  (setq! dired-recursive-deletes 'always)
+
+  ;; from emacs-async
+  (require 'async)
+  (dired-async-mode 1)
+
+  (when is-mac
+    (setq! insert-directory-program "gls" dired-use-ls-dired t)
+    (setq! dired-use-ls-dired nil))
+
+  :hook
+  ;; less details, use '(' inside dired to toggle them
+  (dired-mode . dired-hide-details-mode)
+
+  :bind (
+  ;; ("C-x C-d" . dired)   ;; was: list-directory (an IMHO entirely useless command)
+  :map dired-mode-map
+  ("C-x C-p" . wdired-change-to-wdired-mode)
+  )
+)
+
+
+(use-package dired-aux
+  :defer t
+  :after dired
+
+  :custom
+  ;; If dwim, Isearch matches file names when initial point position
+  ;; is on a file name. Otherwise, it searches the whole buffer
+  ;; without restrictions.
+  (dired-isearch-filenames 'dwim)
+)
+
+
+
 ;;; Package: core/dispnew
 
 ;; No beeping or blinking
@@ -3657,60 +3714,7 @@ re_W_rite      _t_ype definition
 
 
 
-;;; Package: misc/dired
-
-(use-package dired
-  :defer t
-
-  :custom
-  ;; adding -Gh1v --group-directories-first
-  ;; -G  no group
-  ;; -h  human readable sizes
-  ;; -1  one column
-  ;; -v  natural sort of versions numbers within text
-  (dired-listing-switches "-laGhv --group-directories-first")
-  ;; revert when revisiting
-  (dired-auto-revert-buffer t)
-  ;; work in a Norton Commander like mode if 2 dired panes are open
-  (dired-dwim-target t)
-
-
-  :config
-  ;; less confirmations (some of them don't work in :custom)
-  (setq! dired-no-confirm t)
-  (setq! dired-deletion-confirmer '(lambda (x) t))
-  (setq! dired-confirm-shell-command nil)
-  (setq! dired-recursive-deletes 'always)
-
-  ;; from emacs-async
-  (require 'async)
-  (dired-async-mode 1)
-
-  (when is-mac
-    (setq! insert-directory-program "gls" dired-use-ls-dired t)
-    (setq! dired-use-ls-dired nil))
-
-  :hook
-  ;; less details, use '(' inside dired to toggle them
-  (dired-mode . dired-hide-details-mode)
-
-  :bind (("C-x C-d" . dired)   ;; was: list-directory (an IMHO entirely useless command)
-         :map dired-mode-map
-         ("C-x C-p" . wdired-change-to-wdired-mode))
-)
-
-
-(use-package dired-aux
-  :defer t
-  :after dired
-
-  :custom
-  ;; If dwim, Isearch matches file names when initial point position
-  ;; is on a file name. Otherwise, it searches the whole buffer
-  ;; without restrictions.
-  (dired-isearch-filenames 'dwim)
-)
-
+;;; Package: misc/casual-dired
 
 (use-package casual-dired
   :ensure t
