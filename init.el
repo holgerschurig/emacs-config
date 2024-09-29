@@ -665,8 +665,8 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
   (window-divider-default-places t)
   (window-divider-default-right-width 1)
 
-  :config
-  (add-hook 'after-init-hook #'window-divider-mode)
+  :hook
+  (after-init . window-divider-mode)
 )
 
 
@@ -1524,9 +1524,6 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
   :ensure t
   :defer t
 
-  :config
-  (add-hook 'helpful-mode-hook #'visual-line-mode)
-
   :bind (
    ;;("C-h f" . helpful-callable)
    ([remap describe-function] . helpful-callable)
@@ -1580,11 +1577,11 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
           ("BUG" error bold)
           ("XXX" font-lock-constant-face bold)))
 
-  :init
-  (add-hook 'prog-mode-hook #'hl-todo-mode)
-  (add-hook 'rust-mode-hook #'hl-todo-mode)
-  (add-hook 'org-mode-hook #'hl-todo-mode)
-  (add-hook 'yaml-mode-hook #'hl-todo-mode)
+  :hook
+  (prog-mode . hl-todo-mode)
+  (rust-mode . hl-todo-mode)
+  (org-mode  . hl-todo-mode)
+  (yaml-mode . hl-todo-mode)
 )
 
 
@@ -1801,9 +1798,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   (add-to-list 'pulsar-pulse-functions 'my-switch-to-buffer)
   (add-to-list 'pulsar-pulse-functions 'consult-imenu)
 
-  (add-hook 'next-error-hook #'pulsar-pulse-line)
-  (add-hook 'minibuffer-setup-hook #'pulsar-pulse-line)
-  (add-hook 'after-focus-change-function  #'pulsar-pulse-line)
+  (add-function :after after-focus-change-function  #'pulsar-pulse-line)
 
   ;; integration with the `consult' package:
   (with-eval-after-load 'consult
@@ -1816,6 +1811,10 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
     (add-hook 'imenu-after-jump-hook #'pulsar-reveal-entry))
 
   (pulsar-global-mode 1)
+
+  :hook
+  (next-error       . pulsar-pulse-line)
+  (minibuffer-setup . pulsar-pulse-line)
 )
 
 
@@ -1979,6 +1978,10 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   (defun avy-action-mark-to-char (pt)
     (activate-mark)
     (goto-char pt))
+
+  :chords
+  ("jh" . avy-goto-char-timer)
+  ("jl" . avy-goto-line)
 
   :bind (
     ("M-j" . avy-goto-char-timer)
@@ -2266,7 +2269,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   :defer t
 
   :hook
-  (prog-mode-hook . clean-aindent-mode)
+  (prog-mode . clean-aindent-mode)
 )
 
 
@@ -2297,8 +2300,6 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   (compilation-scroll-output 'first-error)
 
   :config
-  (add-hook 'compilation-filter-hook #'ansi-color-compilation-filter)
-
   (defun my-compilation-setup ()
     (setq-local truncate-lines nil))
   (add-hook 'compilation-mode-hook #'my-compilation-setup)
@@ -2314,6 +2315,9 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   ;; config.cpp:14:0:". Stop that:
   ;; http://stackoverflow.com/questions/15489319/how-can-i-skip-in-file-included-from-in-emacs-c-compilation-mode
   ;; (setcar (nthcdr 5 (assoc 'gcc-include compilation-error-regexp-alist-alist)) 0)
+
+  :hook
+  (compilation-filter . ansi-color-compilation-filter)
 )
 
 
@@ -2390,10 +2394,11 @@ successfully sets indent_style/indent_size.")
       ;; Don't display messages in the echo area, but still log them
       (let ((inhibit-message (not init-file-debug)))
         (dtrt-indent-mode +1))))
-  (add-hook 'prog-mode-hook #'my-detect-indentation)
-
   ;; always keep tab-width up-to-date
   (push '(t tab-width) dtrt-indent-hook-generic-mapping-list)
+
+  :hook
+  (prog-mode . my-detect-indentation)
 
   :custom
   ;; Enable dtrt-indent even in smie modes so that it can update `tab-width',
@@ -2447,11 +2452,6 @@ successfully sets indent_style/indent_size.")
   ;; remove-from-list :-)
   (remove-hook 'completion-category-defaults '(eglot (styles flex basic)))
 
-  ;; Default to have the hints mode off in managed buffers
-  (defun my-eglot-managed-hook ()
-    (eglot-inlay-hints-mode -1))
-  (add-hook 'eglot-managed-mode-hook #'my-eglot-managed-hook)
-
   (defhydra eglot-help (:color blue :hint nil)
     "
 ^^Actions      ^^Find              ^^Modify       Toggles
@@ -2486,6 +2486,13 @@ re_W_rite      _t_ype definition
     ;; eglot is built in, and flymake is built in. So let's toggle flymake here
     ("m" flymake-mode :exit nil)
   )
+
+  ;; Default to have the hints mode off in managed buffers
+  (defun my-eglot-managed-hook ()
+    (eglot-inlay-hints-mode -1))
+
+  :hook
+  (eglot-managed-mode . my-eglot-managed-hook)
 
   :bind
   (:map eglot-mode-map
@@ -2783,6 +2790,21 @@ re_W_rite      _t_ype definition
   ;;                                   (project-eshell                "Eshell"           ?e)
   ;;                                   (project-shell-command         "shell command"    ?!)
   ;;                                   (project-any-command           "Other")))
+
+  :chords
+  (".a" . project-any-command)
+  (".b" . project-switch-to-buffer)
+  (".d" . project-dired)
+  (".e" . project-eshell)
+  (".f" . project-find-file)
+  (".k" . project-kill-buffers)
+  (".m" . magit-project-status)
+  (".p" . project-switch-project)
+  (".r" . project-find-dir)
+  (".s" . project-shell-command)
+  (".v" . project-vc-dir)
+  (".x" . project-find-regexp)
+
   :bind (:map project-prefix-map
               ("d" . project-dired)
               ("D" . project-find-dir)
@@ -2901,8 +2923,9 @@ re_W_rite      _t_ype definition
             c-basic-offset 4))
     )
 
-  (add-hook 'c-mode-hook   #'my-c-mode-setup)
-  (add-hook 'c++-mode-hook #'my-c-mode-setup)
+  :hook
+  (c-mode   . my-c-mode-setup)
+  (c++-mode . my-c-mode-setup)
 
   :bind (
    :map c-mode-base-map
@@ -2966,7 +2989,8 @@ re_W_rite      _t_ype definition
     (add-to-list 'imenu-generic-expression
                  '("Section" "^;;[;]\\{1,8\\} \\(.*$\\)" 1)))
 
-  (add-hook 'emacs-lisp-mode-hook #'my-emacs-lisp-mode-setup)
+  :hook
+  (emacs-lisp-mode . my-emacs-lisp-mode-setup)
 )
 
 
@@ -3015,7 +3039,8 @@ re_W_rite      _t_ype definition
   :config
   ;; Show trailing whitespace when programming
 
-  (add-hook 'prog-mode-hook #'show-trailing-whitespace)
+  :hook
+  (prog-mode . show-trailing-whitespace)
 )
 
 
@@ -3075,8 +3100,10 @@ re_W_rite      _t_ype definition
 
   (when (fboundp 'rainbow-delimiters-mode)
     (add-hook 'nim-mode-hook #'rainbow-delimiters-mode))
-  (add-hook 'nim-mode-hook #'subword-mode)
-  ;; TODO (add-hook 'nim-mode-hook #'nimsuggest-mode)
+
+  :hook
+  (nim-mode . subword-mode)
+  ;; TODO (nim-mode . nimsuggest-mode)
 )
 
 
@@ -3118,7 +3145,9 @@ re_W_rite      _t_ype definition
           ;; this fixes the weird indentation when entering a colon
           ;; from http://emacs.stackexchange.com/questions/3322/python-auto-indent-problem
           electric-indent-chars (delq ?: electric-indent-chars)))
-  (add-hook 'python-mode-hook #'my-python-setup)
+
+  :hook
+  (python-mode . my-python-setup)
 )
 
 
@@ -3146,10 +3175,7 @@ re_W_rite      _t_ype definition
   ;; See also rust-mode's lsp-rust-XXX variables!
 
   :config
-  ;; (add-hook 'rustic-mode-hook #'lsp-mode)
-
   ;; (add-to-list 'flycheck-checkers 'rustic-clippy))
-  ;; (add-hook 'rustic-mode-local-vars-hook #'tree-sitter! 'append))
 
   ;; These bindings bind some keys that are already in flycheck or lsp
   ;; again, but then they are all nicely in C-c C-c which faster to
@@ -3169,6 +3195,10 @@ re_W_rite      _t_ype definition
 
          ("C-c C-c s" . lsp-rust-analyzer-status)
          ("C-c w a" . lsp-rust-analyzer-status))
+
+  ;; :hook
+  ;; (rustic-mode . lsp-mode)
+  ;; (rustic-mode-local-vars . tree-sitter! 'append))
 )
 
 
@@ -3196,7 +3226,7 @@ re_W_rite      _t_ype definition
     (hi-lock-line-face-buffer "^commit"))
 
   :hook
-  (diff-mode-hook . my-diff-mode-setup)
+  (diff-mode . my-diff-mode-setup)
 )
 
 
@@ -3224,14 +3254,15 @@ re_W_rite      _t_ype definition
   ;; The annotations currently throw an error with Emacs 29.0.50
   (remove-hook 'pdf-tools-enabled-modes 'pdf-annot-minor-mode)
 
-  ;; Remove the bounding boxes
-  (add-hook 'pdf-view-mode-hook #'pdf-view-auto-slice-minor-mode)
-
   (pdf-tools-install)
 
   ;; (add-to-list 'org-file-apps
   ;;              '("\\.pdf\\'" . (lambda (file link)
   ;;                                (org-pdfview-open link)))))
+
+  :hook
+  ;; Remove the bounding boxes
+  (pdf-view-mode . pdf-view-auto-slice-minor-mode)
 )
 
 
@@ -3601,9 +3632,6 @@ re_W_rite      _t_ype definition
   (setq! dired-confirm-shell-command nil)
   (setq! dired-recursive-deletes 'always)
 
-  ;; less details, use '(' inside dired to toggle them
-  (add-hook 'dired-mode-hook #'dired-hide-details-mode)
-
   ;; from emacs-async
   (require 'async)
   (dired-async-mode 1)
@@ -3611,6 +3639,10 @@ re_W_rite      _t_ype definition
   (when is-mac
     (setq! insert-directory-program "gls" dired-use-ls-dired t)
     (setq! dired-use-ls-dired nil))
+
+  :hook
+  ;; less details, use '(' inside dired to toggle them
+  (dired-mode . dired-hide-details-mode)
 
   :bind (("C-x C-d" . dired)   ;; was: list-directory (an IMHO entirely useless command)
          :map dired-mode-map
@@ -3694,7 +3726,8 @@ re_W_rite      _t_ype definition
     (ibuffer-switch-to-saved-filter-groups "default")
     (ibuffer-auto-mode 1))
 
-  (add-hook 'ibuffer-mode-hook #'my-ibuffer-setup)
+  :hook
+  (ibuffer-mode . my-ibuffer-setup)
 
   :bind
   ("C-x b" . ibuffer)                     ;; was: switch-to-buffer)
@@ -3749,9 +3782,9 @@ re_W_rite      _t_ype definition
   ;; jinx-camel-modes: add maybe python-mode and nim-mode?
 
   :hook
-  (text-mode-hook . jinx-mode)
-  (conf-mode-hook . jinx-mode)
-  ;; (prog-mode-hook . jinx-mode)
+  (text-mode . jinx-mode)
+  (conf-mode . jinx-mode)
+  ;; (prog-mode . jinx-mode)
 
   :bind
   ;; since we don't ue ispell, we can re-assign it's keybinding
@@ -3857,15 +3890,16 @@ You are a helpful assistant. Respond concisely.")
   (org-ellipsis "⤵")
 
   :config
-  (defun my-org-setup ()
-    (setq indent-line-function #'indent-relative-first-indent-point)
-    (auto-fill-mode))
-  (add-hook 'org-mode-hook #'my-org-setup)
-
   ;; Enable PlantUML
   (org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t)))
 
-  (add-hook 'org-mode-hook #'pixel-scroll-precision-mode)
+  (defun my-org-setup ()
+    (setq indent-line-function #'indent-relative-first-indent-point)
+    (auto-fill-mode))
+
+  :hook
+  (org-mode . my-org-setup)
+  (org-mode . pixel-scroll-precision-mode)
 
   :bind
   ("C-c l"   . org-store-link)
@@ -4239,7 +4273,17 @@ You are a helpful assistant. Respond concisely.")
 
 
 
-;;; Misc
+;;; Package: post/elpaca hook
+
+;; https://github.com/progfolio/elpaca/wiki/after-init-hook%3F-emacs-startup-hook%3F
+
+;; prevents `elpaca-after-init-hook` from running more than once.
+(setq elpaca-after-init-time (or elpaca-after-init-time (current-time)))
+(elpaca-wait)
+
+
+
+;;; Package: post/TODO
 
 ;; switch-to-buffer runs pop-to-buffer-same-window instead
 (setq switch-to-buffer-obey-display-actions t)
