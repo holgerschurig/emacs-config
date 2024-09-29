@@ -139,39 +139,6 @@ Unlike `setopt', this won't needlessly pull in dependencies."
 
 
 
-;;; Package: pre/key-chord
-
-;; Enable the :chords stanca in use-package
-;; https://github.com/jwiegley/use-package?tab=readme-ov-file#use-package-chords
-
-(use-package use-package-chords
-  :ensure t
-
-  :config
-  (key-chord-mode 1)
-)
-
-;; Make sure the use-package-chords is loaded, so that later down
-;; :chords is valid in (use-package ...)
-(elpaca-wait)
-
-;; https://github.com/emacsorphanage/key-chord
-;; https://www.emacswiki.org/emacs/KeyChord
-
-(use-package key-chord
-  :ensure nil ;; already loaded indirectly via use-package-chords!
-
-  :custom
-  (key-chord-two-keys-delay 0.075)
-  (key-chord-safety-interval-forward 0.2)
-
-  :chords
-  ("->" . "→")
-  ("<-" . "←")
-)
-
-
-
 ;;; Package: core/align
 
 (defadvice align-regexp (around align-regexp-with-spaces activate)
@@ -2096,10 +2063,6 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
     (activate-mark)
     (goto-char pt))
 
-  :chords
-  ("jh" . avy-goto-char-timer)
-  ("jl" . avy-goto-line)
-
   :bind (
     ("M-j" . avy-goto-char-timer)
     :map isearch-mode-map
@@ -2915,39 +2878,13 @@ re_W_rite      _t_ype definition
   (project-list-file (locate-user-emacs-file "var/projects"))
   (project-vc-extra-root-markers '("WORKSPACE" "WORKSPACE.bazel" "WORKSPACE.bzlmod"))
 
-  ;; :config
-  ;; (setopt project-switch-commands '((project-find-file             "Find file"        ?f)
-  ;;                                   (project-find-regexp           "find reGexp"      ?g)
-  ;;                                   (project-query-replace-regexp  "Query/replace"    ?q)
-  ;;                                   (project-dired                 "Dired"            ?d)
-  ;;                                   (project-find-dir              "find diRectory"   ?r)
-  ;;                                   (project-buffer                "Buffer"           ?b)
-  ;;                                   (project-kill-buffers          "Kill buffers"     ?k)
-  ;;                                   (project-magit-status          "Magit"            ?m)
-  ;;                                   (project-vc-dir                "VC-Dir"           ?v)
-  ;;                                   (project-eshell                "Eshell"           ?e)
-  ;;                                   (project-shell-command         "shell command"    ?!)
-  ;;                                   (project-any-command           "Other")))
-
-  :chords
-  (".a" . project-any-command)
-  (".b" . project-switch-to-buffer)
-  (".d" . project-dired)
-  (".e" . project-eshell)
-  (".f" . project-find-file)
-  (".k" . project-kill-buffers)
-  (".m" . magit-project-status)
-  (".p" . project-switch-project)
-  (".r" . project-find-dir)
-  (".s" . project-shell-command)
-  (".v" . project-vc-dir)
-  (".x" . project-find-regexp)
-
   :bind (:map project-prefix-map
+              ("a" . project-any-command)
+              ("b" . project-switch-to-buffer)
               ("d" . project-dired)
-              ("D" . project-find-dir)
+              ("r" . project-find-dir)
+              ("s" . project-shell-command)
         )
-
 )
 
 
