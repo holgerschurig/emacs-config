@@ -3657,34 +3657,6 @@ re_W_rite      _t_ype definition
 
 
 
-;;; Package: misc/casual
-
-(with-eval-after-load 'casual-lib
-
-  ;; The same as the original ones, just with "q" to quit instead of C-g. The
-  ;; reason is that almost any read-only buffer these days (magit, dired,
-  ;; ibuffer, describe-buffers, ...) can be quit with "q"
-
-  (transient-define-suffix casual-lib-quit-all ()
-    "Casual suffix to call `transient-quit-all'."
-    :transient nil
-    :if-not #'casual-lib-quit-all-hide-navigation-p
-    :key "q"
-    :description "Dismiss"
-    (interactive)
-    (transient-quit-all))
-
-  (transient-define-suffix casual-lib-quit-one ()
-    "Casual suffix to call `transient-quit-one'."
-    :transient nil
-    :if-not #'casual-lib-hide-navigation-p
-    :key "q"
-    :description #'casual-lib--quit-one-suffix-label
-    (interactive)
-    (transient-quit-one))
-)
-
-
 ;;; Package: misc/dired
 
 (use-package dired
