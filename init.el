@@ -55,9 +55,11 @@ Unlike `setopt', this won't needlessly pull in dependencies."
 
 ;;; Package: elpaca
 
-;; https://github.com/progfolio/elpaca
-;; https://github.com/progfolio/elpaca/blob/master/doc/manual.md
-;; https://www.youtube.com/watch?v=5Ud-TE3iIQY
+;; Intro:  https://github.com/progfolio/elpaca
+;; Manual: https://github.com/progfolio/elpaca/blob/master/doc/manual.md
+;; Hook:   https://github.com/progfolio/elpaca/wiki/after-init-hook%3F-emacs-startup-hook%3F
+;; Wiki:   https://github.com/progfolio/elpaca/wiki/Migrating-to-Elpaca
+;; Video:  https://www.youtube.com/watch?v=5Ud-TE3iIQY
 
 ;; Search for packages?   M-x elpaca-menu-item
 ;;                        M-x elpaca-manager
@@ -110,6 +112,7 @@ Unlike `setopt', this won't needlessly pull in dependencies."
   ;; Enable use-package :ensure support for Elpaca.
   (elpaca-use-package-mode))
 
+;; Easy way out of Elpaca log
 (bind-key "q" #'kill-buffer-and-window 'elpaca-log-mode-map)
 
 
