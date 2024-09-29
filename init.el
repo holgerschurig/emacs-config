@@ -1316,7 +1316,7 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 (use-package window
   :custom
   (fast-but-imprecise-scrolling nil)
-  (scroll-preserve-screen-position t)
+  (scroll-preserve-screen-position 'always)
   ;; Do not resize windows pixelwise, as this can cause crashes in some
   ;; cases when resizing too many windows at once or rapidly. Yaih, GTK.
   (window-resize-pixelwise nil)
@@ -1387,7 +1387,6 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 (setq! scroll-conservatively 101)
 (setq! scroll-up-aggressively 0.01)
 (setq! scroll-down-aggressively 0.01)
-(setq! scroll-preserve-screen-position 'always)
 
 ;; If enabled and `truncate-lines' is disabled, soft wrapping will not occur
 ;; when the window is narrower than `truncate-partial-width-windows' characters.
