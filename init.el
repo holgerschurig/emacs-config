@@ -3510,6 +3510,7 @@ re_W_rite      _t_ype definition
   (corfu-preview-current 'insert)
   (corfu-preselect 'prompt)
   (corfu-on-exact-match nil)
+
   :bind (:map corfu-map
               ;; these two would interfere with tempel, use cursor keys instead
               ;; ("TAB"        . corfu-next)
@@ -3520,6 +3521,7 @@ re_W_rite      _t_ype definition
 
               ("RET"        . corfu-insert)
               ("S-<return>" . corfu-insert))
+
   :config
   (corfu-history-mode)
 )
