@@ -2903,6 +2903,9 @@ re_W_rite      _t_ype definition
 
 ;;; Package: ide/project
 
+;; Fixes project-list-buffers
+(defvar-local Buffer-menu-show-internal nil)
+
 (use-package project
   :ensure t
   :defer t
