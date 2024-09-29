@@ -1795,6 +1795,32 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
+;;; Package: gui/moody
+
+;; Nicer Modeline
+;;
+;; https://github.com/tarsius/moody
+
+(use-package moody
+  :disabled t
+  :ensure t
+
+  :init
+  (moody-replace-mode-line-front-space)
+  (moody-replace-mode-line-buffer-identification)
+  (moody-replace-vc-mode)
+
+  ;; (set-face-attribute 'mode-line nil :box 'unspecified)
+  ;; (set-face-attribute 'mode-line-inactive nil :box nil)
+
+  (set-face-attribute 'mode-line nil :overline "blue")
+  (set-face-attribute 'mode-line nil :underline `(:color "blue" :position t))
+  (set-face-attribute 'mode-line-inactive nil :overline "green")
+  (set-face-attribute 'mode-line-inactive nil :underline `(:color "green" :position t))
+)
+
+
+
 ;;; Package: gui/nerd-icons
 
 ;; https://github.com/emacsmirror/nerd-icons
