@@ -2080,7 +2080,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 ;;; Package: edit/embark
 
 ;; The following keymaps already exist, so you can simply add actions to them.
-;; Position the cursor somewhere and press "C-,". To view which actions are
+;; Position the cursor somewhere and press "C-.". To view which actions are
 ;; available, run "M-x describe-keybinding" or "C-h".
 
 ;; +vertico/embark-doom-package-map
