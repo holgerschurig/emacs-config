@@ -2008,7 +2008,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 ;; https://github.com/abo-abo/avy
 ;; https://karthinks.com/software/avy-can-do-anything/
 ;; https://github.com/karthink/.emacs.d/blob/master/lisp/setup-avy.el
-;; https://melpa.org/#/?q=avy
+;; https://karthinks.com/software/avy-can-do-anything
 
 ;; Jump to char(s): M-j <quickly enter char(s)> <wait 0.2s> <enter highligher>
 ;; Action:          M-j <quickly enter char(s)> <wait 0.2s> <enter action> <enter highligher>
@@ -2020,19 +2020,24 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   :commands (avy-goto-word-1 avy-goto-char-2 avy-goto-char-timer)
 
   :custom
-  (avy-timeout-seconds 0.20)
+  ;; https://github.com/abo-abo/avy/wiki/defcustom
+  (avy-timeout-seconds 0.5)
+  (avy-style 'pre)
+  (avy-orders-list '((avy-goto-char . avy-order-closest)
+                     (avy-goto-char-timer . avy-order-closest)))
 
   ;; Use more letters for targets (i.E. not just the home row
-  ;; HINT: Only use keyss here that aren't in avy-dispatch-alist
-  (avy-keys '(?a ?s ?d ?f ?g ?h ?j ?l ?o ?v ?b ?n ?, ?, ?. ?-))
+  ;; HINT: Only use keys here that aren't in avy-dispatch-alist
+  (avy-keys '(?a ?s ?d ?f ?g ?h ?j ?l ?+          ;; home row
+              ?q ?w ?r ?u ?i ?o                   ;; top row
+              ?v ?b ?n ?, ?. ?-)                  ;; lower row
+            )
 
   ;; ORIGINAL:
   ;; HINT: Only use keys here that aren't in avy-keys
   ;; HINT: use ?\C-m or ?M-m for modifier keys
   (avy-dispatch-alist'((?c . avy-action-mark-to-char)
                        (?e . avy-action-embark)
-                       ;;(?h . avy-action-helpful) ;; do this via embark
-                       (?i . avy-action-ispell)    ;; TODO: do this with jinx-correct, without turning on jinx-mode?
                        (?k . avy-action-kill-stay)
                        (?t . avy-action-teleport)
                        (?m . avy-action-mark)
@@ -2044,7 +2049,6 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
                        ))
 
   :config
-
   (defun avy-action-embark (pt)
     (unwind-protect
         (save-excursion
