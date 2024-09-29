@@ -1173,7 +1173,9 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 
 (column-number-mode)
 
-(toggle-truncate-lines -1)
+(let ((inhibit-message t)
+      (message-log-max nil))
+ (toggle-truncate-lines -1))
 
 ;; remove text property when copying, see https://emacs.stackexchange.com/questions/4187
 (defun my-unpropertize-kill-ring ()
