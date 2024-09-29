@@ -139,6 +139,39 @@ Unlike `setopt', this won't needlessly pull in dependencies."
 
 
 
+;;; Package: pre/key-chord
+
+;; Enable the :chords stanca in use-package
+;; https://github.com/jwiegley/use-package?tab=readme-ov-file#use-package-chords
+
+(use-package use-package-chords
+  :ensure t
+
+  :config
+  (key-chord-mode 1)
+)
+
+;; Make sure the use-package-chords is loaded, so that later down
+;; :chords is valid in (use-package ...)
+(elpaca-wait)
+
+;; https://github.com/emacsorphanage/key-chord
+;; https://www.emacswiki.org/emacs/KeyChord
+
+(use-package key-chord
+  :ensure nil ;; already loaded indirectly via use-package-chords!
+
+  :custom
+  (key-chord-two-keys-delay 0.075)
+  (key-chord-safety-interval-forward 0.2)
+
+  :chords
+  ("->" . "→")
+  ("<-" . "←")
+)
+
+
+
 ;;; Package: core/align
 
 (defadvice align-regexp (around align-regexp-with-spaces activate)
