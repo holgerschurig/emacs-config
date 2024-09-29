@@ -1086,6 +1086,9 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 ;; Remove duplicates from the kill ring to reduce clutter
 (setq! kill-do-not-save-duplicates t)
 
+(setq! next-error-recenter t)
+(setq! shell-command-prompt-show-cwd t)
+
 ;; Prefer spaces over tabs. Spaces offer a more consistent default compared to
 ;; 8-space tabs. This setting can be adjusted on a per-mode basis as needed.
 (setq-default indent-tabs-mode nil)
@@ -1167,7 +1170,6 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 
 (bind-key "<f8>"    #'my-next-error)
 (bind-key "S-<f8>"  #'my-previous-error)
-
 
 (bind-key "C-x I" #'insert-buffer)
 (bind-key "M-SPC" #'cycle-spacing)     ;; just-one-space
