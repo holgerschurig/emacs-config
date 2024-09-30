@@ -2883,13 +2883,33 @@ re_W_rite      _t_ype definition
   :custom
   (project-list-file (locate-user-emacs-file "var/projects"))
   (project-vc-extra-root-markers '("WORKSPACE" "WORKSPACE.bazel" "WORKSPACE.bzlmod"))
-  (project-switch-use-entire-map t)
   (project-mode-line t)
 
+  (project-switch-commands
+   '(
+     (project-any-command           "any Cmd"          ?a)
+     (project-switch-to-buffer      "Buffer"           ?b)
+     (project-compile               "Compile"          ?c)
+     (project-dired                 "Dired"            ?d)
+     (project-find-file             "Find file"        ?f)
+     (project-find-regexp           "find reGexp"      ?g)
+     (project-kill-buffers          "Kill buffers"     ?k)
+     (project-query-replace-regexp  "Query/replace"    ?q)
+     (project-find-dir              "find diRectory"   ?r)
+     (project-eshell                "Eshell"           ?e)
+     (project-shell-command         "shell command"    ?s)
+     (project-vc-dir                "VC-Dir"           ?v)
+     (magit-project-status          "Magit"            ?m)
+  ))
+
   :bind (:map project-prefix-map
+              ("!" . nil) ;; this is now "s"
+              ("D" . nil) ;; already on d
               ("a" . project-any-command)
               ("b" . project-switch-to-buffer)
               ("d" . project-dired)
+              ("q" . project-query-replace-regexp)
+              ("m" . magit-project-status)
               ("r" . project-find-dir)
               ("s" . project-shell-command)
         )
