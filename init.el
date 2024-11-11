@@ -3259,8 +3259,7 @@ re_W_rite      _t_ype definition
   :config
   (defun my-python-setup ()
     (interactive)
-    (setq indent-tabs-mode t
-          python-indent-offset 4
+    (setq python-indent-offset 4
           tab-width 4
           ;; this fixes the weird indentation when entering a colon
           ;; from http://emacs.stackexchange.com/questions/3322/python-auto-indent-problem
