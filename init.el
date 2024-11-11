@@ -1547,7 +1547,7 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 ;; https://github.com/kickingvegas/casual-info
 
 (use-package casual-info
-  :ensure t
+  :disabled t
   :defer t
   :after info
 
@@ -2268,7 +2268,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 (use-package casual-isearch
-  :ensure t
+  :disabled t
   :defer t
   :after isearch
 
@@ -2805,7 +2805,7 @@ re_W_rite      _t_ype definition
   ;;     ]])
 
   :bind (:map lsp-command-map
-         ("C-o" . casual-lsp-tmenu)
+         ;; ("C-o" . casual-lsp-tmenu)
          ;; :map lsp-mode-map
          ;; ("M-." . lsp-find-definition)
         )
@@ -3687,7 +3687,7 @@ re_W_rite      _t_ype definition
 ;; https://github.com/kickingvegas/casual-calc
 
 (use-package casual-calc
-  :ensure t
+  :disabled t
   :defer t
   :after calc
 
@@ -3704,7 +3704,7 @@ re_W_rite      _t_ype definition
 ;;; Package: misc/casual-dired
 
 (use-package casual-dired
-  :ensure t
+  :disabled t
   :defer t
   :after dired
 
@@ -3779,7 +3779,7 @@ re_W_rite      _t_ype definition
 ;; https://github.com/kickingvegas/casual-ibuffer
 
 (use-package casual-ibuffer
-  :ensure t
+  :disabled t
   :after (ibuffer)
 
   :bind (:map ibuffer-mode-map
