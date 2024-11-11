@@ -2645,9 +2645,7 @@ re_W_rite      _t_ype definition
 
 ;;; Package: ide/git-commit
 
-;; This is a dependency of transient
 (use-package git-commit
-  :ensure t
   :defer t
 
   :custom
