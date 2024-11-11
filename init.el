@@ -3,6 +3,10 @@
 ;; Based on: James Cherti, https://github.com/jamescherti/minimal-emacs.d
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 
+;; Setup Emacs on macOS: https://bsarkar321.github.io/emacs_setup/
+;; brew tap d12frosted/emacs-plus
+;; brew install emacs-plus@30 --with-ctags --with-xwidgets --with-imagemagick --with-native-comp --with-modern-alecive-flatwoken-icon
+
 
 ;; TODO: use pulsar (instead of nav-flash)
 
