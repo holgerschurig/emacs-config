@@ -3415,6 +3415,16 @@ re_W_rite      _t_ype definition
 
 
 
+;;; Package: modes/yaml
+
+(use-package yaml-mode
+  :ensure t
+  :defer t
+  :mode
+  ("/\\.yml\\'" . yaml-mode)
+)
+
+
 
 ;;; Package: completion/consult
 
