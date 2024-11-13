@@ -1955,6 +1955,8 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   :ensure t
   :defer t
 
+  :commands (transient-define-prefix)
+
   :custom
   (transient-history-file (locate-user-emacs-file "var/transient_history.el"))
   (transient-levels-file (locate-user-emacs-file "var/transient_levels.el"))
