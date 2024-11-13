@@ -2663,6 +2663,16 @@ re_W_rite      _t_ype definition
 
 ;;; Package: ide/magit
 
+(use-package with-editor
+  :defer t
+
+  :init
+  (when is-mac
+    (setq with-editor-emacsclient-executable "/opt/homebrew/bin/emacsclient"))
+)
+
+
+
 (use-package magit
   :ensure t
   :defer t
