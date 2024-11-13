@@ -3925,7 +3925,7 @@ You are a helpful assistant. Respond concisely.")
   :ensure t
   :defer t
 
-  :mode (("\\epub\\'" . nov-mode))
+  :mode (("\\.epub\\'" . nov-mode))
 )
 
 
