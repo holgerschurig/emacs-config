@@ -2972,6 +2972,7 @@ re_W_rite      _t_ype definition
   ("/\\(?:WORKSPACE\\(?:\\.b\\(?:azel\\|zlmod\\)\\)?\\)\\'" . bazel-workspace-mode)
   ("/\\(?:BUILD\\(?:\\.bazel\\)?\\)\\'" . bazel-build-mode)
   ("\\.BUILD\\'" . bazel-build-mode)
+  ("/BUILD\\." . bazel-build-mode)
 
   :config
   (transient-define-prefix casual-bazel-tmenu ()
