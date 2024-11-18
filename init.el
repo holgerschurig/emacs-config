@@ -1917,9 +1917,10 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   :ensure t
 
   :custom
+  ;; :regexp                should be matched as regexp
   ;; :select                select the popped up window
-  ;; :inhibit-window-quit   disable the q key
   ;; :custom                override with custom action
+  ;; :inhibit-window-quit   disable the q key
   ;; :ignore                ignore specified buffer
   ;; :other                 use or re-use other window
   ;; :same                  use this window
@@ -1928,19 +1929,17 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   ;; :size                  fractonal=ratio, integer=lines
   ;; :frame                 pop up a frame instead of a new window
   (shackle-rules '(
-           (compilation-mode       :select nil :align 'bottom :size 0.3)
+       (compilation-mode       :select nil :align 'below :size 0.3)
 		   (proced-mode            :select t   :same t)
 		   (dired-mode             :select t   :same t)
 		   (messages-buffer-mode   :select nil :other t :inhibit-window-quit t)
-           (helpful-mode           :select t   :same t  :inhibit-window-quit t)
-           (help-mode              :select t   :same t  :inhibit-window-quit t)
+       (helpful-mode           :select t   :same t  :inhibit-window-quit t)
+       (help-mode              :select t   :same t  :inhibit-window-quit t)
 		   ("\\*magit"   :regexp t :select t   :same t)
 		   ("\\*shell.*" :regexp t :select t   :same t)
 		   ("\\*Cargo.*" :regexp t :select nil :other t)
 		   ("\\*Pp Eval" :regexp t :select t   :other t)
-                 ))
-
-  (shackle-default-rule nil)
+  ))
 
   :config
   (shackle-mode)
