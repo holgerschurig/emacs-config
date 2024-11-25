@@ -726,6 +726,10 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
   (window-divider-default-places t)
   (window-divider-default-right-width 1)
 
+  :init
+  (when is-mac
+    (set-frame-font "Menlo 13" nil t))
+
   :hook
   (after-init . window-divider-mode)
 )
