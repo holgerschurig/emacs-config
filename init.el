@@ -3955,9 +3955,22 @@ You are a helpful assistant. Respond concisely.")
   ;; Some characters to choose from: …, ⤵, ▼, ↴, ⬎, ⤷, and ⋱
   (org-ellipsis "⤵")
 
+  ;; I have no need for "Evaluate this dot code block on your system" questions
+  (org-confirm-babel-evaluate nil)
+
   :config
-  ;; Enable PlantUML
-  (org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t)))
+  ;; Enable PlantUML, Python, Dot, SQLite
+  (org-babel-do-load-languages 'org-babel-load-languages
+                 '((shell . t)
+                 (python . t)
+                 ;; (R . t)
+                 ;; (ruby . t)
+                 ;; (ditaa . t)
+                 (dot . t)
+                 ;; (octave . t)
+                 (sqlite . t)
+                 ;;(perl . t)
+                 ))
 
   (defun my-org-setup ()
     (setq indent-line-function #'indent-relative-first-indent-point)
