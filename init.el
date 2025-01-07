@@ -728,7 +728,7 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 
   :init
   (when is-mac
-    (set-frame-font "Menlo 13" nil t))
+    (set-frame-font "Menlo 14" nil t))
 
   :hook
   (after-init . window-divider-mode)
