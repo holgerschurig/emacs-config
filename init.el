@@ -66,12 +66,12 @@ Unlike `setopt', this won't needlessly pull in dependencies."
 ;; Search for packages?   M-x elpaca-menu-item
 ;;                        M-x elpaca-manager
 
-(defvar elpaca-installer-version 0.8)
+(defvar elpaca-installer-version 0.10)
 (defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
 (defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
 (defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
 (defvar elpaca-order '(elpaca :repo "https://github.com/progfolio/elpaca.git"
-                              :ref nil :depth 1
+                              :ref nil :depth 1 :inherit ignore
                               :files (:defaults "elpaca-test.el" (:exclude "extensions"))
                               :build (:not elpaca--activate-package)))
 (let* ((repo  (expand-file-name "elpaca/" elpaca-repos-directory))
@@ -81,7 +81,7 @@ Unlike `setopt', this won't needlessly pull in dependencies."
   (add-to-list 'load-path (if (file-exists-p build) build repo))
   (unless (file-exists-p repo)
     (make-directory repo t)
-    (when (< emacs-major-version 28) (require 'subr-x))
+    (when (<= emacs-major-version 28) (require 'subr-x))
     (condition-case-unless-debug err
         (if-let* ((buffer (pop-to-buffer-same-window "*elpaca-bootstrap*"))
                   ((zerop (apply #'call-process `("git" nil ,buffer t "clone"
@@ -103,11 +103,9 @@ Unlike `setopt', this won't needlessly pull in dependencies."
     (elpaca-generate-autoloads "elpaca" repo)
     (load "./elpaca-autoloads")))
 (add-hook 'after-init-hook #'elpaca-process-queues)
-
-;; Somehow a let-binding don't prevent the pointless elpaca warning
-(setq emacs-version "29.3")
+(setq emacs-version "30.1")
 (elpaca `(,@elpaca-order))
-(setq emacs-version "29.3.50")
+(setq emacs-version "30.1.50")
 
 ;; Install use-package support
 (elpaca elpaca-use-package
