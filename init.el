@@ -498,6 +498,17 @@ If there are two windows displayed, act like \"C-x o\"."
 
 
 
+;;; Package: core/editorconfig
+
+(use-package editorconfig
+  :delight
+
+  :config
+  (editorconfig-mode 1)
+)
+
+
+
 ;;; Package: core/eshell
 
 (use-package eshell
@@ -2511,25 +2522,6 @@ successfully sets indent_style/indent_size.")
   (dtrt-indent-run-after-smie t)
   ;; Reduced from the default of 5000 for slightly faster analysis
   (dtrt-indent-max-lines 2000)
-)
-
-
-
-;;; Package: ide/editorconfig
-
-;; https://github.com/editorconfig/editorconfig-emacs
-
-(use-package editorconfig
-  :ensure t
-  :delight
-
-  :config
-  ;; Archives don't need editorconfig settings, and they may otherwise
-  ;; interfere with the process of opening them (office formats are
-  ;; zipped XML formats).
-  (add-to-list 'editorconfig-exclude-regexps
-               "\\.\\(zip\\|\\(doc\\|xls\\|ppt\\)x\\)\\'")
-  (editorconfig-mode 1)
 )
 
 
