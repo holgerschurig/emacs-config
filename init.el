@@ -51,8 +51,6 @@ Unlike `setopt', this won't needlessly pull in dependencies."
                               ',var ,val))))
 
 
-;; TODO
-;; (defun sudo-edit () ... )
 
 
 
@@ -4389,3 +4387,5 @@ You are a helpful assistant. Respond concisely.")
 
 
 ;;(setq truncate-string-ellipsis "…")
+
+;; (defun sudo-edit () ... )
