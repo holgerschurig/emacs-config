@@ -2816,8 +2816,9 @@ re_W_rite      _t_ype definition
   :hook
   (lsp-mode . lsp-enable-which-key-integration)
   ;;(lsp-mode . lsp-ui-mode)
-  (lsp-mode . corfu-mode)
-  (lsp-mode . corfu-popupinfo-mode)
+  ;; (lsp-mode . corfu-mode)
+  ;; (lsp-mode . corfu-popupinfo-mode)
+  (lsp-mode . completion-preview-mode)
 )
 
 
@@ -3109,7 +3110,8 @@ re_W_rite      _t_ype definition
     ;;                                           #'cape-elisp-symbol))
     ;;   (setq-local completion-at-point-functions '(my-elisp-capf t)))
     (setq-local completion-at-point-functions '(tempel-expand elisp-completion-at-point t))
-    (corfu-mode)
+    ;; (corfu-mode)
+    (completion-preview-mode)
     (add-to-list 'imenu-generic-expression
                  '("Section" "^;;[;]\\{1,8\\} \\(.*$\\)" 1)))
 
@@ -3523,12 +3525,24 @@ re_W_rite      _t_ype definition
 
 
 
+;;; Package: completion/completion-preview
+
+(use-package completion-preview
+  :commands (completion-preview-mode)
+
+  :bind (:map completion-preview-active-mode-map
+              ("C-<up>"   . completion-preview-prev-candidate)
+              ("C-<down>" . completion-preview-next-candidate))
+)
+
+
+
 ;;; Package: completion/corfu
 
 ;; https://github.com/minad/corfu
 
 (use-package corfu
-  :ensure t
+  :disabled t ;; try completion-preview-mode for now
   :defer t
   :commands (corfu-mode)
 
