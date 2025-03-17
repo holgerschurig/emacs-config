@@ -724,6 +724,8 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 ;; TODO revisit
 ;; (blink-cursor-mode -1)
 
+(setq frame-title-format (list '(buffer-file-name "%f" "%b")))
+
 
 ;; The native border "uses" a pixel of the fringe on the rightmost
 ;; splits, whereas `window-divider` does not.
