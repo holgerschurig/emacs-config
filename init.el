@@ -3910,8 +3910,9 @@ You are a helpful assistant. Respond concisely.")
   (setq! gptel-backend (gptel-make-ollama "Ollama"              ; Any name of your choosing
                          :host "localhost:11434"                ; Where it's running
                          :stream t                              ; Stream responses
-                         :models '("llama3.1:latest"))          ; List of models
-         gptel-model "llama3.1:latest")
+                         ;:models '("llama3.1:latest" "deepseek-coder-v2:latest"))
+                         :models '("mbenhamd/qwen2.5-7b-instruct-cline-128k-q8_0:latest" "qwen2.5-coder:latest"))
+         gptel-model "qwen2.5-coder:latest")
 
   ;; Scroll automatically, move cursor to next pronpt automatically
   (add-hook 'gptel-post-stream-hook 'gptel-auto-scroll)
