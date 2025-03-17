@@ -2993,6 +2993,21 @@ re_W_rite      _t_ype definition
 )
 
 
+(defun bazel-format-log ()
+  "This reformats the overly long lines of cargo/rustc invocation."
+  (interactive)
+  (let ((frm (region-beginning))
+        (til (region-end)))
+    (save-excursion
+      (goto-char frm)
+      (while (search-forward "'" til t)
+        (replace-match "" nil t)))
+    (save-excursion
+      (goto-char frm)
+      (while (search-forward " -" til t)
+        (replace-match "\n    -" nil t)))))
+
+
 ;;; Package: prog/bb-mode (Bitbake)
 
 ;; https://github.com/mferland/bb-mode
