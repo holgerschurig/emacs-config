@@ -2,11 +2,12 @@
 force_tty=false
 force_wait=false
 stdin_mode=""
+UNAME="$(uname)"
 
 args=()
 
 if [ "$UID" = "0" ]; then
-	if [ `uname` = Linux ]; then
+	if [ "$UNAME" = "Linux" ]; then
 		args+=(--socket /run/user/1000/emacs/server)
 	else
 		echo "running under root not supported"
@@ -58,7 +59,7 @@ if [ ! "${#args[*]}" = 0 ] && [ "${args[-1]}" = "-" ]; then
 	args+=(--eval "(let ((b (generate-new-buffer \"*stdin*\"))) (switch-to-buffer b) (insert-file-contents \"$TMP\") (delete-file \"$TMP\")${stdin_mode})")
 fi
 
-if [ `uname` = Linux ]; then
+if [ "$UNAME" = "Linux" ]; then
 	if [ -z "$DISPLAY" ] || $force_tty; then
 		# detect terminals with sneaky 24-bit support
 		if { [ "$COLORTERM" = truecolor ] || [ "$COLORTERM" = 24bit ]; } \
@@ -75,4 +76,9 @@ fi
 
 
 test $force_wait && args+=(--no-wait)
-emacsclient --alternate-editor="" "${args[@]}"
+if [ "$UNAME" = "Darwin" ]; then
+    # The "env -" is to protect against Nix shenanigans
+    env - /opt/homebrew/bin/emacsclient --alternate-editor="" "${args[@]}"
+else
+    emacsclient --alternate-editor="" "${args[@]}"
+fi
