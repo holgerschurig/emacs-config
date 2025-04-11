@@ -3003,6 +3003,17 @@ re_W_rite      _t_ype definition
       ("d" "remove coverage Display" bazel-remove-coverage-display)
       ("q" transient-quit-one)]])
 
+  (defun bazel-highlight-tab ()
+    (interactive)
+    (highlight-regexp "	" 'hi-yellow))
+
+  :hook
+  ;; (bazel-mode . bazel-highlight-tab)
+  (bazel-build-mode . bazel-highlight-tab)
+  (bazel-module-mode . bazel-highlight-tab)
+  (bazel-starlark-mode . bazel-highlight-tab)
+  (bazel-workspace-mode . bazel-highlight-tab)
+
   :bind (:map bazel-mode-map
          ("C-c C-o" . casual-bazel-tmenu))
 )
