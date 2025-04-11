@@ -2661,7 +2661,7 @@ re_W_rite      _t_ype definition
 
   :init
   (when is-mac
-    (setq with-editor-emacsclient-executable "/opt/homebrew/bin/emacsclient"))
+    (setq with-editor-emacsclient-executable (concat (getenv "HOME") "/bin/emacsclient")))
 )
 
 
@@ -2921,6 +2921,19 @@ re_W_rite      _t_ype definition
               ("r" . project-find-dir)
               ("s" . project-shell-command)
         )
+)
+
+
+;;; Package: ide/with-editor
+
+;; For some reason, with-editor-emacsclient-executable was correctly set, but
+;; (with-editor-locate-emcasclient) still said that it didn't find a suitable
+;; emacssclient.
+(use-package with-editor
+  :defer t
+  :config
+  (defun with-editor-locate-emacsclient ()
+    with-editor-emacsclient-executable)
 )
 
 
