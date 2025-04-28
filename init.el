@@ -3931,8 +3931,6 @@ re_W_rite      _t_ype definition
   :commands (gptel gptel-menu)
 
   :custom
-  ;; (gptel-model "mistral:latest")
-
   (gptel-directives '(
      ;; Removed the "living in Emacs", as some models get back rather snarky with "I don't live in Emacs"
      (default     . "To assist: Be terse. Do not offer unprompted advice or clarifications. Speak in specific,
@@ -3955,13 +3953,14 @@ You are a helpful assistant. Respond concisely.")
      (typo        . "Fix typos, grammar and style of the following: ")))
 
   :config
-  (setq! gptel-backend (gptel-make-ollama "Ollama"              ; Any name of your choosing
-                         :host "localhost:11434"                ; Where it's running
-                         :stream t                              ; Stream responses
-                         ;:models '("llama3.1:latest" "deepseek-coder-v2:latest"))
-                         :models '("mbenhamd/qwen2.5-7b-instruct-cline-128k-q8_0:latest" "qwen2.5-coder:latest"))
-         gptel-model "qwen2.5-coder:latest")
-
+  ;; ;:models '("llama3.1:latest" "deepseek-coder-v2:latest"))
+  ;; :models '("mbenhamd/qwen2.5-7b-instruct-cline-128k-q8_0:latest" "qwen2.5-coder:latest")))
+  (when is-mac
+    (setopt gptel-backend (gptel-make-ollama "Ollama"
+                            :host "localhost:11434"
+                            :stream t
+                            :models '(gemma3:12b)))
+    (setopt gptel-model 'gemma3:12b))
 
   :hook
   (gptel-post-stream-hook . gptel-auto-scroll)
@@ -3969,7 +3968,8 @@ You are a helpful assistant. Respond concisely.")
   (gptel-mode-hook . visual-line-mode)
 
   ;; Weird, this didn't work in a :bind clause
-  (bind-key "C-c C-c" #'gptel-send gptel-mode-map)
+  :bind (:map gptel-mode-map
+              ("C-c C-c" . gptel-send))
 )
 
 
