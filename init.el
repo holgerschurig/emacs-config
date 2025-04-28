@@ -1512,7 +1512,6 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 ;;; Package: core/xref
 
 (use-package xref
-  :ensure t  ;; we need a newer version
   :defer t
 
   :custom
