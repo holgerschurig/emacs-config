@@ -76,9 +76,5 @@ fi
 
 
 test $force_wait && args+=(--no-wait)
-if [ "$UNAME" = "Darwin" ]; then
-    # The "env -" is to protect against Nix shenanigans
-    env - /opt/homebrew/bin/emacsclient --alternate-editor="" "${args[@]}"
-else
-    emacsclient --alternate-editor="" "${args[@]}"
-fi
+# The "env -" is to protect against Nix shenanigans
+env - ~/bin/emacsclient --alternate-editor="" "${args[@]}"
