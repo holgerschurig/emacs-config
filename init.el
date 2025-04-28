@@ -115,6 +115,9 @@ Unlike `setopt', this won't needlessly pull in dependencies."
 ;; Easy way out of Elpaca log
 (bind-key "q" #'kill-buffer-and-window 'elpaca-log-mode-map)
 
+;;; Package: pre/use-package
+
+(setopt use-package-hook-name-suffix nil)
 
 ;;; Package: pre/exec-path-from-shell
 
@@ -456,7 +459,7 @@ If there are two windows displayed, act like \"C-x o\"."
 
   :hook
   ;; less details, use '(' inside dired to toggle them
-  (dired-mode . dired-hide-details-mode)
+  (dired-mode-hook . dired-hide-details-mode)
 
   :bind (
   ;; ("C-x C-d" . dired)   ;; was: list-directory (an IMHO entirely useless command)
@@ -536,7 +539,6 @@ If there are two windows displayed, act like \"C-x o\"."
     (eshell/alias "x" "embark-open-externally $1")
     (eshell/alias "ll" "ls -l $*")
     )
-  (add-hook 'eshell-mode-hook #'my-eshell-setup)
 
   (defun eshell/pro (project)
     (interactive)
@@ -553,6 +555,9 @@ If there are two windows displayed, act like \"C-x o\"."
     (interactive)
     (eshell/clear-scrollback)
     (eshell-send-input))
+
+  :hook
+  (eshell-mode-hook . my-eshell-setup)
 
   :bind (:map eshell-mode-map
          ("C-l" . my-eshell-clear))
@@ -600,7 +605,7 @@ If there are two windows displayed, act like \"C-x o\"."
   :defer t
   :hook
   ;; Make files with shebang ("#!" at start) executable when we save them
-  (after-save . executable-make-buffer-file-executable-if-script-p)
+  (after-save-hook . executable-make-buffer-file-executable-if-script-p)
 )
 
 
@@ -740,7 +745,7 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
     (set-frame-font "Menlo 14" nil t))
 
   :hook
-  (after-init . window-divider-mode)
+  (elpaca-after-init-hook . window-divider-mode)
 )
 
 
@@ -1552,9 +1557,9 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
   (indent-bars-display-on-blank-lines nil)
 
   :hook
-  (python-mode   . indent-bars-mode)
-  (yaml-mode     . indent-bars-mode)
-  (makefile-mode . indent-bars-mode)
+  (python-mode-hook   . indent-bars-mode)
+  (yaml-mode-hook     . indent-bars-mode)
+  (makefile-mode-hook . indent-bars-mode)
 )
 
 
@@ -1655,10 +1660,10 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
           ("XXX" font-lock-constant-face bold)))
 
   :hook
-  (prog-mode . hl-todo-mode)
-  (rust-mode . hl-todo-mode)
-  (org-mode  . hl-todo-mode)
-  (yaml-mode . hl-todo-mode)
+  (prog-mode-hook . hl-todo-mode)
+  (rust-mode-hook . hl-todo-mode)
+  (org-mode-hook  . hl-todo-mode)
+  (yaml-mode-hook . hl-todo-mode)
 )
 
 
@@ -1916,8 +1921,8 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   (pulsar-global-mode 1)
 
   :hook
-  (next-error       . pulsar-pulse-line)
-  (minibuffer-setup . pulsar-pulse-line)
+  (next-error-hook       . pulsar-pulse-line)
+  (minibuffer-setup-hook . pulsar-pulse-line)
 )
 
 
@@ -2167,16 +2172,13 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   (setq embark-prompter #'embark-keymap-prompter)
 
   ;; Now that we don't use which-keys anymore, remove this indicator
-  (remove-hook 'embark-indicators #'+vertico-embark-which-key-indicator)
-  (remove-hook 'embark-indicators #'embark-minimal-indicator)
-  (remove-hook 'embark-indicators #'embark-highlight-indicator)
-  (remove-hook 'embark-indicators #'embark-isearch-highlight-indicator)
-  (add-hook 'embark-indicators #'embark-minimal-indicator 10)
-  (add-hook 'embark-indicators #'embark-highlight-indicator 20)
-  (add-hook 'embark-indicators #'embark-isearch-highlight-indicator 30)
-
-  ;; Emphasize current line a bit better
-  (add-hook 'embark-collect-mode #'hl-line-mode)
+  ;; (remove-hook 'embark-indicators #'+vertico-embark-which-key-indicator)
+  ;; (remove-hook 'embark-indicators #'embark-minimal-indicator)
+  ;; (remove-hook 'embark-indicators #'embark-highlight-indicator)
+  ;; (remove-hook 'embark-indicators #'embark-isearch-highlight-indicator)
+  ;; (add-hook 'embark-indicators #'embark-minimal-indicator 10)
+  ;; (add-hook 'embark-indicators #'embark-highlight-indicator 20)
+  ;; (add-hook 'embark-indicators #'embark-isearch-highlight-indicator 30)
 
   ;; This allows you to use C-; after a prefix key, e.g. "C-x C-;" to get
   ;; an embark-narrowable list of items
@@ -2193,6 +2195,10 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
   ;; Always prompt via vertico?  Something like "C-a u" won't then work :-(
   ;; (setq embark-prompter 'embark-completing-read-prompter)
+
+  :hook
+  ;; Emphasize current line a bit better
+  (embark-collect-mode-hook . hl-line-mode)
 
   :bind
   (("C-." . embark-act)         ;; pick some comfortable binding
@@ -2236,7 +2242,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   :ensure t
   :after (embark)
   :hook
-  (embark-collect-mode . consult-preview-at-point-mode)
+  (embark-collect-mode-hook . consult-preview-at-point-mode)
 )
 
 
@@ -2391,7 +2397,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   :defer t
 
   :hook
-  (prog-mode . clean-aindent-mode)
+  (prog-mode-hook . clean-aindent-mode)
 )
 
 
@@ -2424,7 +2430,6 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   :config
   (defun my-compilation-setup ()
     (setq-local truncate-lines nil))
-  (add-hook 'compilation-mode-hook #'my-compilation-setup)
 
   (defun my-compile-autoclose (buffer string)
     "Auto close compile log if there are no errors"
@@ -2439,7 +2444,8 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
   ;; (setcar (nthcdr 5 (assoc 'gcc-include compilation-error-regexp-alist-alist)) 0)
 
   :hook
-  (compilation-filter . ansi-color-compilation-filter)
+  (compilation-mode-hook . my-compilation-setup)
+  (compilation-filter-hook . ansi-color-compilation-filter)
 )
 
 
@@ -2520,7 +2526,7 @@ successfully sets indent_style/indent_size.")
   (push '(t tab-width) dtrt-indent-hook-generic-mapping-list)
 
   :hook
-  (prog-mode . my-detect-indentation)
+  (prog-mode-hook . my-detect-indentation)
 
   :custom
   ;; Enable dtrt-indent even in smie modes so that it can update `tab-width',
@@ -2595,7 +2601,7 @@ re_W_rite      _t_ype definition
     (eglot-inlay-hints-mode -1))
 
   :hook
-  (eglot-managed-mode . my-eglot-managed-hook)
+  (eglot-managed-mode-hook . my-eglot-managed-hook)
 
   :bind
   (:map eglot-mode-map
@@ -2820,11 +2826,11 @@ re_W_rite      _t_ype definition
         )
 
   :hook
-  (lsp-mode . lsp-enable-which-key-integration)
+  (lsp-mode-hook . lsp-enable-which-key-integration)
   ;;(lsp-mode . lsp-ui-mode)
   ;; (lsp-mode . corfu-mode)
   ;; (lsp-mode . corfu-popupinfo-mode)
-  (lsp-mode . completion-preview-mode)
+  (lsp-mode-hook . completion-preview-mode)
 )
 
 
@@ -3009,10 +3015,10 @@ re_W_rite      _t_ype definition
 
   :hook
   ;; (bazel-mode . bazel-highlight-tab)
-  (bazel-build-mode . bazel-highlight-tab)
-  (bazel-module-mode . bazel-highlight-tab)
-  (bazel-starlark-mode . bazel-highlight-tab)
-  (bazel-workspace-mode . bazel-highlight-tab)
+  (bazel-build-mode-hook . bazel-highlight-tab)
+  (bazel-module-mode-hook . bazel-highlight-tab)
+  (bazel-starlark-mode-hook . bazel-highlight-tab)
+  (bazel-workspace-mode-hook . bazel-highlight-tab)
 
   :bind (:map bazel-mode-map
          ("C-c C-o" . casual-bazel-tmenu))
@@ -3094,8 +3100,8 @@ re_W_rite      _t_ype definition
     )
 
   :hook
-  (c-mode   . my-c-mode-setup)
-  (c++-mode . my-c-mode-setup)
+  (c-mode-hook   . my-c-mode-setup)
+  (c++-mode-hook . my-c-mode-setup)
 
   :bind (
    :map c-mode-base-map
@@ -3161,7 +3167,7 @@ re_W_rite      _t_ype definition
                  '("Section" "^;;[;]\\{1,8\\} \\(.*$\\)" 1)))
 
   :hook
-  (emacs-lisp-mode . my-emacs-lisp-mode-setup)
+  (emacs-lisp-mode-hook . my-emacs-lisp-mode-setup)
 )
 
 
@@ -3211,7 +3217,7 @@ re_W_rite      _t_ype definition
   ;; Show trailing whitespace when programming
 
   :hook
-  (prog-mode . show-trailing-whitespace)
+  (prog-mode-hook . show-trailing-whitespace)
 )
 
 
@@ -3273,7 +3279,7 @@ re_W_rite      _t_ype definition
     (add-hook 'nim-mode-hook #'rainbow-delimiters-mode))
 
   :hook
-  (nim-mode . subword-mode)
+  (nim-mode-hook . subword-mode)
   ;; TODO (nim-mode . nimsuggest-mode)
 )
 
@@ -3317,7 +3323,7 @@ re_W_rite      _t_ype definition
           electric-indent-chars (delq ?: electric-indent-chars)))
 
   :hook
-  (python-mode . my-python-setup)
+  (python-mode-hook . my-python-setup)
 )
 
 
@@ -3367,8 +3373,8 @@ re_W_rite      _t_ype definition
          ("C-c w a" . lsp-rust-analyzer-status))
 
   ;; :hook
-  ;; (rustic-mode . lsp-mode)
-  ;; (rustic-mode-local-vars . tree-sitter! 'append))
+  ;; (rustic-mode-hook . lsp-mode)
+  ;; (rustic-mode-local-vars-hook . tree-sitter! 'append))
 )
 
 
@@ -3396,7 +3402,7 @@ re_W_rite      _t_ype definition
     (hi-lock-line-face-buffer "^commit"))
 
   :hook
-  (diff-mode . my-diff-mode-setup)
+  (diff-mode-hook . my-diff-mode-setup)
 )
 
 
@@ -3432,7 +3438,7 @@ re_W_rite      _t_ype definition
 
   :hook
   ;; Remove the bounding boxes
-  (pdf-view-mode . pdf-view-auto-slice-minor-mode)
+  (pdf-view-mode-hook . pdf-view-auto-slice-minor-mode)
 )
 
 
@@ -3445,7 +3451,8 @@ re_W_rite      _t_ype definition
   :config
   (setq ediff-split-window-function 'split-window-vertically)
 
-  (add-hook 'ediff-after-quit-hook-internal #'winner-undo)
+  :hook
+  (ediff-after-quit-hook-internal . winner-undo)
 )
 
 
@@ -3840,7 +3847,7 @@ re_W_rite      _t_ype definition
     (ibuffer-auto-mode 1))
 
   :hook
-  (ibuffer-mode . my-ibuffer-setup)
+  (ibuffer-mode-hook . my-ibuffer-setup)
 
   :bind
   ("C-x b" . ibuffer)                     ;; was: switch-to-buffer)
@@ -3895,8 +3902,8 @@ re_W_rite      _t_ype definition
   ;; jinx-camel-modes: add maybe python-mode and nim-mode?
 
   :hook
-  (text-mode . jinx-mode)
-  (conf-mode . jinx-mode)
+  (text-mode-hook . jinx-mode)
+  (conf-mode-hook . jinx-mode)
   ;; (prog-mode . jinx-mode)
 
   :bind
@@ -3955,9 +3962,11 @@ You are a helpful assistant. Respond concisely.")
                          :models '("mbenhamd/qwen2.5-7b-instruct-cline-128k-q8_0:latest" "qwen2.5-coder:latest"))
          gptel-model "qwen2.5-coder:latest")
 
-  ;; Scroll automatically, move cursor to next pronpt automatically
-  (add-hook 'gptel-post-stream-hook 'gptel-auto-scroll)
-  (add-hook 'gptel-post-response-functions 'gptel-end-of-response)
+
+  :hook
+  (gptel-post-stream-hook . gptel-auto-scroll)
+  (gptel-post-response-functions . gptel-end-of-response)
+  (gptel-mode-hook . visual-line-mode)
 
   ;; Weird, this didn't work in a :bind clause
   (bind-key "C-c C-c" #'gptel-send gptel-mode-map)
@@ -4025,8 +4034,8 @@ You are a helpful assistant. Respond concisely.")
     (auto-fill-mode))
 
   :hook
-  (org-mode . my-org-setup)
-  (org-mode . pixel-scroll-precision-mode)
+  (org-mode-hook . my-org-setup)
+  (org-mode-hook . pixel-scroll-precision-mode)
 
   :bind
   ("C-c l"   . org-store-link)
