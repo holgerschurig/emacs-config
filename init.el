@@ -677,6 +677,8 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
   (interactive "P")
   (set-buffer-modified-p arg))
 
+  ;; (add-to-list 'safe-local-variable-directories (concat (getenv "HOME") "/d/os/"))
+
   :bind
   ("<f2>" . save-buffer)
   ("<f3>" . find-sibling-file)  ;; toggle between .c and .h
