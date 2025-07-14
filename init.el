@@ -66,7 +66,7 @@ Unlike `setopt', this won't needlessly pull in dependencies."
 ;; Search for packages?   M-x elpaca-menu-item
 ;;                        M-x elpaca-manager
 
-(defvar elpaca-installer-version 0.10)
+(defvar elpaca-installer-version 0.11)
 (defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
 (defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
 (defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
@@ -101,7 +101,8 @@ Unlike `setopt', this won't needlessly pull in dependencies."
   (unless (require 'elpaca-autoloads nil t)
     (require 'elpaca)
     (elpaca-generate-autoloads "elpaca" repo)
-    (load "./elpaca-autoloads")))
+    (let ((load-source-file-function nil)) (load "./elpaca-autoloads"))))
+
 (add-hook 'after-init-hook #'elpaca-process-queues)
 (setq emacs-version "30.1")
 (elpaca `(,@elpaca-order))
