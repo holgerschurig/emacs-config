@@ -3996,7 +3996,6 @@ You are a helpful assistant. Respond concisely.")
   :defer t
 
   :custom
-  (org-directory "~/Sync/Data") ;; TODO
   (org-fontify-whole-heading-line t)
   ;;(org-hide-leading-stars t)
   (org-agenda-files (directory-files-recursively org-directory "\\.org$"))
@@ -4027,6 +4026,9 @@ You are a helpful assistant. Respond concisely.")
                  (sqlite . t)
                  ;;(perl . t)
                  ))
+
+  (when (file-directory-p "~/Sync/Data")
+    (org-directory "~/Sync/Data"))
 
   (defun my-org-setup ()
     (setq indent-line-function #'indent-relative-first-indent-point)
