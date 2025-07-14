@@ -2329,24 +2329,6 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
-;;; Package: edit/transform-string-at-point
-
-;; https://github.com/waymondo/transform-string-at-point
-;;
-;; Easily change the string at point between camelcasing, snakecasing, dasherized and more.
-
-(use-package transform-string-at-point
-  :ensure (:host github :repo "waymondo/transform-string-at-point")
-  ;; :vc
-  ;; (:url "https://github.com/waymondo/transform-string-at-point")
-  :custom
-  (transform-string-at-point-cursor-after-transform 'string-start)
-  :bind
-  ("C-#" . transform-string-at-point-map)
-)
-
-
-
 ;;; Package: edit/undo-fu
 
 ;; https://github.com/emacsmirror/undo-fu
