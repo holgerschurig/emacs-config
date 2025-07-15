@@ -66,7 +66,7 @@ Unlike `setopt', this won't needlessly pull in dependencies."
 ;; Search for packages?   M-x elpaca-menu-item
 ;;                        M-x elpaca-manager
 
-(defvar elpaca-installer-version 0.10)
+(defvar elpaca-installer-version 0.11)
 (defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
 (defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
 (defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
@@ -101,7 +101,8 @@ Unlike `setopt', this won't needlessly pull in dependencies."
   (unless (require 'elpaca-autoloads nil t)
     (require 'elpaca)
     (elpaca-generate-autoloads "elpaca" repo)
-    (load "./elpaca-autoloads")))
+    (let ((load-source-file-function nil)) (load "./elpaca-autoloads"))))
+
 (add-hook 'after-init-hook #'elpaca-process-queues)
 (setq emacs-version "30.1")
 (elpaca `(,@elpaca-order))
@@ -2335,24 +2336,6 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
-;;; Package: edit/transform-string-at-point
-
-;; https://github.com/waymondo/transform-string-at-point
-;;
-;; Easily change the string at point between camelcasing, snakecasing, dasherized and more.
-
-(use-package transform-string-at-point
-  :ensure (:host github :repo "waymondo/transform-string-at-point")
-  ;; :vc
-  ;; (:url "https://github.com/waymondo/transform-string-at-point")
-  :custom
-  (transform-string-at-point-cursor-after-transform 'string-start)
-  :bind
-  ("C-#" . transform-string-at-point-map)
-)
-
-
-
 ;;; Package: edit/undo-fu
 
 ;; https://github.com/emacsmirror/undo-fu
@@ -2628,6 +2611,9 @@ re_W_rite      _t_ype definition
 
   :init
   (global-flycheck-mode +1)
+
+  :custom
+  (flycheck-emacs-lisp-load-path 'inherit "necessary with alternatives to package.el")
 
   :config
   (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
