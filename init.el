@@ -2605,6 +2605,9 @@ re_W_rite      _t_ype definition
   :init
   (global-flycheck-mode +1)
 
+  :custom
+  (flycheck-emacs-lisp-load-path 'inherit "necessary with alternatives to package.el")
+
   :config
   (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
 )
