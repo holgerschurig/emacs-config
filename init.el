@@ -3499,10 +3499,10 @@ re_W_rite      _t_ype definition
     ;; C-c C-r -> vertico-repeat
 
     ;; C-x bindings (ctl-x-map)
-    ("C-x M-:"  . consult-complex-command)     ;; was: repeat-complex-command)
-    ("C-x C-b"  . consult-buffer)              ;; was: list-buffers)
-    ("C-x 4 b"  . consult-buffer-other-window) ;; was: switch-to-buffer-other-window)
-    ("C-x 5 b"  . consult-buffer-other-frame)  ;; was: switch-to-buffer-other-frame)
+    ("C-x M-:"  . consult-complex-command)     ;; was: repeat-complex-command
+    ("C-x C-b"  . consult-buffer)              ;; was: list-buffers
+    ("C-x 4 b"  . consult-buffer-other-window) ;; was: switch-to-buffer-other-window
+    ("C-x 5 b"  . consult-buffer-other-frame)  ;; was: switch-to-buffer-other-frame
     ("C-x r b"  . consult-bookmark)
     ("C-x p b"  . consult-project-buffer)
 
@@ -3953,8 +3953,8 @@ You are a helpful assistant. Respond concisely.")
      (typo        . "Fix typos, grammar and style of the following: ")))
 
   :config
-  ;; ;:models '("llama3.1:latest" "deepseek-coder-v2:latest"))
-  ;; :models '("mbenhamd/qwen2.5-7b-instruct-cline-128k-q8_0:latest" "qwen2.5-coder:latest")))
+  ;; ;:models '("llama3.1:latest" "deepseek-coder-v2:latest")
+  ;; :models '("mbenhamd/qwen2.5-7b-instruct-cline-128k-q8_0:latest" "qwen2.5-coder:latest")
   (when is-mac
     (setopt gptel-backend (gptel-make-ollama "Ollama"
                             :host "localhost:11434"
