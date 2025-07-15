@@ -3349,6 +3349,7 @@ re_W_rite      _t_ype definition
          ("C-c C-c e" . lsp-rust-analyzer-expand-macro)
          ("C-c C-c a" . lsp-execute-code-action)
          ("C-c C-c r" . lsp-rename) ;; was: rustic-cargo-rename
+         ("C-c C-c C-r" . lsp-rename) ;; was: rustic-cargo-run
 
          ;; Handling crates in Cargo.toml
          ("C-c C-c A" . rustic-cargo-add)
