@@ -673,9 +673,9 @@ With prefix ARG, mark buffer as modified, so \\[save-buffer] will save.
 
 It is not a good idea to use this function in Lisp programs, because it
 prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
-  (declare (interactive-only set-buffer-modified-p))
-  (interactive "P")
-  (set-buffer-modified-p arg))
+    (declare (interactive-only set-buffer-modified-p))
+    (interactive "P")
+    (set-buffer-modified-p arg))
 
   ;; (add-to-list 'safe-local-variable-directories (concat (getenv "HOME") "/d/os/"))
 
@@ -3071,8 +3071,6 @@ re_W_rite      _t_ype definition
   (setq-default c-electric-flag nil)
 
   (defun my-c-mode-setup ()
-    ;; TODO check for compilation database and if found, start eglot
-    ;;(eglot-ensure)
 
     ;; need to check the mode because I run this also at the revert hook!
     (modify-syntax-entry ?_ "w")
