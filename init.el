@@ -3340,6 +3340,13 @@ re_W_rite      _t_ype definition
   :config
   ;; (add-to-list 'flycheck-checkers 'rustic-clippy))
 
+  (defun my-rustic-mode-hook ()
+    "Make sure that tempel-expand is before lsp-completion-at-point"
+    (make-local-variable 'completion-at-point-functions)
+    (remove-hook 'completion-at-point-functions #'tempel-expand)
+    (add-to-list 'completion-at-point-functions #'lsp-completion-at-point)
+    (add-to-list 'completion-at-point-functions #'tempel-expand))
+
   ;; These bindings bind some keys that are already in flycheck or lsp
   ;; again, but then they are all nicely in C-c C-c which faster to
   ;; type than e.g. C-c = or C-c !
@@ -3360,7 +3367,8 @@ re_W_rite      _t_ype definition
          ("C-c C-c s" . lsp-rust-analyzer-status)
          ("C-c w a" . lsp-rust-analyzer-status))
 
-  ;; :hook
+  :hook
+  (rustic-mode-hook . my-rustic-mode-hook)
   ;; (rustic-mode-hook . lsp-mode)
   ;; (rustic-mode-local-vars-hook . tree-sitter! 'append))
 )
