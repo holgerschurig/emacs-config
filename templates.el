@@ -167,6 +167,14 @@ rustic-mode
 (for "for " p " in " p " {" n> r> n> "}" )
 (ifl "if let " p " = " p " {" n> r> n> "}" )
 (imp "impl " (s NAME) " {" n> "fn " (s METHOD) "(" (p "&self") ") " p " {" n> p "}" n>"}" > )
+(pt "fn _print_type_of<T>(_: &T) {
+    println!(\"{}\", std::any::type_name::<T>());
+}")
+(un "#![allow(unused_imports)]
+#![allow(unused_variables)]
+#![allow(dead_code)]
+")
+
 ;;imp-add
 ;;imp-debug
 ;;imp-display
