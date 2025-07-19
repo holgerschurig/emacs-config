@@ -3653,6 +3653,9 @@ re_W_rite      _t_ype definition
 
   :init
   (marginalia-mode)
+
+  :config
+  (setf (alist-get 'elpaca-info marginalia-command-categories) 'elpaca)
 )
 
 
