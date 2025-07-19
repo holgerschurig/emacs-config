@@ -2666,6 +2666,8 @@ re_W_rite      _t_ype definition
   ;; I want my (yet) untracked files to be diplayed at all times
   (magit-section-initial-visibility-alist '((untracked . show)
                                             (stashes . hide)))
+  ;; nicer diffs
+  (magit-diff-refine-hunk 'all)
 
   ;; Switch repositories with magit-list-repositories
   (magit-repository-directories
