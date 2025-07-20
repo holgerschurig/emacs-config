@@ -2733,7 +2733,7 @@ re_W_rite      _t_ype definition
   ;; 3. Lenses
   (lsp-lens-enable nil)
   ;; 4. Headerline
-  (lsp-headerline-breadcrumb-enable t)
+  (lsp-headerline-breadcrumb-enable nil)
   ;; 5. Sideline code actions is in the lsp-ui section
   (eldoc-documentation-functions nil)
   (lsp-signature-auto-activate nil)
@@ -2777,49 +2777,73 @@ re_W_rite      _t_ype definition
 
   ;; (lsp-inlay-hint-enable t)
 
-  ;; :config
-  ;; (transient-define-prefix casual-lsp-tmenu ()
-  ;;   ;; see also lsp-command-map for examples of what we could add, and
-  ;;   ;; what predicates might be applicable
-  ;;   "Transient menu for Mastodon."
-  ;;   [["Actions"
-  ;;     ("a" "Action"           lsp-execute-code-action)
-  ;;     ("R" "rename Var"       lsp-rename)]
-  ;;    ["Find"
-  ;;     ("r" "References"       lsp-find-references)
-  ;;     ("c" "deClaration"      lsp-find-declaration)
-  ;;     ("d" "Definition"       lsp-find-definition)
-  ;;     ("i" "Implementation"   lsp-find-implementation)
-  ;;     ("t" "Type defintion"   lsp-find-type-definition)]
-  ;;    ["Modify"
-  ;;     ("f" "Format region"    lsp-format-region)
-  ;;     ("b" "format Buffer"    lsp-format-buffer)
-  ;;     ("i" "sort Imports"     lsp-organize-imports)]
-  ;;    ["Toggles"
-  ;;     ("D" "doc mode"         lsp-ui-doc-mode :transient t)
-  ;;     ("s" "ui Sideline"      lsp-ui-sideline-mode :transient t)
-  ;;     ("A" "modeline Actions" lsp-modeline-code-actions-mode :transient t)
-  ;;     ("B" "Breadcrumps"      lsp-headerline-breadcrumb-mode :transient t)
-  ;;     ("S" "Signature"        lsp-toggle-signature-auto-activate :transient t)
-  ;;     ("h" "inlay Hints"      lsp-inlay-hints-mode :transient t)
-  ;;     ("c" "flycheck"         flycheck-mode :transient t)]
-  ;;   ["Misc"
-  ;;     ("?" "help"             describe-mode)
-  ;;     ("q" "quit"             transient-quit-one)
-  ;;     ]])
+  :config
+  (transient-define-prefix casual-lsp-tmenu ()
+    ;; see also lsp-command-map for examples of what we could add, and
+    ;; what predicates might be applicable
+    "Transient menu for Mastodon."
+    [["Actions"
+      ("a" "Action"           lsp-execute-code-action)
+      ("r" "rename Var"       lsp-rename)]
+     ["LSP"
+      ("S" "shutdown" lsp-workspace-shutdown)
+      ("R" "restart" lsp-workspace-restart)]
+
+     ["Find"
+      ("R" "References"       lsp-find-references)
+      ("c" "deClaration"      lsp-find-declaration)
+      ("d" "Definition"       lsp-find-definition)
+      ("i" "Implementation"   lsp-find-implementation)
+      ("t" "Type defintion"   lsp-find-type-definition)]
+     ["Modify"
+      ("f" "Format region"    lsp-format-region)
+      ("b" "format Buffer"    lsp-format-buffer)
+      ("i" "sort Imports"     lsp-organize-imports)]
+     ["Toggles"
+      ("D" "elDoc mode"         eldoc-mode
+       :description (lambda () (casual-lib-checkbox-label eldoc-mode "Doc mode"))
+       :transient t)
+      ("s" "ui Sideline"      lsp-ui-sideline-mode
+       :description (lambda () (casual-lib-checkbox-label lsp-ui-sideline-mode "ui sideline"))
+       :if-non-nil lsp-ui-mode
+       :transient t)
+      ("A" "modeline Actions" lsp-modeline-code-actions-mode
+       :description (lambda () (casual-lib-checkbox-label lsp-modeline-code-actions-mode "modeline Actions"))
+       :transient t)
+      ("B" "Breadcrumps"      lsp-headerline-breadcrumb-mode
+       :description (lambda () (casual-lib-checkbox-label lsp-headerline-breadcrumb-mode "Breadcrumps"))
+       :transient t)
+      ("S" "Signature"        lsp-toggle-signature-auto-activate
+       :description (lambda () (casual-lib-checkbox-label lsp-signature-auto-activate "Signature"))
+       :transient t)
+      ("H" "inlay Hints"      lsp-inlay-hints-mode
+       :description (lambda () (casual-lib-checkbox-label lsp-inlay-hints-mode "inlay Hints"))
+       :transient t)
+      ("F" "flycheck"         flycheck-mode
+       :description (lambda () (casual-lib-checkbox-label flycheck-mode "flycheck"))
+       :transient t)]
+    ["Misc"
+      ("?" "help"             describe-mode)
+      ("q" "quit"             transient-quit-one)
+      ]])
+
+  (defun my-lsp-configure-hook ()
+    "Setup lsp managed mode"
+    (eldoc-mode -1))
 
   :bind (:map lsp-command-map
-         ;; ("C-o" . casual-lsp-tmenu)
+         ("C-o" . casual-lsp-tmenu)
          ;; :map lsp-mode-map
          ;; ("M-." . lsp-find-definition)
         )
 
   :hook
   (lsp-mode-hook . lsp-enable-which-key-integration)
-  ;;(lsp-mode . lsp-ui-mode)
+  ;; (lsp-mode . lsp-ui-mode)
   ;; (lsp-mode . corfu-mode)
   ;; (lsp-mode . corfu-popupinfo-mode)
   (lsp-mode-hook . completion-preview-mode)
+  (lsp-configure-hook . my-lsp-configure-hook)
 )
 
 
@@ -2864,11 +2888,12 @@ re_W_rite      _t_ype definition
   ;; 5. Sideline code actions
   (lsp-ui-sideline-enable t)  ;; this is the whole sideline
   (lsp-ui-sideline-show-code-actions t)
+  (lsp-ui-sideline-code-actions-prefix "💡")
   ;; 6. Symbols info in sideline, see also M-x lsp-ui-sideline-toggle-symbols-info
   (lsp-ui-sideline-show-hover nil)
   (lsp-ui-sideline-show-symbol nil)
   ;; 9. Sideline diagnostics is in the lsp-ui section
-  (lsp-ui-sideline-show-diagnostics nil) ;; show only errors if nil
+  (lsp-ui-sideline-show-diagnostics t)
 )
 
 
@@ -3325,16 +3350,24 @@ re_W_rite      _t_ype definition
 ;; General: C-c C-c
 ;; Popup:   C-c C-p
 
+(use-package casual
+  :ensure t
+)
+
 (use-package rustic
   :ensure t
   :defer t
+
+  :init
+  ;; Cannot be :custom, otherwise rustic.el still loads the optional elisp files
+  (setopt rustic-load-optional-libraries nil)
 
   :mode ("\\.rs\\'" . rustic-mode)
 
   :custom
   (rustic-lsp-setup-p nil) ;; don't ask if I want to install LSP
   (rustic-indent-method-chain t)
-  (rustic-babel-format-src-block nil) ;; TODO -> rustic-babel
+  ;; (rustic-babel-format-src-block nil) ;; TODO -> rustic-babel
   ;; See also rust-mode's lsp-rust-XXX variables!
 
   :config
@@ -3342,34 +3375,83 @@ re_W_rite      _t_ype definition
 
   (defun my-rustic-mode-hook ()
     "Make sure that tempel-expand is before lsp-completion-at-point"
+
+    ;; somehow rustic-save-some-buffers is broken
+    (require 'rustic-compile)
+    (defun rustic-save-some-buffers (&opt)
+      "blah"
+      )
+
+    ;; Move tempel-expand to the top-most position
     (make-local-variable 'completion-at-point-functions)
     (remove-hook 'completion-at-point-functions #'tempel-expand)
     (add-to-list 'completion-at-point-functions #'lsp-completion-at-point)
-    (add-to-list 'completion-at-point-functions #'tempel-expand))
+    (add-to-list 'completion-at-point-functions #'tempel-expand)
 
-  ;; These bindings bind some keys that are already in flycheck or lsp
-  ;; again, but then they are all nicely in C-c C-c which faster to
-  ;; type than e.g. C-c = or C-c !
+    (lsp-mode 1)
+
+    (require 'rustic-rustfmt) ;; for rustic-after-save-hook
+    )
+
+  (transient-define-prefix casual-rustic-tmenu ()
+    "Transient menu for Mastodon."
+    [["Actions"
+      ("a" "Action"              lsp-execute-code-action)
+      ("r" "Rename"              lsp-rename)
+      ("e" "Expand macro"        lsp-rust-analyzer-expand-macro)
+      ("c" "Cargo"               rustic-popup)
+      ("l" "LSP actions"         casual-lsp-tmenu)]
+     ["Cargo"
+      ("C-a" "cargo add crate"   rustic-cargo-add)
+      ("C-r" "cargo rm crate"    rustic-cargo-rm)
+      ("C-m" "cargo missing dep" rustic-cargo-add-missing-dependencies)
+      ]
+     ["Find"
+      ;; ("M-," "Definition"     lsp-find-definition)
+      ;; ("M-?" "References"     lsp-find-references)
+      ("M-,"                     lsp-ui-peek-find-definitions)
+      ("M-?"                     lsp-ui-peek-find-references)
+      ("c" "deClaration"         lsp-find-declaration)
+      ("i" "Implementation"      lsp-find-implementation)
+      ("t" "Type definition"     lsp-find-type-definition)]
+     ["Modify"
+      ("f" "Format region"       rustic-format-region)
+      ("b" "format Buffer"       lsp-format-buffer)
+      ("i" "sort Imports"        lsp-organize-imports)]
+     ["Toggles"
+      ("D" "eldoc mode"          eldoc-mode
+       :description (lambda () (casual-lib-checkbox-label eldoc-mode "Doc mode"))
+       :transient t)
+      ("s" "ui Sideline"         lsp-ui-sideline-mode
+       :description (lambda () (casual-lib-checkbox-label lsp-ui-sideline-mode "ui sideline"))
+       :transient t)
+      ("A" "modeline Actions"    lsp-modeline-code-actions-mode
+       :description (lambda () (casual-lib-checkbox-label lsp-modeline-code-actions-mode "modeline Actions"))
+       :transient t)
+      ("B" "Breadcrumps"         lsp-headerline-breadcrumb-mode
+       :description (lambda () (casual-lib-checkbox-label lsp-headerline-breadcrumb-mode "Breadcrumps"))
+       :transient t)
+      ("S" "Signature"           lsp-toggle-signature-auto-activate
+       :description (lambda () (casual-lib-checkbox-label lsp-signature-auto-activate "Signature"))
+       :transient t)
+      ("H" "inlay Hints"         lsp-inlay-hints-mode
+       :description (lambda () (casual-lib-checkbox-label lsp-inlay-hints-mode "inlay Hints"))
+       :transient t)
+      ("F" "flycheck"            flycheck-mode
+       :description (lambda () (casual-lib-checkbox-label flycheck-mode "flycheck"))
+       :transient t)]
+    ["Misc"
+      ("?" "help"                describe-mode)
+      ("q" "quit"                transient-quit-one)
+      ]])
+
   :bind (:map rustic-mode-map
-         ("C-c C-c Q" . lsp-workspace-shutdown)
-         ("C-c C-c q" . lsp-workspace-restart)
-         ("C-c C-c e" . lsp-rust-analyzer-expand-macro)
-         ("C-c C-c a" . lsp-execute-code-action)
-         ("C-c C-c r" . lsp-rename) ;; was: rustic-cargo-rename
-         ("C-c C-c C-r" . lsp-rename) ;; was: rustic-cargo-run
-
-         ;; Handling crates in Cargo.toml
-         ("C-c C-c A" . rustic-cargo-add)
-         ("C-c C-c R" . rustic-cargo-rm)
-         ("C-c C-c m" . rustic-cargo-add-missing-dependencies)
-         ;; C-c C-c u is already bound to rustic-cargo-upgrade
-
-         ("C-c C-c s" . lsp-rust-analyzer-status)
-         ("C-c w a" . lsp-rust-analyzer-status))
+              ("C-o" . casual-rustic-tmenu)
+              ("M-." . lsp-ui-peek-find-definitions)
+              ("M-?" . lsp-ui-peek-find-references))
 
   :hook
   (rustic-mode-hook . my-rustic-mode-hook)
-  ;; (rustic-mode-hook . lsp-mode)
   ;; (rustic-mode-local-vars-hook . tree-sitter! 'append))
 )
 
