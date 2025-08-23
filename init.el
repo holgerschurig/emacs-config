@@ -4080,7 +4080,6 @@ You are a helpful assistant. Respond concisely.")
   :custom
   (org-fontify-whole-heading-line t)
   ;;(org-hide-leading-stars t)
-  (org-agenda-files (directory-files-recursively org-directory "\\.org$"))
   (org-todo-keywords (quote
                       ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
                        ;; "@" means to add a note (with time) WHEN ENTERING STATE
@@ -4110,7 +4109,8 @@ You are a helpful assistant. Respond concisely.")
                  ))
 
   (when (file-directory-p "~/Sync/Data")
-    (org-directory "~/Sync/Data"))
+    (setopt org-directory "~/Sync/Data"))
+  (setopt org-agenda-files (directory-files-recursively org-directory "\\.org$"))
 
   (defun my-org-setup ()
     (setq indent-line-function #'indent-relative-first-indent-point)
