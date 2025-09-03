@@ -4530,4 +4530,10 @@ You are a helpful assistant. Respond concisely.")
 
 ;;(setq truncate-string-ellipsis "…")
 
-;; (defun sudo-edit () ... )
+(defun sudo-this-file ()
+  "Opens current buffer via sudo."
+  (interactive)
+  (let ((buffer (current-buffer))
+        (tramp-file-name (concat "/sudo::" (buffer-file-name))))
+    (find-file tramp-file-name)
+    (kill-buffer buffer)))
