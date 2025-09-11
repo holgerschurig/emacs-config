@@ -206,3 +206,7 @@ rustic-mode
 ;;trait
 ;;type
 ;;unsafe
+
+bazel-starlark-mode
+
+(dbg "x = ctx" n> "for k in dir(x):" n> "if k in ('aspect_ids','build_setting_value', 'rule'): continue" n> "v = getattr(x, k)" n> "print(k, type(v), v)")
