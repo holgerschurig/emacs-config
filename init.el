@@ -2839,18 +2839,11 @@ re_W_rite      _t_ype definition
 
   :hook
   (lsp-mode-hook . lsp-enable-which-key-integration)
-<<<<<<< HEAD
-  ;;(lsp-mode . lsp-ui-mode)
-  ;; (lsp-mode . corfu-mode)
-  ;; (lsp-mode . corfu-popupinfo-mode)
-  (lsp-mode-hook . completion-preview-mode)
-=======
   ;; (lsp-mode . lsp-ui-mode)
   ;; (lsp-mode . corfu-mode)
   ;; (lsp-mode . corfu-popupinfo-mode)
   (lsp-mode-hook . completion-preview-mode)
   (lsp-configure-hook . my-lsp-configure-hook)
->>>>>>> e7c6cf048fa24da7543a1ca7eebe4352325b6667
 )
 
 
@@ -3459,8 +3452,7 @@ re_W_rite      _t_ype definition
 
   :hook
   (rustic-mode-hook . my-rustic-mode-hook)
->>>>>>> e7c6cf048fa24da7543a1ca7eebe4352325b6667
-  ;; (rustic-mode-local-vars-hook . tree-sitter! 'append))
+ ;; (rustic-mode-local-vars-hook . tree-sitter! 'append))
 )
 
 
