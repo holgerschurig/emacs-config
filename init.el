@@ -2832,7 +2832,7 @@ re_W_rite      _t_ype definition
     (eldoc-mode -1))
 
   :bind (:map lsp-command-map
-         ("C-o" . casual-lsp-tmenu)
+         ("C-c C-o" . casual-lsp-tmenu)
          ;; :map lsp-mode-map
          ;; ("M-." . lsp-find-definition)
         )
@@ -3388,7 +3388,7 @@ re_W_rite      _t_ype definition
     (add-to-list 'completion-at-point-functions #'lsp-completion-at-point)
     (add-to-list 'completion-at-point-functions #'tempel-expand)
 
-    (lsp-mode 1)
+    ;; (lsp-mode 1)
 
     (require 'rustic-rustfmt) ;; for rustic-after-save-hook
     )
@@ -3407,10 +3407,10 @@ re_W_rite      _t_ype definition
       ("C-m" "cargo missing dep" rustic-cargo-add-missing-dependencies)
       ]
      ["Find"
-      ;; ("M-," "Definition"     lsp-find-definition)
-      ;; ("M-?" "References"     lsp-find-references)
-      ("M-,"                     lsp-ui-peek-find-definitions)
-      ("M-?"                     lsp-ui-peek-find-references)
+      ("M-," "definition"        lsp-find-definition)
+      ("M-?" "references"        lsp-find-references)
+      ;; ("M-,"                     lsp-ui-peek-find-definitions)
+      ;; ("M-?"                     lsp-ui-peek-find-references)
       ("c" "deClaration"         lsp-find-declaration)
       ("i" "Implementation"      lsp-find-implementation)
       ("t" "Type definition"     lsp-find-type-definition)]
@@ -3446,9 +3446,9 @@ re_W_rite      _t_ype definition
       ]])
 
   :bind (:map rustic-mode-map
-              ("C-o" . casual-rustic-tmenu)
-              ("M-." . lsp-ui-peek-find-definitions)
-              ("M-?" . lsp-ui-peek-find-references))
+              ("C-c C-o" . casual-rustic-tmenu)
+              ("M-."     . lsp-ui-peek-find-definitions)
+              ("M-?"     . lsp-ui-peek-find-references))
 
   :hook
   (rustic-mode-hook . my-rustic-mode-hook)
