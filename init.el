@@ -2697,7 +2697,7 @@ re_W_rite      _t_ype definition
   ("M-g M" . magit-list-repositories)
 )
 
-
+(elpaca (cond-let :host github :repo "tarsius/cond-let"))
 
 ;;; Package: ide/make-mode
 
