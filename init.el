@@ -1090,8 +1090,8 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
   :defer 1
 
   :config
-  (when-let (name (getenv "EMACS_SERVER_NAME"))
-    (setq server-name name))
+  (let (name (getenv "EMACS_SERVER_NAME"))
+    (when name (setq server-name name)))
   (unless (server-running-p)
     (server-start)))
 
