@@ -117,7 +117,13 @@ Unlike `setopt', this won't needlessly pull in dependencies."
   (elpaca-use-package-mode))
 
 ;; Easy way out of Elpaca log
-(bind-key "q" #'kill-buffer-and-window 'elpaca-log-mode-map)
+(use-package elpaca-log
+  :defer t
+  :bind (
+  :map elpaca-log-mode-map
+  ("q" . kill-buffer-and-window)
+  )
+)
 
 ;;; Package: pre/use-package
 
