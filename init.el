@@ -65,6 +65,9 @@ Unlike `setopt', this won't needlessly pull in dependencies."
 
 ;; Search for packages?   M-x elpaca-menu-item
 ;;                        M-x elpaca-manager
+;; Look for changes: f x  (fetch, execute)
+;; Merging them:     m x  (merge, execute)
+;; or directly: p m       (pull, execute)
 
 (defvar elpaca-installer-version 0.11)
 (defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
