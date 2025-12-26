@@ -2692,12 +2692,19 @@ re_W_rite      _t_ype definition
      ("~/src"    . 1)
      ))
 
+  :config
+  (set-face-attribute 'magit-branch-local       nil :box nil :inverse-video t)
+  (set-face-attribute 'magit-branch-current     nil :box nil :inverse-video t)
+  (set-face-attribute 'magit-branch-remote-head nil :box nil :inverse-video t)
+
   :bind
   ("M-g m" . magit-status)
   ("M-g M" . magit-list-repositories)
 )
 
 (elpaca (cond-let :host github :repo "tarsius/cond-let"))
+
+
 
 ;;; Package: ide/make-mode
 
@@ -2950,6 +2957,15 @@ re_W_rite      _t_ype definition
               ("r" . project-find-dir)
               ("s" . project-shell-command)
         )
+)
+
+
+;;; Package: ide/smerge-mode
+
+(use-package smerge-mode
+  :defer t
+  :config
+  (set-face-attribute 'smerge-refine-shadow-cursor nil :box nil :inverse-video t)
 )
 
 
