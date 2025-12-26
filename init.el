@@ -242,7 +242,7 @@ that point."
 (defun my-kill-without-query ()
   "Mark a buffer not modified, to make it killable without a
  query. Use with kill-buffer-query-functions."
-  (not-modified) t)
+  (set-buffer-modified-p nil) t)
 
 
 ;; revert buffer with one keystroke
