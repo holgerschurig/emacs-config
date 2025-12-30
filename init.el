@@ -65,6 +65,9 @@ Unlike `setopt', this won't needlessly pull in dependencies."
 
 ;; Search for packages?   M-x elpaca-menu-item
 ;;                        M-x elpaca-manager
+;; Look for changes: f x  (fetch, execute)
+;; Merging them:     m x  (merge, execute)
+;; or directly: p m       (pull, execute)
 
 (defvar elpaca-installer-version 0.11)
 (defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
@@ -114,7 +117,13 @@ Unlike `setopt', this won't needlessly pull in dependencies."
   (elpaca-use-package-mode))
 
 ;; Easy way out of Elpaca log
-(bind-key "q" #'kill-buffer-and-window 'elpaca-log-mode-map)
+(use-package elpaca-log
+  :defer t
+  :bind (
+  :map elpaca-log-mode-map
+  ("q" . kill-buffer-and-window)
+  )
+)
 
 ;;; Package: pre/use-package
 
@@ -233,7 +242,7 @@ that point."
 (defun my-kill-without-query ()
   "Mark a buffer not modified, to make it killable without a
  query. Use with kill-buffer-query-functions."
-  (not-modified) t)
+  (set-buffer-modified-p nil) t)
 
 
 ;; revert buffer with one keystroke
@@ -1081,8 +1090,8 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
   :defer 1
 
   :config
-  (when-let (name (getenv "EMACS_SERVER_NAME"))
-    (setq server-name name))
+  (let (name (getenv "EMACS_SERVER_NAME"))
+    (when name (setq server-name name)))
   (unless (server-running-p)
     (server-start)))
 
@@ -2683,10 +2692,17 @@ re_W_rite      _t_ype definition
      ("~/src"    . 1)
      ))
 
+  :config
+  (set-face-attribute 'magit-branch-local       nil :box nil :inverse-video t)
+  (set-face-attribute 'magit-branch-current     nil :box nil :inverse-video t)
+  (set-face-attribute 'magit-branch-remote-head nil :box nil :inverse-video t)
+
   :bind
   ("M-g m" . magit-status)
   ("M-g M" . magit-list-repositories)
 )
+
+(elpaca (cond-let :host github :repo "tarsius/cond-let"))
 
 
 
@@ -2941,6 +2957,15 @@ re_W_rite      _t_ype definition
               ("r" . project-find-dir)
               ("s" . project-shell-command)
         )
+)
+
+
+;;; Package: ide/smerge-mode
+
+(use-package smerge-mode
+  :defer t
+  :config
+  (set-face-attribute 'smerge-refine-shadow-cursor nil :box nil :inverse-video t)
 )
 
 
@@ -4080,7 +4105,6 @@ You are a helpful assistant. Respond concisely.")
   :custom
   (org-fontify-whole-heading-line t)
   ;;(org-hide-leading-stars t)
-  (org-agenda-files (directory-files-recursively org-directory "\\.org$"))
   (org-todo-keywords (quote
                       ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
                        ;; "@" means to add a note (with time) WHEN ENTERING STATE
@@ -4110,7 +4134,8 @@ You are a helpful assistant. Respond concisely.")
                  ))
 
   (when (file-directory-p "~/Sync/Data")
-    (org-directory "~/Sync/Data"))
+    (setopt org-directory "~/Sync/Data"))
+  (setopt org-agenda-files (directory-files-recursively org-directory "\\.org$"))
 
   (defun my-org-setup ()
     (setq indent-line-function #'indent-relative-first-indent-point)
@@ -4530,4 +4555,10 @@ You are a helpful assistant. Respond concisely.")
 
 ;;(setq truncate-string-ellipsis "…")
 
-;; (defun sudo-edit () ... )
+(defun sudo-this-file ()
+  "Opens current buffer via sudo."
+  (interactive)
+  (let ((buffer (current-buffer))
+        (tramp-file-name (concat "/sudo::" (buffer-file-name))))
+    (find-file tramp-file-name)
+    (kill-buffer buffer)))

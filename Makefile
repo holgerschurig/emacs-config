@@ -121,7 +121,6 @@ confemacs emacs.git/Makefile: emacs.git/configure
 		--with-gpm=no \
 		--with-harfbuzz \
 		--without-imagemagick \
-		--with-json \
 		--with-modules \
 		--with-native-compilation=aot \
 		--with-rsvg \
