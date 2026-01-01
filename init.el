@@ -164,10 +164,8 @@ Unlike `setopt', this won't needlessly pull in dependencies."
 ;;; Package: core/auth-source
 
 (use-package auth-source
-  :config
-  (setq! auth-sources (list (locate-user-emacs-file "authinfo.gpg")
-                             "~/.authinfo.gpg"
-                             "~/.authinfo"))
+  :custom
+  (auth-sources '("~/.authinfo"))
 )
 
 
