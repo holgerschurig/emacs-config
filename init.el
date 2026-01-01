@@ -4080,6 +4080,19 @@ You are a helpful assistant. Respond concisely.")
 
 
 
+;;; Package: misc/persist
+
+(use-package persist
+  :defer t
+  :ensure (:host github :repo "emacsmirror/persist" :branch "master")
+
+  :custom
+  (persist--directory-location (locate-user-emacs-file "var"))
+  (setq! persist--directory-location (locate-user-emacs-file "var"))
+)
+
+
+
 ;;; Package: misc/nov (reading epubs)
 
 ;; https://depp.brause.cc/nov.el/
@@ -4504,15 +4517,6 @@ You are a helpful assistant. Respond concisely.")
   :bind (:map mastodon-mode-map
          ("C-o" . casual-mastodon-tmenu)
          ("SPC" . my-mastoron-more))
-)
-
-
-(use-package persist
-  :ensure (:host github :repo "emacsmirror/persist" :branch "master")
-  :defer t
-
-  :config
-  (setq! persist--directory-location (locate-user-emacs-file "var"))
 )
 
 
