@@ -4394,14 +4394,21 @@ You are a helpful assistant. Respond concisely.")
 
 
 
-;;; Packages: comm/mastodon
+;;; Packages: comm/mastodon (disabled)
 
 ;; https://codeberg.org/martianh/mastodon.el
 ;;
-;; TODO: write transient of what used to be the old hydra
+;; TODO mastodon.el become a total mess authentication wise. Don't use it
+;; until it becomes sane.
+;;
+;; mastodon-client.el hard-wires the use of plstore. And it is hard
+;; coded to use "secrets". That makes plstore call epg and that wants
+;; to run GPG which I intentionally don't use. It's quite buggy and
+;; wrongly designed, see see
+;; https://media.ccc.de/v/39c3-to-sign-or-not-to-sign-practical-vulnerabilities-i
 
 (use-package mastodon
-  :ensure t
+  :disabled t
   :defer t
   :commands (mastodon mastodon-discover)
 
@@ -4519,6 +4526,15 @@ You are a helpful assistant. Respond concisely.")
          ("SPC" . my-mastoron-more))
 )
 
+
+(use-package mastodon-auth
+  :defer t
+  :config
+  (require 'mastodon)
+  (require 'mastodon-client)
+  :custom
+  (mastodon-auth-use-auth-source t)
+)
 
 
 ;;; Package: post/elpaca hook
