@@ -896,7 +896,11 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
     ;; Behavior of left command key
     (setopt ns-command-modifier 'meta)
     ;; Behavior of left option key
-    (setopt ns-alternate-modifier 'meta))
+    (setopt ns-alternate-modifier 'meta)
+
+    ;; "EINFG"/"INS" is mapped to a help key?!?!
+    (define-key global-map (kbd "<help>") #'overwrite-mode)
+    )
 
   (when (boundp 'mac-command-modifier)
     ;; Ctrl key, has 'control as default so no need to change
