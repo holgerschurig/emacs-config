@@ -1131,6 +1131,9 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 ;; 8-space tabs. This setting can be adjusted on a per-mode basis as needed.
 (setq-default indent-tabs-mode nil)
 
+;; Unbind disabled command: set-goal-column
+(unbind-key "C-x C-n")
+
 ;; Don't blink the paren matching the one at point, it's too distracting.
 ;; TODO revisit
 ;;(setq! blink-matching-paren nil)
