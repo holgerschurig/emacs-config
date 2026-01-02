@@ -4001,16 +4001,23 @@ re_W_rite      _t_ype definition
 (use-package jinx
   :ensure t
   :defer t
-  ;; it actually doesn't need hunspell, but since we use hunspell
-  ;; setup in libenchant's ordering, we might have installed anyway.
-  :if (locate-file "hunspell" exec-path)
+
+  :commands (jinx-mode)
+
+  :init
+  (defun my-jinx-mode ()
+    (unless (string= (buffer-name) "*scratch*")
+      (require 'jinx)
+      (set-face-attribute 'jinx-misspelled nil :underline '(:style wave :color "red"))
+      (jinx-mode 1)))
 
   ;; jinx-camel-modes: add maybe python-mode and nim-mode?
 
   :hook
-  (text-mode-hook . jinx-mode)
-  (conf-mode-hook . jinx-mode)
-  ;; (prog-mode . jinx-mode)
+  (text-mode-hook . my-jinx-mode)
+  (conf-mode-hook . my-jinx-mode)
+  (prog-mode-hook . my-jinx-mode)
+  (rst-mode-hook . my-jinx-mode)
 
   :bind
   ;; since we don't ue ispell, we can re-assign it's keybinding
