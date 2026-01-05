@@ -164,10 +164,8 @@ Unlike `setopt', this won't needlessly pull in dependencies."
 ;;; Package: core/auth-source
 
 (use-package auth-source
-  :config
-  (setq! auth-sources (list (locate-user-emacs-file "authinfo.gpg")
-                             "~/.authinfo.gpg"
-                             "~/.authinfo"))
+  :custom
+  (auth-sources '("~/.authinfo"))
 )
 
 
@@ -4094,6 +4092,19 @@ You are a helpful assistant. Respond concisely.")
 
 
 
+;;; Package: misc/persist
+
+(use-package persist
+  :defer t
+  :ensure (:host github :repo "emacsmirror/persist" :branch "master")
+
+  :custom
+  (persist--directory-location (locate-user-emacs-file "var"))
+  (setq! persist--directory-location (locate-user-emacs-file "var"))
+)
+
+
+
 ;;; Package: misc/nov (reading epubs)
 
 ;; https://depp.brause.cc/nov.el/
@@ -4395,23 +4406,29 @@ You are a helpful assistant. Respond concisely.")
 
 
 
-;;; Packages: comm/mastodon
+;;; Packages: comm/mastodon (disabled)
 
 ;; https://codeberg.org/martianh/mastodon.el
 ;;
-;; TODO: write transient of what used to be the old hydra
+;; TODO mastodon.el become a total mess authentication wise. Don't use it
+;; until it becomes sane.
+;;
+;; mastodon-client.el hard-wires the use of plstore. And it is hard
+;; coded to use "secrets". That makes plstore call epg and that wants
+;; to run GPG which I intentionally don't use. It's quite buggy and
+;; wrongly designed, see see
+;; https://media.ccc.de/v/39c3-to-sign-or-not-to-sign-practical-vulnerabilities-i
 
 (use-package mastodon
-  :ensure t
+  :disabled t
   :defer t
-  :commands (mastodon)
+  :commands (mastodon mastodon-discover)
 
   :custom
-  (mastodon-active-user user-mail-address)
-  (mastodon-instance-url "https://emacs.ch")
+  (mastodon-active-user "HolgerSchurig")
+  (mastodon-instance-url "https://social.tchncs.de")
 
   :config
-  (setq! mastodon-client--token-file (locate-user-emacs-file "var/mastodon.plstore"))
   (mastodon-discover)
 
   (defun my-mastoron-more ()
@@ -4422,71 +4439,72 @@ You are a helpful assistant. Respond concisely.")
   (transient-define-prefix casual-mastodon-tmenu ()
     "Transient menu for Mastodon."
     [["Timelines"
-      ("H" "home"            mastodon-tl--get-home-timeline)
-      ("L" "local"           mastodon-tl--get-local-timeline)
-      ("F" "federated"       mastodon-tl--get-federated-timeline)
-      ("K" "bookmarks"       mastodon-profile--view-bookmarks)
-      ("V" "favorites"       mastodon-profile--view-favourites)
-      ("'" "followed tags"   mastodon-tl--followed-tags-timeline)
-      ("@" "mentions"        mastodon-notifications--get-mentions)
+      ("H" "home"            mastodon-tl-get-home-timeline)
+      ("L" "local"           mastodon-tl-get-local-timeline)
+      ("F" "federated"       mastodon-tl-get-federated-timeline)
+      ("K" "bookmarks"       mastodon-profile-view-bookmarks)
+      ("V" "favorites"       mastodon-profile-view-favourites)
+      ("'" "followed tags"   mastodon-tl-followed-tags-timeline)
+      ("@" "mentions"        mastodon-notifications-get-mentions)
       ("N" "notifications"   mastodon-notifications-get)
-      ("\\" "of remote host" mastodon-tl--get-remote-local-timeline)]
+      ("\\" "of remote host" mastodon-tl-get-remote-local-timeline)]
 
-     ;; u                    mastodon-tl--update
+     ;; u                    mastodon-tl-update
 
      ["Search"
-      ("s" "search"          mastodon-search--query)
-      ("#" "tagged"          mastodon-tl--get-tag-timeline)
-      ("\"" "followed tags"  mastodon-tl--list-followed-tags)
-      ("I" "filter"          mastodon-views--view-filters)
-      ("X" "lists"           mastodon-views--view-lists)]
+      ("s" "search"          mastodon-search-query)
+      ("#" "tagged"          mastodon-tl-get-tag-timeline)
+      ("\"" "followed tags"  mastodon-tl-list-followed-tags)
+      ("I" "filter"          mastodon-views-view-filters)
+      ("X" "lists"           mastodon-views-view-lists)]
 
      ["Toots"
-      ("n" "next"            mastodon-tl--goto-next-item :transient t)
-      ("p" "prev"            mastodon-tl--goto-prev-item :transient t)
-      ("c" "spoiler"         mastodon-tl--toggle-spoiler-text-in-toot :transient t)
-      ("T" "thread"          mastodon-tl--thread)
-      ("b" "(un)boost"       mastodon-toot--toggle-boost :transient t)
-      ("f" "(un)fav"         mastodon-toot--toggle-favourite :transient t)
-      ("i" "(un)pin"         mastodon-toot--pin-toot-toggle :transient t)
-      ("k" "(un)bookmark"    mastodon-toot--toggle-bookmark :transient t)
-      ("v" "vote"            mastodon-tl--poll-vote)]
+      ("n" "next"            mastodon-tl-goto-next-item :transient t)
+      ("p" "prev"            mastodon-tl-goto-prev-item :transient t)
+      ("c" "spoiler"         mastodon-tl-toggle-spoiler-text-in-toot :transient t)
+      ("T" "thread"          mastodon-tl-thread)
+      ("b" "(un)boost"       mastodon-toot-toggle-boost :transient t)
+      ("f" "(un)fav"         mastodon-toot-toggle-favourite :transient t)
+      ("i" "(un)pin"         mastodon-toot-pin-toot-toggle :transient t)
+      ("k" "(un)bookmark"    mastodon-toot-toggle-bookmark :transient t)
+      ("v" "vote"            mastodon-tl-poll-vote)]
 
-     ;; Z                    mastodon-tl--report-to-mods
-     ;; o                    mastodon-toot--open-toot-url
+     ;; Z                    mastodon-tl-report-to-mods
+     ;; o                    mastodon-toot-open-toot-url
 
      ["Own Toots"
-      ("r" "replay"          mastodon-toot--reply)
+      ("r" "replay"          mastodon-toot-reply)
       ("t" "write"           mastodon-toot)
-      ("e" "edit"            mastodon-toot--edit-toot-at-point)
-      ("d" "delete"          mastodon-toot--delete-toot)
-      ("D" "del & redraft"   mastodon-toot--delete-and-redraft-toot)
-      ("E" "show edits"      mastodon-toot--view-toot-edits)]
+      ("e" "edit"            mastodon-toot-edit-toot-at-point)
+      ("d" "delete"          mastodon-toot-delete-toot)
+      ("D" "del & redraft"   mastodon-toot-delete-and-redraft-toot)
+      ("E" "show edits"      mastodon-toot-view-toot-edits)]
 
-     ;; S                    mastodon-views--view-scheduled-toots
+     ;; S                    mastodon-views-view-scheduled-toots
 
      ["Users"
-      ("W" "follow"          mastodon-tl--follow-user)
-      ("R" "follow req"      mastodon-views--view-follow-requests)
-      ("G" "suggestions"     mastodon-views--view-follow-suggestions)
-      ("M" "mute user"       mastodon-tl--mute-user)
-      ("B" "block user"      mastodon-tl--block-user)
-      ("m" "message user"    mastodon-tl--dm-user)
+      ("W" "follow"          mastodon-tl-follow-user)
+      ("R" "follow req"      mastodon-views-view-follow-requests)
+      ("G" "suggestions"     mastodon-views-view-follow-suggestions)
+      ("M" "mute user"       mastodon-tl-mute-user)
+      ("B" "block user"      mastodon-tl-block-user)
+      ("m" "message user"    mastodon-tl-dm-user)
       ""
-      ("," "favouriters"     mastodon-toot--list-toot-favouriters)
-      ("." "boosters"        mastodon-toot--list-toot-boosters)]]
+      ;; TODO ("," "favouriters"     mastodon-toot-list-toot-favouriters)
+      ;; TODO ("." "boosters"        mastodon-toot-list-toot-boosters)
+      ]]
 
-     ;; S-RET                mastodon-tl--unmute-user
-     ;; C-S-b                mastodon-tl--unblock-user
+     ;; S-RET                mastodon-tl-unmute-user
+     ;; C-S-b                mastodon-tl-unblock-user
 
     [["Profiles"
-      ("A" "author"          mastodon-profile--get-toot-author)
-      ("P" "any user"        mastodon-profile--show-user)
-      ("O" "own"             mastodon-profile--my-profile)
-      ("U" "update own"      mastodon-profile--update-user-profile-note)]
+      ("A" "author"          mastodon-profile-get-toot-author)
+      ("P" "any user"        mastodon-profile-show-user)
+      ("O" "own"             mastodon-profile-my-profile)
+      ("U" "update own"      mastodon-profile-update-user-profile-note)]
 
      ["Misc"
-      ("C" "copy URL"        mastodon-toot--copy-toot-url)
+      ("C" "copy URL"        mastodon-toot-copy-toot-url)
       ("?" "help"            describe-mode)
       ("q" "quit"            transient-quit-one)
       ]])
@@ -4521,14 +4539,14 @@ You are a helpful assistant. Respond concisely.")
 )
 
 
-(use-package persist
-  :ensure (:host github :repo "emacsmirror/persist" :branch "master")
+(use-package mastodon-auth
   :defer t
-
   :config
-  (setq! persist--directory-location (locate-user-emacs-file "var"))
+  (require 'mastodon)
+  (require 'mastodon-client)
+  :custom
+  (mastodon-auth-use-auth-source t)
 )
-
 
 
 ;;; Package: post/elpaca hook
