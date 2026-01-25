@@ -4079,8 +4079,10 @@ You are a helpful assistant. Respond concisely.")
     (setopt gptel-backend (gptel-make-ollama "Ollama"
                             :host "localhost:11434"
                             :stream t
-                            :models '(gemma3:12b)))
-    (setopt gptel-model 'gemma3:12b))
+                            :models '(qwen2.5-coder:14b llama3.1:8b gpt-oss:20b))
+            (setopt gptel-model 'qwen2.5-coder:14b)))
+
+  (gptel-make-gh-copilot "Copilot")
 
   :hook
   (gptel-post-stream-hook . gptel-auto-scroll)
