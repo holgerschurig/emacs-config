@@ -4017,6 +4017,8 @@ re_W_rite      _t_ype definition
       (jinx-mode 1)))
 
   ;; jinx-camel-modes: add maybe python-mode and nim-mode?
+  :config
+  (add-to-list 'jinx-exclude-faces '(t font-lock-string-face))
 
   :hook
   (text-mode-hook . my-jinx-mode)
