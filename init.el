@@ -4040,13 +4040,12 @@ re_W_rite      _t_ype definition
 ;;; Package: misc/gptel
 
 ;; gptel:         https://github.com/karthink/gptel
-;; ollama:        https://github.com/ollama/ollama
-;; Model library: https://ollama.com/library
+;; llama.cpp      https://github.com/ggml-org/llama.cpp/releases
 
 (use-package gptel
   :ensure t
   :defer t
-  :if (locate-file "ollama" exec-path)
+  :if (locate-file "llama-cli" exec-path)
 
   :commands (gptel gptel-menu)
 
@@ -4073,14 +4072,19 @@ You are a helpful assistant. Respond concisely.")
      (typo        . "Fix typos, grammar and style of the following: ")))
 
   :config
-  ;; ;:models '("llama3.1:latest" "deepseek-coder-v2:latest")
-  ;; :models '("mbenhamd/qwen2.5-7b-instruct-cline-128k-q8_0:latest" "qwen2.5-coder:latest")
   (when is-mac
-    (setopt gptel-backend (gptel-make-ollama "Ollama"
-                            :host "localhost:11434"
+    ;; (setopt gptel-backend (gptel-make-ollama "Ollama"
+    ;;                         :host "localhost:11434"
+    ;;                         :stream t
+    ;;                         :models '(qwen2.5-coder:14b llama3.1:8b gpt-oss:20b)))
+    ;; (setopt gptel-model 'qwen2.5-coder:14b))
+    (setopt gptel-backend (gptel-make-openai "llama"
                             :stream t
-                            :models '(qwen2.5-coder:14b llama3.1:8b gpt-oss:20b))
-            (setopt gptel-model 'qwen2.5-coder:14b)))
+                            :protocol "http"
+                            :host "localhost:8080"
+                            :models '(llama)))
+    ;; (setopt gptel-model 'qwen2.5-coder:14b)
+    )
 
   (gptel-make-gh-copilot "Copilot")
 
