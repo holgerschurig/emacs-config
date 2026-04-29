@@ -209,4 +209,4 @@ rustic-mode
 
 bazel-starlark-mode
 
-(dbg "x = ctx" n> "for k in dir(x):" n> "if k in ('aspect_ids','build_setting_value', 'rule'): continue" n> "v = getattr(x, k)" n> "print(k, type(v), v)")
+(dbg "x = ctx" n> "print(type(x))" n> "print(x)" n> "for k in dir(x):" n> "if k in ('aspect_ids','build_setting_value','rule','tree_relative_path'): continue" n> "v = getattr(x, k)" n> "print(k, type(v), v)")
