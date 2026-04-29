@@ -1853,7 +1853,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 ;; Colorize strings that look like colors
 
 (use-package rainbow-mode
-  :ensure (:host github :repo "emacsmirror/rainbow-mode" :branch "master")
+  :ensure t
   :defer t
 )
 
