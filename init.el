@@ -3057,6 +3057,17 @@ re_W_rite      _t_ype definition
       (while (search-forward " -" til t)
         (replace-match "\n    -" nil t)))))
 
+(defun strip-ansi-sequences ()
+  "Replace ANSI escape sequences with nothing in selection or buffer."
+  (interactive)
+  (let ((regexp "\033\\[[0-9;]*[a-zA-Z]")
+        (beg (if (use-region-p) (region-beginning) (point-min)))
+        (end (if (use-region-p) (region-end) (point-max))))
+    (save-excursion
+      (goto-char beg)
+      (while (re-search-forward regexp end t)
+        (replace-match "" nil nil)))))
+
 
 ;;; Package: prog/bb-mode (Bitbake)
 
