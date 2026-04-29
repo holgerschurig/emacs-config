@@ -1566,7 +1566,7 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 ;; https://github.com/jdtsmith/indent-bars
 
 (use-package indent-bars
-  :ensure (:host github :repo "jdtsmith/indent-bars")
+  :ensure t
   :defer t
 
   :custom
