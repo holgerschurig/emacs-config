@@ -2901,7 +2901,7 @@ re_W_rite      _t_ype definition
 (defvar-local Buffer-menu-show-internal nil)
 
 (use-package project
-  :ensure t
+  :ensure nil
   :defer t
   :functions (project-root)
 
