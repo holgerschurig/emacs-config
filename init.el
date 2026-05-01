@@ -19,6 +19,17 @@
 (require 'private (locate-user-emacs-file "private.el") 'noerror)
 
 
+;;; Early things
+
+(keymap-unset global-map "<f2>") ;; was 2C-command, becomes save-bufferr
+(keymap-unset global-map "<f2>" 'remove)
+(keymap-unset global-map "<f3>") ;; becomes find-sibling-file
+(keymap-unset global-map "<f3>" 'remove)
+(keymap-unset global-map "C-x 6") ;; was 2C-command
+(keymap-unset global-map "C-x 6" 'remove)
+
+
+
 ;;; functions
 
 (defun 822date ()
