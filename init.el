@@ -1040,6 +1040,9 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 (use-package rect
   :defer t
 
+  :custom
+  (rectangle-indicate-zero-width-rectangle nil)
+
   :bind (
   :map rectangle-mark-mode-map
   ("t" . string-rectangle)                   ;; replace rectange with string
