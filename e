@@ -70,7 +70,7 @@ if [ "$UNAME" = "Linux" ]; then
 			if infocmp "$termstub-direct" >/dev/null 2>&1; then
 				TERM="$termstub-direct"; else			TERM="xterm-direct"; fi # should be fairly safe
 		fi
-		exec emacsclient --tty --alternate-editor="" "${args[@]}"
+		exec ~/bin/emacsclient --tty --alternate-editor="" "${args[@]}"
 	fi
 fi
 
