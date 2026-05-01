@@ -191,6 +191,14 @@ Unlike `setopt', this won't needlessly pull in dependencies."
   :defer t
 
   :config
+  (setopt bookmark-fringe-mark nil)
+
+  ;; Write changes to the bookmark file as soon as 1 modification is
+  ;; made (addition or deletion).  Otherwise Emacs will only save the
+  ;; bookmarks when it closes, which may never happen properly
+  ;; (e.g. power failure).
+  (setq bookmark-save-flag 1)
+
   (defun my-bookmark-save-no-prompt (&rest _)
     "Run `bookmark-save' without prompts.
 
