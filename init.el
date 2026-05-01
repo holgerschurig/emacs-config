@@ -1125,6 +1125,23 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 
 
 
+;;; Package: core/shr
+
+(use-package shr
+  :defer t
+
+  :config
+  ;; t is bad for accessibility and generally awkward for HTML email
+  ;; (especially with dark themes).
+  (setq shr-use-colors nil)
+  ;; This option should not exist, given `variable-pitch-mode'.
+  ;; Furthermore, its default value runs counter to almost everything
+  ;; else in Emacs which just uses the `default' face.
+  (setq shr-use-fonts nil)
+)
+
+
+
 ;;; Package: core/simple
 
 ;; React faster to keystrokes
