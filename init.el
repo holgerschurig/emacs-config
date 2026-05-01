@@ -1179,6 +1179,9 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 ;; Unbind disabled command: set-goal-column
 (unbind-key "C-x C-n")
 
+;; No region? Kill word!
+(setopt kill-region-dwim 'emacs-word)
+
 ;; Don't blink the paren matching the one at point, it's too distracting.
 ;; TODO revisit
 ;;(setq! blink-matching-paren nil)
