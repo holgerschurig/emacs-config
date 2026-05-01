@@ -640,8 +640,6 @@ If there are two windows displayed, act like \"C-x o\"."
 ;;; Package: core/files
 
 (use-package files
-  :defer t
-
   :custom
   (confirm-kill-emacs nil)
   (confirm-kill-processes nil)
@@ -704,8 +702,6 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
   ("<f2>" . save-buffer)
   ("<f3>" . find-sibling-file)  ;; toggle between .c and .h
 )
-
-
 
 
 
@@ -1593,7 +1589,7 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 
 
 
-;;; Package: gui/info
+;;; Package: gui/info (disabled)
 
 ;; https://github.com/kickingvegas/casual-info
 
@@ -2295,6 +2291,9 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 )
 
 
+
+;; Package: edit/casual-isearch (disabled)
+
 (use-package casual-isearch
   :disabled t
   :defer t
@@ -2388,7 +2387,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
-;;; Package: ide/comment-dwim-2
+;;; Package: ide/comment-dwim-2 (disabled)
 
 (use-package comment-dwim-2
   :disabled t
@@ -3515,7 +3514,7 @@ re_W_rite      _t_ype definition
 
 
 
-;;; Package: modes/pdf-tools
+;;; Package: modes/pdf-tools (disabled)
 
 ;; https://github.com/vedang/pdf-tools
 ;; https://pdftools.wiki/
@@ -3696,7 +3695,7 @@ re_W_rite      _t_ype definition
 
 
 
-;;; Package: completion/corfu
+;;; Package: completion/corfu (disabled)
 
 ;; https://github.com/minad/corfu
 
@@ -3871,7 +3870,7 @@ re_W_rite      _t_ype definition
 
 
 
-;;; Package: misc/calc
+;;; Package: misc/calc (disabled)
 
 ;; https://github.com/kickingvegas/casual-calc
 
@@ -3890,7 +3889,7 @@ re_W_rite      _t_ype definition
 
 
 
-;;; Package: misc/casual-dired
+;;; Package: misc/casual-dired (disabled)
 
 (use-package casual-dired
   :disabled t
@@ -3965,11 +3964,13 @@ re_W_rite      _t_ype definition
 
 
 
+;; Package: misc/casual-ibuffer (disabled)
+
 ;; https://github.com/kickingvegas/casual-ibuffer
 
 (use-package casual-ibuffer
   :disabled t
-  :after (ibuffer)
+  :after ibuffer
 
   :bind (:map ibuffer-mode-map
          ("C-o" . casual-ibuffer-tmenu)
