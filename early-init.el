@@ -38,6 +38,12 @@
 
 
 
+;; Package: core/C-Source
+
+(setq load-path-filter-function 'load-path-filter-cache-directory-files)
+
+
+
 ;;; Package: core/advice
 
 ;; Disable warnings from the legacy advice API. They aren't useful.
