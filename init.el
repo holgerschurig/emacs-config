@@ -983,6 +983,7 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
 
   :custom
   (show-paren-context-when-offscreen 'overlay)
+  (show-paren-not-in-comments-or-strings 'on-mismatch)
 )
 
 
