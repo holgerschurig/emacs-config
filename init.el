@@ -2316,9 +2316,10 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
 
 
-;;; Package: edit/expand-region
+;;; Package: edit/expand-region (disabled)
 
 (use-package expand-region
+  :disabled t
   :ensure t
   :defer t
 
@@ -2328,6 +2329,35 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
   :bind
   ("C-+" . er/expand-region)
+)
+
+
+
+;;; Package: edit/expreg
+
+;; https://github.com/casouri/expreg
+
+(use-package expreg
+  :ensure t
+  :defer t
+
+  :config
+  ;; (expand-region-reset-fast-key    "<ESC><ESC>")
+  ;; (expand-region-smart-cursor t)
+
+  ;; :bind
+  ;; ("C-+" . expreg-expand)
+  ;; ("C--"   . expreg-contract)
+  (defvar expreg-expand-keymap
+    (define-keymap
+      "+" #'expreg-expand
+      "-" #'expreg-contract))
+
+  (put #'expreg-expand 'repeat-map 'expreg-expand-keymap)
+  (put #'expreg-contract 'repeat-map 'expreg-expand-keymap)
+
+  :bind
+  ("C-+" . expreg-expand)
 )
 
 
@@ -4878,3 +4908,4 @@ Edit freely."
 
 (setq read-answer-short t)
 (setq find-library-include-other-files nil)
+(repeat-mode 1)
