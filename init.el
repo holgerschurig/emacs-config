@@ -3629,8 +3629,10 @@ re_W_rite      _t_ype definition
 (use-package ediff
   :defer t
 
-  :config
-  (setq ediff-split-window-function 'split-window-vertically)
+  :custom
+  (ediff-split-window-function 'split-window-vertically)
+  ;; better for tiling window managers:
+  (ediff-window-setup-function 'ediff-setup-windows-plain)
 
   :hook
   (ediff-after-quit-hook-internal . winner-undo)
