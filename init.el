@@ -1166,6 +1166,11 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
      (list (save-excursion (backward-word 1) (point)) (point)))))
 
 
+(defvar my--jinx-navigate nil)
+(defun my-jinx-navigate ()
+  (interactive)
+  (setq my--jinx-navigate (not my--jinx-navigate)))
+
 (defun my-next-error (&optional arg)
   (interactive)
   (let ((p))
@@ -1181,7 +1186,7 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
       (ignore-errors
         (save-excursion (call-interactively #'spell-fu-goto-next-error)
                         (cl-pushnew (point) p))))
-    (when (and (boundp 'jinx-mode) jinx-mode)
+    (when (and my--jinx-navigate (boundp 'jinx-mode) jinx-mode)
       (ignore-errors
         (save-excursion (call-interactively #'jinx-next)
                         (cl-pushnew (point) p))))
@@ -1206,7 +1211,7 @@ prints a message in the minibuffer.  Instead, use `set-buffer-modified-p'."
       (ignore-errors
         (save-excursion (call-interactively #'spell-fu-goto-previous-error)
                         (cl-pushnew (point) p))))
-    (when (and (boundp 'jinx-mode) jinx-mode)
+    (when (and my--jinx-navigate (boundp 'jinx-mode) jinx-mode)
       (ignore-errors
         (save-excursion (call-interactively #'jinx-previous)
                         (cl-pushnew (point) p))))
