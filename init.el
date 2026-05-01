@@ -393,6 +393,15 @@ If there are two windows displayed, act like \"C-x o\"."
 
 
 
+;;; Package: core/custom
+
+;; I have never seen a user say "no" to loading a theme they have
+;; downloaded.  Technically, any Elisp file can run arbitrary code,
+;; so this is not doing much on the security front.
+(setq custom-safe-themes t)
+
+
+
 ;;; Package: core/cus-edit
 
 (use-package cus-edit
@@ -1287,6 +1296,10 @@ The DWIM behaviour of this command is as follows:
   "Remove text properties for kill ring entries."
   (setq kill-ring (mapcar 'substring-no-properties kill-ring)))
 (add-hook 'kill-emacs-hook #'my-unpropertize-kill-ring)
+
+(setq save-interprogram-paste-before-kill t)
+
+(setq window-combination-resize t)
 
 
 
@@ -4050,6 +4063,7 @@ re_W_rite      _t_ype definition
   ;; jinx-camel-modes: add maybe python-mode and nim-mode?
   :config
   (add-to-list 'jinx-exclude-faces '(t font-lock-string-face))
+  (setq-default jinx-languages "en_US")
 
   :hook
   (text-mode-hook . my-jinx-mode)
@@ -4828,3 +4842,6 @@ Edit freely."
         (tramp-file-name (concat "/sudo::" (buffer-file-name))))
     (find-file tramp-file-name)
     (kill-buffer buffer)))
+
+(setq read-answer-short t)
+(setq find-library-include-other-files nil)
