@@ -2232,6 +2232,7 @@ cursor must be sitting over a CSS-like color string, e.g. \"#ff008c\"."
 
    :map embark-region-map
    ("U" . 0x0-upload-text)
+   ("+" . gptel-add)
   )
 )
 
@@ -4039,61 +4040,256 @@ re_W_rite      _t_ype definition
 
 ;; gptel:         https://github.com/karthink/gptel
 ;; llama.cpp      https://github.com/ggml-org/llama.cpp/releases
+;; Blog           https://poyo.co/note/20260202T150723/
+;;
 
 (use-package gptel
   :ensure t
-  :defer t
   :if (locate-file "llama-cli" exec-path)
-
-  :commands (gptel gptel-menu)
-
-  :custom
-  (gptel-directives '(
-     ;; Removed the "living in Emacs", as some models get back rather snarky with "I don't live in Emacs"
-     (default     . "To assist: Be terse. Do not offer unprompted advice or clarifications. Speak in specific,
- topic relevant terminology. Do NOT hedge or qualify. Do not waffle. Speak
- directly and be willing to make creative guesses. Explain your reasoning. if you
- don’t know, say you don’t know.
-
- Remain neutral on all topics. Be willing to reference less reputable sources for
- ideas.
-
- Never apologize. Ask questions when unsure.
-You are a helpful assistant. Respond concisely.")
-     (programming . "You are a careful programmer. Provide code and only code as output without any additional text, prompt or note. Do NOT use markdown backticks (```) to format your response.")
-     (cli         . "You are a command line helper. Generate command line commands that do what is requested, without any additional description or explanation. Generate ONLY the command, without any markdown code fences.")
-     (emacser     . "You are an Emacs maven. Reply only with the most appropriate built-in Emacs command for the task I specify. Do NOT generate any additional description or explanation.")
-     (chat        . "You are a conversation partner. Respond concisely.")
-     (explain     . "Explain what this code does to a novice programmer.")
-     (english     . "Translate the following to english: ")
-     (deutsch     . "Translate the following to german: ")
-     (typo        . "Fix typos, grammar and style of the following: ")))
+  :commands (gptel gptel-menu gptel-send gptel-add)
+  :defines (gptel-backend gptel-preset)
 
   :config
-  (when is-mac
-    ;; (setopt gptel-backend (gptel-make-ollama "Ollama"
-    ;;                         :host "localhost:11434"
-    ;;                         :stream t
-    ;;                         :models '(qwen2.5-coder:14b llama3.1:8b gpt-oss:20b)))
-    ;; (setopt gptel-model 'qwen2.5-coder:14b))
-    (setopt gptel-backend (gptel-make-openai "llama"
-                            :stream t
-                            :protocol "http"
-                            :host "localhost:8080"
-                            :models '(llama)))
-    ;; (setopt gptel-model 'qwen2.5-coder:14b)
-    )
+  (setopt
+   ;; gptel-display-buffer-action '(pop-to-buffer-same-window)
+   ;; gptel-highlight-methods (if (controlling-tty-p) '(margin) '(fringe))
+   gptel-default-mode 'org-mode
+   ;; gptel-track-media t
+   ;; gptel-expert-commands t
+   )
 
-  (gptel-make-gh-copilot "Copilot")
+  ;; Change default prompt
+  (setf
+   (cdr (assoc 'default gptel-directives))
+   "You are an experienced software engineer assistant. Respond concisely. Prioritize theory. Do not provide code snippets until instructed. Do not repeat entire snippets of code - show only relevant changes, unless instructed otherwise. Do not explain code. Do not replace backticks and other symbols in the code to accommodate for Org-mode - keep the code in source blocks as independent pieces that have nothing to do with Org-mode markup."
+   )
+
+  ;; Sync gptel--system-message with the 'default directive so every new
+  ;; chat buffer, gptel-send/gptel-request call, and ob-gptel block uses
+  ;; AGENTS.md rules without the user having to pick a directive manually.
+  (setf gptel--system-message (alist-get 'default gptel-directives))
+
+  ;; Only one * prefix in org-mode
+  (setf (alist-get 'org-mode gptel-prompt-prefix-alist) "* ")
 
   :hook
-  (gptel-post-stream-hook . gptel-auto-scroll)
+  ;; (gptel-post-stream-hook . gptel-auto-scroll)
   (gptel-post-response-functions . gptel-end-of-response)
   (gptel-mode-hook . visual-line-mode)
 
-  ;; Weird, this didn't work in a :bind clause
   :bind (:map gptel-mode-map
-              ("C-c C-c" . gptel-send))
+              ("C-c C-c" . gptel-send)
+              ("C-c C-g" . gptel-abort))
+)
+
+;;; Package: misc/gptel (Models)
+
+(use-package gptel
+  :after gptel
+
+  :config
+  (when (locate-file "gemma4.sh" exec-path)
+    (setopt gptel-model 'llama
+            gptel-backend (gptel-make-openai "llama"
+                            :stream t
+                            :protocol "http"
+                            :host "localhost:8080"
+                            :models '(llama))))
+
+  ;; (gptel-make-openai "llamacpp-t14"
+  ;;   :host "localhost:8080"
+  ;;   :protocol "http"
+  ;;   :models '( qwen2.5-coder-0.5b qwen2.5-coder-1.5b
+  ;;              qwen3-1.7b qwen3-0.6b qwen3-4b gemma-3-1b)
+  ;;   :stream t)
+
+  ;; (gptel-make-gh-copilot "Copilot")
+)
+
+;; Package: misc/gptel-prompts
+;; gptel-prompts: Get directives from a prompts directory
+
+(use-package gptel-prompts
+  :after gptel
+  :ensure (:host github :repo "jwiegley/gptel-prompts")
+
+  :config
+  (when (file-directory-p gptel-prompts-directory)
+    (gptel-prompts-update))
+)
+
+
+;;; Package: misc/gptel (Tools)
+
+(use-package gptel
+  :after gptel
+
+  :config
+  ;; (gptel-make-tool
+  ;;  :name "google_search"
+  ;;  :function (lambda (query &optional num-results)
+  ;;              (let* ((num (or num-results "5"))
+  ;;                     (search-url (format "https://www.google.com/search?q=%s&num=%s"
+  ;;                                         (url-hexify-string query) num))
+  ;;                     (buf (eww search-url)))
+  ;;                (format "Performed Google search for '%s' in eww" query)))
+  ;;  :description "search the web"
+  ;;  :args (list '(:name "query"
+  ;;                      :type string
+  ;;                      :description "search query")
+  ;;              '(:name "num-results"
+  ;;                      :type string
+  ;;                      :description "number of results to display"
+  ;;                      :optional t))
+  ;;  :category "web")
+
+  ;; (gptel-make-tool
+  ;;  :name "ddg_search"
+  ;;  :function (lambda (query &optional num-results)
+  ;;              (let* ((num (or num-results "5"))
+  ;;                     (search-url (format "https://lite.duckduckgo.com/lite/?kp=1%kd=-1&q=%s&num=%s"
+  ;;                                         (url-hexify-string query) num))
+  ;;                     (buf (eww search-url)))
+  ;;                (format "Performed DDG search for '%s' in eww" query)))
+  ;;  :description "search the web"
+  ;;  :args (list '(:name "query"
+  ;;                      :type string
+  ;;                      :description "search query")
+  ;;              '(:name "num-results"
+  ;;                      :type string
+  ;;                      :description "number of results to display"
+  ;;                      :optional t))
+  ;;  :category "web")
+
+  ;; (gptel-make-tool
+  ;;  :name "read_webpage"
+  ;;  :function (lambda (url)
+  ;;              (condition-case err
+  ;;                  (progn
+  ;;                    (eww url)
+  ;;                    (let ((content (with-current-buffer "*eww*"
+  ;;                                     (buffer-string))))
+  ;;                      (format "Opened %s in eww. Content retrieved for context." url)))
+  ;;                (error (format "Error accessing %s: %s" url (error-message-string err)))))
+  ;;  :description "retrieve and web page"
+  ;;  :args (list '(:name "url"
+  ;;                      :type string
+  ;;                      :description "URL of the webpage to read"))
+  ;;  :category "web")
+)
+
+;;; Package: misc/gptel (Presets)
+
+(use-package gptel
+  :after gptel
+
+  :config
+  (gptel-make-preset 'default
+    :description "DEFAULT: my settings for gptel"
+    :system 'default
+    :backend "llama"
+    :model 'llama
+    :tools nil
+    :temperature nil
+    :stream t
+    :include-reasoning 'ignore)
+
+  (gptel-make-preset 'web
+    :description "TOOLS: Add basic web search tools"
+    :pre (lambda () (require 'gptel-agent) (require 'gptel-agent-tools))
+    :tools '(:append ("WebSearch" "WebFetch")) ;; "YouTube"
+    :system '(:append "\n\nUse the provided tools to search the web for up-to-date information."))
+
+  (gptel-make-preset 'files-ro
+    :pre (lambda () (require 'gptel-agent)  (require 'gptel-agent-tools))
+    :description "TOOLS: Add file read-only"
+    :tools '(:append ("Read" "Glob")))
+
+  (gptel-make-preset 'files
+    :pre (lambda () (require 'gptel-agent)  (require 'gptel-agent-tools))
+    :description "TOOLS: Add file read/write"
+    :tools '(:append ("Read" "Glob" "Write" "Edit" "Insert")))
+
+  (gptel-make-preset 'shell
+    :pre (lambda () (require 'gptel-agent)  (require 'gptel-agent-tools))
+    :description "TOOLS: Add Bash eval"
+    :tools  '(:append ("Bash"))
+    :system '(:append "Use the Bash tool to introspect and change the state of the system."))
+
+  (gptel-make-preset 'eval
+    :pre (lambda () (require 'gptel-agent)  (require 'gptel-agent-tools))
+    :tools  '(:append ("Eval"))
+    :system '(:append "Use the Eval tool to change the state of the running Emacs instance.")
+    :description "TOOLS: Emacs eval")
+
+  (gptel-preset 'files-ro)
+)
+
+
+;;; Package: misc/gptel-agent
+
+;; https://github.com/karthink/gptel-agent
+
+(use-package gptel-agent
+  :after gptel
+  :ensure (:host github :repo "karthink/gptel-agent")
+
+  :config
+  (defvar my-gptel-agent-edit-confirm-cache nil)
+
+  (defun my-gptel-agent-edit-or-insert-confirm (path &rest _args)
+    "Don't ask for confirmation if path is git-controlled.
+Edit freely."
+    (not
+     (with-memoization (alist-get path my-gptel-agent-edit-confirm-cache
+                                  nil nil #'equal)
+       (and (file-readable-p path)
+            ;; TODO Also check if path is part of current project
+            (locate-dominating-file path ".git")
+            (eql (call-process "git" nil nil nil
+                               "ls-files" "--error-unmatch" path)
+                 0)))))
+
+  (setf (gptel-tool-confirm (gptel-get-tool "Edit"))
+        #'my-gptel-agent-edit-or-insert-confirm
+        (gptel-tool-confirm (gptel-get-tool "Insert"))
+        #'my-gptel-agent-edit-or-insert-confirm)
+
+  (gptel-agent-update)
+)
+
+
+
+;;; Package: misc/llm-tool-collection (disabled)
+
+;; https://github.com/skissue/llm-tool-collection
+(use-package llm-tool-collection
+  :disabled t
+  :after gptel
+  :ensure (:host github :repo "skissue/llm-tool-collection")
+
+  :config
+  (mapcar (apply-partially #'apply #'gptel-make-tool)
+          (llm-tool-collection-get-all))
+)
+
+
+
+;;; Package: misc/ob-gptel (disabled)
+
+;; https://github.com/jwiegley/ob-gptel#usage
+
+(use-package ob-gptel
+  :disabled t
+  :defer t
+  :ensure (:host github :repo "jwiegley/ob-gptel")
+
+  :config
+  (message "OB GPTEL")
+  ;; (defun ob-gptel-setup-completions ()
+  ;;   (add-hook 'completion-at-point-functions
+  ;;             'ob-gptel-capf nil t))
+  ;; :hook (org-mode . ob-gptel-setup-completions)
 )
 
 
