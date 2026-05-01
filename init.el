@@ -3288,12 +3288,13 @@ re_W_rite      _t_ype definition
 (use-package lisp-mode
   :defer t
 
+  :custom
+  (elisp-fontify-semantically t)
+
   :config
   (defun my-emacs-lisp-mode-setup ()
     "My emacs lisp mode setup function."
     (interactive)
-    ;; "-" is almost always part of a function- or variable-name
-    (modify-syntax-entry ?- "w")
 
     ;; make sure we cannot save with imbalanced parenthesisa
     (add-hook 'write-file-functions 'check-parens nil t)
