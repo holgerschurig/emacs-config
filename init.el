@@ -3576,6 +3576,12 @@ re_W_rite      _t_ype definition
   (defun my-diff-mode-setup ()
     (hi-lock-line-face-buffer "^commit"))
 
+  :custom
+  ;; You cannot expect the syntax highlighting of themes to look
+  ;; equally readabable against what typically are red and green
+  ;; backgrounds. This should be opt-in by default, not opt-out.
+  (diff-font-lock-syntax nil)
+
   :hook
   (diff-mode-hook . my-diff-mode-setup)
 )
